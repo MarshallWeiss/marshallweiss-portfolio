@@ -1,0 +1,307 @@
+[
+  {
+    "fields": [
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "title",
+                "type": "string"
+              },
+              {
+                "name": "subtitle",
+                "type": "string",
+                "title": "Subtitle (Role/Tools)"
+              },
+              {
+                "name": "intro",
+                "type": "text",
+                "title": "Introduction"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "image",
+                "type": "image",
+                "title": "Cover Image"
+              }
+            ],
+            "type": "object",
+            "name": "hero"
+          },
+          {
+            "fields": [
+              {
+                "name": "role",
+                "type": "string"
+              },
+              {
+                "name": "client",
+                "type": "string"
+              },
+              {
+                "name": "year",
+                "type": "string"
+              }
+            ],
+            "type": "object",
+            "name": "metadata"
+          },
+          {
+            "fields": [
+              {
+                "name": "headline",
+                "type": "string"
+              },
+              {
+                "name": "text",
+                "type": "text"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "image",
+                "type": "image"
+              },
+              {
+                "initialValue": false,
+                "name": "reverseLayout",
+                "type": "boolean",
+                "title": "Reverse Layout (Image on Left)"
+              }
+            ],
+            "type": "object",
+            "name": "splitMedia"
+          },
+          {
+            "fields": [
+              {
+                "name": "headline",
+                "type": "string"
+              },
+              {
+                "of": [
+                  {
+                    "options": {
+                      "hotspot": true
+                    },
+                    "type": "image"
+                  }
+                ],
+                "name": "images",
+                "type": "array"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "1 Column",
+                      "value": "1"
+                    },
+                    {
+                      "title": "2 Columns",
+                      "value": "2"
+                    },
+                    {
+                      "title": "3 Columns",
+                      "value": "3"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "2",
+                "name": "columns",
+                "type": "string"
+              }
+            ],
+            "type": "object",
+            "name": "mediaGrid"
+          },
+          {
+            "fields": [
+              {
+                "name": "headline",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "image",
+                "type": "image"
+              },
+              {
+                "name": "caption",
+                "type": "string"
+              }
+            ],
+            "type": "object",
+            "name": "fullWidthMedia"
+          },
+          {
+            "fields": [
+              {
+                "name": "headline",
+                "type": "string"
+              },
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      },
+                      {
+                        "flag": "min",
+                        "constraint": 2
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "of": [
+                  {
+                    "options": {
+                      "hotspot": true
+                    },
+                    "type": "image"
+                  }
+                ],
+                "name": "images",
+                "type": "array"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Full Width",
+                      "value": "full"
+                    },
+                    {
+                      "title": "Contained",
+                      "value": "contained"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "full",
+                "name": "layout",
+                "type": "string",
+                "title": "Layout Style"
+              }
+            ],
+            "type": "object",
+            "name": "carousel",
+            "title": "Carousel Gallery"
+          },
+          {
+            "fields": [
+              {
+                "options": {
+                  "accept": "video/*"
+                },
+                "name": "video",
+                "type": "file",
+                "title": "Video File"
+              },
+              {
+                "name": "heading",
+                "type": "string"
+              },
+              {
+                "name": "text",
+                "type": "text"
+              },
+              {
+                "initialValue": 50,
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "min",
+                        "constraint": 0
+                      },
+                      {
+                        "flag": "max",
+                        "constraint": 100
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "overlayOpacity",
+                "type": "number",
+                "title": "Overlay Opacity (%)"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Dark",
+                      "value": "dark"
+                    },
+                    {
+                      "title": "Light",
+                      "value": "light"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "dark",
+                "name": "overlayColor",
+                "type": "string"
+              },
+              {
+                "initialValue": true,
+                "name": "autoplay",
+                "type": "boolean"
+              },
+              {
+                "initialValue": true,
+                "name": "loop",
+                "type": "boolean"
+              },
+              {
+                "initialValue": true,
+                "name": "muted",
+                "type": "boolean"
+              }
+            ],
+            "type": "object",
+            "name": "backgroundVideo"
+          }
+        ],
+        "name": "modules",
+        "type": "array"
+      }
+    ],
+    "name": "caseStudy",
+    "type": "document"
+  }
+]

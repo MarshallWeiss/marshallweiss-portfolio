@@ -5,6 +5,7 @@ import SplitMedia from './SplitMedia';
 import MediaGrid from './MediaGrid';
 import FullWidthMedia from './FullWidthMedia';
 import Carousel from './Carousel';
+import BackgroundVideo from './BackgroundVideo';
 
 interface BlockRendererProps {
     modules: any[];
@@ -39,6 +40,9 @@ export default function BlockRenderer({ modules }: BlockRendererProps) {
 
                     case 'carousel':
                         return <Carousel key={key} {...module} />;
+
+                    case 'backgroundVideo':
+                        return <BackgroundVideo key={key} {...module} />;
 
                     default:
                         console.warn(`Unknown block type: ${module._type}`);

@@ -20,6 +20,28 @@ export default defineType({
             },
         }),
         defineField({
+            name: 'images',
+            title: 'Images',
+            description: 'Upload images here first, then assign them to blocks below',
+            type: 'array',
+            of: [{
+                type: 'image',
+                options: { hotspot: true },
+                fields: [
+                    {
+                        name: 'caption',
+                        type: 'string',
+                        title: 'Caption',
+                    },
+                    {
+                        name: 'alt',
+                        type: 'string',
+                        title: 'Alt text',
+                    }
+                ]
+            }],
+        }),
+        defineField({
             name: 'modules',
             title: 'Modules',
             type: 'array',
@@ -33,6 +55,7 @@ export default defineType({
                         defineField({ name: 'title', type: 'string', title: 'Title' }),
                         defineField({ name: 'subtitle', type: 'string', title: 'Subtitle (Role/Tools)' }),
                         defineField({ name: 'intro', type: 'text', title: 'Introduction' }),
+                        defineField({ name: 'image', type: 'image', title: 'Cover Image', options: { hotspot: true } }),
                     ],
                 }),
                 // Metadata Block
@@ -124,6 +147,62 @@ export default defineType({
                                 layout: 'radio',
                             },
                             initialValue: 'full',
+                        }),
+                    ],
+                }),
+                // Background Video Block
+                defineField({
+                    name: 'backgroundVideo',
+                    title: 'Background Video',
+                    type: 'object',
+                    fields: [
+                        defineField({
+                            name: 'video',
+                            type: 'file',
+                            title: 'Video File',
+                            options: {
+                                accept: 'video/*'
+                            }
+                        }),
+                        defineField({ name: 'heading', type: 'string', title: 'Heading' }),
+                        defineField({ name: 'text', type: 'text', title: 'Text' }),
+                        defineField({
+                            name: 'overlayOpacity',
+                            type: 'number',
+                            title: 'Overlay Opacity (%)',
+                            initialValue: 50,
+                            validation: Rule => Rule.min(0).max(100)
+                        }),
+                        defineField({
+                            name: 'overlayColor',
+                            title: 'Overlay Color',
+                            type: 'string',
+                            options: {
+                                list: [
+                                    { title: 'Dark', value: 'dark' },
+                                    { title: 'Light', value: 'light' },
+                                ],
+                                layout: 'radio',
+                            },
+                            initialValue: 'dark',
+                        }),
+                        defineField({
+                            name: 'autoplay',
+                            type: 'boolean',
+                            title: 'Autoplay',
+                            initialValue: true
+                        }),
+                        defineField({
+                            name: 'loop',
+                            type: 'boolean',
+                            title: 'Loop',
+                            initialValue: true
+                        }),
+                        defineField({
+                            name: 'muted',
+                            type: 'boolean',
+                            title: 'Muted',
+                            initialValue: true
                         }),
                     ],
                 }),
