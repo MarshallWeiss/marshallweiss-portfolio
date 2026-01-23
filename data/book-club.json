@@ -1,0 +1,76 @@
+{
+  "items": [
+    {
+      "id": "the-design-of-everyday-things",
+      "title": "The Design of Everyday Things",
+      "author": "Don Norman",
+      "synopsis": "A classic exploration of how design affects our daily lives. Norman reveals why some products satisfy customers while others only frustrate them, and how good design principles can transform the user experience.",
+      "cover": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1328581571i/840.jpg",
+      "tags": ["Design", "UX", "Psychology", "Non-fiction"],
+      "date": "2024-11-15",
+      "slug": "the-design-of-everyday-things",
+      "featured": true,
+      "status": "reading now"
+    },
+    {
+      "id": "thinking-fast-and-slow",
+      "title": "Thinking, Fast and Slow",
+      "author": "Daniel Kahneman",
+      "synopsis": "Kahneman takes us on a groundbreaking tour of the mind and explains the two systems that drive the way we think. System 1 is fast, intuitive, and emotional; System 2 is slower, more deliberative, and more logical.",
+      "cover": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1317793965i/11468377.jpg",
+      "tags": ["Psychology", "Behavioral Economics", "Cognitive Science", "Non-fiction"],
+      "date": "2024-10-20",
+      "slug": "thinking-fast-and-slow",
+      "featured": false,
+      "status": "completed"
+    },
+    {
+      "id": "the-art-of-computer-programming",
+      "title": "The Art of Computer Programming",
+      "author": "Donald E. Knuth",
+      "synopsis": "A comprehensive monograph written by computer scientist Donald Knuth that covers many kinds of programming algorithms and their analysis. Volume 1 focuses on fundamental algorithms.",
+      "cover": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1385062547i/112239.jpg",
+      "tags": ["Computer Science", "Programming", "Algorithms", "Technical"],
+      "date": "2024-09-10",
+      "slug": "the-art-of-computer-programming",
+      "featured": false,
+      "status": "completed"
+    },
+    {
+      "id": "sapiens",
+      "title": "Sapiens: A Brief History of Humankind",
+      "author": "Yuval Noah Harari",
+      "synopsis": "From a renowned historian comes a groundbreaking narrative of humanity's creation and evolution that explores the ways in which biology and history have defined us and enhanced our understanding of what it means to be 'human'.",
+      "cover": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1705599038i/23692271.jpg",
+      "tags": ["History", "Anthropology", "Philosophy", "Non-fiction"],
+      "date": "2024-08-05",
+      "slug": "sapiens",
+      "featured": false,
+      "status": "completed"
+    },
+    {
+      "id": "the-innovators-dilemma",
+      "title": "The Innovator's Dilemma",
+      "author": "Clayton M. Christensen",
+      "synopsis": "Christensen explains why most companies miss out on new waves of innovation. He shows how even the most outstanding companies can do everything right and still lose market leadership.",
+      "cover": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1388208963i/2615.jpg",
+      "tags": ["Business", "Innovation", "Technology", "Strategy"],
+      "date": "2024-07-12",
+      "slug": "the-innovators-dilemma",
+      "featured": false,
+      "status": "completed"
+    },
+    {
+      "id": "clean-code",
+      "title": "Clean Code: A Handbook of Agile Software Craftsmanship",
+      "author": "Robert C. Martin",
+      "synopsis": "Even bad code can function. But if code isn't clean, it can bring a development organization to its knees. This book is a must-read for any developer, software engineer, project manager, team lead, or systems analyst.",
+      "cover": "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1436202607i/3735293.jpg",
+      "tags": ["Programming", "Software Engineering", "Best Practices", "Technical"],
+      "date": "2024-06-18",
+      "slug": "clean-code",
+      "featured": false,
+      "status": "completed"
+    }
+  ]
+}
