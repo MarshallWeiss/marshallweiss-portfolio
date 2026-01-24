@@ -6,6 +6,7 @@ import { visionTool } from '@sanity/vision'
 import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 import { media } from 'sanity-plugin-media'
+import { muxInput } from 'sanity-plugin-mux-input'
 
 // Go to https://www.sanity.io/docs/api-versioning to learn how API versioning works
 import { apiVersion, dataset, projectId } from './sanity/env'
@@ -24,5 +25,7 @@ export default defineConfig({
         visionTool({ defaultApiVersion: apiVersion }),
         // Media library for uploading and managing assets
         media(),
+        // Mux video integration
+        muxInput(),
     ],
 })

@@ -1,105 +1,99 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { useNextSanityImage } from 'next-sanity-image';
 import { client } from '@/sanity/lib/client';
 import { cn } from '@/lib/utils';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+
+interface Slide {
+    _key?: string;
+    image?: any;
+    title?: string;
+    description?: string;
+}
 
 interface CarouselProps {
-    images?: any[];
-    layout?: 'full' | 'contained';
+    slides?: Slide[];
     headline?: string;
 }
 
-export default function Carousel({ images, layout = 'full', headline }: CarouselProps) {
-    const [activeIndex, setActiveIndex] = useState(0);
+export default function Carousel({ slides, headline }: CarouselProps) {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
+    const [canScrollLeft, setCanScrollLeft] = useState(false);
+    const [canScrollRight, setCanScrollRight] = useState(true);
 
-    if (!images || images.length === 0) return null;
+    const checkScrollButtons = () => {
+        if (scrollContainerRef.current) {
+            const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+            setCanScrollLeft(scrollLeft > 0);
+            setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+        }
+    };
 
+    useEffect(() => {
+        checkScrollButtons();
+        window.addEventListener('resize', checkScrollButtons);
+        return () => window.removeEventListener('resize', checkScrollButtons);
+    }, []);
 
-    const scrollTo = (index: number) => {
-        setActiveIndex(index);
+    if (!slides || slides.length === 0) return null;
+
+    const scroll = (direction: 'left' | 'right') => {
         if (scrollContainerRef.current) {
             const container = scrollContainerRef.current;
-            const width = container.offsetWidth;
-            container.scrollTo({
-                left: width * index,
+            const slideWidth = container.querySelector('.carousel-slide')?.clientWidth || 500;
+            const scrollAmount = direction === 'left' ? -slideWidth : slideWidth;
+            container.scrollBy({
+                left: scrollAmount,
                 behavior: 'smooth'
             });
         }
     };
 
-    const next = () => {
-        const nextIndex = (activeIndex + 1) % images.length;
-        scrollTo(nextIndex);
-    };
-
-    const prev = () => {
-        const prevIndex = (activeIndex - 1 + images.length) % images.length;
-        scrollTo(prevIndex);
-    };
-
     return (
-        <section className={cn(
-            "py-12 md:py-16 w-full",
-            layout === 'contained' ? "max-w-6xl mx-auto px-6 md:px-0" : ""
-        )}>
+        <section className="py-16 md:py-24">
             {headline && (
-                <div className={cn(
-                    "mb-6 md:mb-8",
-                    layout === 'full' ? "max-w-6xl mx-auto px-6 md:px-12" : ""
-                )}>
-                    <h3 className="text-2xl md:text-3xl font-semibold text-gray-900">{headline}</h3>
+                <div className="mb-8 md:mb-12">
+                    <h3 className="text-2xl md:text-3xl font-medium text-gray-900">{headline}</h3>
                 </div>
             )}
-            <div className="relative group">
-                {/* Scroll Container */}
-                <div
-                    ref={scrollContainerRef}
-                    className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide touch-pan-x"
-                    style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-                    onScroll={(e) => {
-                        const container = e.currentTarget;
-                        const index = Math.round(container.scrollLeft / container.offsetWidth);
-                        if (index !== activeIndex) setActiveIndex(index);
-                    }}
-                >
-                    {images.map((img, idx) => (
-                        <CarouselItem key={img._key || idx} image={img} layout={layout} />
-                    ))}
-                </div>
 
+            <div className="relative">
                 {/* Navigation Arrows */}
                 <button
-                    onClick={prev}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-white/90 p-2 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-0"
+                    onClick={() => scroll('left')}
+                    disabled={!canScrollLeft}
+                    className={cn(
+                        "absolute left-0 top-1/3 -translate-y-1/2 z-10 w-12 h-12 rounded-full border border-gray-300 bg-white flex items-center justify-center transition-all hover:border-gray-400",
+                        !canScrollLeft && "opacity-30 cursor-not-allowed"
+                    )}
                     aria-label="Previous slide"
                 >
-                    <ChevronLeft className="w-5 h-5 text-gray-900" />
+                    <ArrowLeft className="w-5 h-5 text-gray-700" />
                 </button>
                 <button
-                    onClick={next}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-white/90 p-2 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-0"
+                    onClick={() => scroll('right')}
+                    disabled={!canScrollRight}
+                    className={cn(
+                        "absolute right-0 top-1/3 -translate-y-1/2 z-10 w-12 h-12 rounded-full border border-gray-300 bg-white flex items-center justify-center transition-all hover:border-gray-400",
+                        !canScrollRight && "opacity-30 cursor-not-allowed"
+                    )}
                     aria-label="Next slide"
                 >
-                    <ChevronRight className="w-5 h-5 text-gray-900" />
+                    <ArrowRight className="w-5 h-5 text-gray-700" />
                 </button>
 
-                {/* Dots */}
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                    {images.map((_, idx) => (
-                        <button
-                            key={idx}
-                            onClick={() => scrollTo(idx)}
-                            className={cn(
-                                "w-2 h-2 rounded-full transition-all",
-                                idx === activeIndex ? "bg-white w-4" : "bg-white/50 hover:bg-white/80"
-                            )}
-                            aria-label={`Go to slide ${idx + 1}`}
-                        />
+                {/* Slides Container */}
+                <div
+                    ref={scrollContainerRef}
+                    className="flex gap-6 overflow-x-auto scrollbar-hide px-14"
+                    style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                    onScroll={checkScrollButtons}
+                >
+                    {slides.map((slide, idx) => (
+                        <CarouselSlide key={slide._key || idx} slide={slide} />
                     ))}
                 </div>
             </div>
@@ -107,24 +101,36 @@ export default function Carousel({ images, layout = 'full', headline }: Carousel
     );
 }
 
-function CarouselItem({ image, layout }: { image: any, layout: string }) {
-    const imageProps = useNextSanityImage(client, image);
+function CarouselSlide({ slide }: { slide: Slide }) {
+    const imageProps = useNextSanityImage(client, slide.image);
 
     return (
-        <div className="min-w-full flex-shrink-0 snap-center relative">
-            <div className={cn(
-                "relative overflow-hidden bg-gray-100",
-                layout === 'full' ? "aspect-[16/9] md:aspect-[21/9]" : "aspect-[16/10] rounded-xl"
-            )}>
+        <div className="carousel-slide flex-shrink-0 w-[500px] max-w-[80vw]">
+            {/* Image */}
+            <div className="relative aspect-[4/3] rounded-lg overflow-hidden bg-gray-100 shadow-sm mb-4">
                 {imageProps ? (
                     <Image
                         {...(imageProps as any)}
-                        alt="Carousel slide"
+                        alt={slide.title || 'Carousel slide'}
                         className="object-cover w-full h-full"
-                        sizes="100vw"
+                        sizes="(max-width: 768px) 80vw, 500px"
                     />
                 ) : null}
             </div>
+
+            {/* Title */}
+            {slide.title && (
+                <h4 className="text-lg font-medium text-gray-900 mb-2">
+                    {slide.title}
+                </h4>
+            )}
+
+            {/* Description */}
+            {slide.description && (
+                <p className="text-gray-600 text-sm leading-relaxed">
+                    {slide.description}
+                </p>
+            )}
         </div>
     );
 }

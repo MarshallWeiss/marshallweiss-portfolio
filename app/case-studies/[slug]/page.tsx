@@ -33,8 +33,35 @@ export async function generateStaticParams() {
 export default async function CaseStudyPage({ params }: PageProps) {
     const { slug } = params;
 
-    // Query to fetch the full document
-    const query = groq`*[_type == "caseStudy" && slug.current == $slug][0]`;
+    // Query to fetch the full document with expanded Mux video assets
+    const query = groq`*[_type == "caseStudy" && slug.current == $slug][0]{
+        ...,
+        modules[]{
+            ...,
+            _type == "backgroundVideo" => {
+                ...,
+                video{
+                    ...,
+                    asset->{
+                        playbackId,
+                        assetId,
+                        status
+                    }
+                }
+            },
+            _type == "fullWidthMedia" => {
+                ...,
+                video{
+                    ...,
+                    asset->{
+                        playbackId,
+                        assetId,
+                        status
+                    }
+                }
+            }
+        }
+    }`;
 
     let caseStudy = null;
 

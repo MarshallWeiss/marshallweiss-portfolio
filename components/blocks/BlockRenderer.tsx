@@ -6,6 +6,9 @@ import MediaGrid from './MediaGrid';
 import FullWidthMedia from './FullWidthMedia';
 import Carousel from './Carousel';
 import BackgroundVideo from './BackgroundVideo';
+import ContentCards from './ContentCards';
+import Accordion from './Accordion';
+import Comparison from './Comparison';
 
 interface BlockRendererProps {
     modules: any[];
@@ -43,6 +46,16 @@ export default function BlockRenderer({ modules }: BlockRendererProps) {
 
                     case 'backgroundVideo':
                         return <BackgroundVideo key={key} {...module} />;
+
+                    case 'contentCards':
+                        return <ContentCards key={key} {...module} />;
+
+                    case 'accordion':
+                    case 'splitAccordion': // backward compatibility
+                        return <Accordion key={key} {...module} />;
+
+                    case 'comparison':
+                        return <Comparison key={key} {...module} />;
 
                     default:
                         console.warn(`Unknown block type: ${module._type}`);
