@@ -59,10 +59,20 @@ export default async function CaseStudyPage({ params }: PageProps) {
                         status
                     }
                 }
+            },
+            _type == "splitMedia" => {
+                ...,
+                video{
+                    ...,
+                    asset->{
+                        playbackId,
+                        assetId,
+                        status
+                    }
+                }
             }
         }
     }`;
-
     let caseStudy = null;
 
     try {

@@ -22,7 +22,7 @@ function SanityImage({ image, alt, label }: { image: any; alt: string; label?: s
         <div className="flex flex-col items-center">
             <div className="relative w-full">
                 <Image
-                    {...imageProps}
+                    {...(imageProps as any)}
                     alt={alt}
                     sizes="(max-width: 768px) 100vw, 50vw"
                     className="w-full h-auto object-contain"

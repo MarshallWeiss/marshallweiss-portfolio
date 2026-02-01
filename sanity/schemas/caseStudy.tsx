@@ -3,6 +3,14 @@ import { MultipleImageInput } from '../components/MultipleImageInput'
 import { ImagePreview } from '../components/ImagePreview'
 import { HotspotImageInput } from '../components/HotspotImageInput'
 import { BlockWithConverter } from '../components/BlockConverter'
+import {
+    layoutFields,
+    typographyFields,
+    headingFields,
+    mediaItemFields,
+    aspectRatioField,
+    objectFitField,
+} from './shared-fields'
 
 export default defineType({
     name: 'caseStudy',
@@ -130,17 +138,48 @@ export default defineType({
                         input: BlockWithConverter,
                     },
                     fields: [
-                        defineField({ name: 'headline', type: 'string', title: 'Headline' }),
-                        defineField({ name: 'text', type: 'text', title: 'Text' }),
-                        defineField({ name: 'image', type: 'image', title: 'Single Image', options: { hotspot: true }, description: 'Use this for a single image, or use Images below for multiple' }),
+                        ...headingFields,
+                        defineField({ name: 'text', type: 'text', title: 'Text', rows: 6 }),
+                        ...typographyFields,
+                        defineField({
+                            name: 'mediaType',
+                            title: 'Media Type',
+                            type: 'string',
+                            options: {
+                                list: [
+                                    { title: 'Single Image', value: 'image' },
+                                    { title: 'Multiple Images', value: 'images' },
+                                    { title: 'Video', value: 'video' },
+                                ],
+                                layout: 'radio',
+                            },
+                            initialValue: 'image',
+                        }),
+                        defineField({
+                            name: 'image',
+                            type: 'image',
+                            title: 'Image',
+                            options: { hotspot: true },
+                            hidden: ({ parent }) => parent?.mediaType !== 'image',
+                        }),
                         defineField({
                             name: 'images',
-                            title: 'Multiple Images',
-                            description: 'Add multiple images to display side by side. If populated, this overrides Single Image.',
+                            title: 'Images',
+                            description: 'Add multiple images to display side by side.',
                             type: 'array',
                             of: [{ type: 'image', options: { hotspot: true } }],
+                            hidden: ({ parent }) => parent?.mediaType !== 'images',
                         }),
-                        defineField({ name: 'reverseLayout', type: 'boolean', title: 'Reverse Layout (Image/Images on Left)', initialValue: false }),
+                        defineField({
+                            name: 'video',
+                            type: 'mux.video',
+                            title: 'Video',
+                            hidden: ({ parent }) => parent?.mediaType !== 'video',
+                        }),
+                        aspectRatioField,
+                        objectFitField,
+                        defineField({ name: 'reverseLayout', type: 'boolean', title: 'Reverse Layout (Media on Left)', initialValue: false }),
+                        ...layoutFields,
                     ],
                     preview: {
                         select: {
@@ -214,7 +253,7 @@ export default defineType({
                         input: BlockWithConverter,
                     },
                     fields: [
-                        defineField({ name: 'headline', type: 'string', title: 'Headline' }),
+                        ...headingFields,
                         defineField({
                             name: 'mediaType',
                             title: 'Media Type',
@@ -241,7 +280,10 @@ export default defineType({
                             title: 'Video',
                             hidden: ({ parent }) => parent?.mediaType !== 'video',
                         }),
+                        aspectRatioField,
+                        objectFitField,
                         defineField({ name: 'caption', type: 'string', title: 'Caption' }),
+                        ...layoutFields,
                     ],
                     preview: {
                         select: {
@@ -596,6 +638,62 @@ export default defineType({
                                 title: `👯 Side by Side${headline ? `: ${headline}` : ''}`,
                                 subtitle: labels || undefined,
                                 media: leftImage,
+                            }
+                        },
+                    },
+                }),
+                // Text Block
+                defineField({
+                    name: 'textBlock',
+                    title: 'Text Block',
+                    type: 'object',
+                    components: {
+                        input: BlockWithConverter,
+                    },
+                    fields: [
+                        defineField({ name: 'headline', type: 'string', title: 'Headline (optional)' }),
+                        defineField({ name: 'text', type: 'text', title: 'Text', rows: 6 }),
+                        defineField({
+                            name: 'alignment',
+                            title: 'Text Alignment',
+                            type: 'string',
+                            options: {
+                                list: [
+                                    { title: 'Left', value: 'left' },
+                                    { title: 'Center', value: 'center' },
+                                    { title: 'Right', value: 'right' },
+                                ],
+                                layout: 'radio',
+                            },
+                            initialValue: 'center',
+                        }),
+                        defineField({
+                            name: 'maxWidth',
+                            title: 'Max Width',
+                            type: 'string',
+                            options: {
+                                list: [
+                                    { title: 'Narrow (prose)', value: 'narrow' },
+                                    { title: 'Medium', value: 'medium' },
+                                    { title: 'Wide', value: 'wide' },
+                                ],
+                                layout: 'radio',
+                            },
+                            initialValue: 'medium',
+                        }),
+                    ],
+                    preview: {
+                        select: {
+                            headline: 'headline',
+                            text: 'text',
+                            alignment: 'alignment',
+                        },
+                        prepare({ headline, text, alignment }) {
+                            const alignEmoji = alignment === 'center' ? '⊡' : alignment === 'left' ? '⊣' : '⊢'
+                            const preview = text ? text.substring(0, 60) + (text.length > 60 ? '...' : '') : ''
+                            return {
+                                title: `${alignEmoji} Text${headline ? `: ${headline}` : ''}`,
+                                subtitle: preview,
                             }
                         },
                     },

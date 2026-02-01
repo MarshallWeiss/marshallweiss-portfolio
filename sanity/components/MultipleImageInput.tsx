@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from 'react'
 import { set, useClient, useFormValue } from 'sanity'
-import { ArrayInputProps } from 'sanity'
 import { Stack, Button, Card, Text, Box, Flex, Spinner } from '@sanity/ui'
 import { detectImageGroups, ImageGroup, detectGroupsFromExistingImages, ExistingImageGroup } from '@/lib/gallery-grouping'
 import { createMediaGridBlock, createCarouselBlock, createImageAssetRef } from '@/lib/gallery-generator'
@@ -10,7 +9,7 @@ import { GalleryCreationDialog, GalleryConfig } from './GalleryCreationDialog'
  * Custom input component for uploading multiple images at once
  * Supports folder upload and automatic gallery creation
  */
-export function MultipleImageInput(props: ArrayInputProps) {
+export function MultipleImageInput(props: any) {
   const { value = [], onChange } = props
   const [uploading, setUploading] = useState(false)
   const [scanning, setScanning] = useState(false)
@@ -368,12 +367,11 @@ export function MultipleImageInput(props: ArrayInputProps) {
                 type="file"
                 multiple
                 accept="image/*"
-                webkitdirectory=""
-                directory=""
                 onChange={handleFolderSelect}
                 disabled={uploading || scanning}
                 style={{ display: 'none' }}
                 id="folder-upload"
+                {...({ webkitdirectory: '', directory: '' } as any)}
               />
               <Button
                 as="label"

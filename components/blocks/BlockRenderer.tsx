@@ -10,6 +10,7 @@ import ContentCards from './ContentCards';
 import Accordion from './Accordion';
 import Comparison from './Comparison';
 import SideBySideImages from './SideBySideImages';
+import TextBlock from './TextBlock';
 import AnnotatedImage from './AnnotatedImage';
 
 interface BlockRendererProps {
@@ -95,6 +96,9 @@ export default function BlockRenderer({ modules }: BlockRendererProps) {
 
                     case 'sideBySideImages':
                         return <SideBySideImages key={key} {...module} />;
+
+                    case 'textBlock':
+                        return <TextBlock key={key} {...module} />;
 
                     case 'annotatedImage':
                         return <AnnotatedImage key={key} {...module} />;

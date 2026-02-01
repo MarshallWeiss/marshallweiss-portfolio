@@ -166,7 +166,7 @@ export default function AnnotatedImage({
                                             marginLeft: hotspot.x > 70 ? 0 : 12,
                                             marginRight: hotspot.x > 70 ? 12 : 0,
                                             '--slide-direction': hotspot.x > 70 ? '10px' : '-10px',
-                                        } as React.CSSProperties}
+                                        } as any}
                                         onMouseEnter={() => setActiveHotspot(hotspot._key)}
                                         onMouseLeave={() => setActiveHotspot(null)}
                                     >

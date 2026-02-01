@@ -1,41 +1,115 @@
 'use client';
 import React from 'react';
 import Image from 'next/image';
+import MuxPlayer from '@mux/mux-player-react';
 import { useNextSanityImage } from 'next-sanity-image';
 import { client } from '@/sanity/lib/client';
 import { cn } from '@/lib/utils';
+import BlockWrapper from './BlockWrapper';
+import BlockHeading from './BlockHeading';
+import MediaItem from './MediaItem';
 
 interface SplitMediaProps {
-    text: string;
-    image?: any;
-    images?: any[];
-    reverseLayout?: boolean;
-    headline?: string;
+    // Content
+    headline?: string
+    subheading?: string
+    text: string
+
+    // Typography
+    headlineSize?: 'small' | 'medium' | 'large'
+    textAlign?: 'left' | 'center' | 'right'
+
+    // Media
+    mediaType?: 'image' | 'images' | 'video'
+    image?: any
+    images?: any[]
+    video?: any
+    aspectRatio?: 'auto' | 'square' | '4:3' | '16:9' | '3:4' | '9:16'
+    objectFit?: 'cover' | 'contain'
+
+    // Layout
+    reverseLayout?: boolean
+    width?: 'contained' | 'wide' | 'full'
+    background?: 'none' | 'white' | 'gray'
+    spacing?: 'compact' | 'default' | 'spacious'
 }
 
 // Separate component for individual images to use hooks properly
-function SanityImage({ image, className }: { image: any; className?: string }) {
+function SanityImage({
+    image,
+    aspectRatio = 'auto',
+    objectFit = 'cover',
+}: {
+    image: any
+    aspectRatio?: string
+    objectFit?: string
+}) {
     const imageProps = useNextSanityImage(client, image);
 
     if (!imageProps) return null;
 
+    const aspectRatioClasses: Record<string, string> = {
+        'auto': '',
+        'square': 'aspect-square',
+        '4:3': 'aspect-[4/3]',
+        '16:9': 'aspect-video',
+        '3:4': 'aspect-[3/4]',
+        '9:16': 'aspect-[9/16]',
+    }
+
+    const objectFitClasses: Record<string, string> = {
+        cover: 'object-cover',
+        contain: 'object-contain',
+    }
+
     return (
-        <Image
-            {...(imageProps as any)}
-            alt="Split media"
-            className={cn("object-cover w-full h-full", className)}
-            sizes="(max-width: 768px) 100vw, 50vw"
-        />
+        <div className={cn(
+            'relative rounded-xl overflow-hidden bg-gray-50 w-full',
+            aspectRatio && aspectRatioClasses[aspectRatio]
+        )}>
+            <Image
+                {...(imageProps as any)}
+                alt="Split media"
+                className={cn('w-full h-full', objectFitClasses[objectFit])}
+                sizes="(max-width: 768px) 100vw, 50vw"
+            />
+        </div>
     );
 }
 
-export default function SplitMedia({ text, image, images, reverseLayout = false, headline }: SplitMediaProps) {
-    // Use images array if available, otherwise fall back to single image
-    const hasMultipleImages = images && images.length > 0;
+export default function SplitMedia({
+    headline,
+    subheading,
+    text,
+    headlineSize = 'medium',
+    textAlign = 'left',
+    mediaType = 'image',
+    image,
+    images,
+    video,
+    aspectRatio = 'auto',
+    objectFit = 'cover',
+    reverseLayout = false,
+    width = 'contained',
+    background = 'none',
+    spacing = 'default',
+}: SplitMediaProps) {
+    // Determine what media to display
+    const hasVideo = mediaType === 'video' && video?.asset;
+    const hasMultipleImages = mediaType === 'images' && images && images.length > 0;
     const displayImages = hasMultipleImages ? images : (image ? [image] : []);
 
+    const aspectRatioClasses: Record<string, string> = {
+        'auto': '',
+        'square': 'aspect-square',
+        '4:3': 'aspect-[4/3]',
+        '16:9': 'aspect-video',
+        '3:4': 'aspect-[3/4]',
+        '9:16': 'aspect-[9/16]',
+    }
+
     return (
-        <section className="py-12 md:py-24">
+        <BlockWrapper width={width} background={background} spacing={spacing}>
             <div className={cn(
                 "grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-center",
                 reverseLayout ? "md:grid-flow-dense" : ""
@@ -45,36 +119,69 @@ export default function SplitMedia({ text, image, images, reverseLayout = false,
                     "prose prose-lg text-gray-600",
                     reverseLayout ? "md:col-start-2" : "md:col-start-1"
                 )}>
-                    {headline && <h3 className="text-2xl font-semibold text-gray-900 mb-4">{headline}</h3>}
-                    <p className="whitespace-pre-wrap leading-relaxed">{text}</p>
+                    <BlockHeading
+                        headline={headline}
+                        subheading={subheading}
+                        headlineSize={headlineSize}
+                        textAlign={textAlign}
+                    />
+                    <p className={cn(
+                        "whitespace-pre-wrap leading-relaxed",
+                        textAlign === 'center' && 'text-center',
+                        textAlign === 'right' && 'text-right'
+                    )}>
+                        {text}
+                    </p>
                 </div>
 
                 {/* Media Side */}
                 <div className={cn(
                     reverseLayout ? "md:col-start-1" : "md:col-start-2"
                 )}>
-                    {displayImages.length === 1 && (
-                        <figure className="relative rounded-xl overflow-hidden bg-gray-50 aspect-[4/3] w-full">
-                            <SanityImage image={displayImages[0]} />
-                        </figure>
+                    {/* Video */}
+                    {hasVideo && (
+                        <div className={cn(
+                            "relative rounded-xl overflow-hidden bg-gray-50 w-full",
+                            aspectRatio && aspectRatioClasses[aspectRatio]
+                        )}>
+                            <MuxPlayer
+                                playbackId={video.asset.playbackId}
+                                metadata={{
+                                    video_title: headline || 'Split media video',
+                                }}
+                                streamType="on-demand"
+                                className="w-full h-full"
+                            />
+                        </div>
                     )}
-                    {displayImages.length > 1 && (
+
+                    {/* Single Image */}
+                    {!hasVideo && displayImages.length === 1 && (
+                        <SanityImage
+                            image={displayImages[0]}
+                            aspectRatio={aspectRatio}
+                            objectFit={objectFit}
+                        />
+                    )}
+
+                    {/* Multiple Images */}
+                    {!hasVideo && displayImages.length > 1 && (
                         <div className={cn(
                             "grid gap-4",
                             displayImages.length === 2 ? "grid-cols-2" : "grid-cols-2"
                         )}>
                             {displayImages.map((img, index) => (
-                                <figure
+                                <SanityImage
                                     key={img._key || index}
-                                    className="relative rounded-xl overflow-hidden bg-gray-50 aspect-[3/4] w-full"
-                                >
-                                    <SanityImage image={img} />
-                                </figure>
+                                    image={img}
+                                    aspectRatio={aspectRatio}
+                                    objectFit={objectFit}
+                                />
                             ))}
                         </div>
                     )}
                 </div>
             </div>
-        </section>
+        </BlockWrapper>
     );
 }

@@ -52,7 +52,7 @@ export default function BackgroundVideo({
                     '--media-object-position': 'center',
                     '--media-background-color': 'white',
                     'backgroundColor': 'white',
-                } as React.CSSProperties}
+                } as any}
                 streamType="on-demand"
                 maxResolution="2160p"
                 minResolution="1080p"

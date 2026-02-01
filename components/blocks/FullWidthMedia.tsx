@@ -58,7 +58,7 @@ export default function FullWidthMedia({ image, video, mediaType = 'image', capt
                                 height: 'auto',
                                 aspectRatio: '16/9',
                                 '--controls': 'none',
-                            } as React.CSSProperties}
+                            } as any}
                         />
                     ) : hasImage ? (
                         <Image

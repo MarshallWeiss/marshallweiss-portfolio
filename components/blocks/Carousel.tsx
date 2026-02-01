@@ -255,7 +255,7 @@ function Lightbox({
                 onClick={(e) => e.stopPropagation()}
                 style={{
                     '--slide-direction': direction === 'right' ? '20px' : '-20px',
-                } as React.CSSProperties}
+                } as any}
             >
                 {imageProps && (
                     <Image

@@ -11,7 +11,7 @@ interface ImagePreviewData {
 }
 
 export function ImagePreview(props: PreviewProps<ImagePreviewData>) {
-  const { value, media, schemaType } = props
+  const { value, media, schemaType } = props as any
   const client = useClient({ apiVersion: '2024-01-01' })
   const [filename, setFilename] = useState<string>('Image')
 

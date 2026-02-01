@@ -94,7 +94,7 @@ export function GalleryCreationDialog({
                     Gallery {index + 1}
                   </Text>
                   <Text size={0} muted>
-                    ({config.files.length} images)
+                    ({config.files?.length || 0} images)
                   </Text>
                 </Flex>
 
