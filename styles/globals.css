@@ -11,3 +11,19 @@
 body {
   @apply bg-white text-gray-900 antialiased;
 }
+
+/* Lightbox slide animation */
+@keyframes fade-slide {
+  from {
+    opacity: 0;
+    transform: translateX(var(--slide-direction, 20px));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-slide {
+  animation: fade-slide 0.2s ease-out forwards;
+}

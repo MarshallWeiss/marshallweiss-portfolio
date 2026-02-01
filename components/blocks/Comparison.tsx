@@ -32,9 +32,9 @@ export default function Comparison({
             {(headline || description) && (
                 <div className="mb-12 md:mb-16 max-w-4xl mx-auto text-center">
                     {headline && (
-                        <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-gray-900 mb-4">
+                        <h3 className="text-2xl md:text-3xl lg:text-4xl font-medium text-gray-900 mb-4">
                             {headline}
-                        </h2>
+                        </h3>
                     )}
                     {description && (
                         <p className="text-gray-600 text-lg leading-relaxed">

@@ -96,6 +96,11 @@ export default async function CaseStudyPage({ params }: PageProps) {
         notFound();
     }
 
+    // Debug: Log module count
+    console.log('Case study:', caseStudy.title);
+    console.log('Module count:', caseStudy.modules?.length || 0);
+    console.log('Module types:', caseStudy.modules?.map((m: any) => m._type) || []);
+
     return (
         <main className="min-h-screen bg-white">
             {/* Navigation */}
@@ -116,7 +121,14 @@ export default async function CaseStudyPage({ params }: PageProps) {
 
             {/* Main Content */}
             <div className="pt-24 md:pt-32 px-6 md:px-12 max-w-[1920px] mx-auto pb-32">
-                <BlockRenderer modules={caseStudy.modules} />
+                {caseStudy.modules && caseStudy.modules.length > 0 ? (
+                    <BlockRenderer modules={caseStudy.modules} />
+                ) : (
+                    <div className="text-center py-20">
+                        <p className="text-gray-500">No modules found for this case study.</p>
+                        <p className="text-sm text-gray-400 mt-2">Add modules in Sanity Studio to see content here.</p>
+                    </div>
+                )}
             </div>
 
             {/* Footer Navigation or Next Project could go here */}

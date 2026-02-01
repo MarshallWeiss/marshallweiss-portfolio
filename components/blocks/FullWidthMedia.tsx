@@ -30,11 +30,18 @@ export default function FullWidthMedia({ image, video, mediaType = 'image', capt
 
     return (
         <section className="py-16 md:py-24 w-full">
-            {headline && (
-                <div className="mb-10 md:mb-14 text-center">
-                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-gray-900">
-                        {headline}
-                    </h2>
+            {(headline || caption) && (
+                <div className="mb-10 md:mb-14 text-center max-w-4xl mx-auto">
+                    {headline && (
+                        <h3 className="text-2xl md:text-3xl lg:text-4xl font-medium text-gray-900">
+                            {headline}
+                        </h3>
+                    )}
+                    {caption && (
+                        <p className="mt-4 text-gray-600 text-lg leading-relaxed">
+                            {caption}
+                        </p>
+                    )}
                 </div>
             )}
             <figure className="w-full max-w-6xl mx-auto">
@@ -63,11 +70,6 @@ export default function FullWidthMedia({ image, video, mediaType = 'image', capt
                         />
                     ) : null}
                 </div>
-                {caption && (
-                    <figcaption className="mt-4 text-center text-sm text-gray-500">
-                        {caption}
-                    </figcaption>
-                )}
             </figure>
         </section>
     );

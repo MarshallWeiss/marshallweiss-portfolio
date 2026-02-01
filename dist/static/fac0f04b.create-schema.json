@@ -1,0 +1,951 @@
+[
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "slug"
+      }
+    ],
+    "name": "media.tag",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "max_width",
+        "type": "number"
+      },
+      {
+        "name": "max_frame_rate",
+        "type": "number"
+      },
+      {
+        "name": "duration",
+        "type": "number"
+      },
+      {
+        "name": "max_height",
+        "type": "number"
+      }
+    ],
+    "name": "mux.track",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "policy",
+        "type": "string"
+      }
+    ],
+    "name": "mux.playbackId",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "ext",
+        "type": "string"
+      },
+      {
+        "name": "height",
+        "type": "number"
+      },
+      {
+        "name": "width",
+        "type": "number"
+      },
+      {
+        "name": "bitrate",
+        "type": "number"
+      },
+      {
+        "name": "filesize",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "status",
+        "type": "string"
+      },
+      {
+        "name": "resolution_tier",
+        "type": "string"
+      },
+      {
+        "name": "resolution",
+        "type": "string"
+      },
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "passthrough",
+        "type": "string"
+      }
+    ],
+    "name": "mux.staticRenditionFile",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "name": "status",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "type": "mux.staticRenditionFile"
+          }
+        ],
+        "name": "files",
+        "type": "array"
+      }
+    ],
+    "name": "mux.staticRenditions",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "name": "resolution_tier",
+        "type": "string"
+      },
+      {
+        "name": "upload_id",
+        "type": "string"
+      },
+      {
+        "name": "created_at",
+        "type": "string"
+      },
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "status",
+        "type": "string"
+      },
+      {
+        "name": "max_stored_resolution",
+        "type": "string"
+      },
+      {
+        "name": "passthrough",
+        "type": "string"
+      },
+      {
+        "name": "encoding_tier",
+        "type": "string"
+      },
+      {
+        "name": "video_quality",
+        "type": "string"
+      },
+      {
+        "name": "master_access",
+        "type": "string"
+      },
+      {
+        "name": "aspect_ratio",
+        "type": "string"
+      },
+      {
+        "name": "duration",
+        "type": "number"
+      },
+      {
+        "name": "max_stored_frame_rate",
+        "type": "number"
+      },
+      {
+        "name": "mp4_support",
+        "type": "string"
+      },
+      {
+        "name": "max_resolution_tier",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "type": "mux.track"
+          }
+        ],
+        "name": "tracks",
+        "type": "array"
+      },
+      {
+        "of": [
+          {
+            "type": "mux.playbackId"
+          }
+        ],
+        "name": "playback_ids",
+        "type": "array"
+      },
+      {
+        "name": "static_renditions",
+        "type": "mux.staticRenditions"
+      }
+    ],
+    "name": "mux.assetData",
+    "type": "object",
+    "title": "Mux asset data"
+  },
+  {
+    "fields": [
+      {
+        "name": "status",
+        "type": "string"
+      },
+      {
+        "name": "assetId",
+        "type": "string"
+      },
+      {
+        "name": "playbackId",
+        "type": "string"
+      },
+      {
+        "name": "filename",
+        "type": "string"
+      },
+      {
+        "name": "thumbTime",
+        "type": "number"
+      },
+      {
+        "name": "data",
+        "type": "mux.assetData"
+      }
+    ],
+    "name": "mux.videoAsset",
+    "type": "document",
+    "title": "Video asset"
+  },
+  {
+    "fields": [
+      {
+        "weak": true,
+        "to": [
+          {
+            "type": "mux.videoAsset"
+          }
+        ],
+        "name": "asset",
+        "type": "reference",
+        "title": "Video"
+      }
+    ],
+    "name": "mux.video",
+    "type": "object",
+    "title": "Video asset reference"
+  },
+  {
+    "fields": [
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "description": "Use \"Select Files\" button to upload multiple images at once. Filenames are shown automatically.",
+        "of": [
+          {
+            "options": {
+              "hotspot": true
+            },
+            "fields": [
+              {
+                "description": "Auto-filled from filename, but can be edited",
+                "name": "alt",
+                "type": "string",
+                "title": "Alt text"
+              },
+              {
+                "description": "Optional caption",
+                "name": "caption",
+                "type": "string"
+              }
+            ],
+            "type": "image"
+          }
+        ],
+        "name": "images",
+        "type": "array"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "title",
+                "type": "string"
+              },
+              {
+                "name": "subtitle",
+                "type": "string",
+                "title": "Subtitle (Role/Tools)"
+              },
+              {
+                "name": "intro",
+                "type": "text",
+                "title": "Introduction"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "image",
+                "type": "image",
+                "title": "Cover Image"
+              }
+            ],
+            "type": "object",
+            "name": "hero"
+          },
+          {
+            "fields": [
+              {
+                "name": "role",
+                "type": "string"
+              },
+              {
+                "name": "client",
+                "type": "string"
+              },
+              {
+                "name": "year",
+                "type": "string"
+              }
+            ],
+            "type": "object",
+            "name": "metadata"
+          },
+          {
+            "fields": [
+              {
+                "name": "headline",
+                "type": "string"
+              },
+              {
+                "name": "text",
+                "type": "text"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "image",
+                "type": "image"
+              },
+              {
+                "initialValue": false,
+                "name": "reverseLayout",
+                "type": "boolean",
+                "title": "Reverse Layout (Image on Left)"
+              }
+            ],
+            "type": "object",
+            "name": "splitMedia"
+          },
+          {
+            "fields": [
+              {
+                "name": "headline",
+                "type": "string"
+              },
+              {
+                "rows": 3,
+                "name": "description",
+                "type": "text"
+              },
+              {
+                "of": [
+                  {
+                    "options": {
+                      "hotspot": true
+                    },
+                    "type": "image"
+                  }
+                ],
+                "name": "images",
+                "type": "array"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "1 Column",
+                      "value": "1"
+                    },
+                    {
+                      "title": "2 Columns",
+                      "value": "2"
+                    },
+                    {
+                      "title": "3 Columns",
+                      "value": "3"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "2",
+                "name": "columns",
+                "type": "string"
+              }
+            ],
+            "type": "object",
+            "name": "mediaGrid"
+          },
+          {
+            "fields": [
+              {
+                "name": "headline",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Image",
+                      "value": "image"
+                    },
+                    {
+                      "title": "Video",
+                      "value": "video"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "image",
+                "name": "mediaType",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "hidden": "conditional",
+                "name": "image",
+                "type": "image"
+              },
+              {
+                "hidden": "conditional",
+                "name": "video",
+                "type": "mux.video"
+              },
+              {
+                "name": "caption",
+                "type": "string"
+              }
+            ],
+            "type": "object",
+            "name": "fullWidthMedia"
+          },
+          {
+            "fields": [
+              {
+                "name": "headline",
+                "type": "string"
+              },
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      },
+                      {
+                        "flag": "min",
+                        "constraint": 2
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "of": [
+                  {
+                    "fields": [
+                      {
+                        "options": {
+                          "hotspot": true
+                        },
+                        "name": "image",
+                        "type": "image"
+                      },
+                      {
+                        "name": "title",
+                        "type": "string"
+                      },
+                      {
+                        "rows": 3,
+                        "name": "description",
+                        "type": "text"
+                      }
+                    ],
+                    "type": "object",
+                    "name": "slide"
+                  }
+                ],
+                "name": "slides",
+                "type": "array"
+              }
+            ],
+            "type": "object",
+            "name": "carousel",
+            "title": "Carousel Gallery"
+          },
+          {
+            "fields": [
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Full Width",
+                      "value": "fullWidth"
+                    },
+                    {
+                      "title": "Split (Text + Accordion)",
+                      "value": "split"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "fullWidth",
+                "name": "layout",
+                "type": "string"
+              },
+              {
+                "name": "headline",
+                "type": "string"
+              },
+              {
+                "rows": 6,
+                "description": "Only shown in Split layout",
+                "hidden": "conditional",
+                "name": "text",
+                "type": "text",
+                "title": "Body Text"
+              },
+              {
+                "of": [
+                  {
+                    "fields": [
+                      {
+                        "name": "title",
+                        "type": "string"
+                      },
+                      {
+                        "rows": 4,
+                        "name": "content",
+                        "type": "text"
+                      }
+                    ],
+                    "type": "object",
+                    "name": "accordionItem"
+                  }
+                ],
+                "name": "items",
+                "type": "array",
+                "title": "Accordion Items"
+              },
+              {
+                "initialValue": false,
+                "hidden": "conditional",
+                "name": "reverseLayout",
+                "type": "boolean",
+                "title": "Reverse Layout (Accordion on Left)"
+              }
+            ],
+            "type": "object",
+            "name": "accordion"
+          },
+          {
+            "fields": [
+              {
+                "name": "headline",
+                "type": "string"
+              },
+              {
+                "name": "description",
+                "type": "text",
+                "title": "Description (optional)"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "White with border",
+                      "value": "bordered"
+                    },
+                    {
+                      "title": "Gray background",
+                      "value": "filled"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "bordered",
+                "name": "style",
+                "type": "string",
+                "title": "Card Style"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "2 Columns",
+                      "value": "2"
+                    },
+                    {
+                      "title": "3 Columns",
+                      "value": "3"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "3",
+                "name": "columns",
+                "type": "string"
+              },
+              {
+                "of": [
+                  {
+                    "fields": [
+                      {
+                        "name": "title",
+                        "type": "string",
+                        "title": "Card Title"
+                      },
+                      {
+                        "rows": 4,
+                        "name": "text",
+                        "type": "text",
+                        "title": "Paragraph Text"
+                      },
+                      {
+                        "of": [
+                          {
+                            "type": "string"
+                          }
+                        ],
+                        "name": "items",
+                        "type": "array",
+                        "title": "Bullet Points (optional)"
+                      }
+                    ],
+                    "type": "object",
+                    "name": "card"
+                  }
+                ],
+                "name": "cards",
+                "type": "array"
+              }
+            ],
+            "type": "object",
+            "name": "contentCards"
+          },
+          {
+            "fields": [
+              {
+                "name": "video",
+                "type": "mux.video"
+              },
+              {
+                "name": "heading",
+                "type": "string"
+              },
+              {
+                "name": "text",
+                "type": "text"
+              },
+              {
+                "initialValue": 50,
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "min",
+                        "constraint": 0
+                      },
+                      {
+                        "flag": "max",
+                        "constraint": 100
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "overlayOpacity",
+                "type": "number",
+                "title": "Overlay Opacity (%)"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Dark",
+                      "value": "dark"
+                    },
+                    {
+                      "title": "Light",
+                      "value": "light"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "dark",
+                "name": "overlayColor",
+                "type": "string"
+              },
+              {
+                "initialValue": true,
+                "name": "autoplay",
+                "type": "boolean"
+              },
+              {
+                "initialValue": true,
+                "name": "loop",
+                "type": "boolean"
+              },
+              {
+                "initialValue": true,
+                "name": "muted",
+                "type": "boolean"
+              }
+            ],
+            "type": "object",
+            "name": "backgroundVideo"
+          },
+          {
+            "fields": [
+              {
+                "name": "headline",
+                "type": "string"
+              },
+              {
+                "rows": 3,
+                "name": "description",
+                "type": "text"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "leftImage",
+                "type": "image"
+              },
+              {
+                "name": "leftLabel",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "rightImage",
+                "type": "image"
+              },
+              {
+                "name": "rightLabel",
+                "type": "string"
+              }
+            ],
+            "type": "object",
+            "name": "comparison"
+          },
+          {
+            "fields": [
+              {
+                "name": "headline",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "leftImage",
+                "type": "image"
+              },
+              {
+                "name": "leftLabel",
+                "type": "string",
+                "title": "Left Label (optional)"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "rightImage",
+                "type": "image"
+              },
+              {
+                "name": "rightLabel",
+                "type": "string",
+                "title": "Right Label (optional)"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Gray",
+                      "value": "gray"
+                    },
+                    {
+                      "title": "White",
+                      "value": "white"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "gray",
+                "name": "background",
+                "type": "string"
+              }
+            ],
+            "type": "object",
+            "name": "sideBySideImages",
+            "title": "Side by Side Images"
+          },
+          {
+            "fields": [
+              {
+                "name": "headline",
+                "type": "string"
+              },
+              {
+                "rows": 2,
+                "name": "description",
+                "type": "text"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "image",
+                "type": "image"
+              },
+              {
+                "of": [
+                  {
+                    "fields": [
+                      {
+                        "name": "x",
+                        "type": "number",
+                        "title": "X Position (%)"
+                      },
+                      {
+                        "name": "y",
+                        "type": "number",
+                        "title": "Y Position (%)"
+                      },
+                      {
+                        "name": "title",
+                        "type": "string"
+                      },
+                      {
+                        "rows": 2,
+                        "name": "description",
+                        "type": "text"
+                      },
+                      {
+                        "options": {
+                          "list": [
+                            {
+                              "title": "Problem",
+                              "value": "problem"
+                            },
+                            {
+                              "title": "Improvement",
+                              "value": "improvement"
+                            },
+                            {
+                              "title": "Neutral",
+                              "value": "neutral"
+                            }
+                          ]
+                        },
+                        "initialValue": "neutral",
+                        "name": "type",
+                        "type": "string"
+                      }
+                    ],
+                    "type": "object",
+                    "name": "hotspot"
+                  }
+                ],
+                "name": "hotspots",
+                "type": "array"
+              },
+              {
+                "initialValue": true,
+                "description": "Display all hotspots as a numbered list below the image",
+                "name": "showLegend",
+                "type": "boolean",
+                "title": "Show Legend Below Image"
+              }
+            ],
+            "type": "object",
+            "name": "annotatedImage"
+          }
+        ],
+        "name": "modules",
+        "type": "array"
+      }
+    ],
+    "name": "caseStudy",
+    "type": "document"
+  }
+]

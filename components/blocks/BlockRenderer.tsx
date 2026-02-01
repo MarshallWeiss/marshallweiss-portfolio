@@ -9,6 +9,8 @@ import BackgroundVideo from './BackgroundVideo';
 import ContentCards from './ContentCards';
 import Accordion from './Accordion';
 import Comparison from './Comparison';
+import SideBySideImages from './SideBySideImages';
+import AnnotatedImage from './AnnotatedImage';
 
 interface BlockRendererProps {
     modules: any[];
@@ -19,13 +21,47 @@ export default function BlockRenderer({ modules }: BlockRendererProps) {
         return null;
     }
 
+    // Group hero + metadata blocks together for side-by-side layout
+    const processedModules: any[] = [];
+    for (let i = 0; i < modules.length; i++) {
+        const current = modules[i];
+        const next = modules[i + 1];
+
+        if (current._type === 'hero' && next?._type === 'metadata') {
+            // Combine hero and metadata into a single group
+            processedModules.push({
+                _type: 'heroWithMetadata',
+                _key: current._key || Math.random().toString(36).substring(7),
+                hero: current,
+                metadata: next,
+            });
+            i++; // Skip the next module since we've included it
+        } else {
+            processedModules.push(current);
+        }
+    }
+
     return (
         <div className="space-y-12 md:space-y-24 lg:space-y-32">
-            {modules.map((module) => {
+            {processedModules.map((module) => {
                 // Use _key as key if available, otherwise random fallback
                 const key = module._key || Math.random().toString(36).substring(7);
 
                 switch (module._type) {
+                    case 'heroWithMetadata':
+                        return (
+                            <section key={key} className="mt-12 md:mt-24 mb-16 md:mb-24">
+                                <div className="flex flex-col lg:flex-row lg:gap-16 xl:gap-24">
+                                    <div className="lg:flex-1">
+                                        <Hero {...module.hero} isInline />
+                                    </div>
+                                    <div className="lg:w-[340px] xl:w-[400px] mt-12 lg:mt-0">
+                                        <Metadata {...module.metadata} isVertical />
+                                    </div>
+                                </div>
+                            </section>
+                        );
+
                     case 'hero':
                         return <Hero key={key} {...module} />;
 
@@ -56,6 +92,12 @@ export default function BlockRenderer({ modules }: BlockRendererProps) {
 
                     case 'comparison':
                         return <Comparison key={key} {...module} />;
+
+                    case 'sideBySideImages':
+                        return <SideBySideImages key={key} {...module} />;
+
+                    case 'annotatedImage':
+                        return <AnnotatedImage key={key} {...module} />;
 
                     default:
                         console.warn(`Unknown block type: ${module._type}`);

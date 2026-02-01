@@ -5,16 +5,34 @@ import { useNextSanityImage } from 'next-sanity-image';
 import { client } from '@/sanity/lib/client';
 import { cn } from '@/lib/utils';
 
-// Simple types for now, assuming standard Sanity image
 interface SplitMediaProps {
     text: string;
     image?: any;
+    images?: any[];
     reverseLayout?: boolean;
     headline?: string;
 }
 
-export default function SplitMedia({ text, image, reverseLayout = false, headline }: SplitMediaProps) {
+// Separate component for individual images to use hooks properly
+function SanityImage({ image, className }: { image: any; className?: string }) {
     const imageProps = useNextSanityImage(client, image);
+
+    if (!imageProps) return null;
+
+    return (
+        <Image
+            {...(imageProps as any)}
+            alt="Split media"
+            className={cn("object-cover w-full h-full", className)}
+            sizes="(max-width: 768px) 100vw, 50vw"
+        />
+    );
+}
+
+export default function SplitMedia({ text, image, images, reverseLayout = false, headline }: SplitMediaProps) {
+    // Use images array if available, otherwise fall back to single image
+    const hasMultipleImages = images && images.length > 0;
+    const displayImages = hasMultipleImages ? images : (image ? [image] : []);
 
     return (
         <section className="py-12 md:py-24">
@@ -35,15 +53,25 @@ export default function SplitMedia({ text, image, reverseLayout = false, headlin
                 <div className={cn(
                     reverseLayout ? "md:col-start-1" : "md:col-start-2"
                 )}>
-                    {image && imageProps && (
+                    {displayImages.length === 1 && (
                         <figure className="relative rounded-xl overflow-hidden bg-gray-50 aspect-[4/3] w-full">
-                            <Image
-                                {...(imageProps as any)}
-                                alt="Split media"
-                                className="object-cover w-full h-full"
-                                sizes="(max-width: 768px) 100vw, 50vw"
-                            />
+                            <SanityImage image={displayImages[0]} />
                         </figure>
+                    )}
+                    {displayImages.length > 1 && (
+                        <div className={cn(
+                            "grid gap-4",
+                            displayImages.length === 2 ? "grid-cols-2" : "grid-cols-2"
+                        )}>
+                            {displayImages.map((img, index) => (
+                                <figure
+                                    key={img._key || index}
+                                    className="relative rounded-xl overflow-hidden bg-gray-50 aspect-[3/4] w-full"
+                                >
+                                    <SanityImage image={img} />
+                                </figure>
+                            ))}
+                        </div>
                     )}
                 </div>
             </div>
