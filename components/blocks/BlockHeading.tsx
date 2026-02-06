@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils'
 interface BlockHeadingProps {
     headline?: string
     subheading?: string
-    headlineSize?: 'small' | 'medium' | 'large'
+    headlineSize?: 'xsmall' | 'small' | 'medium' | 'large'
     textAlign?: 'left' | 'center' | 'right'
     className?: string
 }
@@ -18,6 +18,7 @@ export default function BlockHeading({
     if (!headline && !subheading) return null
 
     const headlineSizeClasses = {
+        xsmall: 'text-lg md:text-xl',
         small: 'text-xl md:text-2xl',
         medium: 'text-2xl md:text-3xl',
         large: 'text-3xl md:text-4xl lg:text-5xl',

@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import Image from 'next/image';
-import { useNextSanityImage } from 'next-sanity-image';
-import { client } from '@/sanity/lib/client';
 import { cn } from '@/lib/utils';
+import BlockWrapper from './BlockWrapper';
+import BlockHeading from './BlockHeading';
+import MediaItem from './MediaItem';
 
 interface Hotspot {
     _key: string;
@@ -17,24 +17,44 @@ interface Hotspot {
 
 interface AnnotatedImageProps {
     headline?: string;
+    subheading?: string;
+    headlineSize?: 'xsmall' | 'small' | 'medium' | 'large';
     description?: string;
+    textAlign?: 'left' | 'center' | 'right';
     image?: any;
     hotspots?: Hotspot[];
+    layout?: 'overlay' | 'stackLeft' | 'stackRight';
     showLegend?: boolean;
+    aspectRatio?: 'auto' | 'square' | '4:3' | '16:9' | '3:4' | '9:16';
+    objectFit?: 'cover' | 'contain';
+    width?: 'contained' | 'wide' | 'full';
+    background?: 'none' | 'white' | 'gray';
+    spacing?: 'compact' | 'default' | 'spacious';
 }
 
 export default function AnnotatedImage({
     headline,
+    subheading,
+    headlineSize,
     description,
+    textAlign = 'center',
     image,
     hotspots = [],
+    layout = 'overlay',
     showLegend = true,
+    aspectRatio = 'auto',
+    objectFit = 'cover',
+    width = 'contained',
+    background = 'none',
+    spacing = 'default',
 }: AnnotatedImageProps) {
-    const imageProps = useNextSanityImage(client, image);
     const [activeHotspot, setActiveHotspot] = useState<string | null>(null);
     const [hoveredLegendItem, setHoveredLegendItem] = useState<string | null>(null);
 
-    if (!image || !imageProps) return null;
+    if (!image) return null;
+
+    const alignmentClass = textAlign === 'center' ? 'text-center' : textAlign === 'right' ? 'text-right' : 'text-left';
+    const isStackLayout = layout === 'stackLeft' || layout === 'stackRight';
 
     const getHotspotColor = (type: string) => {
         switch (type) {
@@ -77,32 +97,83 @@ export default function AnnotatedImage({
     };
 
     return (
-        <section className="py-16 md:py-24">
-            {/* Header */}
-            {(headline || description) && (
-                <div className="mb-10 md:mb-14 text-center max-w-4xl mx-auto">
-                    {headline && (
-                        <h3 className="text-2xl md:text-3xl lg:text-4xl font-medium text-gray-900">
-                            {headline}
-                        </h3>
-                    )}
-                    {description && (
-                        <p className="mt-4 text-gray-600 text-lg leading-relaxed">
-                            {description}
-                        </p>
-                    )}
-                </div>
+        <BlockWrapper width={width} background={background} spacing={spacing}>
+            <BlockHeading
+                headline={headline}
+                subheading={subheading}
+                headlineSize={headlineSize}
+                textAlign={textAlign}
+                className="mb-4"
+            />
+            {description && (
+                <p className={cn("text-gray-600 text-lg leading-relaxed mb-10 md:mb-14", alignmentClass)}>
+                    {description}
+                </p>
             )}
 
             {/* Image with hotspots */}
-            <div className="relative max-w-6xl mx-auto">
-                <div className="relative rounded-lg overflow-hidden bg-gray-100 shadow-lg">
-                    <Image
-                        {...(imageProps as any)}
+            <div className={cn(
+                "relative",
+                isStackLayout && "grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start"
+            )}>
+                {/* Stack annotations on left */}
+                {isStackLayout && layout === 'stackLeft' && hotspots.length > 0 && (
+                    <div className="md:col-span-4 space-y-4">
+                        {hotspots.map((hotspot, index) => {
+                            const colors = getHotspotColor(hotspot.type);
+                            const isActive = activeHotspot === hotspot._key || hoveredLegendItem === hotspot._key;
+
+                            return (
+                                <div
+                                    key={hotspot._key}
+                                    className={cn(
+                                        'p-4 rounded-lg border transition-all cursor-pointer',
+                                        isActive ? `${colors.bgLight} ${colors.border} shadow-md` : 'bg-white border-gray-200 hover:border-gray-300'
+                                    )}
+                                    onMouseEnter={() => setHoveredLegendItem(hotspot._key)}
+                                    onMouseLeave={() => setHoveredLegendItem(null)}
+                                    onClick={() => setActiveHotspot(isActive ? null : hotspot._key)}
+                                >
+                                    <div className="flex items-start gap-3">
+                                        <div
+                                            className={cn(
+                                                'flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-white text-sm font-bold',
+                                                colors.bg
+                                            )}
+                                        >
+                                            {index + 1}
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                            <div className="flex items-center gap-2 mb-1">
+                                                <span className={cn('text-xs font-medium uppercase tracking-wide', colors.text)}>
+                                                    {getTypeLabel(hotspot.type)}
+                                                </span>
+                                            </div>
+                                            <h4 className="font-medium text-gray-900">
+                                                {hotspot.title}
+                                            </h4>
+                                            {hotspot.description && (
+                                                <p className="text-sm text-gray-600 mt-1 leading-relaxed">
+                                                    {hotspot.description}
+                                                </p>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                )}
+
+                <div className={cn(
+                    "relative",
+                    isStackLayout && "md:col-span-8"
+                )}>
+                    <MediaItem
+                        image={image}
                         alt={headline || 'Annotated image'}
-                        className="w-full h-auto"
-                        sizes="(max-width: 1280px) 100vw, 1280px"
-                        style={{ width: '100%', height: 'auto' }}
+                        aspectRatio={aspectRatio}
+                        objectFit={objectFit}
                     />
 
                     {/* Hotspot markers */}
@@ -151,8 +222,8 @@ export default function AnnotatedImage({
                                     {index + 1}
                                 </button>
 
-                                {/* Tooltip */}
-                                {isActive && (
+                                {/* Tooltip - only show in overlay mode */}
+                                {!isStackLayout && isActive && (
                                     <div
                                         className={cn(
                                             'absolute z-20 w-72 p-4 rounded-lg shadow-xl border bg-white',
@@ -202,9 +273,59 @@ export default function AnnotatedImage({
                     })}
                 </div>
 
-                {/* Legend */}
-                {showLegend && hotspots.length > 0 && (
-                    <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Stack annotations on right */}
+                {isStackLayout && layout === 'stackRight' && hotspots.length > 0 && (
+                    <div className="md:col-span-4 space-y-4">
+                        {hotspots.map((hotspot, index) => {
+                            const colors = getHotspotColor(hotspot.type);
+                            const isActive = activeHotspot === hotspot._key || hoveredLegendItem === hotspot._key;
+
+                            return (
+                                <div
+                                    key={hotspot._key}
+                                    className={cn(
+                                        'p-4 rounded-lg border transition-all cursor-pointer',
+                                        isActive ? `${colors.bgLight} ${colors.border} shadow-md` : 'bg-white border-gray-200 hover:border-gray-300'
+                                    )}
+                                    onMouseEnter={() => setHoveredLegendItem(hotspot._key)}
+                                    onMouseLeave={() => setHoveredLegendItem(null)}
+                                    onClick={() => setActiveHotspot(isActive ? null : hotspot._key)}
+                                >
+                                    <div className="flex items-start gap-3">
+                                        <div
+                                            className={cn(
+                                                'flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-white text-sm font-bold',
+                                                colors.bg
+                                            )}
+                                        >
+                                            {index + 1}
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                            <div className="flex items-center gap-2 mb-1">
+                                                <span className={cn('text-xs font-medium uppercase tracking-wide', colors.text)}>
+                                                    {getTypeLabel(hotspot.type)}
+                                                </span>
+                                            </div>
+                                            <h4 className="font-medium text-gray-900">
+                                                {hotspot.title}
+                                            </h4>
+                                            {hotspot.description && (
+                                                <p className="text-sm text-gray-600 mt-1 leading-relaxed">
+                                                    {hotspot.description}
+                                                </p>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                )}
+            </div>
+
+            {/* Legend - only show in overlay mode */}
+            {!isStackLayout && showLegend && hotspots.length > 0 && (
+                <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
                         {hotspots.map((hotspot, index) => {
                             const colors = getHotspotColor(hotspot.type);
                             const isActive = activeHotspot === hotspot._key || hoveredLegendItem === hotspot._key;
@@ -248,9 +369,8 @@ export default function AnnotatedImage({
                                 </div>
                             );
                         })}
-                    </div>
-                )}
-            </div>
-        </section>
+                </div>
+            )}
+        </BlockWrapper>
     );
 }

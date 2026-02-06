@@ -29,44 +29,31 @@ export default function BlockRenderer({ modules }: BlockRendererProps) {
         const next = modules[i + 1];
 
         if (current._type === 'hero' && next?._type === 'metadata') {
-            // Combine hero and metadata into a single group
+            // Merge metadata fields into hero for backward compatibility
             processedModules.push({
-                _type: 'heroWithMetadata',
-                _key: current._key || Math.random().toString(36).substring(7),
-                hero: current,
-                metadata: next,
+                ...current,
+                role: next.role,
+                client: next.client,
+                year: next.year,
             });
-            i++; // Skip the next module since we've included it
+            i++; // Skip the next module since we've merged it
         } else {
             processedModules.push(current);
         }
     }
 
     return (
-        <div className="space-y-12 md:space-y-24 lg:space-y-32">
+        <div>
             {processedModules.map((module) => {
                 // Use _key as key if available, otherwise random fallback
                 const key = module._key || Math.random().toString(36).substring(7);
 
                 switch (module._type) {
-                    case 'heroWithMetadata':
-                        return (
-                            <section key={key} className="mt-12 md:mt-24 mb-16 md:mb-24">
-                                <div className="flex flex-col lg:flex-row lg:gap-16 xl:gap-24">
-                                    <div className="lg:flex-1">
-                                        <Hero {...module.hero} isInline />
-                                    </div>
-                                    <div className="lg:w-[340px] xl:w-[400px] mt-12 lg:mt-0">
-                                        <Metadata {...module.metadata} isVertical />
-                                    </div>
-                                </div>
-                            </section>
-                        );
-
                     case 'hero':
                         return <Hero key={key} {...module} />;
 
                     case 'metadata':
+                        // Standalone metadata blocks (legacy) - render as before
                         return <Metadata key={key} {...module} />;
 
                     case 'splitMedia':

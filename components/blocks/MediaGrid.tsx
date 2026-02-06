@@ -6,15 +6,38 @@ import { useNextSanityImage } from 'next-sanity-image';
 import { client } from '@/sanity/lib/client';
 import { cn } from '@/lib/utils';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import BlockWrapper from './BlockWrapper';
+import BlockHeading from './BlockHeading';
 
 interface MediaGridProps {
     images?: any[];
     columns?: '1' | '2' | '3';
     headline?: string;
+    subheading?: string;
+    headlineSize?: 'xsmall' | 'small' | 'medium' | 'large';
     description?: string;
+    textAlign?: 'left' | 'center' | 'right';
+    aspectRatio?: 'auto' | 'square' | '4:3' | '16:9' | '3:4' | '9:16';
+    objectFit?: 'cover' | 'contain';
+    width?: 'contained' | 'wide' | 'full';
+    background?: 'none' | 'white' | 'gray';
+    spacing?: 'compact' | 'default' | 'spacious';
 }
 
-export default function MediaGrid({ images, columns = '2', headline, description }: MediaGridProps) {
+export default function MediaGrid({
+    images,
+    columns = '2',
+    headline,
+    subheading,
+    headlineSize,
+    description,
+    textAlign = 'center',
+    aspectRatio = 'auto',
+    objectFit = 'cover',
+    width = 'contained',
+    background = 'none',
+    spacing = 'default',
+}: MediaGridProps) {
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
     if (!images || images.length === 0) return null;
@@ -38,21 +61,31 @@ export default function MediaGrid({ images, columns = '2', headline, description
         }
     };
 
+    const alignmentClass = textAlign === 'center' ? 'text-center' : textAlign === 'right' ? 'text-right' : 'text-left';
+
     return (
-        <section className="py-12 md:py-16">
-            {(headline || description) && (
-                <div className="mb-8 md:mb-12 max-w-3xl mx-auto text-center">
-                    {headline && (
-                        <h3 className="text-2xl md:text-3xl font-medium text-gray-900 mb-3">{headline}</h3>
-                    )}
-                    {description && (
-                        <p className="text-gray-600 text-lg leading-relaxed">{description}</p>
-                    )}
-                </div>
+        <BlockWrapper width={width} background={background} spacing={spacing}>
+            <BlockHeading
+                headline={headline}
+                subheading={subheading}
+                headlineSize={headlineSize}
+                textAlign={textAlign}
+                className="mb-4"
+            />
+            {description && (
+                <p className={cn("text-gray-600 text-lg leading-relaxed mb-8 md:mb-12", alignmentClass)}>
+                    {description}
+                </p>
             )}
             <div className={cn("grid gap-4 md:gap-6", gridCols[columns])}>
                 {images.map((img, idx) => (
-                    <GridItem key={img._key || idx} image={img} onOpen={() => openLightbox(idx)} />
+                    <GridItem
+                        key={img._key || idx}
+                        image={img}
+                        onOpen={() => openLightbox(idx)}
+                        aspectRatio={aspectRatio}
+                        objectFit={objectFit}
+                    />
                 ))}
             </div>
 
@@ -66,25 +99,56 @@ export default function MediaGrid({ images, columns = '2', headline, description
                     onPrev={goPrev}
                 />
             )}
-        </section>
+        </BlockWrapper>
     );
 }
 
-function GridItem({ image, onOpen }: { image: any; onOpen: () => void }) {
-    const imageProps = useNextSanityImage(client, image);
+function GridItem({
+    image,
+    onOpen,
+    aspectRatio = 'auto',
+    objectFit = 'cover',
+}: {
+    image: any;
+    onOpen: () => void;
+    aspectRatio?: 'auto' | 'square' | '4:3' | '16:9' | '3:4' | '9:16';
+    objectFit?: 'cover' | 'contain';
+}) {
+    const imageProps = useNextSanityImage(client, image, {
+        imageBuilder: (imageUrlBuilder, options) => {
+            return imageUrlBuilder
+                .width(Math.min(options.width || 3000, 3000))
+                .quality(95)
+        }
+    });
 
     if (!imageProps) return null;
 
+    const aspectRatioClass = {
+        'auto': '',
+        'square': 'aspect-square',
+        '4:3': 'aspect-[4/3]',
+        '16:9': 'aspect-video',
+        '3:4': 'aspect-[3/4]',
+        '9:16': 'aspect-[9/16]',
+    }[aspectRatio];
+
+    const objectFitClass = objectFit === 'contain' ? 'object-contain' : 'object-cover';
+
     return (
         <div
-            className="group relative cursor-pointer rounded-lg overflow-hidden bg-gray-100 hover:shadow-lg transition-all duration-300"
+            className="group relative cursor-pointer rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300"
             onClick={onOpen}
         >
             <Image
                 {...(imageProps as any)}
                 alt={image.alt || "Gallery image"}
-                className="w-full h-auto object-cover aspect-[4/3] group-hover:scale-[1.02] transition-transform duration-300"
-                sizes="(max-width: 768px) 100vw, 33vw"
+                className={cn(
+                    "w-full h-auto group-hover:scale-[1.02] transition-transform duration-300",
+                    aspectRatioClass,
+                    objectFitClass
+                )}
+                sizes="100vw"
                 style={{ width: '100%', height: 'auto' }}
             />
         </div>
@@ -105,7 +169,13 @@ function Lightbox({
     onPrev: () => void;
 }) {
     const currentImage = images[currentIndex];
-    const imageProps = useNextSanityImage(client, currentImage);
+    const imageProps = useNextSanityImage(client, currentImage, {
+        imageBuilder: (imageUrlBuilder, options) => {
+            return imageUrlBuilder
+                .width(Math.min(options.width || 3000, 3000))
+                .quality(95)
+        }
+    });
 
     // Keyboard navigation
     React.useEffect(() => {

@@ -40,6 +40,7 @@ export const layoutFields = [
         type: 'string',
         options: {
             list: [
+                { title: 'None', value: 'none' },
                 { title: 'Compact', value: 'compact' },
                 { title: 'Default', value: 'default' },
                 { title: 'Spacious', value: 'spacious' },
@@ -102,6 +103,50 @@ export const objectFitField = defineField({
     initialValue: 'cover',
 })
 
+export const imageStyleFields = [
+    defineField({
+        name: 'imageBackground',
+        title: 'Image Background',
+        description: 'Add a subtle background behind the image',
+        type: 'string',
+        options: {
+            list: [
+                { title: 'None', value: 'none' },
+                { title: 'Gray', value: 'gray' },
+            ],
+            layout: 'radio',
+        },
+        initialValue: 'none',
+    }),
+    defineField({
+        name: 'imageShadow',
+        title: 'Image Shadow',
+        type: 'string',
+        options: {
+            list: [
+                { title: 'None', value: 'none' },
+                { title: 'Small', value: 'small' },
+                { title: 'Medium', value: 'medium' },
+                { title: 'Large', value: 'large' },
+            ],
+            layout: 'radio',
+        },
+        initialValue: 'none',
+    }),
+    defineField({
+        name: 'enableLightbox',
+        title: 'Enable Lightbox',
+        description: 'Allow clicking image to view full-screen',
+        type: 'boolean',
+        initialValue: false,
+    }),
+    defineField({
+        name: 'imageCaption',
+        title: 'Image Caption',
+        type: 'string',
+    }),
+]
+
 // Enhanced heading options
 export const headingFields = [
     defineField({
@@ -120,6 +165,7 @@ export const headingFields = [
         type: 'string',
         options: {
             list: [
+                { title: 'Extra Small', value: 'xsmall' },
                 { title: 'Small', value: 'small' },
                 { title: 'Medium', value: 'medium' },
                 { title: 'Large', value: 'large' },
@@ -127,6 +173,31 @@ export const headingFields = [
             layout: 'radio',
         },
         initialValue: 'medium',
+    }),
+]
+
+// Universal video controls
+export const videoControlFields = [
+    defineField({
+        name: 'autoplay',
+        type: 'boolean',
+        title: 'Autoplay',
+        description: 'Start playing automatically when the video comes into view',
+        initialValue: true,
+    }),
+    defineField({
+        name: 'loop',
+        type: 'boolean',
+        title: 'Loop',
+        description: 'Restart the video when it ends',
+        initialValue: true,
+    }),
+    defineField({
+        name: 'muted',
+        type: 'boolean',
+        title: 'Muted',
+        description: 'Play without sound (required for autoplay to work)',
+        initialValue: true,
     }),
 ]
 

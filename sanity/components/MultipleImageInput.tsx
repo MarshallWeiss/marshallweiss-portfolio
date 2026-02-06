@@ -326,23 +326,25 @@ export function MultipleImageInput(props: any) {
     <>
       <Stack space={3}>
         <Card padding={3} tone="primary" radius={2}>
-          <Flex align="center" gap={2}>
+          <Flex align="flex-start" gap={2}>
             {uploading || scanning ? (
               <Spinner />
             ) : (
               <Text size={2}>📤</Text>
             )}
             <Box flex={1}>
-              <Text size={1} weight="medium">
-                Upload Multiple Images
-              </Text>
-              <Text size={0} muted>
-                {uploading
-                  ? 'Uploading...'
-                  : scanning
-                  ? 'Scanning existing images...'
-                  : 'Select files or folders to upload. Use naming like "gallery-name-1.jpg" to auto-create galleries.'}
-              </Text>
+              <Stack space={2}>
+                <Text size={1} weight="medium">
+                  Upload Multiple Images
+                </Text>
+                <Text size={0} muted>
+                  {uploading
+                    ? 'Uploading...'
+                    : scanning
+                    ? 'Scanning existing images...'
+                    : 'Upload images to use in your case study blocks.'}
+                </Text>
+              </Stack>
             </Box>
             <Flex gap={2}>
               <input

@@ -49,15 +49,19 @@ Tailwind CSS with custom Inter font. Global styles in `styles/globals.css`.
 
 ## Skills
 
-Quick-capture commands for ideas:
+Quick-capture commands:
 
 - `/idea <text>` - Add an article idea to `content/ideas/backlog.md`
 - `/experiment <text>` - Add an experiment idea to `content/experiments/backlog.md`
+- `/roadmap <text>` - Add an item to the portfolio project roadmap at `content/roadmap/backlog.md`
+
+You can also naturally mention "add to roadmap: <item>" in conversation.
 
 ## Content Backlogs
 
 - `content/ideas/backlog.md` - Article ideas for future AI-assisted writing
 - `content/experiments/backlog.md` - Experiment/side project ideas
+- `content/roadmap/backlog.md` - Portfolio project roadmap items to prioritize and implement
 
 ## Documentation
 

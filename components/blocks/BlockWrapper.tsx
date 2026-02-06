@@ -5,7 +5,7 @@ interface BlockWrapperProps {
     children: ReactNode
     width?: 'contained' | 'wide' | 'full'
     background?: 'none' | 'white' | 'gray'
-    spacing?: 'compact' | 'default' | 'spacious'
+    spacing?: 'none' | 'compact' | 'default' | 'spacious'
     className?: string
 }
 
@@ -32,6 +32,7 @@ export default function BlockWrapper({
 
     // Spacing classes
     const spacingClasses = {
+        none: '',
         compact: 'py-8 md:py-12',
         default: 'py-12 md:py-24',
         spacious: 'py-16 md:py-32',

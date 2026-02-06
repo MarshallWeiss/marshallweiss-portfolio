@@ -4,7 +4,7 @@ import { client } from '@/sanity/lib/client';
 import BlockRenderer from '@/components/blocks/BlockRenderer';
 import { groq } from 'next-sanity';
 import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface PageProps {
     params: {
@@ -73,16 +73,34 @@ export default async function CaseStudyPage({ params }: PageProps) {
             }
         }
     }`;
+
+    // Query to get all case studies for navigation
+    const allCaseStudiesQuery = groq`*[_type == "caseStudy" && defined(slug.current)] | order(_createdAt desc) {
+        title,
+        "slug": slug.current
+    }`;
+
     let caseStudy = null;
+    let allCaseStudies = [];
 
     try {
         caseStudy = await client.fetch(query, { slug }, { next: { revalidate: 0 } });
+        allCaseStudies = await client.fetch(allCaseStudiesQuery);
     } catch (error) {
         console.error("Sanity fetch error:", error);
         // If we can't fetch real data, maybe we are in local dev without keys.
-        // We could fallback to mock data for demonstration if needed, 
+        // We could fallback to mock data for demonstration if needed,
         // but standard behavior is to show error or 404.
     }
+
+    // Find current index and get previous/next (with infinite loop)
+    const currentIndex = allCaseStudies.findIndex((study: any) => study.slug === slug);
+    const prevCaseStudy = currentIndex > 0
+        ? allCaseStudies[currentIndex - 1]
+        : allCaseStudies[allCaseStudies.length - 1]; // Loop to last
+    const nextCaseStudy = currentIndex < allCaseStudies.length - 1
+        ? allCaseStudies[currentIndex + 1]
+        : allCaseStudies[0]; // Loop to first
 
     if (!caseStudy) {
         // Optional: Demo mode for development if no keys are set
@@ -112,25 +130,9 @@ export default async function CaseStudyPage({ params }: PageProps) {
     console.log('Module types:', caseStudy.modules?.map((m: any) => m._type) || []);
 
     return (
-        <main className="min-h-screen bg-white">
-            {/* Navigation */}
-            <nav className="fixed top-0 left-0 w-full z-40 bg-white/80 backdrop-blur-sm border-b border-gray-100">
-                <div className="px-6 md:px-12 h-16 md:h-20 flex items-center justify-between max-w-[1920px] mx-auto">
-                    <Link
-                        href="/case-studies"
-                        className="text-sm font-medium text-gray-900 tracking-wide hover:text-gray-600 transition-colors flex items-center gap-2"
-                    >
-                        <ArrowLeft className="w-4 h-4" />
-                        Back to Case Studies
-                    </Link>
-                    <span className="text-sm font-semibold text-gray-900 hidden md:block">
-                        {caseStudy.title}
-                    </span>
-                </div>
-            </nav>
-
+        <div className="min-h-screen bg-white">
             {/* Main Content */}
-            <div className="pt-24 md:pt-32 px-6 md:px-12 max-w-[1920px] mx-auto pb-32">
+            <div className="px-6 md:px-12 max-w-[1920px] mx-auto pb-32 pt-8">
                 {caseStudy.modules && caseStudy.modules.length > 0 ? (
                     <BlockRenderer modules={caseStudy.modules} />
                 ) : (
@@ -141,7 +143,30 @@ export default async function CaseStudyPage({ params }: PageProps) {
                 )}
             </div>
 
-            {/* Footer Navigation or Next Project could go here */}
-        </main>
+            {/* Case Study Navigation */}
+            {allCaseStudies.length > 1 && (
+                <nav className="border-t border-gray-200 py-12 px-6 md:px-12 max-w-[1920px] mx-auto">
+                    <div className="flex justify-between items-center gap-8">
+                        {/* Previous Case Study */}
+                        <Link
+                            href={`/case-studies/${prevCaseStudy.slug}`}
+                            className="group flex items-center gap-3 text-gray-900 hover:text-gray-600 transition-colors"
+                        >
+                            <ChevronLeft className="w-6 h-6 flex-shrink-0 group-hover:-translate-x-1 transition-transform" />
+                            <span className="text-base md:text-lg font-normal">{prevCaseStudy.title}</span>
+                        </Link>
+
+                        {/* Next Case Study */}
+                        <Link
+                            href={`/case-studies/${nextCaseStudy.slug}`}
+                            className="group flex items-center gap-3 text-gray-900 hover:text-gray-600 transition-colors ml-auto"
+                        >
+                            <span className="text-base md:text-lg font-normal text-right">{nextCaseStudy.title}</span>
+                            <ChevronRight className="w-6 h-6 flex-shrink-0 group-hover:translate-x-1 transition-transform" />
+                        </Link>
+                    </div>
+                </nav>
+            )}
+        </div>
     );
 }

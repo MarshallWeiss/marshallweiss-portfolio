@@ -1,6 +1,8 @@
 'use client';
 import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
+import BlockWrapper from './BlockWrapper';
+import BlockHeading from './BlockHeading';
 
 interface AccordionItem {
     _key?: string;
@@ -10,18 +12,30 @@ interface AccordionItem {
 
 interface AccordionProps {
     headline?: string;
+    subheading?: string;
+    headlineSize?: 'xsmall' | 'small' | 'medium' | 'large';
+    textAlign?: 'left' | 'center' | 'right';
     text?: string;
     items?: AccordionItem[];
     layout?: 'fullWidth' | 'split';
     reverseLayout?: boolean;
+    width?: 'contained' | 'wide' | 'full';
+    background?: 'none' | 'white' | 'gray';
+    spacing?: 'compact' | 'default' | 'spacious';
 }
 
 export default function Accordion({
     headline,
+    subheading,
+    headlineSize,
+    textAlign = 'left',
     text,
     items,
     layout = 'fullWidth',
-    reverseLayout = false
+    reverseLayout = false,
+    width = 'contained',
+    background = 'none',
+    spacing = 'default',
 }: AccordionProps) {
     const [openIndex, setOpenIndex] = useState<number | null>(0);
 
@@ -34,12 +48,14 @@ export default function Accordion({
     // Full Width Layout
     if (layout === 'fullWidth') {
         return (
-            <section className="py-16 md:py-24">
-                {headline && (
-                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-gray-900 mb-10 md:mb-14">
-                        {headline}
-                    </h2>
-                )}
+            <BlockWrapper width={width} background={background} spacing={spacing}>
+                <BlockHeading
+                    headline={headline}
+                    subheading={subheading}
+                    headlineSize={headlineSize || 'large'}
+                    textAlign={textAlign}
+                    className="mb-10 md:mb-14"
+                />
                 <div className="border-t border-gray-200">
                     {items.map((item, index) => (
                         <div key={item._key || index} className="border-b border-gray-200">
@@ -80,13 +96,13 @@ export default function Accordion({
                         </div>
                     ))}
                 </div>
-            </section>
+            </BlockWrapper>
         );
     }
 
     // Split Layout (original SplitAccordion)
     return (
-        <section className="py-16 md:py-24">
+        <BlockWrapper width={width} background={background} spacing={spacing}>
             <div className={cn(
                 "grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24",
                 reverseLayout ? "lg:grid-flow-dense" : ""
@@ -95,11 +111,13 @@ export default function Accordion({
                 <div className={cn(
                     reverseLayout ? "lg:col-start-2" : "lg:col-start-1"
                 )}>
-                    {headline && (
-                        <h2 className="text-2xl md:text-3xl font-medium text-gray-900 mb-6">
-                            {headline}
-                        </h2>
-                    )}
+                    <BlockHeading
+                        headline={headline}
+                        subheading={subheading}
+                        headlineSize={headlineSize || 'medium'}
+                        textAlign={textAlign}
+                        className="mb-6"
+                    />
                     {text && (
                         <div className="text-gray-600 leading-relaxed whitespace-pre-wrap">
                             {text}
@@ -153,6 +171,6 @@ export default function Accordion({
                     </div>
                 </div>
             </div>
-        </section>
+        </BlockWrapper>
     );
 }

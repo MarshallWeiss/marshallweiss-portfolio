@@ -4,6 +4,9 @@ import Image from 'next/image';
 import { useNextSanityImage } from 'next-sanity-image';
 import { client } from '@/sanity/lib/client';
 import MuxPlayer from '@mux/mux-player-react';
+import BlockWrapper from './BlockWrapper';
+import BlockHeading from './BlockHeading';
+import { cn } from '@/lib/utils';
 
 interface FullWidthMediaProps {
     image?: any;
@@ -14,63 +17,122 @@ interface FullWidthMediaProps {
             status?: string;
         };
     };
-    mediaType?: 'image' | 'video';
+    mediaType?: 'image' | 'video' | 'figma';
+    figmaUrl?: string;
     caption?: string;
     headline?: string;
+    subheading?: string;
+    headlineSize?: 'xsmall' | 'small' | 'medium' | 'large';
+    textAlign?: 'left' | 'center' | 'right';
+    aspectRatio?: 'auto' | 'square' | '4:3' | '16:9' | '3:4' | '9:16';
+    objectFit?: 'cover' | 'contain';
+    imageBackground?: 'none' | 'gray';
+    autoplay?: boolean;
+    loop?: boolean;
+    muted?: boolean;
+    width?: 'contained' | 'wide' | 'full';
+    background?: 'none' | 'white' | 'gray';
+    spacing?: 'compact' | 'default' | 'spacious';
 }
 
-export default function FullWidthMedia({ image, video, mediaType = 'image', caption, headline }: FullWidthMediaProps) {
-    const imageProps = useNextSanityImage(client, image);
+export default function FullWidthMedia({
+    image,
+    video,
+    mediaType = 'image',
+    figmaUrl,
+    caption,
+    headline,
+    subheading,
+    headlineSize = 'medium',
+    textAlign = 'center',
+    aspectRatio = 'auto',
+    objectFit = 'cover',
+    imageBackground = 'none',
+    autoplay = true,
+    loop = true,
+    muted = true,
+    width = 'contained',
+    background = 'none',
+    spacing = 'default',
+}: FullWidthMediaProps) {
+    const imageProps = useNextSanityImage(client, image, {
+        imageBuilder: (imageUrlBuilder, options) => {
+            return imageUrlBuilder
+                .width(Math.min(options.width || 3000, 3000))
+                .quality(95)
+        }
+    });
 
     const playbackId = video?.asset?.playbackId;
     const hasImage = image && imageProps;
     const hasVideo = mediaType === 'video' && playbackId;
+    const hasFigma = mediaType === 'figma' && figmaUrl;
 
-    if (!hasImage && !hasVideo) return null;
+    if (!hasImage && !hasVideo && !hasFigma) return null;
+
+    const alignmentClass = textAlign === 'center' ? 'text-center' : textAlign === 'right' ? 'text-right' : 'text-left';
+
+    const aspectRatioClasses: Record<string, string> = {
+        'auto': '',
+        'square': 'aspect-square',
+        '4:3': 'aspect-[4/3]',
+        '16:9': 'aspect-video',
+        '3:4': 'aspect-[3/4]',
+        '9:16': 'aspect-[9/16]',
+    };
+
+    const objectFitClasses: Record<string, string> = {
+        cover: 'object-cover',
+        contain: 'object-contain',
+    };
 
     return (
-        <section className="py-16 md:py-24 w-full">
-            {(headline || caption) && (
-                <div className="mb-10 md:mb-14 text-center max-w-4xl mx-auto">
-                    {headline && (
-                        <h3 className="text-2xl md:text-3xl lg:text-4xl font-medium text-gray-900">
-                            {headline}
-                        </h3>
-                    )}
-                    {caption && (
-                        <p className="mt-4 text-gray-600 text-lg leading-relaxed">
-                            {caption}
-                        </p>
-                    )}
-                </div>
+        <BlockWrapper width={width} background={background} spacing={spacing}>
+            <BlockHeading
+                headline={headline}
+                subheading={subheading}
+                headlineSize={headlineSize}
+                textAlign={textAlign}
+                className="mb-4"
+            />
+            {caption && (
+                <p className={cn("text-gray-600 text-lg leading-relaxed mb-10 md:mb-14", alignmentClass)}>
+                    {caption}
+                </p>
             )}
-            <figure className="w-full max-w-6xl mx-auto">
-                <div className="rounded-lg overflow-hidden bg-gray-50 shadow-lg">
+            <figure className="w-full">
+                <div className={cn(
+                    "rounded-lg overflow-hidden",
+                    imageBackground === 'gray' && 'bg-gray-50',
+                    aspectRatio !== 'auto' && aspectRatioClasses[aspectRatio]
+                )}>
                     {hasVideo ? (
                         <MuxPlayer
                             playbackId={playbackId}
                             streamType="on-demand"
-                            autoPlay="muted"
-                            loop
-                            muted
-                            style={{
-                                width: '100%',
-                                height: 'auto',
-                                aspectRatio: '16/9',
-                                '--controls': 'none',
-                            } as any}
+                            autoPlay={autoplay}
+                            loop={loop}
+                            muted={muted}
+                            className="w-full h-full"
+                        />
+                    ) : hasFigma ? (
+                        <iframe
+                            src={figmaUrl}
+                            allowFullScreen
+                            className="w-full h-full border-0"
+                            style={{ minHeight: '600px' }}
                         />
                     ) : hasImage ? (
                         <Image
                             {...(imageProps as any)}
                             alt={caption || "Full width media"}
-                            className="w-full h-auto"
-                            sizes="(max-width: 1280px) 100vw, 1280px"
+                            className={cn("w-full h-auto", objectFitClasses[objectFit])}
+                            sizes="100vw"
                             style={{ width: '100%', height: 'auto' }}
                         />
                     ) : null}
                 </div>
             </figure>
-        </section>
+        </BlockWrapper>
     );
 }

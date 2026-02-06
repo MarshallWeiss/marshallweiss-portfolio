@@ -1,87 +1,98 @@
 'use client';
 import React from 'react';
-import Image from 'next/image';
-import { useNextSanityImage } from 'next-sanity-image';
-import { client } from '@/sanity/lib/client';
+import { cn } from '@/lib/utils';
+import BlockWrapper from './BlockWrapper';
+import BlockHeading from './BlockHeading';
+import MediaItem from './MediaItem';
 
 interface ComparisonProps {
     headline?: string;
+    subheading?: string;
+    headlineSize?: 'xsmall' | 'small' | 'medium' | 'large';
     description?: string;
+    textAlign?: 'left' | 'center' | 'right';
     leftImage?: any;
     leftLabel?: string;
     rightImage?: any;
     rightLabel?: string;
+    aspectRatio?: 'auto' | 'square' | '4:3' | '16:9' | '3:4' | '9:16';
+    objectFit?: 'cover' | 'contain';
+    width?: 'contained' | 'wide' | 'full';
+    background?: 'none' | 'white' | 'gray';
+    spacing?: 'compact' | 'default' | 'spacious';
 }
 
 export default function Comparison({
     headline,
+    subheading,
+    headlineSize,
     description,
+    textAlign = 'center',
     leftImage,
     leftLabel,
     rightImage,
-    rightLabel
+    rightLabel,
+    aspectRatio = 'auto',
+    objectFit = 'cover',
+    width = 'contained',
+    background = 'none',
+    spacing = 'default',
 }: ComparisonProps) {
-    const leftImageProps = useNextSanityImage(client, leftImage);
-    const rightImageProps = useNextSanityImage(client, rightImage);
-
     if (!leftImage && !rightImage) return null;
 
+    const alignmentClass = textAlign === 'center' ? 'text-center' : textAlign === 'right' ? 'text-right' : 'text-left';
+
     return (
-        <section className="py-16 md:py-24">
-            {/* Header */}
-            {(headline || description) && (
-                <div className="mb-12 md:mb-16 max-w-4xl mx-auto text-center">
-                    {headline && (
-                        <h3 className="text-2xl md:text-3xl lg:text-4xl font-medium text-gray-900 mb-4">
-                            {headline}
-                        </h3>
-                    )}
-                    {description && (
-                        <p className="text-gray-600 text-lg leading-relaxed">
-                            {description}
-                        </p>
-                    )}
-                </div>
+        <BlockWrapper width={width} background={background} spacing={spacing}>
+            <BlockHeading
+                headline={headline}
+                subheading={subheading}
+                headlineSize={headlineSize}
+                textAlign={textAlign}
+                className="mb-4"
+            />
+            {description && (
+                <p className={cn("text-gray-600 text-lg leading-relaxed mb-12 md:mb-16", alignmentClass)}>
+                    {description}
+                </p>
             )}
 
             {/* Images */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
                 {/* Left */}
-                {leftImage && leftImageProps && (
+                {leftImage && (
                     <div>
                         {leftLabel && (
                             <p className="text-sm font-medium text-gray-900 mb-4">{leftLabel}</p>
                         )}
-                        <div className="rounded-lg overflow-hidden bg-gray-100 shadow-lg">
-                            <Image
-                                {...(leftImageProps as any)}
+                        <div className="shadow-lg">
+                            <MediaItem
+                                image={leftImage}
                                 alt={leftLabel || "Left comparison image"}
-                                className="w-full h-auto"
-                                sizes="(max-width: 768px) 100vw, 50vw"
-                                style={{ width: '100%', height: 'auto' }}
+                                aspectRatio={aspectRatio}
+                                objectFit={objectFit}
                             />
                         </div>
                     </div>
                 )}
 
                 {/* Right */}
-                {rightImage && rightImageProps && (
+                {rightImage && (
                     <div>
                         {rightLabel && (
                             <p className="text-sm font-medium text-gray-900 mb-4">{rightLabel}</p>
                         )}
-                        <div className="rounded-lg overflow-hidden bg-gray-100 shadow-lg">
-                            <Image
-                                {...(rightImageProps as any)}
+                        <div className="shadow-lg">
+                            <MediaItem
+                                image={rightImage}
                                 alt={rightLabel || "Right comparison image"}
-                                className="w-full h-auto"
-                                sizes="(max-width: 768px) 100vw, 50vw"
-                                style={{ width: '100%', height: 'auto' }}
+                                aspectRatio={aspectRatio}
+                                objectFit={objectFit}
                             />
                         </div>
                     </div>
                 )}
             </div>
-        </section>
+        </BlockWrapper>
     );
 }

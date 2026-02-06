@@ -6,6 +6,8 @@ import { useNextSanityImage } from 'next-sanity-image';
 import { client } from '@/sanity/lib/client';
 import { cn } from '@/lib/utils';
 import { ArrowLeft, ArrowRight, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import BlockWrapper from './BlockWrapper';
+import BlockHeading from './BlockHeading';
 
 interface Slide {
     _key?: string;
@@ -17,9 +19,38 @@ interface Slide {
 interface CarouselProps {
     slides?: Slide[];
     headline?: string;
+    subheading?: string;
+    headlineSize?: 'xsmall' | 'small' | 'medium' | 'large';
+    textAlign?: 'left' | 'center' | 'right';
+    aspectRatio?: 'auto' | 'square' | '4:3' | '16:9' | '3:4' | '9:16';
+    objectFit?: 'cover' | 'contain';
+    slidesPerView?: '1' | '2' | '3' | '4';
+    verticalAlign?: 'top' | 'center' | 'bottom';
+    arrowPosition?: 'overlapping' | 'outside';
+    infiniteLoop?: boolean;
+    showBackground?: boolean;
+    width?: 'contained' | 'wide' | 'full';
+    background?: 'none' | 'white' | 'gray';
+    spacing?: 'compact' | 'default' | 'spacious';
 }
 
-export default function Carousel({ slides, headline }: CarouselProps) {
+export default function Carousel({
+    slides,
+    headline,
+    subheading,
+    headlineSize,
+    textAlign = 'left',
+    aspectRatio = 'auto',
+    objectFit = 'cover',
+    slidesPerView = '2',
+    verticalAlign = 'center',
+    arrowPosition = 'overlapping',
+    infiniteLoop = false,
+    showBackground = true,
+    width = 'contained',
+    background = 'none',
+    spacing = 'default',
+}: CarouselProps) {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(true);
@@ -41,8 +72,14 @@ export default function Carousel({ slides, headline }: CarouselProps) {
     const checkScrollButtons = () => {
         if (scrollContainerRef.current) {
             const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
-            setCanScrollLeft(scrollLeft > 0);
-            setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+            if (infiniteLoop) {
+                // In infinite loop mode, arrows are always enabled
+                setCanScrollLeft(true);
+                setCanScrollRight(true);
+            } else {
+                setCanScrollLeft(scrollLeft > 0);
+                setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+            }
         }
     };
 
@@ -54,65 +91,150 @@ export default function Carousel({ slides, headline }: CarouselProps) {
 
     if (!slides || slides.length === 0) return null;
 
+    // Vertical alignment classes
+    const alignmentClass = {
+        'top': 'items-start',
+        'center': 'items-center',
+        'bottom': 'items-end',
+    }[verticalAlign];
+
     const scroll = (direction: 'left' | 'right') => {
         if (scrollContainerRef.current) {
             const container = scrollContainerRef.current;
+            const { scrollLeft, scrollWidth, clientWidth } = container;
             const slideWidth = container.querySelector('.carousel-slide')?.clientWidth || 500;
-            const scrollAmount = direction === 'left' ? -slideWidth : slideWidth;
-            container.scrollBy({
-                left: scrollAmount,
-                behavior: 'smooth'
-            });
+            const gap = 48; // 12 * 4 (gap-12 in Tailwind)
+
+            if (infiniteLoop) {
+                // Infinite loop behavior
+                if (direction === 'right' && scrollLeft >= scrollWidth - clientWidth - 10) {
+                    // At the end, jump to start
+                    container.scrollTo({ left: 0, behavior: 'smooth' });
+                } else if (direction === 'left' && scrollLeft <= 0) {
+                    // At the start, jump to end
+                    container.scrollTo({ left: scrollWidth - clientWidth, behavior: 'smooth' });
+                } else {
+                    // Normal scroll
+                    const scrollAmount = direction === 'left' ? -(slideWidth + gap) : (slideWidth + gap);
+                    container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                }
+            } else {
+                // Standard scroll behavior
+                const scrollAmount = direction === 'left' ? -(slideWidth + gap) : (slideWidth + gap);
+                container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            }
         }
     };
 
     return (
-        <section className="py-16 md:py-24">
-            {headline && (
-                <div className="mb-8 md:mb-12">
-                    <h3 className="text-2xl md:text-3xl font-medium text-gray-900">{headline}</h3>
+        <BlockWrapper width={width} background={background} spacing={spacing}>
+            <BlockHeading
+                headline={headline}
+                subheading={subheading}
+                headlineSize={headlineSize}
+                textAlign={textAlign}
+                className="mb-8 md:mb-12"
+            />
+
+{arrowPosition === 'outside' ? (
+                // Outside positioning - arrows in flex layout
+                <div className="flex items-center gap-4">
+                    {/* Left Arrow */}
+                    <button
+                        onClick={() => scroll('left')}
+                        disabled={!canScrollLeft}
+                        className={cn(
+                            "flex-shrink-0 w-12 h-12 rounded-full border border-gray-300 bg-white flex items-center justify-center transition-all hover:border-gray-400",
+                            !canScrollLeft && "opacity-30 cursor-not-allowed"
+                        )}
+                        aria-label="Previous slide"
+                    >
+                        <ArrowLeft className="w-5 h-5 text-gray-700" />
+                    </button>
+
+                    {/* Slides Container */}
+                    <div
+                        ref={scrollContainerRef}
+                        className={cn("flex-1 flex gap-12 overflow-x-auto scrollbar-hide", alignmentClass)}
+                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                        onScroll={checkScrollButtons}
+                    >
+                        {slides.map((slide, idx) => (
+                            <CarouselSlide
+                                key={slide._key || idx}
+                                slide={slide}
+                                onOpen={() => openLightbox(idx)}
+                                aspectRatio={aspectRatio}
+                                objectFit={objectFit}
+                                slidesPerView={slidesPerView}
+                                showBackground={showBackground}
+                            />
+                        ))}
+                    </div>
+
+                    {/* Right Arrow */}
+                    <button
+                        onClick={() => scroll('right')}
+                        disabled={!canScrollRight}
+                        className={cn(
+                            "flex-shrink-0 w-12 h-12 rounded-full border border-gray-300 bg-white flex items-center justify-center transition-all hover:border-gray-400",
+                            !canScrollRight && "opacity-30 cursor-not-allowed"
+                        )}
+                        aria-label="Next slide"
+                    >
+                        <ArrowRight className="w-5 h-5 text-gray-700" />
+                    </button>
+                </div>
+            ) : (
+                // Overlapping positioning - arrows absolute
+                <div className="relative">
+                    {/* Slides Container */}
+                    <div
+                        ref={scrollContainerRef}
+                        className={cn("flex gap-12 overflow-x-auto scrollbar-hide", alignmentClass)}
+                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                        onScroll={checkScrollButtons}
+                    >
+                        {slides.map((slide, idx) => (
+                            <CarouselSlide
+                                key={slide._key || idx}
+                                slide={slide}
+                                onOpen={() => openLightbox(idx)}
+                                aspectRatio={aspectRatio}
+                                objectFit={objectFit}
+                                slidesPerView={slidesPerView}
+                                showBackground={showBackground}
+                            />
+                        ))}
+                    </div>
+
+                    {/* Left Arrow - Overlapping */}
+                    <button
+                        onClick={() => scroll('left')}
+                        disabled={!canScrollLeft}
+                        className={cn(
+                            "absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full border border-gray-300 bg-white flex items-center justify-center transition-all hover:border-gray-400 shadow-lg",
+                            !canScrollLeft && "opacity-30 cursor-not-allowed"
+                        )}
+                        aria-label="Previous slide"
+                    >
+                        <ArrowLeft className="w-5 h-5 text-gray-700" />
+                    </button>
+
+                    {/* Right Arrow - Overlapping */}
+                    <button
+                        onClick={() => scroll('right')}
+                        disabled={!canScrollRight}
+                        className={cn(
+                            "absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full border border-gray-300 bg-white flex items-center justify-center transition-all hover:border-gray-400 shadow-lg",
+                            !canScrollRight && "opacity-30 cursor-not-allowed"
+                        )}
+                        aria-label="Next slide"
+                    >
+                        <ArrowRight className="w-5 h-5 text-gray-700" />
+                    </button>
                 </div>
             )}
-
-            <div className="relative flex items-start gap-4">
-                {/* Left Arrow */}
-                <button
-                    onClick={() => scroll('left')}
-                    disabled={!canScrollLeft}
-                    className={cn(
-                        "flex-shrink-0 mt-[16.67%] -translate-y-1/2 w-12 h-12 rounded-full border border-gray-300 bg-white flex items-center justify-center transition-all hover:border-gray-400",
-                        !canScrollLeft && "opacity-30 cursor-not-allowed"
-                    )}
-                    aria-label="Previous slide"
-                >
-                    <ArrowLeft className="w-5 h-5 text-gray-700" />
-                </button>
-
-                {/* Slides Container */}
-                <div
-                    ref={scrollContainerRef}
-                    className="flex-1 flex gap-12 overflow-x-auto scrollbar-hide"
-                    style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-                    onScroll={checkScrollButtons}
-                >
-                    {slides.map((slide, idx) => (
-                        <CarouselSlide key={slide._key || idx} slide={slide} onOpen={() => openLightbox(idx)} />
-                    ))}
-                </div>
-
-                {/* Right Arrow */}
-                <button
-                    onClick={() => scroll('right')}
-                    disabled={!canScrollRight}
-                    className={cn(
-                        "flex-shrink-0 mt-[16.67%] -translate-y-1/2 w-12 h-12 rounded-full border border-gray-300 bg-white flex items-center justify-center transition-all hover:border-gray-400",
-                        !canScrollRight && "opacity-30 cursor-not-allowed"
-                    )}
-                    aria-label="Next slide"
-                >
-                    <ArrowRight className="w-5 h-5 text-gray-700" />
-                </button>
-            </div>
 
             {/* Lightbox */}
             {selectedIndex !== null && (
@@ -124,26 +246,82 @@ export default function Carousel({ slides, headline }: CarouselProps) {
                     onPrev={goPrev}
                 />
             )}
-        </section>
+        </BlockWrapper>
     );
 }
 
-function CarouselSlide({ slide, onOpen }: { slide: Slide; onOpen: () => void }) {
-    const imageProps = useNextSanityImage(client, slide.image);
+function CarouselSlide({
+    slide,
+    onOpen,
+    aspectRatio = 'auto',
+    objectFit = 'cover',
+    slidesPerView = '2',
+    showBackground = true,
+}: {
+    slide: Slide;
+    onOpen: () => void;
+    aspectRatio?: 'auto' | 'square' | '4:3' | '16:9' | '3:4' | '9:16';
+    objectFit?: 'cover' | 'contain';
+    slidesPerView?: '1' | '2' | '3' | '4';
+    showBackground?: boolean;
+}) {
+    const imageProps = useNextSanityImage(client, slide.image, {
+        imageBuilder: (imageUrlBuilder, options) => {
+            return imageUrlBuilder
+                .width(options.width || 2400)
+                .quality(95)
+                .fit('max')
+        }
+    });
+
+    // When aspect ratio is 'auto', don't force any aspect ratio (dynamic height)
+    const aspectRatioClass = aspectRatio === 'auto' ? '' : {
+        'square': 'aspect-square',
+        '4:3': 'aspect-[4/3]',
+        '16:9': 'aspect-video',
+        '3:4': 'aspect-[3/4]',
+        '9:16': 'aspect-[9/16]',
+    }[aspectRatio];
+
+    const objectFitClass = objectFit === 'contain' ? 'object-contain' : 'object-cover';
+
+    // Calculate width based on slides per view
+    const slideWidthClass = {
+        '1': 'w-full max-w-full',                   // Full width for lightbox style
+        '2': 'w-[500px] max-w-[80vw]',              // Default
+        '3': 'w-[350px] max-w-[70vw]',              // Medium
+        '4': 'w-[280px] max-w-[60vw]',              // Compact
+    }[slidesPerView];
+
+    // Dynamic sizes based on slidesPerView for optimal image loading
+    const imageSizes = {
+        '1': '100vw',
+        '2': '(max-width: 768px) 80vw, 500px',
+        '3': '(max-width: 768px) 70vw, 350px',
+        '4': '(max-width: 768px) 60vw, 280px',
+    }[slidesPerView];
 
     return (
-        <div className="carousel-slide flex-shrink-0 w-[500px] max-w-[80vw]">
+        <div className={cn("carousel-slide flex-shrink-0", slideWidthClass)}>
             {/* Image */}
             <div
-                className="relative aspect-[4/3] rounded-lg overflow-hidden bg-gray-100 shadow-sm mb-4 cursor-pointer group"
+                className={cn(
+                    "relative rounded-lg overflow-hidden shadow-sm mb-4 cursor-pointer group",
+                    showBackground && "bg-gray-100",
+                    aspectRatioClass
+                )}
                 onClick={onOpen}
             >
                 {imageProps ? (
                     <Image
                         {...(imageProps as any)}
                         alt={slide.title || 'Carousel slide'}
-                        className="object-cover w-full h-full group-hover:scale-[1.02] transition-transform duration-300"
-                        sizes="(max-width: 768px) 80vw, 500px"
+                        className={cn(
+                            "group-hover:scale-[1.02] transition-transform duration-300",
+                            aspectRatioClass ? "w-full h-full" : "w-full h-auto",
+                            objectFitClass
+                        )}
+                        sizes={imageSizes}
                     />
                 ) : null}
             </div>
@@ -182,7 +360,14 @@ function Lightbox({
     const [direction, setDirection] = useState<'left' | 'right'>('right');
 
     const currentSlide = slides[currentIndex];
-    const imageProps = useNextSanityImage(client, currentSlide.image);
+    const imageProps = useNextSanityImage(client, currentSlide.image, {
+        imageBuilder: (imageUrlBuilder, options) => {
+            return imageUrlBuilder
+                .width(options.width || 2400)
+                .quality(95)
+                .fit('max')
+        }
+    });
 
     const handleNext = () => {
         setDirection('right');

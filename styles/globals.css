@@ -27,3 +27,41 @@ body {
 .animate-fade-slide {
   animation: fade-slide 0.2s ease-out forwards;
 }
+
+/* Card reveal animation */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s ease-out forwards;
+}
+
+/* Hide all Mux Player controls for thumbnail videos */
+.pointer-events-none mux-player::part(bottom),
+.pointer-events-none mux-player::part(center),
+.pointer-events-none mux-player::part(top),
+.pointer-events-none mux-player::part(gesture-layer),
+.pointer-events-none mux-player::part(play-button),
+.pointer-events-none mux-player::part(seek-backward-button),
+.pointer-events-none mux-player::part(seek-forward-button),
+.pointer-events-none mux-player::part(mute-button),
+.pointer-events-none mux-player::part(captions-button),
+.pointer-events-none mux-player::part(airplay-button),
+.pointer-events-none mux-player::part(pip-button),
+.pointer-events-none mux-player::part(fullscreen-button),
+.pointer-events-none mux-player::part(cast-button),
+.pointer-events-none mux-player::part(playback-rate-button),
+.pointer-events-none mux-player::part(volume-range),
+.pointer-events-none mux-player::part(time-range),
+.pointer-events-none mux-player::part(time-display),
+.pointer-events-none mux-player::part(duration-display) {
+  display: none !important;
+}

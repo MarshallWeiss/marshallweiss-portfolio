@@ -3,6 +3,7 @@ import { MultipleImageInput } from '../components/MultipleImageInput'
 import { ImagePreview } from '../components/ImagePreview'
 import { HotspotImageInput } from '../components/HotspotImageInput'
 import { BlockWithConverter } from '../components/BlockConverter'
+import { ImageWithMetadata } from '../components/ImageWithMetadata'
 import {
     layoutFields,
     typographyFields,
@@ -10,6 +11,8 @@ import {
     mediaItemFields,
     aspectRatioField,
     objectFitField,
+    imageStyleFields,
+    videoControlFields,
 } from './shared-fields'
 
 export default defineType({
@@ -32,9 +35,43 @@ export default defineType({
             },
         }),
         defineField({
+            name: 'thumbnailType',
+            title: 'Thumbnail Type',
+            description: 'Choose between image or video for the case studies listing page thumbnail',
+            type: 'string',
+            options: {
+                list: [
+                    { title: 'Image', value: 'image' },
+                    { title: 'Video', value: 'video' },
+                ],
+                layout: 'radio',
+            },
+            initialValue: 'image',
+        }),
+        defineField({
+            name: 'thumbnailImage',
+            title: 'Thumbnail Image',
+            description: 'Optional: Custom thumbnail for the case studies listing page. If not set, will use the hero image.',
+            type: 'image',
+            options: {
+                hotspot: true,
+            },
+            components: {
+                input: ImageWithMetadata,
+            },
+            hidden: ({ document }) => document?.thumbnailType === 'video',
+        }),
+        defineField({
+            name: 'thumbnailVideo',
+            title: 'Thumbnail Video',
+            description: 'Video thumbnail for the case studies listing page. Will autoplay, loop, and be muted.',
+            type: 'mux.video',
+            hidden: ({ document }) => document?.thumbnailType !== 'video',
+        }),
+        defineField({
             name: 'images',
-            title: 'Images',
-            description: 'Use "Select Files" button to upload multiple images at once. Filenames are shown automatically.',
+            title: 'Case Study Images',
+            description: 'Upload all images used in this case study. These images can be referenced in blocks below.',
             type: 'array',
             components: {
                 input: MultipleImageInput,
@@ -87,7 +124,29 @@ export default defineType({
                         defineField({ name: 'title', type: 'string', title: 'Title' }),
                         defineField({ name: 'subtitle', type: 'string', title: 'Subtitle (Role/Tools)' }),
                         defineField({ name: 'intro', type: 'text', title: 'Introduction' }),
-                        defineField({ name: 'image', type: 'image', title: 'Cover Image', options: { hotspot: true } }),
+                        defineField({
+                            name: 'image',
+                            type: 'image',
+                            title: 'Cover Image',
+                            options: { hotspot: true },
+                            components: {
+                                input: ImageWithMetadata,
+                            },
+                        }),
+                        defineField({
+                            name: 'showImage',
+                            type: 'boolean',
+                            title: 'Show Cover Image',
+                            description: 'Uncheck to hide the cover image and use the next block as the visual instead.',
+                            initialValue: true,
+                        }),
+                        defineField({ name: 'role', type: 'string', title: 'Role' }),
+                        defineField({ name: 'client', type: 'string', title: 'Client' }),
+                        defineField({ name: 'year', type: 'string', title: 'Year' }),
+                        aspectRatioField,
+                        objectFitField,
+                        ...imageStyleFields,
+                        ...layoutFields,
                     ],
                     preview: {
                         select: {
@@ -129,10 +188,10 @@ export default defineType({
                         },
                     },
                 }),
-                // Split Media Block
+                // Split Media Block (Text and Media)
                 defineField({
                     name: 'splitMedia',
-                    title: 'Split Media',
+                    title: 'Text and Media',
                     type: 'object',
                     components: {
                         input: BlockWithConverter,
@@ -142,6 +201,21 @@ export default defineType({
                         defineField({ name: 'text', type: 'text', title: 'Text', rows: 6 }),
                         ...typographyFields,
                         defineField({
+                            name: 'layout',
+                            title: 'Layout',
+                            description: 'How to arrange text and media.',
+                            type: 'string',
+                            options: {
+                                list: [
+                                    { title: 'Side by Side', value: 'sideBySide' },
+                                    { title: 'Text Above, Media Below', value: 'textAbove' },
+                                    { title: 'Media Above, Text Below', value: 'mediaAbove' },
+                                ],
+                                layout: 'radio',
+                            },
+                            initialValue: 'sideBySide',
+                        }),
+                        defineField({
                             name: 'mediaType',
                             title: 'Media Type',
                             type: 'string',
@@ -150,6 +224,7 @@ export default defineType({
                                     { title: 'Single Image', value: 'image' },
                                     { title: 'Multiple Images', value: 'images' },
                                     { title: 'Video', value: 'video' },
+                                    { title: 'Figma Prototype', value: 'figma' },
                                 ],
                                 layout: 'radio',
                             },
@@ -161,13 +236,57 @@ export default defineType({
                             title: 'Image',
                             options: { hotspot: true },
                             hidden: ({ parent }) => parent?.mediaType !== 'image',
+                            components: {
+                                input: ImageWithMetadata,
+                            },
                         }),
                         defineField({
                             name: 'images',
                             title: 'Images',
-                            description: 'Add multiple images to display side by side.',
+                            description: 'Add multiple images to display side by side. Each image can have its own aspect ratio.',
                             type: 'array',
-                            of: [{ type: 'image', options: { hotspot: true } }],
+                            of: [{
+                                type: 'object',
+                                name: 'imageWithAspectRatio',
+                                fields: [
+                                    defineField({
+                                        name: 'image',
+                                        type: 'image',
+                                        title: 'Image',
+                                        options: { hotspot: true },
+                                    }),
+                                    defineField({
+                                        name: 'aspectRatio',
+                                        title: 'Aspect Ratio',
+                                        description: 'Override the default aspect ratio for this specific image',
+                                        type: 'string',
+                                        options: {
+                                            list: [
+                                                { title: 'Auto (original)', value: 'auto' },
+                                                { title: 'Square (1:1)', value: 'square' },
+                                                { title: 'Landscape 4:3', value: '4:3' },
+                                                { title: 'Landscape 16:9', value: '16:9' },
+                                                { title: 'Portrait 3:4', value: '3:4' },
+                                                { title: 'Portrait 9:16', value: '9:16' },
+                                            ],
+                                            layout: 'dropdown',
+                                        },
+                                        initialValue: 'auto',
+                                    }),
+                                ],
+                                preview: {
+                                    select: {
+                                        media: 'image',
+                                        aspectRatio: 'aspectRatio',
+                                    },
+                                    prepare({ media, aspectRatio }) {
+                                        return {
+                                            title: aspectRatio ? `${aspectRatio}` : 'Auto',
+                                            media,
+                                        }
+                                    },
+                                },
+                            }],
                             hidden: ({ parent }) => parent?.mediaType !== 'images',
                         }),
                         defineField({
@@ -176,9 +295,73 @@ export default defineType({
                             title: 'Video',
                             hidden: ({ parent }) => parent?.mediaType !== 'video',
                         }),
+                        ...videoControlFields.map(field => ({
+                            ...field,
+                            hidden: ({ parent }: any) => parent?.mediaType !== 'video',
+                        })),
+                        defineField({
+                            name: 'figmaUrl',
+                            type: 'url',
+                            title: 'Figma Prototype URL',
+                            description: 'Paste the Figma prototype embed URL here. In Figma: Share → "Get embed code" → copy the URL from the iframe src.',
+                            hidden: ({ parent }) => parent?.mediaType !== 'figma',
+                            validation: Rule => Rule.uri({
+                                scheme: ['https']
+                            })
+                        }),
                         aspectRatioField,
                         objectFitField,
-                        defineField({ name: 'reverseLayout', type: 'boolean', title: 'Reverse Layout (Media on Left)', initialValue: false }),
+                        defineField({
+                            name: 'imageHeight',
+                            title: 'Image Height',
+                            description: 'Set a fixed height for multiple images to ensure they match. Only applies when using multiple images.',
+                            type: 'number',
+                            initialValue: 600,
+                            validation: Rule => Rule.min(200).max(1200),
+                            hidden: ({ parent }) => parent?.mediaType !== 'images',
+                        }),
+                        defineField({
+                            name: 'reverseLayout',
+                            type: 'boolean',
+                            title: 'Reverse Layout (Media on Left)',
+                            description: 'Only applies to side-by-side layout.',
+                            initialValue: false,
+                            hidden: ({ parent }) => parent?.layout !== 'sideBySide',
+                        }),
+                        defineField({
+                            name: 'mediaRatio',
+                            title: 'Media/Text Width Ratio',
+                            description: 'Control how much space the media takes vs. text. Only applies to side-by-side layout.',
+                            type: 'string',
+                            options: {
+                                list: [
+                                    { title: '40/60 - Text Larger', value: '40/60' },
+                                    { title: '50/50 - Balanced', value: '50/50' },
+                                    { title: '60/40 - Media Larger', value: '60/40' },
+                                    { title: '70/30 - Media Dominant', value: '70/30' },
+                                ],
+                                layout: 'radio',
+                            },
+                            initialValue: '50/50',
+                            hidden: ({ parent }) => parent?.layout !== 'sideBySide',
+                        }),
+                        defineField({
+                            name: 'textPadding',
+                            title: 'Text Padding',
+                            description: 'Add extra padding around the text content.',
+                            type: 'string',
+                            options: {
+                                list: [
+                                    { title: 'None', value: 'none' },
+                                    { title: 'Small', value: 'small' },
+                                    { title: 'Medium', value: 'medium' },
+                                    { title: 'Large', value: 'large' },
+                                ],
+                                layout: 'radio',
+                            },
+                            initialValue: 'none',
+                        }),
+                        ...imageStyleFields,
                         ...layoutFields,
                     ],
                     preview: {
@@ -186,13 +369,28 @@ export default defineType({
                             headline: 'headline',
                             media: 'image',
                             images: 'images',
+                            layout: 'layout',
                         },
-                        prepare({ headline, media, images }) {
+                        prepare({ headline, media, images, layout }) {
                             const imageCount = images?.length || (media ? 1 : 0)
+                            const layoutIcons: Record<string, string> = {
+                                sideBySide: '↔️',
+                                textAbove: '⬇️',
+                                mediaAbove: '⬆️',
+                            }
+                            const layoutNames: Record<string, string> = {
+                                sideBySide: 'Side by Side',
+                                textAbove: 'Text Above',
+                                mediaAbove: 'Media Above',
+                            }
+                            const icon = layoutIcons[layout || 'sideBySide'] || '↔️'
+                            const layoutName = layoutNames[layout || 'sideBySide'] || 'Side by Side'
+                            // Handle new structure where images is array of { image, aspectRatio }
+                            const previewImage = images?.[0]?.image || images?.[0] || media
                             return {
-                                title: `↔️ Split Media${headline ? `: ${headline}` : ''}`,
-                                subtitle: imageCount > 1 ? `${imageCount} images` : undefined,
-                                media: images?.[0] || media,
+                                title: `${icon} Text & Media${headline ? `: ${headline}` : ''}`,
+                                subtitle: `${layoutName}${imageCount > 1 ? ` • ${imageCount} images` : ''}`,
+                                media: previewImage,
                             }
                         },
                     },
@@ -206,8 +404,9 @@ export default defineType({
                         input: BlockWithConverter,
                     },
                     fields: [
-                        defineField({ name: 'headline', type: 'string', title: 'Headline' }),
+                        ...headingFields,
                         defineField({ name: 'description', type: 'text', title: 'Description', rows: 3 }),
+                        ...typographyFields,
                         defineField({
                             name: 'images',
                             title: 'Images',
@@ -228,6 +427,9 @@ export default defineType({
                             },
                             initialValue: '2',
                         }),
+                        aspectRatioField,
+                        objectFitField,
+                        ...layoutFields,
                     ],
                     preview: {
                         select: {
@@ -262,6 +464,7 @@ export default defineType({
                                 list: [
                                     { title: 'Image', value: 'image' },
                                     { title: 'Video', value: 'video' },
+                                    { title: 'Figma Prototype', value: 'figma' },
                                 ],
                                 layout: 'radio',
                             },
@@ -272,7 +475,10 @@ export default defineType({
                             type: 'image',
                             title: 'Image',
                             options: { hotspot: true },
-                            hidden: ({ parent }) => parent?.mediaType === 'video',
+                            hidden: ({ parent }) => parent?.mediaType !== 'image',
+                            components: {
+                                input: ImageWithMetadata,
+                            },
                         }),
                         defineField({
                             name: 'video',
@@ -280,9 +486,14 @@ export default defineType({
                             title: 'Video',
                             hidden: ({ parent }) => parent?.mediaType !== 'video',
                         }),
+                        ...videoControlFields.map(field => ({
+                            ...field,
+                            hidden: ({ parent }: any) => parent?.mediaType !== 'video',
+                        })),
                         aspectRatioField,
                         objectFitField,
                         defineField({ name: 'caption', type: 'string', title: 'Caption' }),
+                        ...imageStyleFields,
                         ...layoutFields,
                     ],
                     preview: {
@@ -309,7 +520,8 @@ export default defineType({
                         input: BlockWithConverter,
                     },
                     fields: [
-                        defineField({ name: 'headline', type: 'string', title: 'Headline' }),
+                        ...headingFields,
+                        ...typographyFields,
                         defineField({
                             name: 'slides',
                             title: 'Slides',
@@ -331,6 +543,68 @@ export default defineType({
                             }],
                             validation: Rule => Rule.required().min(2),
                         }),
+                        defineField({
+                            name: 'slidesPerView',
+                            title: 'Slides Per View',
+                            description: 'How many slides to show at once. Use 1 for large lightbox-style display.',
+                            type: 'string',
+                            options: {
+                                list: [
+                                    { title: '1 (Lightbox Style - Largest)', value: '1' },
+                                    { title: '2 (Large)', value: '2' },
+                                    { title: '3 (Medium)', value: '3' },
+                                    { title: '4 (Compact)', value: '4' },
+                                ],
+                                layout: 'radio',
+                            },
+                            initialValue: '2',
+                        }),
+                        defineField({
+                            name: 'verticalAlign',
+                            title: 'Vertical Alignment',
+                            description: 'Align images to top, center, or bottom of the carousel container.',
+                            type: 'string',
+                            options: {
+                                list: [
+                                    { title: 'Top', value: 'top' },
+                                    { title: 'Center', value: 'center' },
+                                    { title: 'Bottom', value: 'bottom' },
+                                ],
+                                layout: 'radio',
+                            },
+                            initialValue: 'center',
+                        }),
+                        defineField({
+                            name: 'arrowPosition',
+                            title: 'Arrow Position',
+                            description: 'Place arrows overlapping images or outside (outside works best with contained/wide widths).',
+                            type: 'string',
+                            options: {
+                                list: [
+                                    { title: 'Overlapping Images', value: 'overlapping' },
+                                    { title: 'Outside Images', value: 'outside' },
+                                ],
+                                layout: 'radio',
+                            },
+                            initialValue: 'overlapping',
+                        }),
+                        defineField({
+                            name: 'infiniteLoop',
+                            title: 'Infinite Loop',
+                            description: 'Enable continuous scrolling - arrows loop back to start/end instead of disabling.',
+                            type: 'boolean',
+                            initialValue: false,
+                        }),
+                        defineField({
+                            name: 'showBackground',
+                            title: 'Show Image Background',
+                            description: 'Display gray background behind images. Disable for transparent/dynamic height images.',
+                            type: 'boolean',
+                            initialValue: true,
+                        }),
+                        aspectRatioField,
+                        objectFitField,
+                        ...layoutFields,
                     ],
                     preview: {
                         select: {
@@ -369,7 +643,8 @@ export default defineType({
                             },
                             initialValue: 'fullWidth',
                         }),
-                        defineField({ name: 'headline', type: 'string', title: 'Headline' }),
+                        ...headingFields,
+                        ...typographyFields,
                         defineField({
                             name: 'text',
                             type: 'text',
@@ -401,6 +676,7 @@ export default defineType({
                             initialValue: false,
                             hidden: ({ parent }) => parent?.layout !== 'split',
                         }),
+                        ...layoutFields,
                     ],
                     preview: {
                         select: {
@@ -425,8 +701,9 @@ export default defineType({
                         input: BlockWithConverter,
                     },
                     fields: [
-                        defineField({ name: 'headline', type: 'string', title: 'Headline' }),
+                        ...headingFields,
                         defineField({ name: 'description', type: 'text', title: 'Description (optional)' }),
+                        ...typographyFields,
                         defineField({
                             name: 'style',
                             title: 'Card Style',
@@ -452,6 +729,21 @@ export default defineType({
                                 layout: 'radio',
                             },
                             initialValue: '3',
+                        }),
+                        defineField({
+                            name: 'revealOnClick',
+                            title: 'Reveal on Click',
+                            description: 'Hide card content until clicked. Great for Q&A, tips, or interactive reveals!',
+                            type: 'boolean',
+                            initialValue: false,
+                        }),
+                        defineField({
+                            name: 'revealHint',
+                            title: 'Reveal Hint Text',
+                            description: 'Text to show on cards before they\'re clicked (e.g., "Click to reveal", "Tap for answer")',
+                            type: 'string',
+                            initialValue: '👆 Click to reveal',
+                            hidden: ({ parent }) => !parent?.revealOnClick,
                         }),
                         defineField({
                             name: 'cards',
@@ -487,6 +779,7 @@ export default defineType({
                                 },
                             }],
                         }),
+                        ...layoutFields,
                     ],
                     preview: {
                         select: {
@@ -516,8 +809,9 @@ export default defineType({
                             type: 'mux.video',
                             title: 'Video',
                         }),
-                        defineField({ name: 'heading', type: 'string', title: 'Heading' }),
+                        ...headingFields,
                         defineField({ name: 'text', type: 'text', title: 'Text' }),
+                        ...typographyFields,
                         defineField({
                             name: 'overlayOpacity',
                             type: 'number',
@@ -556,6 +850,8 @@ export default defineType({
                             title: 'Muted',
                             initialValue: true
                         }),
+                        aspectRatioField,
+                        ...layoutFields,
                     ],
                     preview: {
                         select: {
@@ -577,12 +873,32 @@ export default defineType({
                         input: BlockWithConverter,
                     },
                     fields: [
-                        defineField({ name: 'headline', type: 'string', title: 'Headline' }),
+                        ...headingFields,
                         defineField({ name: 'description', type: 'text', title: 'Description', rows: 3 }),
-                        defineField({ name: 'leftImage', type: 'image', title: 'Left Image', options: { hotspot: true } }),
+                        ...typographyFields,
+                        defineField({
+                            name: 'leftImage',
+                            type: 'image',
+                            title: 'Left Image',
+                            options: { hotspot: true },
+                            components: {
+                                input: ImageWithMetadata,
+                            },
+                        }),
                         defineField({ name: 'leftLabel', type: 'string', title: 'Left Label' }),
-                        defineField({ name: 'rightImage', type: 'image', title: 'Right Image', options: { hotspot: true } }),
+                        defineField({
+                            name: 'rightImage',
+                            type: 'image',
+                            title: 'Right Image',
+                            options: { hotspot: true },
+                            components: {
+                                input: ImageWithMetadata,
+                            },
+                        }),
                         defineField({ name: 'rightLabel', type: 'string', title: 'Right Label' }),
+                        aspectRatioField,
+                        objectFitField,
+                        ...layoutFields,
                     ],
                     preview: {
                         select: {
@@ -606,24 +922,31 @@ export default defineType({
                         input: BlockWithConverter,
                     },
                     fields: [
-                        defineField({ name: 'headline', type: 'string', title: 'Headline' }),
-                        defineField({ name: 'leftImage', type: 'image', title: 'Left Image', options: { hotspot: true } }),
-                        defineField({ name: 'leftLabel', type: 'string', title: 'Left Label (optional)' }),
-                        defineField({ name: 'rightImage', type: 'image', title: 'Right Image', options: { hotspot: true } }),
-                        defineField({ name: 'rightLabel', type: 'string', title: 'Right Label (optional)' }),
+                        ...headingFields,
+                        ...typographyFields,
                         defineField({
-                            name: 'background',
-                            title: 'Background',
-                            type: 'string',
-                            options: {
-                                list: [
-                                    { title: 'Gray', value: 'gray' },
-                                    { title: 'White', value: 'white' },
-                                ],
-                                layout: 'radio',
+                            name: 'leftImage',
+                            type: 'image',
+                            title: 'Left Image',
+                            options: { hotspot: true },
+                            components: {
+                                input: ImageWithMetadata,
                             },
-                            initialValue: 'gray',
                         }),
+                        defineField({ name: 'leftLabel', type: 'string', title: 'Left Label (optional)' }),
+                        defineField({
+                            name: 'rightImage',
+                            type: 'image',
+                            title: 'Right Image',
+                            options: { hotspot: true },
+                            components: {
+                                input: ImageWithMetadata,
+                            },
+                        }),
+                        defineField({ name: 'rightLabel', type: 'string', title: 'Right Label (optional)' }),
+                        aspectRatioField,
+                        objectFitField,
+                        ...layoutFields,
                     ],
                     preview: {
                         select: {
@@ -651,8 +974,23 @@ export default defineType({
                         input: BlockWithConverter,
                     },
                     fields: [
-                        defineField({ name: 'headline', type: 'string', title: 'Headline (optional)' }),
+                        ...headingFields,
                         defineField({ name: 'text', type: 'text', title: 'Text', rows: 6 }),
+                        defineField({
+                            name: 'textSize',
+                            title: 'Text Size',
+                            type: 'string',
+                            options: {
+                                list: [
+                                    { title: 'Small', value: 'small' },
+                                    { title: 'Medium', value: 'medium' },
+                                    { title: 'Large', value: 'large' },
+                                    { title: 'Extra Large', value: 'xlarge' },
+                                ],
+                                layout: 'radio',
+                            },
+                            initialValue: 'medium',
+                        }),
                         defineField({
                             name: 'alignment',
                             title: 'Text Alignment',
@@ -681,6 +1019,7 @@ export default defineType({
                             },
                             initialValue: 'medium',
                         }),
+                        ...layoutFields,
                     ],
                     preview: {
                         select: {
@@ -707,13 +1046,32 @@ export default defineType({
                         input: HotspotImageInput,
                     },
                     fields: [
-                        defineField({ name: 'headline', type: 'string', title: 'Headline' }),
+                        ...headingFields,
                         defineField({ name: 'description', type: 'text', title: 'Description', rows: 2 }),
+                        ...typographyFields,
                         defineField({
                             name: 'image',
                             type: 'image',
                             title: 'Image',
                             options: { hotspot: true },
+                            components: {
+                                input: ImageWithMetadata,
+                            },
+                        }),
+                        defineField({
+                            name: 'layout',
+                            title: 'Annotation Layout',
+                            type: 'string',
+                            description: 'Choose how annotations appear: overlaid on image with legend below, or stacked beside the image',
+                            options: {
+                                list: [
+                                    { title: 'Overlay with Legend Below', value: 'overlay' },
+                                    { title: 'Stack on Left', value: 'stackLeft' },
+                                    { title: 'Stack on Right', value: 'stackRight' },
+                                ],
+                                layout: 'radio',
+                            },
+                            initialValue: 'overlay',
                         }),
                         defineField({
                             name: 'hotspots',
@@ -759,9 +1117,13 @@ export default defineType({
                             name: 'showLegend',
                             type: 'boolean',
                             title: 'Show Legend Below Image',
-                            description: 'Display all hotspots as a numbered list below the image',
+                            description: 'Display all hotspots as a numbered list below the image (only applies to Overlay layout)',
                             initialValue: true,
+                            hidden: ({ parent }) => parent?.layout === 'stackLeft' || parent?.layout === 'stackRight',
                         }),
+                        aspectRatioField,
+                        objectFitField,
+                        ...layoutFields,
                     ],
                     preview: {
                         select: {

@@ -1,73 +1,79 @@
-'use client'
+'use client';
 
-import Image from 'next/image'
-import { useNextSanityImage } from 'next-sanity-image'
-import { client } from '@/sanity/lib/client'
+import React from 'react';
+import { cn } from '@/lib/utils';
+import BlockWrapper from './BlockWrapper';
+import BlockHeading from './BlockHeading';
+import MediaItem from './MediaItem';
 
 interface SideBySideImagesProps {
-    headline?: string
-    leftImage?: any
-    leftLabel?: string
-    rightImage?: any
-    rightLabel?: string
-    background?: 'gray' | 'white'
-}
-
-function SanityImage({ image, alt, label }: { image: any; alt: string; label?: string }) {
-    const imageProps = useNextSanityImage(client, image)
-
-    if (!imageProps) return null
-
-    return (
-        <div className="flex flex-col items-center">
-            <div className="relative w-full">
-                <Image
-                    {...(imageProps as any)}
-                    alt={alt}
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    className="w-full h-auto object-contain"
-                />
-            </div>
-            {label && (
-                <p className="mt-3 text-sm text-gray-600 font-medium">{label}</p>
-            )}
-        </div>
-    )
+    headline?: string;
+    subheading?: string;
+    headlineSize?: 'xsmall' | 'small' | 'medium' | 'large';
+    textAlign?: 'left' | 'center' | 'right';
+    leftImage?: any;
+    leftLabel?: string;
+    rightImage?: any;
+    rightLabel?: string;
+    aspectRatio?: 'auto' | 'square' | '4:3' | '16:9' | '3:4' | '9:16';
+    objectFit?: 'cover' | 'contain';
+    width?: 'contained' | 'wide' | 'full';
+    background?: 'none' | 'white' | 'gray';
+    spacing?: 'compact' | 'default' | 'spacious';
 }
 
 export default function SideBySideImages({
     headline,
+    subheading,
+    headlineSize,
+    textAlign = 'center',
     leftImage,
     leftLabel,
     rightImage,
     rightLabel,
+    aspectRatio = 'auto',
+    objectFit = 'contain',
+    width = 'contained',
     background = 'gray',
+    spacing = 'default',
 }: SideBySideImagesProps) {
-    const bgClass = background === 'gray' ? 'bg-gray-100' : 'bg-white'
-
     return (
-        <section className={`py-16 ${bgClass}`}>
-            <div className="max-w-6xl mx-auto px-6">
-                {headline && (
-                    <h2 className="text-2xl font-semibold mb-8 text-center">{headline}</h2>
-                )}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-                    {leftImage && (
-                        <SanityImage
+        <BlockWrapper width={width} background={background} spacing={spacing}>
+            <BlockHeading
+                headline={headline}
+                subheading={subheading}
+                headlineSize={headlineSize}
+                textAlign={textAlign}
+                className="mb-8"
+            />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+                {leftImage && (
+                    <div className="flex flex-col items-center">
+                        <MediaItem
                             image={leftImage}
                             alt={leftLabel || 'Left image'}
-                            label={leftLabel}
+                            aspectRatio={aspectRatio}
+                            objectFit={objectFit}
                         />
-                    )}
-                    {rightImage && (
-                        <SanityImage
+                        {leftLabel && (
+                            <p className="mt-3 text-sm text-gray-600 font-medium">{leftLabel}</p>
+                        )}
+                    </div>
+                )}
+                {rightImage && (
+                    <div className="flex flex-col items-center">
+                        <MediaItem
                             image={rightImage}
                             alt={rightLabel || 'Right image'}
-                            label={rightLabel}
+                            aspectRatio={aspectRatio}
+                            objectFit={objectFit}
                         />
-                    )}
-                </div>
+                        {rightLabel && (
+                            <p className="mt-3 text-sm text-gray-600 font-medium">{rightLabel}</p>
+                        )}
+                    </div>
+                )}
             </div>
-        </section>
-    )
+        </BlockWrapper>
+    );
 }

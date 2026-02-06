@@ -1,17 +1,31 @@
 import { cn } from '@/lib/utils'
+import BlockHeading from './BlockHeading'
+import BlockWrapper from './BlockWrapper'
 
 interface TextBlockProps {
     headline?: string
+    subheading?: string
+    headlineSize?: 'xsmall' | 'small' | 'medium' | 'large'
     text: string
+    textSize?: 'small' | 'medium' | 'large' | 'xlarge'
     alignment?: 'left' | 'center' | 'right'
     maxWidth?: 'narrow' | 'medium' | 'wide'
+    width?: 'contained' | 'wide' | 'full'
+    background?: 'none' | 'white' | 'gray'
+    spacing?: 'none' | 'compact' | 'default' | 'spacious'
 }
 
 export default function TextBlock({
     headline,
+    subheading,
+    headlineSize = 'medium',
     text,
+    textSize = 'medium',
     alignment = 'center',
     maxWidth = 'medium',
+    width = 'contained',
+    background = 'none',
+    spacing = 'default',
 }: TextBlockProps) {
     const alignmentClasses = {
         left: 'text-left',
@@ -25,22 +39,30 @@ export default function TextBlock({
         wide: 'max-w-5xl',       // ~64rem
     }
 
+    const textSizeClasses = {
+        small: 'text-base leading-relaxed',
+        medium: 'text-lg leading-relaxed',
+        large: 'text-xl leading-relaxed',
+        xlarge: 'text-2xl md:text-3xl leading-relaxed',
+    }
+
     return (
-        <section className="py-12 md:py-24">
+        <BlockWrapper width={width} background={background} spacing={spacing}>
             <div className={cn(
-                'mx-auto px-6',
+                'mx-auto',
                 maxWidthClasses[maxWidth],
                 alignmentClasses[alignment]
             )}>
-                {headline && (
-                    <h2 className="text-2xl font-semibold text-gray-900 mb-6">
-                        {headline}
-                    </h2>
-                )}
-                <div className="text-gray-600 leading-relaxed whitespace-pre-wrap">
+                <BlockHeading
+                    headline={headline}
+                    subheading={subheading}
+                    headlineSize={headlineSize}
+                    textAlign={alignment}
+                />
+                <div className={cn("text-gray-600 whitespace-pre-wrap", textSizeClasses[textSize])}>
                     {text}
                 </div>
             </div>
-        </section>
+        </BlockWrapper>
     )
 }
