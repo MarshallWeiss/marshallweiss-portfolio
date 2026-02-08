@@ -17,6 +17,7 @@ interface ContentCardsProps {
     headlineSize?: 'xsmall' | 'small' | 'medium' | 'large';
     description?: string;
     textAlign?: 'left' | 'center' | 'right';
+    headingSpacing?: 'compact' | 'default' | 'spacious';
     style?: 'bordered' | 'filled';
     columns?: '2' | '3';
     revealOnClick?: boolean;
@@ -33,6 +34,7 @@ export default function ContentCards({
     headlineSize,
     description,
     textAlign = 'left',
+    headingSpacing = 'default',
     style = 'bordered',
     columns = '3',
     revealOnClick = false,
@@ -79,6 +81,12 @@ export default function ContentCards({
 
     const alignmentClass = textAlign === 'center' ? 'text-center' : textAlign === 'right' ? 'text-right' : 'text-left';
 
+    const headingSpacingClasses = {
+        compact: 'mb-4',
+        default: 'mb-8 md:mb-10',
+        spacious: 'mb-12 md:mb-16',
+    };
+
     return (
         <BlockWrapper width={width} background={background} spacing={spacing}>
             <BlockHeading
@@ -86,7 +94,7 @@ export default function ContentCards({
                 subheading={subheading}
                 headlineSize={headlineSize}
                 textAlign={textAlign}
-                className="mb-4"
+                className={headingSpacingClasses[headingSpacing]}
             />
             {description && (
                 <p className={cn(

@@ -523,6 +523,21 @@ export default defineType({
                         ...headingFields,
                         ...typographyFields,
                         defineField({
+                            name: 'headingSpacing',
+                            title: 'Heading to Carousel Spacing',
+                            type: 'string',
+                            options: {
+                                list: [
+                                    { title: 'Tight', value: 'tight' },
+                                    { title: 'Compact', value: 'compact' },
+                                    { title: 'Default', value: 'default' },
+                                    { title: 'Spacious', value: 'spacious' },
+                                ],
+                                layout: 'radio',
+                            },
+                            initialValue: 'default',
+                        }),
+                        defineField({
                             name: 'slides',
                             title: 'Slides',
                             type: 'array',
@@ -704,6 +719,20 @@ export default defineType({
                         ...headingFields,
                         defineField({ name: 'description', type: 'text', title: 'Description (optional)' }),
                         ...typographyFields,
+                        defineField({
+                            name: 'headingSpacing',
+                            title: 'Heading to Cards Spacing',
+                            type: 'string',
+                            options: {
+                                list: [
+                                    { title: 'Compact', value: 'compact' },
+                                    { title: 'Default', value: 'default' },
+                                    { title: 'Spacious', value: 'spacious' },
+                                ],
+                                layout: 'radio',
+                            },
+                            initialValue: 'default',
+                        }),
                         defineField({
                             name: 'style',
                             title: 'Card Style',
@@ -896,6 +925,20 @@ export default defineType({
                             },
                         }),
                         defineField({ name: 'rightLabel', type: 'string', title: 'Right Label' }),
+                        defineField({
+                            name: 'labelSize',
+                            title: 'Label Size',
+                            type: 'string',
+                            options: {
+                                list: [
+                                    { title: 'Small', value: 'small' },
+                                    { title: 'Medium', value: 'medium' },
+                                    { title: 'Large', value: 'large' },
+                                ],
+                                layout: 'radio',
+                            },
+                            initialValue: 'small',
+                        }),
                         aspectRatioField,
                         objectFitField,
                         ...layoutFields,
@@ -944,6 +987,20 @@ export default defineType({
                             },
                         }),
                         defineField({ name: 'rightLabel', type: 'string', title: 'Right Label (optional)' }),
+                        defineField({
+                            name: 'labelSize',
+                            title: 'Label Size',
+                            type: 'string',
+                            options: {
+                                list: [
+                                    { title: 'Small', value: 'small' },
+                                    { title: 'Medium', value: 'medium' },
+                                    { title: 'Large', value: 'large' },
+                                ],
+                                layout: 'radio',
+                            },
+                            initialValue: 'small',
+                        }),
                         aspectRatioField,
                         objectFitField,
                         ...layoutFields,

@@ -15,6 +15,7 @@ interface ComparisonProps {
     leftLabel?: string;
     rightImage?: any;
     rightLabel?: string;
+    labelSize?: 'small' | 'medium' | 'large';
     aspectRatio?: 'auto' | 'square' | '4:3' | '16:9' | '3:4' | '9:16';
     objectFit?: 'cover' | 'contain';
     width?: 'contained' | 'wide' | 'full';
@@ -32,6 +33,7 @@ export default function Comparison({
     leftLabel,
     rightImage,
     rightLabel,
+    labelSize = 'small',
     aspectRatio = 'auto',
     objectFit = 'cover',
     width = 'contained',
@@ -41,6 +43,12 @@ export default function Comparison({
     if (!leftImage && !rightImage) return null;
 
     const alignmentClass = textAlign === 'center' ? 'text-center' : textAlign === 'right' ? 'text-right' : 'text-left';
+
+    const labelSizeClasses = {
+        small: 'text-sm',
+        medium: 'text-base',
+        large: 'text-lg',
+    };
 
     return (
         <BlockWrapper width={width} background={background} spacing={spacing}>
@@ -63,7 +71,7 @@ export default function Comparison({
                 {leftImage && (
                     <div>
                         {leftLabel && (
-                            <p className="text-sm font-medium text-gray-900 mb-4">{leftLabel}</p>
+                            <p className={cn("font-medium text-gray-900 mb-4", labelSizeClasses[labelSize])}>{leftLabel}</p>
                         )}
                         <div className="shadow-lg">
                             <MediaItem
@@ -80,7 +88,7 @@ export default function Comparison({
                 {rightImage && (
                     <div>
                         {rightLabel && (
-                            <p className="text-sm font-medium text-gray-900 mb-4">{rightLabel}</p>
+                            <p className={cn("font-medium text-gray-900 mb-4", labelSizeClasses[labelSize])}>{rightLabel}</p>
                         )}
                         <div className="shadow-lg">
                             <MediaItem

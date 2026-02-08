@@ -15,6 +15,7 @@ interface SideBySideImagesProps {
     leftLabel?: string;
     rightImage?: any;
     rightLabel?: string;
+    labelSize?: 'small' | 'medium' | 'large';
     aspectRatio?: 'auto' | 'square' | '4:3' | '16:9' | '3:4' | '9:16';
     objectFit?: 'cover' | 'contain';
     width?: 'contained' | 'wide' | 'full';
@@ -31,12 +32,19 @@ export default function SideBySideImages({
     leftLabel,
     rightImage,
     rightLabel,
+    labelSize = 'small',
     aspectRatio = 'auto',
     objectFit = 'contain',
     width = 'contained',
     background = 'gray',
     spacing = 'default',
 }: SideBySideImagesProps) {
+    const labelSizeClasses = {
+        small: 'text-sm',
+        medium: 'text-base',
+        large: 'text-lg',
+    };
+
     return (
         <BlockWrapper width={width} background={background} spacing={spacing}>
             <BlockHeading
@@ -56,7 +64,7 @@ export default function SideBySideImages({
                             objectFit={objectFit}
                         />
                         {leftLabel && (
-                            <p className="mt-3 text-sm text-gray-600 font-medium">{leftLabel}</p>
+                            <p className={cn("mt-3 text-gray-600 font-medium", labelSizeClasses[labelSize])}>{leftLabel}</p>
                         )}
                     </div>
                 )}
@@ -69,7 +77,7 @@ export default function SideBySideImages({
                             objectFit={objectFit}
                         />
                         {rightLabel && (
-                            <p className="mt-3 text-sm text-gray-600 font-medium">{rightLabel}</p>
+                            <p className={cn("mt-3 text-gray-600 font-medium", labelSizeClasses[labelSize])}>{rightLabel}</p>
                         )}
                     </div>
                 )}

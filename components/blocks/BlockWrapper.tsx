@@ -42,6 +42,8 @@ export default function BlockWrapper({
         <section className={cn(
             spacingClasses[spacing],
             backgroundClasses[background],
+            // Break out of parent padding for full-width backgrounds
+            width === 'full' && background !== 'none' && '-mx-6 md:-mx-12',
             className
         )}>
             <div className={cn(
@@ -53,7 +55,13 @@ export default function BlockWrapper({
                         {children}
                     </div>
                 )}
-                {(background === 'none' || width === 'full') && children}
+                {(background === 'none' || width === 'full') && (
+                    width === 'full' && background !== 'none' ? (
+                        <div className="px-6 md:px-12 max-w-[1920px] mx-auto">
+                            {children}
+                        </div>
+                    ) : children
+                )}
             </div>
         </section>
     )

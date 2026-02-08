@@ -31,7 +31,7 @@ export default function BlockHeading({
     }
 
     return (
-        <div className={cn('mb-8', alignmentClasses[textAlign], className)}>
+        <div className={cn(alignmentClasses[textAlign], className)}>
             {headline && (
                 <h2 className={cn(
                     'font-semibold text-gray-900',

@@ -22,6 +22,7 @@ interface CarouselProps {
     subheading?: string;
     headlineSize?: 'xsmall' | 'small' | 'medium' | 'large';
     textAlign?: 'left' | 'center' | 'right';
+    headingSpacing?: 'tight' | 'compact' | 'default' | 'spacious';
     aspectRatio?: 'auto' | 'square' | '4:3' | '16:9' | '3:4' | '9:16';
     objectFit?: 'cover' | 'contain';
     slidesPerView?: '1' | '2' | '3' | '4';
@@ -40,6 +41,7 @@ export default function Carousel({
     subheading,
     headlineSize,
     textAlign = 'left',
+    headingSpacing = 'default',
     aspectRatio = 'auto',
     objectFit = 'cover',
     slidesPerView = '2',
@@ -49,7 +51,7 @@ export default function Carousel({
     showBackground = true,
     width = 'contained',
     background = 'none',
-    spacing = 'default',
+    spacing = 'compact',
 }: CarouselProps) {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -98,6 +100,14 @@ export default function Carousel({
         'bottom': 'items-end',
     }[verticalAlign];
 
+    // Heading spacing classes
+    const headingSpacingClasses = {
+        tight: 'mb-2',
+        compact: 'mb-4',
+        default: 'mb-8 md:mb-12',
+        spacious: 'mb-12 md:mb-16',
+    };
+
     const scroll = (direction: 'left' | 'right') => {
         if (scrollContainerRef.current) {
             const container = scrollContainerRef.current;
@@ -133,7 +143,7 @@ export default function Carousel({
                 subheading={subheading}
                 headlineSize={headlineSize}
                 textAlign={textAlign}
-                className="mb-8 md:mb-12"
+                className={headingSpacingClasses[headingSpacing]}
             />
 
 {arrowPosition === 'outside' ? (
