@@ -1,0 +1,9 @@
+{
+  "name": "write-article",
+  "description": "Guide through research-backed article writing with voice preservation",
+  "triggers": {
+    "keywords": ["/write-article", "/article"]
+  },
+  "author": "custom",
+  "version": "1.0.0"
+}
