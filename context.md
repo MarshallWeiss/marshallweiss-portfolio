@@ -6,6 +6,62 @@ Session context for continuing work on this project.
 
 `antigravity-sanity-work` - Building out Sanity CMS integration for case studies
 
+## Recent Work (2026-02-13)
+
+### AI News Research Agent - Quality Improvements ✅
+**Major refactor of article writing workflow with comprehensive quality controls:**
+
+**New Article Published:**
+- "Focus: The Most Important Tool in Vibe Coding" - Published article on creating deep work environment for AI-assisted development
+
+**Article Draft Completed:**
+- "We've Built This God Before" - ~5,000 word philosophical essay on AGI as repeating pattern of technological messianism (in drafts/)
+
+**Agent Improvements:**
+1. **High-Quality Source Requirements** (Stage 3):
+   - Only primary sources, peer-reviewed research, quality journalism (Atlantic, NYT, Wired, New Yorker, Bloomberg)
+   - Explicit avoidance of listicles, aggregators, crypto news sites, random blogs
+   - Added to `agents/ai-news-research/AGENT_PROMPT.md`
+
+2. **Stage 4.5: Collaborative Refinement** (NEW):
+   - Ask for desired length (Short/Medium/Long)
+   - Ask for focus type (Single thesis vs exploring tensions)
+   - **Ask for primary angle: "Which ONE argument is THE spine?"**
+   - Ensures article makes ONE clear point, not "all over the map"
+   - Prevents writing unwanted articles
+
+3. **Avoid AI Writing Tells** (Stage 7):
+   - NO "It's not X. It's Y." construction (dead giveaway pattern)
+   - NO cite-insight-cite-insight structure (reads like research paper)
+   - Build coherent arguments that synthesize sources naturally
+   - Write like human thinking, not assembling notes
+
+4. **Philosophical Essay Style Skill**:
+   - Created `.claude/skills/think-piece/` - analytical, idea-driven essay writing
+   - Style reference: Dario Amodei's "Machines of Loving Grace"
+   - Synthesis of published sources, not character-based reporting
+   - Includes Atlantic article references for pattern learning
+   - NO invented details or scenes
+
+5. **Strict Accuracy Requirements**:
+   - Inline citations for every claim
+   - Footnotes for detailed sources
+   - No invented narrative details
+   - Verification tags for uncertainty
+
+**Files Updated:**
+- `agents/ai-news-research/AGENT_PROMPT.md` - Added source quality, Stage 4.5, AI tell avoidance
+- `agents/ai-news-research/README.md` - Updated to 7-stage workflow with quality standards
+- `agents/ai-news-research/state/context.md` - Complete session documentation
+- `.claude/skills/think-piece/prompt.md` - New philosophical essay workflow
+
+**New Ideas Added to Backlog:**
+- "Build Workflows as Agents, Not Conversations"
+- "The Copyright Fiction: Why Stealing Is Easier Than Ever"
+- "How to Save Money on AI Tools: Strategic Free-Tier Playbook"
+
+**Build Status:** ✓ Agent workflow improved for better first drafts
+
 ## Recent Work (2026-02-04)
 
 ### Carousel Component Enhancements ✅
