@@ -1,6 +1,14 @@
 {
   "items": [
     {
+      "id": "focus-the-essential-tool-vibe-coding",
+      "title": "Focus: The Most Important Tool in Vibe Coding",
+      "description": "Why traditional productivity advice fails when working with AI agents, and how to build an environment that sustains the deep attention vibe coding demands.",
+      "date": "2026-02-12",
+      "slug": "focus-the-essential-tool-vibe-coding",
+      "image": "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=400&h=400&fit=crop"
+    },
+    {
       "id": "complete-guide-ai-assisted-development",
       "title": "The Complete Guide to AI-Assisted Development: Best Practices for Vibe Coding",
       "description": "A comprehensive, documentation-first system for building production-quality software with AI coding assistants. Learn the workflows, tools, and patterns that separate successful AI-assisted projects from failed experiments.",

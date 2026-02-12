@@ -18,16 +18,17 @@ node agents/ai-news-research/start.js
 "Start a new AI news research session"
 ```
 
-The agent will guide you through 6 stages:
+The agent will guide you through 7 stages:
 
 1. **Monitoring** - Scans last 7 days of AI news
 2. **Selection** - You pick a topic from proposals
 3. **Research** - Deep dive (technical, cultural, predictive)
 4. **Synthesis** - Creates 2-3 article outlines
-5. **Style** - You choose writing style
-6. **Writing** - Generates complete article
+5. **Refinement** - Collaborate to perfect the outline (NEW)
+6. **Style** - You choose writing style
+7. **Writing** - Generates complete article
 
-## The Six Stages
+## The Seven Stages
 
 ### Stage 1: News Monitoring & Topic Discovery
 
@@ -56,14 +57,15 @@ The agent will guide you through 6 stages:
 ### Stage 3: Deep Research (30-90 minutes)
 
 **What happens:**
-- **Technical research**: Papers, models, techniques, code examples
-- **Thoughtful perspectives**: Atlantic, NYT, Wired, cultural critics
-- **Community signals**: HN, forums, expert discussions
+- **Technical research**: Papers, models, techniques from peer-reviewed sources
+- **Thoughtful perspectives**: The Atlantic, NYT, Wired, New Yorker (high-quality journalism only)
+- **Community signals**: HN, forums, expert discussions (for practitioner sentiment)
 - **Predictive analysis**: Weak signals, trend combinations, forecasts
+- **CRITICAL:** Only high-quality sources (primary sources, peer-reviewed research, quality journalism, recognized experts)
 
 **Agent creates:**
 - Organized research database with insights, quotes, examples, predictions
-- Source list for citations
+- Source list for citations (all from reputable sources)
 
 **You do:**
 - Nothing (but you're notified when complete)
@@ -78,11 +80,34 @@ The agent will guide you through 6 stages:
 **You do:**
 - Select one outline
 
-### Stage 5: Style Selection
+### Stage 4.5: Collaborative Refinement (NEW - CRITICAL)
+
+**What happens:**
+- Agent asks KEY questions first:
+  - **Length:** Short (8-12 min), Medium (15-20 min), Long (25+ min)?
+  - **Focus:** Single thesis or exploring tensions?
+  - **Primary angle:** Which ONE argument is THE spine of the entire article?
+- Agent walks through selected outline in detail
+- Offers alternative approaches (different hooks, emphasis, angles)
+- Iterates based on your feedback
+- **Ensures article makes ONE clear point, not trying to do everything**
+- Prevents "all over the map" articles by establishing clear primary thesis
+
+**You do:**
+- Answer clarifying questions (length, focus, angle)
+- Give feedback on what grabs you
+- Suggest changes or alternative directions
+- Point to research elements you want emphasized
+- Confirm when ready to write
+
+**Why this stage matters:**
+This is where the article becomes genuinely collaborative, not just "AI generates, human approves." It prevents writing 5,000 words the user doesn't want. Ensures clear focus. Results in better articles.
+
+### Stage 6: Style Selection
 
 **Available styles:**
-- **Comprehensive guide**: Long, exhaustive, reference-quality (20-45 min read)
-- **Philosophical exploration**: Cultural/ethical/spiritual analysis (15-25 min)
+- **Philosophical essay**: Analytical, idea-driven piece examining perspectives from high-quality sources - similar to Amodei's "Machines of Loving Grace" or quality Atlantic essays (15-25 min)
+- **Comprehensive guide**: Long, exhaustive, reference-quality how-to (20-45 min read)
 - **Predictive analysis**: Forward-looking, what's next (15-25 min)
 - **Technical deep-dive**: How it works, educational (20-35 min)
 - **Quick take**: Focused, opinionated piece (5-10 min)
@@ -90,17 +115,26 @@ The agent will guide you through 6 stages:
 **You do:**
 - Choose style or let agent decide
 
-### Stage 6: Article Writing
+### Stage 7: Article Writing
 
 **What happens:**
-- Agent writes complete article in selected style
+- Agent writes complete article with STRICT ACCURACY rules:
+  - **NO invented details** - only what's in research
+  - **Inline citations** - every claim links to source
+  - **Footnotes** - detailed source info
+  - **Verification tags** - marks anything uncertain
 - Matches your established voice and structure
-- Includes proper citations and sources
 - Generates frontmatter
 - Saves to `content/thoughts/drafts/[slug].md`
 
 **You do:**
-- Review, edit if needed, publish
+- Review for accuracy (check citations work)
+- Edit if needed
+- Verify no invented details slipped in
+- Publish when satisfied
+
+**Quality Standard:**
+Every fact must be traceable to research document. Better to have less content that's accurate than more content that's embellished.
 
 ## Configuration
 
@@ -118,6 +152,20 @@ Three modes in `config/sources.json`:
 - **Quick**: 15 minutes, 2 sources per category
 - **Standard**: 30 minutes, 3 sources per category (default)
 - **Deep**: 60 minutes, 5 sources per category
+
+### Source Quality Standards
+
+**Use only high-quality sources:**
+- ✅ Primary sources (tech leaders' essays, company blogs, official statements)
+- ✅ Peer-reviewed research (academic papers, university studies)
+- ✅ Quality journalism (The Atlantic, NYT, Wired, New Yorker, Bloomberg)
+- ✅ Expert writings (recognized thinkers, established institutions)
+
+**Avoid:**
+- ❌ Listicles, quote aggregators, content farms
+- ❌ Random blogs or crypto news sites
+- ❌ Secondary sources quoting other secondary sources
+- ❌ Any source that wouldn't be cited in serious academic or journalistic work
 
 ### Topic Discovery Settings
 
