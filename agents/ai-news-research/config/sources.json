@@ -1,0 +1,120 @@
+{
+  "sources": {
+    "technical": [
+      {
+        "name": "arXiv AI",
+        "url": "https://arxiv.org/list/cs.AI/recent",
+        "type": "academic",
+        "focus": "Research papers, cutting-edge techniques"
+      },
+      {
+        "name": "HuggingFace Papers",
+        "url": "https://huggingface.co/papers",
+        "type": "academic",
+        "focus": "ML model releases, research"
+      },
+      {
+        "name": "Google AI Blog",
+        "url": "https://blog.google/technology/ai/",
+        "type": "industry",
+        "focus": "Industry research, product announcements"
+      },
+      {
+        "name": "OpenAI Blog",
+        "url": "https://openai.com/blog/",
+        "type": "industry",
+        "focus": "Model releases, research updates"
+      },
+      {
+        "name": "Anthropic News",
+        "url": "https://www.anthropic.com/news",
+        "type": "industry",
+        "focus": "AI safety, model releases"
+      }
+    ],
+    "thoughtful": [
+      {
+        "name": "The Atlantic - Technology",
+        "url": "https://www.theatlantic.com/technology/",
+        "type": "cultural",
+        "focus": "Long-form cultural analysis"
+      },
+      {
+        "name": "New York Times - Technology",
+        "url": "https://www.nytimes.com/section/technology",
+        "type": "journalism",
+        "focus": "News, analysis, cultural impact"
+      },
+      {
+        "name": "Wired - AI",
+        "url": "https://www.wired.com/tag/artificial-intelligence/",
+        "type": "journalism",
+        "focus": "Tech journalism, trends"
+      },
+      {
+        "name": "Ross Douthat - NYT",
+        "url": "https://www.nytimes.com/column/ross-douthat",
+        "type": "opinion",
+        "focus": "Cultural, spiritual, philosophical perspectives"
+      }
+    ],
+    "community": [
+      {
+        "name": "Hacker News",
+        "url": "https://news.ycombinator.com/",
+        "type": "aggregator",
+        "focus": "Tech community discussions, trends"
+      },
+      {
+        "name": "AI Alignment Forum",
+        "url": "https://www.alignmentforum.org/",
+        "type": "forum",
+        "focus": "AI safety, alignment research"
+      },
+      {
+        "name": "LessWrong",
+        "url": "https://www.lesswrong.com/",
+        "type": "forum",
+        "focus": "Rationality, AI philosophy"
+      }
+    ],
+    "industry": [
+      {
+        "name": "Ben's Bites",
+        "url": "https://www.bensbites.co/",
+        "type": "newsletter",
+        "focus": "Daily AI news aggregation"
+      },
+      {
+        "name": "The Rundown AI",
+        "url": "https://www.therundown.ai/",
+        "type": "newsletter",
+        "focus": "AI news, tools, trends"
+      }
+    ]
+  },
+  "research_depth": {
+    "quick": {
+      "sources_per_category": 2,
+      "articles_per_source": 5,
+      "total_time_minutes": 15
+    },
+    "standard": {
+      "sources_per_category": 3,
+      "articles_per_source": 10,
+      "total_time_minutes": 30
+    },
+    "deep": {
+      "sources_per_category": 5,
+      "articles_per_source": 20,
+      "total_time_minutes": 60
+    }
+  },
+  "topic_discovery": {
+    "look_back_days": 7,
+    "min_mentions_threshold": 3,
+    "diversity_score_weight": 0.4,
+    "recency_score_weight": 0.3,
+    "depth_score_weight": 0.3
+  }
+}

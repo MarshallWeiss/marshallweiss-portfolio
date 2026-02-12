@@ -1,0 +1,49 @@
+{
+  "session_id": "",
+  "stage": "monitoring",
+  "started_at": "",
+  "updated_at": "",
+  "topic": {
+    "title": null,
+    "selected": false,
+    "angle": null,
+    "news_summary": null,
+    "significance": null,
+    "idea_connection": null,
+    "potential_angles": []
+  },
+  "topic_proposals": [],
+  "research": {
+    "status": "pending",
+    "technical": {
+      "papers": [],
+      "insights": [],
+      "examples": []
+    },
+    "thoughtful": {
+      "articles": [],
+      "perspectives": [],
+      "quotes": []
+    },
+    "community": {
+      "discussions": [],
+      "signals": []
+    },
+    "predictions": {
+      "trends": [],
+      "weak_signals": [],
+      "forecasts": []
+    },
+    "sources": []
+  },
+  "outlines": [],
+  "selected_outline": null,
+  "style": null,
+  "draft": {
+    "path": null,
+    "created_at": null,
+    "word_count": null
+  },
+  "status": "in_progress",
+  "notes": []
+}
