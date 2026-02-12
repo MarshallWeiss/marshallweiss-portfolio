@@ -49,11 +49,19 @@ Session context for continuing work on this project.
    - No invented narrative details
    - Verification tags for uncertainty
 
+6. **End Session Skill** (NEW):
+   - Created `.claude/skills/end-session/` - workflow automation for session closure
+   - Automatically updates context.md with session summary
+   - Commits all changes with descriptive message
+   - Ensures work is documented for future sessions
+
 **Files Updated:**
 - `agents/ai-news-research/AGENT_PROMPT.md` - Added source quality, Stage 4.5, AI tell avoidance
 - `agents/ai-news-research/README.md` - Updated to 7-stage workflow with quality standards
 - `agents/ai-news-research/state/context.md` - Complete session documentation
 - `.claude/skills/think-piece/prompt.md` - New philosophical essay workflow
+- `.claude/skills/end-session/skill.md` - New session closure workflow
+- `context.md` - Updated with complete session summary
 
 **New Ideas Added to Backlog:**
 - "Build Workflows as Agents, Not Conversations"
