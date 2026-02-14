@@ -6,6 +6,13 @@ Ideas for future experiments and side projects. Add new ideas at the top.
 
 ## Backlog
 
+### Real-Time Sunlight Map
+
+- **Added**: 2026-02-14
+- **Status**: idea
+- **Technologies**: React/Next.js, WebGL or Three.js, Sun position calculation library (SunCalc), Maps API
+- **Notes**: An interactive map showing real-time sunlight coverage across cities like Madrid, Paris, etc. Visualize where the sun is currently hitting, shadow zones, golden hour timing. Could display sun path throughout the day with a timeline scrubber. Beautiful data visualization that combines astronomy, geography, and time. Useful for photographers, travelers, or anyone curious about daylight patterns. Could expand to show seasonal variations, twilight zones, or compare multiple cities simultaneously.
+
 ### Article Thumbnail Generator Agent
 
 - **Added**: 2026-02-14

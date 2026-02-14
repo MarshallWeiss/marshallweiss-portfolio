@@ -6,6 +6,67 @@ Session context for continuing work on this project.
 
 `antigravity-sanity-work` - Building out Sanity CMS integration for case studies
 
+## Recent Work (2026-02-14)
+
+### Portfolio Redesign & Content Management Improvements ✅
+**Major updates to portfolio UI, content organization, and Sanity CMS integration:**
+
+**Thoughts Page Redesign:**
+- Removed tabbed filtering, switched to minimal list view with all thoughts visible
+- Added garden-themed stage indicators: 🌱 Planting, 🌿 Growing, 🌾 Harvesting
+- Replaced card layout with clean link rows showing title, description, and stage chip
+- Updated thoughts.json to include stage metadata for all entries
+
+**About Page Overhaul:**
+- Complete redesign with gradient hero section and enhanced typography
+- Updated bio to reflect accurate background: Psychology → Philosophy → Graphic Design → UX → Product Design
+- Added interactive contact cards with email and phone (marshallweiss94@gmail.com, +34 691 608 000)
+- Photo styling with shadow, rounded corners, and hover scale effect
+- Removed separate Contact page, consolidated into About
+
+**Current Page (formerly "These Days"):**
+- Renamed from "These Days" to "Current" throughout navigation and URLs
+- Moved from `/these-days` to `/current` directory
+- Added Sanity CMS schemas for dynamic content management:
+  - `currentlyReading.ts` - Book tracking with cover, status, author, description
+  - `workProject.ts` - Work projects with company, priority, status
+  - `funProject.ts` - Personal projects with tags, URL, status
+- Created `lib/sanity-these-days.ts` with data fetching functions
+- Deployed Music Recorder app to GitHub Pages and added as Fun Project
+
+**Music Recorder Deployment:**
+- Built browser-based recording app with React + Web Audio API
+- Deployed to https://marshallweiss.github.io/music-recorder/
+- Added to Sanity as Fun Project with live URL
+- Configured GitHub Pages deployment with gh-pages package
+
+**Experiment Ideas Added:**
+- Real-Time Sunlight Map - Interactive visualization showing where sun hits cities like Madrid, Paris in real-time
+- Article Thumbnail Generator Agent (already in backlog)
+
+**Communication Style:**
+- Updated CLAUDE.md with direct, intellectual communication guidelines
+- Removed enthusiastic/validating language in favor of straightforward engagement
+
+**Files Updated:**
+- `app/about/page.tsx` - Complete redesign with gradient hero and contact cards
+- `app/thoughts/page.tsx` - Simplified to use ThoughtsFilter component
+- `components/ThoughtsFilter.tsx` - New minimal list view with stage chips
+- `components/Navigation.tsx` - Updated to "Current" and removed Contact link
+- `data/thoughts.json` - Added stage field to all thoughts
+- `app/current/page.tsx` - Renamed from these-days, updated title
+- `sanity/schemas/currentlyReading.ts` - New schema for book tracking
+- `sanity/schemas/workProject.ts` - New schema for work projects
+- `sanity/schemas/funProject.ts` - New schema for fun projects
+- `sanity/schema.ts` - Registered new schemas
+- `lib/sanity-these-days.ts` - Data fetching for Current page
+- `experiments/music-recorder/` - Complete app with deployment config
+- `content/experiments/backlog.md` - Added Real-Time Sunlight Map idea
+- `CLAUDE.md` - Added communication style guidelines
+- `docs/LOCAL_DICTATION.md` - Documented local Whisper transcription setup
+
+**Build Status:** ✓ All pages compiling, Music Recorder deployed live
+
 ## Recent Work (2026-02-13)
 
 ### AI News Research Agent - Quality Improvements ✅

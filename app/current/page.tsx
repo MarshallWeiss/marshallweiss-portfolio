@@ -1,10 +1,11 @@
-import { getCurrentlyReading, getWorkProjects, getFunProjects } from '@/lib/notion';
+import { getCurrentlyReading, getPastBooks, getWorkProjects, getFunProjects } from '@/lib/sanity-these-days';
 
 export const revalidate = 3600; // Revalidate every hour
 
 export default async function TheseDaysPage() {
-  const [currentlyReading, workProjects, funProjects] = await Promise.all([
+  const [currentlyReading, pastBooks, workProjects, funProjects] = await Promise.all([
     getCurrentlyReading(),
+    getPastBooks(6),
     getWorkProjects(3),
     getFunProjects(3),
   ]);
@@ -12,7 +13,7 @@ export default async function TheseDaysPage() {
   return (
     <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl font-semibold text-gray-900 mb-2">These days</h1>
+        <h1 className="text-3xl font-semibold text-gray-900 mb-2">Current</h1>
         <p className="text-gray-600 mb-12">
           What I'm working on, reading, and thinking about right now.
         </p>
@@ -119,33 +120,32 @@ export default async function TheseDaysPage() {
               </div>
             )}
           </div>
-        </section>
 
-        {/* Newsletter Signup */}
-        <section className="mb-16">
-          <div className="bg-gray-50 border border-gray-200 rounded-lg p-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-3">AI-Curated Technology Newsletter</h2>
-            <p className="text-gray-600 mb-6">
-              Get weekly insights on AI, design, and technology—curated and summarized by AI, written by me.
-            </p>
-            <form className="flex gap-3 max-w-md">
-              <input
-                type="email"
-                placeholder="your@email.com"
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
-                required
-              />
-              <button
-                type="submit"
-                className="px-6 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-800 transition-colors font-medium"
-              >
-                Subscribe
-              </button>
-            </form>
-            <p className="text-sm text-gray-500 mt-3">
-              Coming soon. No spam, unsubscribe anytime.
-            </p>
-          </div>
+          {/* Past Books */}
+          {pastBooks.length > 0 && (
+            <div className="mt-8">
+              <h3 className="text-lg font-medium text-gray-900 mb-4">Past Reads</h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+                {pastBooks.map((book) => (
+                  <div key={book.id} className="flex flex-col">
+                    {book.cover ? (
+                      <img
+                        src={book.cover}
+                        alt={book.title}
+                        className="w-full aspect-[2/3] object-cover rounded shadow-sm mb-2"
+                      />
+                    ) : (
+                      <div className="w-full aspect-[2/3] bg-gray-200 rounded shadow-sm mb-2 flex items-center justify-center">
+                        <span className="text-gray-400 text-xs text-center px-2">{book.title}</span>
+                      </div>
+                    )}
+                    <p className="text-xs font-medium text-gray-900 line-clamp-2">{book.title}</p>
+                    <p className="text-xs text-gray-600">{book.author}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </section>
       </div>
     </div>
