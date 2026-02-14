@@ -8,9 +8,9 @@ import { SectionItem } from '@/components/SectionCard';
 import Link from 'next/link';
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateStaticParams() {
@@ -28,15 +28,17 @@ export async function generateStaticParams() {
 }
 
 export default async function ThoughtPost({ params }: PageProps) {
+  const { slug } = await params;
+
   // #region agent log
-  fetch('http://127.0.0.1:7243/ingest/60ec796f-d4e3-4429-b157-49a2afc59d66',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app/thoughts/[slug]/page.tsx:ThoughtPost',message:'ThoughtPost entry',data:{paramsType:typeof params,slug:params.slug},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
+  fetch('http://127.0.0.1:7243/ingest/60ec796f-d4e3-4429-b157-49a2afc59d66',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app/thoughts/[slug]/page.tsx:ThoughtPost',message:'ThoughtPost entry',data:{paramsType:typeof params,slug},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
   // #endregion
-  
+
   const items: SectionItem[] = thoughtsData.items;
-  const post = items.find((item) => item.slug === params.slug);
-  
+  const post = items.find((item) => item.slug === slug);
+
   // #region agent log
-  fetch('http://127.0.0.1:7243/ingest/60ec796f-d4e3-4429-b157-49a2afc59d66',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app/thoughts/[slug]/page.tsx:ThoughtPost',message:'post lookup',data:{slug:params.slug,postFound:!!post,postTitle:post?.title},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
+  fetch('http://127.0.0.1:7243/ingest/60ec796f-d4e3-4429-b157-49a2afc59d66',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app/thoughts/[slug]/page.tsx:ThoughtPost',message:'post lookup',data:{slug,postFound:!!post,postTitle:post?.title},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
   // #endregion
 
   if (!post) {
@@ -45,10 +47,10 @@ export default async function ThoughtPost({ params }: PageProps) {
 
   // Read the markdown file
   const cwd = process.cwd();
-  const markdownPath = join(cwd, 'content', 'thoughts', `${params.slug}.md`);
+  const markdownPath = join(cwd, 'content', 'thoughts', `${slug}.md`);
   
   // #region agent log
-  fetch('http://127.0.0.1:7243/ingest/60ec796f-d4e3-4429-b157-49a2afc59d66',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app/thoughts/[slug]/page.tsx:ThoughtPost',message:'before file read',data:{cwd,markdownPath,slug:params.slug},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
+  fetch('http://127.0.0.1:7243/ingest/60ec796f-d4e3-4429-b157-49a2afc59d66',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app/thoughts/[slug]/page.tsx:ThoughtPost',message:'before file read',data:{cwd,markdownPath,slug:slug},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
   // #endregion
   
   let content = '';

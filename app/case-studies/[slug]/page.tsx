@@ -7,9 +7,9 @@ import Link from 'next/link';
 import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface PageProps {
-    params: {
+    params: Promise<{
         slug: string;
-    };
+    }>;
 }
 
 // Revalidate every hour
@@ -31,7 +31,7 @@ export async function generateStaticParams() {
 }
 
 export default async function CaseStudyPage({ params }: PageProps) {
-    const { slug } = params;
+    const { slug } = await params;
 
     // Query to fetch the full document with expanded Mux video assets
     const query = groq`*[_type == "caseStudy" && slug.current == $slug][0]{
