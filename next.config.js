@@ -21,6 +21,12 @@ const nextConfig = {
       },
     ],
   },
+  webpack: (config) => {
+    // Exclude experiments/music-recorder from compilation
+    config.externals = config.externals || [];
+    config.externals.push(/^experiments\/music-recorder\//);
+    return config;
+  },
 }
 
 module.exports = nextConfig
