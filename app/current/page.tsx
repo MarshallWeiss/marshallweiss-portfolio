@@ -23,7 +23,7 @@ export default async function TheseDaysPage() {
           <h2 className="text-2xl font-semibold text-gray-900 mb-6">Working on at Work</h2>
           <div className="space-y-4">
             {workProjects.length > 0 ? (
-              workProjects.map((project) => (
+              workProjects.map((project: any) => (
                 <div key={project.id} className="border border-gray-200 rounded-lg p-6">
                   <h3 className="text-lg font-medium text-gray-900 mb-1">{project.title}</h3>
                   {project.company && (
@@ -47,7 +47,7 @@ export default async function TheseDaysPage() {
           <h2 className="text-2xl font-semibold text-gray-900 mb-6">Working on for Fun</h2>
           <div className="space-y-4">
             {funProjects.length > 0 ? (
-              funProjects.map((project) => (
+              funProjects.map((project: any) => (
                 <div key={project.id} className="border border-gray-200 rounded-lg p-6">
                   <div className="flex justify-between items-start">
                     <div className="flex-1">
@@ -57,7 +57,7 @@ export default async function TheseDaysPage() {
                       )}
                       {project.tags && project.tags.length > 0 && (
                         <div className="flex flex-wrap gap-2">
-                          {project.tags.map((tag) => (
+                          {project.tags.map((tag: string) => (
                             <span
                               key={tag}
                               className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded"
@@ -126,7 +126,7 @@ export default async function TheseDaysPage() {
             <div className="mt-8">
               <h3 className="text-lg font-medium text-gray-900 mb-4">Past Reads</h3>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
-                {pastBooks.map((book) => (
+                {pastBooks.map((book: any) => (
                   <div key={book.id} className="flex flex-col">
                     {book.cover ? (
                       <img

@@ -35,7 +35,7 @@ export async function getCurrentlyReading() {
   if (!DATABASES.reading) return null;
 
   try {
-    const response = await notion.databases.query({
+    const response = await (notion.databases as any).query({
       database_id: DATABASES.reading,
       filter: {
         property: 'Status',
@@ -75,7 +75,7 @@ export async function getWorkProjects(limit: number = 3) {
   if (!DATABASES.workProjects) return [];
 
   try {
-    const response = await notion.databases.query({
+    const response = await (notion.databases as any).query({
       database_id: DATABASES.workProjects,
       filter: {
         property: 'Status',
@@ -113,7 +113,7 @@ export async function getFunProjects(limit: number = 3) {
   if (!DATABASES.funProjects) return [];
 
   try {
-    const response = await notion.databases.query({
+    const response = await (notion.databases as any).query({
       database_id: DATABASES.funProjects,
       filter: {
         property: 'Status',

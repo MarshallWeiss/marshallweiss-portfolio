@@ -42,7 +42,7 @@ export default function WorkCard({ study }: { study: any }) {
                                 '--controls': 'none',
                                 '--media-object-fit': 'cover',
                                 '--media-object-position': 'center',
-                            } as React.CSSProperties}
+                            } as any}
                         />
                     </div>
                 ) : imageProps ? (

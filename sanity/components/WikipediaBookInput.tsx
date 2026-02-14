@@ -58,13 +58,13 @@ export function WikipediaBookInput(props: StringInputProps) {
 
       // Update other fields through the document
       if (author) {
-        props.context?.document?.patch?.([
+        (props as any).context?.document?.patch?.([
           { set: { author } }
         ]);
       }
 
       if (description) {
-        props.context?.document?.patch?.([
+        (props as any).context?.document?.patch?.([
           { set: { description: description.slice(0, 500) } }
         ]);
       }
