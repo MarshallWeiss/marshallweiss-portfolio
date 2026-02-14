@@ -12,7 +12,7 @@ export default async function TheseDaysPage() {
 
   return (
     <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-semibold text-gray-900 mb-2">Current</h1>
         <p className="text-gray-600 mb-12">
           What I'm working on, reading, and thinking about right now.
@@ -20,7 +20,7 @@ export default async function TheseDaysPage() {
 
         {/* Working on at Work */}
         <section className="mb-16">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Working on at Work</h2>
+          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Work</h2>
           <div className="space-y-4">
             {workProjects.length > 0 ? (
               workProjects.map((project: any) => (
@@ -44,7 +44,7 @@ export default async function TheseDaysPage() {
 
         {/* Working on for Fun */}
         <section className="mb-16">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Working on for Fun</h2>
+          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Play</h2>
           <div className="space-y-4">
             {funProjects.length > 0 ? (
               funProjects.map((project: any) => (
