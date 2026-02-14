@@ -6,6 +6,27 @@ Ideas for future experiments and side projects. Add new ideas at the top.
 
 ## Backlog
 
+### Article Thumbnail Generator Agent
+
+- **Added**: 2026-02-14
+- **Status**: idea
+- **Technologies**: Claude API, Image generation API (DALL-E/Midjourney/Stable Diffusion), Next.js
+- **Notes**: Build an agent that generates consistent thumbnail images for articles. Analyzes article title/content and generates images with unified visual style. Define design rules: color palette (maybe brand colors), composition patterns, typography treatment, aspect ratio. Could be a Claude Code skill that reads article content and generates thumbnails automatically. Saves time and creates visual consistency across the portfolio. Much better than stock images.
+
+### Simple Music Recording Software (Four-Track Recorder)
+
+- **Added**: 2026-02-14
+- **Status**: idea
+- **Technologies**: Web Audio API, MediaRecorder API, React/Next.js
+- **Notes**: Build a simple browser-based multi-track recorder for recording music. Four tracks (or expandable), record each independently, playback all together, basic mixing controls (volume, pan). Fun project that would also be genuinely useful. Showcase as portfolio experiment. Reference classic four-track recorders (Tascam, Portastudio) for UX/aesthetic inspiration. Key features: waveform visualization, simple transport controls (record, play, stop), track muting/soloing, export mixed audio.
+
+### Political Indie Games Series
+
+- **Added**: 2026-02-14
+- **Status**: idea
+- **Technologies**: Browser-based (Phaser.js, canvas, simple HTML/CSS/JS), varies per game
+- **Notes**: Create a series of satirical political indie games—each one explores a complex issue through simple gameplay mechanics. Games as commentary. Potential topics: privacy erosion over time, attention economy, copyright/IP theft, software feature replication, design homogenization. Keep them simple, browser-based, shareable. Games communicate differently than articles—you feel the problem by playing it. Could become a signature format.
+
 ### Better Ultimate Guitar Alternative
 
 - **Added**: 2026-02-06

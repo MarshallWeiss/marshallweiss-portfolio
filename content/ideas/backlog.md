@@ -8,6 +8,41 @@ Ideas for future articles. Add new ideas at the top.
 
     `<!-- New ideas go here -->`
 
+### Article Thumbnail Generator Agent
+
+- **Added**: 2026-02-14
+- **Category**: Experiments
+- **Status**: captured
+- **Notes**: Create an agent that generates thumbnail images for articles in a consistent visual style. Better than stock images. The agent would analyze article content/title and generate images using AI (DALL-E, Midjourney API, etc.) with consistent prompting to maintain a unified aesthetic. Could define a design system for thumbnails (color palette, composition rules, typography treatment). Would make the portfolio articles look more cohesive and professional.
+
+### The Privacy Illusion: How Little Privacy We Actually Have on the Internet
+
+- **Added**: 2026-02-14
+- **Category**: Ideas, Articles
+- **Status**: captured
+- **Notes**: Deep dive into how little privacy we actually have online. Most people don't realize the extent of data collection happening constantly. Look at app privacy policies (WhatsApp collects purchases, location, contacts, identifiers, diagnostics, financial info, contact data, user content, usage data), browser tracking, social media surveillance, ISP monitoring, government access, device fingerprinting. The gap between what people think is private and what actually is. Could visualize all the data points collected in a typical day. Related to the privacy amnesia idea but focused on the current state rather than the progression over time.
+
+### Political Indie Games as Commentary
+
+- **Added**: 2026-02-14
+- **Category**: Ideas, Experiments, Design
+- **Status**: captured
+- **Notes**: Start making political indie games—satirical, simple browser games that make a point through gameplay mechanics. Like the internet oversimulation game where pop-ups flood the screen. Games as commentary. Could be a series: AI energy consumption game, privacy erosion game, attention economy game, copyright/stealing game. Each one distills a complex issue into playable mechanics. Quick to build (browser-based, simple mechanics), shareable, memorable. Games communicate ideas differently than articles—you feel the problem by playing it.
+
+### The True Cost of Your AI Habit: Interactive Article on Energy Consumption
+
+- **Added**: 2026-02-14
+- **Category**: Ideas, Articles
+- **Status**: captured
+- **Notes**: Article/formato showcasing how much energy AI actually uses. Research and present the real environmental cost: energy per query, data center consumption, water usage for cooling, carbon footprint comparisons. Interactive elements to make it engaging (scrollytelling, data visualizations, comparisons). Not a game—serious data journalism with interactive presentation. Showcase on portfolio site. Show to Pablo and Lau. The hidden environmental cost everyone ignores while using AI constantly.
+
+### Simple Music Recording Software
+
+- **Added**: 2026-02-14
+- **Category**: Experiments
+- **Status**: captured
+- **Notes**: Build a simple browser-based multi-track recorder. Four-track setup (or expandable), record music directly in the browser, playback all tracks together, basic mixing controls. Would be a fun project and useful tool. Showcase as portfolio experiment. Use Web Audio API, MediaRecorder API. Could reference classic four-track recorders (Tascam) for UX inspiration.
+
 ### Configure Your AI Colleague: When Claude Is Your Entire Software Team
 
 - **Added**: 2026-02-14
@@ -75,3 +110,4 @@ Ideas for future articles. Add new ideas at the top.
   - Accepting edits vs. accepting all edits too. Making it so that you can flow more by having less interruptions, but obviously taking into account that you lose control that way too.
   - Turning on sound, notification sound when the task finishes. AlsoHi.
   - Also being able to connect to your phone like Paco does, and being able to work from wherever.
+  - Terminal vs VS Code plugin (or combination): Different interfaces for different work modes. Terminal for deep focus sessions, plugin for quick edits/consultations, or using both simultaneously for different types of thinking. Each interface affects how you work with Claude—terminal is immersive, plugin is contextual. Could explore when to use which.

@@ -6,6 +6,20 @@ Structured article projects for AI-assisted writing. Add new ideas at the top.
 
 ## Backlog
 
+### The Privacy Illusion: How Little Privacy We Actually Have on the Internet
+
+- **Added**: 2026-02-14
+- **Status**: captured
+- **Source**: Ideas backlog (cross-posted)
+- **Angle**: Expose the reality of internet privacy. Breakdown of what apps like WhatsApp actually collect (purchases, location, contacts, financials, user content, usage data, diagnostics). Browser tracking, ISP monitoring, device fingerprinting, social media surveillance. Visualize a typical day's worth of data collection. The gap between perceived privacy and actual privacy. Could include interactive elements showing what data companies have on you.
+
+### The True Cost of Your AI Habit: Interactive Article on Energy Consumption
+
+- **Added**: 2026-02-14
+- **Status**: captured
+- **Source**: Ideas backlog (cross-posted)
+- **Angle**: Data journalism piece with interactive formato. Research and present the real environmental cost of AI: energy per query, data center consumption, water usage for cooling, carbon footprint. Use scrollytelling, visualizations, comparisons to make it engaging. Not a game—serious journalism with interactive presentation. Showcase on portfolio. Show to Pablo and Lau.
+
 ### Configure Your AI Colleague: Customizing Claude's Communication Style
 
 - **Added**: 2026-02-14

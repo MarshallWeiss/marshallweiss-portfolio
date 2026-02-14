@@ -4,6 +4,7 @@ Items to be prioritized and implemented for the portfolio project.
 
 ## Backlog
 
+- **[Feature] Article thumbnail generator agent - Create consistent, branded thumbnails for articles** - Added 2026-02-14 (Priority: TBD)
 - **[Feature] Replace videos with Figma iframes for more professional, interactive look** - Added 2026-02-06 (Priority: TBD)
 - **[UX] Fix carousel aspect ratios and image sizes - make images larger** - Added 2026-02-03 (Priority: High)
 - **[UX] Add save button to block editors instead of requiring click-outside to close** - Added 2026-02-03 (Priority: High)
