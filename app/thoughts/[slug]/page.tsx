@@ -56,7 +56,9 @@ export default async function ThoughtPost({ params }: PageProps) {
   let content = '';
 
   try {
-    content = readFileSync(markdownPath, 'utf-8');
+    let rawContent = readFileSync(markdownPath, 'utf-8');
+    // Strip YAML frontmatter (content between --- delimiters at start of file)
+    content = rawContent.replace(/^---[\s\S]*?---\n*/, '');
     // #region agent log
     fetch('http://127.0.0.1:7243/ingest/60ec796f-d4e3-4429-b157-49a2afc59d66',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app/thoughts/[slug]/page.tsx:ThoughtPost',message:'file read success',data:{contentLength:content.length,firstChars:content.substring(0,50)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
     // #endregion
