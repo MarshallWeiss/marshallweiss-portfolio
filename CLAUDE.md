@@ -2,6 +2,15 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Communication Style
+
+- **Be direct and intellectual.** Skip the enthusiasm and validation.
+- **Don't praise every idea.** Not everything is "fascinating" or "perfect." Respond naturally.
+- **Be straightforward.** Say what needs to be said without sugarcoating.
+- **Engage intellectually, not emotionally.** Analysis over excitement.
+- **Skip phrases like:** "This is really compelling!", "I love this!", "Perfect!", "Great observation!"
+- **Default tone:** Professional colleague, not cheerleader.
+
 ## Commands
 
 ```bash
@@ -49,19 +58,30 @@ Tailwind CSS with custom Inter font. Global styles in `styles/globals.css`.
 
 ## Skills
 
-Quick-capture commands:
+**Universal Capture:**
 
-- `/idea <text>` - Add an article idea to `content/ideas/backlog.md`
-- `/experiment <text>` - Add an experiment idea to `content/experiments/backlog.md`
-- `/roadmap <text>` - Add an item to the portfolio project roadmap at `content/roadmap/backlog.md`
+- `/idea <anything>` - Smart capture system that intelligently categorizes ideas into the right backlog:
+  - **Ideas** - Raw thoughts, observations, insights
+  - **Articles** - Structured article projects (auto-cross-posted from article-worthy ideas)
+  - **Experiments** - Things to build/try
+  - **Roadmap** - Portfolio improvements
+  - **Music** - Songs to learn, music ideas
+  - **Design** - Design concepts/explorations
 
-You can also naturally mention "add to roadmap: <item>" in conversation.
+The skill analyzes your idea and routes it automatically. Article-worthy ideas get cross-posted to both ideas and articles backlogs.
+
+**Legacy commands** (still work):
+- `/experiment <text>` - Add directly to experiments backlog
+- `/roadmap <text>` - Add directly to roadmap backlog
 
 ## Content Backlogs
 
-- `content/ideas/backlog.md` - Article ideas for future AI-assisted writing
+- `content/ideas/backlog.md` - Raw thoughts, observations, insights
+- `content/articles/backlog.md` - Structured article projects for AI-assisted writing
 - `content/experiments/backlog.md` - Experiment/side project ideas
-- `content/roadmap/backlog.md` - Portfolio project roadmap items to prioritize and implement
+- `content/roadmap/backlog.md` - Portfolio project roadmap items
+- `content/music/backlog.md` - Songs to learn, music practice goals
+- `content/design/backlog.md` - Design concepts and UI/UX explorations
 
 ## Documentation
 
