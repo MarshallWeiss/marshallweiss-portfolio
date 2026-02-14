@@ -12,9 +12,52 @@ import Comparison from './Comparison';
 import SideBySideImages from './SideBySideImages';
 import TextBlock from './TextBlock';
 import AnnotatedImage from './AnnotatedImage';
+import LazyBlock from './LazyBlock';
 
 interface BlockRendererProps {
     modules: any[];
+}
+
+/** Number of blocks to render eagerly (above the fold) */
+const EAGER_COUNT = 2;
+
+function renderBlock(module: any, eager = false) {
+    switch (module._type) {
+        case 'hero':
+            return <Hero {...module} priority={eager} />;
+        case 'metadata':
+            return <Metadata {...module} />;
+        case 'splitMedia':
+            return <SplitMedia {...module} />;
+        case 'mediaGrid':
+            return <MediaGrid {...module} />;
+        case 'fullWidthMedia':
+            return <FullWidthMedia {...module} />;
+        case 'carousel':
+            return <Carousel {...module} />;
+        case 'backgroundVideo':
+            return <BackgroundVideo {...module} />;
+        case 'contentCards':
+            return <ContentCards {...module} />;
+        case 'accordion':
+        case 'splitAccordion':
+            return <Accordion {...module} />;
+        case 'comparison':
+            return <Comparison {...module} />;
+        case 'sideBySideImages':
+            return <SideBySideImages {...module} />;
+        case 'textBlock':
+            return <TextBlock {...module} />;
+        case 'annotatedImage':
+            return <AnnotatedImage {...module} />;
+        default:
+            console.warn(`Unknown block type: ${module._type}`);
+            return (
+                <div className="hidden">
+                    Unknown block: {module._type}
+                </div>
+            );
+    }
 }
 
 export default function BlockRenderer({ modules }: BlockRendererProps) {
@@ -29,14 +72,13 @@ export default function BlockRenderer({ modules }: BlockRendererProps) {
         const next = modules[i + 1];
 
         if (current._type === 'hero' && next?._type === 'metadata') {
-            // Merge metadata fields into hero for backward compatibility
             processedModules.push({
                 ...current,
                 role: next.role,
                 client: next.client,
                 year: next.year,
             });
-            i++; // Skip the next module since we've merged it
+            i++;
         } else {
             processedModules.push(current);
         }
@@ -44,60 +86,20 @@ export default function BlockRenderer({ modules }: BlockRendererProps) {
 
     return (
         <div>
-            {processedModules.map((module) => {
-                // Use _key as key if available, otherwise random fallback
+            {processedModules.map((module, index) => {
                 const key = module._key || Math.random().toString(36).substring(7);
+                const isEager = index < EAGER_COUNT;
+                const block = renderBlock(module, isEager);
 
-                switch (module._type) {
-                    case 'hero':
-                        return <Hero key={key} {...module} />;
-
-                    case 'metadata':
-                        // Standalone metadata blocks (legacy) - render as before
-                        return <Metadata key={key} {...module} />;
-
-                    case 'splitMedia':
-                        return <SplitMedia key={key} {...module} />;
-
-                    case 'mediaGrid':
-                        return <MediaGrid key={key} {...module} />;
-
-                    case 'fullWidthMedia':
-                        return <FullWidthMedia key={key} {...module} />;
-
-                    case 'carousel':
-                        return <Carousel key={key} {...module} />;
-
-                    case 'backgroundVideo':
-                        return <BackgroundVideo key={key} {...module} />;
-
-                    case 'contentCards':
-                        return <ContentCards key={key} {...module} />;
-
-                    case 'accordion':
-                    case 'splitAccordion': // backward compatibility
-                        return <Accordion key={key} {...module} />;
-
-                    case 'comparison':
-                        return <Comparison key={key} {...module} />;
-
-                    case 'sideBySideImages':
-                        return <SideBySideImages key={key} {...module} />;
-
-                    case 'textBlock':
-                        return <TextBlock key={key} {...module} />;
-
-                    case 'annotatedImage':
-                        return <AnnotatedImage key={key} {...module} />;
-
-                    default:
-                        console.warn(`Unknown block type: ${module._type}`);
-                        return (
-                            <div key={key} className="hidden">
-                                Unknown block: {module._type}
-                            </div>
-                        );
+                if (isEager) {
+                    return <React.Fragment key={key}>{block}</React.Fragment>;
                 }
+
+                return (
+                    <LazyBlock key={key}>
+                        {block}
+                    </LazyBlock>
+                );
             })}
         </div>
     );

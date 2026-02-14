@@ -6,6 +6,47 @@ Session context for continuing work on this project.
 
 `antigravity-sanity-work` - Building out Sanity CMS integration for case studies
 
+## Recent Work (2026-02-14) — Session 2
+
+### Performance, Polish & Content Cleanup ✅
+**Optimized loading performance, improved UX, and cleaned up content:**
+
+**Performance Improvements:**
+- Added lazy loading for case study blocks via IntersectionObserver (`components/blocks/LazyBlock.tsx`)
+- First 2 blocks render eagerly, rest defer until near viewport
+- Added `priority` prop to Hero → MediaItem → Image for LCP optimization
+- Compressed about page photo from 7.6MB PNG to 107KB JPEG (resized to 640px wide)
+
+**UX Improvements:**
+- Added prev/next navigation to thought article pages (infinite loop wrapping)
+- Made about page profile photo circular (rounded-full)
+- Fixed duplicate titles on thought articles (stripped leading h1 from markdown)
+- Added MW monogram favicon (`app/icon.svg`)
+
+**Content Cleanup:**
+- Removed unused PPFraktion fonts (4 woff2 files)
+- Removed two deleted articles from thoughts.json (optimizing-design-dev-workflow, the-art-of-micro-interactions)
+- Deleted corresponding markdown files
+
+**Font Exploration (reverted):**
+- Tried Instrument Serif as display font — user rejected, reverted to Inter only
+
+**Files Updated:**
+- `components/blocks/LazyBlock.tsx` — New IntersectionObserver wrapper
+- `components/blocks/BlockRenderer.tsx` — Lazy loading + priority integration
+- `components/blocks/Hero.tsx` — Added priority prop
+- `components/blocks/MediaItem.tsx` — Added priority prop
+- `app/thoughts/[slug]/page.tsx` — Prev/next nav, duplicate title fix
+- `app/about/page.tsx` — Circular photo, optimized image reference
+- `app/layout.tsx` — Font cleanup (Inter via next/font)
+- `app/icon.svg` — New MW monogram favicon
+- `data/thoughts.json` — Removed deleted articles
+- `styles/globals.css` — Cleaned up old font variable
+- `public/images/about/profile.jpg` — Optimized photo (replaced PNG)
+- Deleted: PPFraktion fonts, profile.png, two markdown articles
+
+**Build Status:** ✓ Deployed to Vercel successfully
+
 ## Recent Work (2026-02-14)
 
 ### Portfolio Redesign & Content Management Improvements ✅

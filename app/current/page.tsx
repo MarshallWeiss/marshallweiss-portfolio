@@ -91,7 +91,7 @@ export default async function TheseDaysPage() {
 
         {/* Currently Reading */}
         <section className="mb-16">
-          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Currently Reading</h2>
+          <h2 className="text-2xl font-semibold text-gray-900 mb-6">Reading</h2>
           <div className="space-y-4">
             {currentlyReading ? (
               <div className="border border-gray-200 rounded-lg p-6">

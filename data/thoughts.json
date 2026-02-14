@@ -27,16 +27,7 @@
       "image": "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=400&fit=crop",
       "stage": "growing"
     },
-    {
-      "id": "optimizing-design-dev-workflow",
-      "title": "Optimizing Design and Development Workflows with Figma, Cursor, and Claude MCP",
-      "description": "How to create a seamless bridge between design and code using Figma, Cursor, and Claude MCP to dramatically reduce friction in the design-to-development workflow.",
-      "date": "2024-12-19",
-      "slug": "optimizing-design-dev-workflow",
-      "image": "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=400&h=400&fit=crop",
-      "stage": "harvesting"
-    },
-    {
+{
       "id": "building-design-systems-that-scale",
       "title": "Building Design Systems That Scale",
       "description": "Lessons learned from creating and maintaining design systems for large organizations. How to balance consistency with flexibility and keep your system relevant as products evolve.",
@@ -45,16 +36,7 @@
       "image": "https://images.unsplash.com/photo-1558655146-364adaf1fcc9?w=400&h=400&fit=crop",
       "stage": "harvesting"
     },
-    {
-      "id": "the-art-of-micro-interactions",
-      "title": "The Art of Micro-Interactions",
-      "description": "Why the smallest details matter most. Exploring how thoughtful micro-interactions can transform a good user experience into a delightful one, with practical examples and implementation strategies.",
-      "date": "2024-12-10",
-      "slug": "the-art-of-micro-interactions",
-      "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=400&fit=crop",
-      "stage": "growing"
-    },
-    {
+{
       "id": "accessibility-beyond-compliance",
       "title": "Accessibility Beyond Compliance",
       "description": "Moving from checking boxes to creating truly inclusive experiences. A deep dive into accessibility as a design philosophy, not just a requirement, with real-world case studies.",

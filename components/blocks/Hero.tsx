@@ -16,6 +16,7 @@ interface HeroProps {
     imageShadow?: 'none' | 'small' | 'medium' | 'large';
     enableLightbox?: boolean;
     imageCaption?: string;
+    priority?: boolean;
     isInline?: boolean;
     width?: 'contained' | 'wide' | 'full';
     background?: 'none' | 'white' | 'gray';
@@ -36,6 +37,7 @@ export default function Hero({
     imageShadow = 'none',
     enableLightbox = false,
     imageCaption,
+    priority = false,
     isInline,
     width = 'contained',
     background = 'none',
@@ -116,6 +118,7 @@ export default function Hero({
                         imageShadow={imageShadow}
                         enableLightbox={enableLightbox}
                         imageCaption={imageCaption}
+                        priority={priority}
                     />
                 </div>
             )}

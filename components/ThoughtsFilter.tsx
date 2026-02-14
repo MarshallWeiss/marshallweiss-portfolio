@@ -15,7 +15,7 @@ export default function ThoughtsFilter({ items }: ThoughtsFilterProps) {
           <Link
             key={item.id}
             href={`/thoughts/${item.slug}`}
-            className="group block py-3 border-b border-gray-200 hover:border-gray-400 transition-colors"
+            className="group block py-3 border-b border-gray-200 transition-colors"
           >
             <div>
               <h3 className="text-lg font-medium text-gray-900 group-hover:text-gray-600 transition-colors">

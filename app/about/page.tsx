@@ -8,9 +8,9 @@ export default function AboutPage() {
         <div className="max-w-5xl mx-auto">
           <div className="flex flex-col md:flex-row gap-12 items-start">
             <div className="flex-shrink-0 mx-auto md:mx-0">
-              <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-2xl overflow-hidden shadow-2xl ring-1 ring-gray-900/5 transform hover:scale-105 transition-transform duration-300">
+              <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden shadow-2xl ring-1 ring-gray-900/5 transform hover:scale-105 transition-transform duration-300">
                 <Image
-                  src="/images/about/profile.png"
+                  src="/images/about/profile.jpg"
                   alt="Marshall Weiss"
                   fill
                   className="object-cover"

@@ -6,6 +6,7 @@ import { join } from 'path';
 import thoughtsData from '@/data/thoughts.json';
 import { SectionItem } from '@/components/SectionCard';
 import Link from 'next/link';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface PageProps {
   params: Promise<{
@@ -14,71 +15,44 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  // #region agent log
-  fetch('http://127.0.0.1:7243/ingest/60ec796f-d4e3-4429-b157-49a2afc59d66',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app/thoughts/[slug]/page.tsx:generateStaticParams',message:'generateStaticParams entry',data:{itemsCount:thoughtsData.items.length},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
-  // #endregion
   const items: SectionItem[] = thoughtsData.items;
-  const result = items.map((item) => ({
+  return items.map((item) => ({
     slug: item.slug,
   }));
-  // #region agent log
-  fetch('http://127.0.0.1:7243/ingest/60ec796f-d4e3-4429-b157-49a2afc59d66',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app/thoughts/[slug]/page.tsx:generateStaticParams',message:'generateStaticParams exit',data:{paramsGenerated:result.length,slugs:result.map(r=>r.slug)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
-  // #endregion
-  return result;
 }
 
 export default async function ThoughtPost({ params }: PageProps) {
   const { slug } = await params;
 
-  // #region agent log
-  fetch('http://127.0.0.1:7243/ingest/60ec796f-d4e3-4429-b157-49a2afc59d66',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app/thoughts/[slug]/page.tsx:ThoughtPost',message:'ThoughtPost entry',data:{paramsType:typeof params,slug},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'C'})}).catch(()=>{});
-  // #endregion
-
   const items: SectionItem[] = thoughtsData.items;
-  const post = items.find((item) => item.slug === slug);
-
-  // #region agent log
-  fetch('http://127.0.0.1:7243/ingest/60ec796f-d4e3-4429-b157-49a2afc59d66',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app/thoughts/[slug]/page.tsx:ThoughtPost',message:'post lookup',data:{slug,postFound:!!post,postTitle:post?.title},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
-  // #endregion
+  const currentIndex = items.findIndex((item) => item.slug === slug);
+  const post = currentIndex >= 0 ? items[currentIndex] : undefined;
 
   if (!post) {
     notFound();
   }
 
+  // Previous/next with infinite loop
+  const prevPost = currentIndex > 0
+    ? items[currentIndex - 1]
+    : items[items.length - 1];
+  const nextPost = currentIndex < items.length - 1
+    ? items[currentIndex + 1]
+    : items[0];
+
   // Read the markdown file
-  const cwd = process.cwd();
-  const markdownPath = join(cwd, 'content', 'thoughts', `${slug}.md`);
-  
-  // #region agent log
-  fetch('http://127.0.0.1:7243/ingest/60ec796f-d4e3-4429-b157-49a2afc59d66',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app/thoughts/[slug]/page.tsx:ThoughtPost',message:'before file read',data:{cwd,markdownPath,slug:slug},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
-  // #endregion
-  
+  const markdownPath = join(process.cwd(), 'content', 'thoughts', `${slug}.md`);
+
   let content = '';
 
   try {
-    let rawContent = readFileSync(markdownPath, 'utf-8');
-    // Strip YAML frontmatter (content between --- delimiters at start of file)
-    content = rawContent.replace(/^---[\s\S]*?---\n*/, '');
-    // #region agent log
-    fetch('http://127.0.0.1:7243/ingest/60ec796f-d4e3-4429-b157-49a2afc59d66',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app/thoughts/[slug]/page.tsx:ThoughtPost',message:'file read success',data:{contentLength:content.length,firstChars:content.substring(0,50)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
-    // #endregion
+    const rawContent = readFileSync(markdownPath, 'utf-8');
+    // Strip YAML frontmatter and leading h1 (already shown in page header)
+    content = rawContent.replace(/^---[\s\S]*?---\n*/, '').replace(/^# .+\n+/, '');
   } catch (error: any) {
-    // #region agent log
-    fetch('http://127.0.0.1:7243/ingest/60ec796f-d4e3-4429-b157-49a2afc59d66',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app/thoughts/[slug]/page.tsx:ThoughtPost',message:'file read error',data:{error:error?.message,code:error?.code,markdownPath},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
-    // #endregion
     console.error(`Error reading markdown file: ${markdownPath}`, error);
     notFound();
   }
-  
-  // #region agent log
-  let reactMarkdownAvailable = false;
-  try {
-    reactMarkdownAvailable = !!ReactMarkdown;
-    fetch('http://127.0.0.1:7243/ingest/60ec796f-d4e3-4429-b157-49a2afc59d66',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app/thoughts/[slug]/page.tsx:ThoughtPost',message:'ReactMarkdown check',data:{available:reactMarkdownAvailable,type:typeof ReactMarkdown},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
-  } catch (error: any) {
-    fetch('http://127.0.0.1:7243/ingest/60ec796f-d4e3-4429-b157-49a2afc59d66',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app/thoughts/[slug]/page.tsx:ThoughtPost',message:'ReactMarkdown import error',data:{error:error?.message},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
-  }
-  // #endregion
 
   return (
     <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
@@ -118,14 +92,6 @@ export default async function ThoughtPost({ params }: PageProps) {
 
         {/* Post content */}
         <article className="prose prose-lg max-w-none">
-          {/* #region agent log */}
-          {(() => {
-            try {
-              fetch('http://127.0.0.1:7243/ingest/60ec796f-d4e3-4429-b157-49a2afc59d66',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'app/thoughts/[slug]/page.tsx:ThoughtPost',message:'before ReactMarkdown render',data:{contentLength:content.length,remarkGfmType:typeof remarkGfm},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'D'})}).catch(()=>{});
-            } catch (e) {}
-            return null;
-          })()}
-          {/* #endregion */}
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             components={{
@@ -188,6 +154,29 @@ export default async function ThoughtPost({ params }: PageProps) {
           </ReactMarkdown>
         </article>
       </div>
+
+      {/* Post Navigation */}
+      {items.length > 1 && (
+        <nav className="border-t border-gray-200 py-12 max-w-3xl mx-auto mt-16">
+          <div className="flex justify-between items-center gap-8">
+            <Link
+              href={`/thoughts/${prevPost.slug}`}
+              className="group flex items-center gap-3 text-gray-900 hover:text-gray-600 transition-colors"
+            >
+              <ChevronLeft className="w-6 h-6 flex-shrink-0 group-hover:-translate-x-1 transition-transform" />
+              <span className="text-base md:text-lg font-normal">{prevPost.title}</span>
+            </Link>
+
+            <Link
+              href={`/thoughts/${nextPost.slug}`}
+              className="group flex items-center gap-3 text-gray-900 hover:text-gray-600 transition-colors ml-auto"
+            >
+              <span className="text-base md:text-lg font-normal text-right">{nextPost.title}</span>
+              <ChevronRight className="w-6 h-6 flex-shrink-0 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
+        </nav>
+      )}
     </div>
   );
 }

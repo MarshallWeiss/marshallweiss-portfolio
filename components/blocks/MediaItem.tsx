@@ -19,6 +19,7 @@ interface MediaItemProps {
     imageCaption?: string
     alt?: string
     className?: string
+    priority?: boolean
 }
 
 export default function MediaItem({
@@ -32,6 +33,7 @@ export default function MediaItem({
     imageCaption,
     alt = 'Media',
     className,
+    priority = false,
 }: MediaItemProps) {
     const [lightboxOpen, setLightboxOpen] = useState(false)
     const imageProps = mediaType === 'image' && image ? useNextSanityImage(client, image, {
@@ -104,6 +106,7 @@ export default function MediaItem({
                                 objectFitClasses[objectFit]
                             )}
                             sizes="100vw"
+                            priority={priority}
                         />
                     </div>
                     {imageCaption && (
