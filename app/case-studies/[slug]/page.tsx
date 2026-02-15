@@ -109,7 +109,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
             return (
                 <div className="min-h-screen flex items-center justify-center p-8">
                     <div className="max-w-md text-center">
-                        <h1 className="text-2xl font-bold mb-4">Sanity Not Configured</h1>
+                        <h1 className="font-display text-2xl mb-4">Sanity Not Configured</h1>
                         <p className="text-gray-600 mb-6">
                             Please create a .env.local file with your Sanity credentials to view this page.
                         </p>

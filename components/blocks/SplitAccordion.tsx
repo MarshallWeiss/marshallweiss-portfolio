@@ -35,7 +35,7 @@ export default function SplitAccordion({ headline, text, items, reverseLayout = 
                     reverseLayout ? "lg:col-start-2" : "lg:col-start-1"
                 )}>
                     {headline && (
-                        <h2 className="text-2xl md:text-3xl font-medium text-gray-900 mb-6">
+                        <h2 className="font-display text-2xl md:text-3xl text-gray-900 mb-6">
                             {headline}
                         </h2>
                     )}

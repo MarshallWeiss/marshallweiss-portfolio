@@ -61,7 +61,7 @@ export default function WorkCard({ study }: { study: any }) {
 
             <div className="flex justify-between items-start">
                 <div>
-                    <h2 className="text-2xl font-semibold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+                    <h2 className="font-display text-2xl text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
                         {study.title}
                     </h2>
                     {study.heroSubtitle && (

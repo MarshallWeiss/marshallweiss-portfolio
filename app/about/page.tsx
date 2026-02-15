@@ -22,7 +22,7 @@ export default function AboutPage() {
 
             <div className="flex-1 space-y-6 max-w-2xl">
               <div>
-                <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">Marshall Weiss</h1>
+                <h1 className="font-display text-4xl md:text-5xl text-gray-900 mb-3">Marshall Weiss</h1>
                 <p className="text-xl text-gray-600">Senior Product Designer</p>
               </div>
 

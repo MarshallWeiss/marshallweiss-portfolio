@@ -34,7 +34,7 @@ export default function BlockHeading({
         <div className={cn(alignmentClasses[textAlign], className)}>
             {headline && (
                 <h2 className={cn(
-                    'font-semibold text-gray-900',
+                    'font-display text-gray-900',
                     headlineSizeClasses[headlineSize]
                 )}>
                     {headline}

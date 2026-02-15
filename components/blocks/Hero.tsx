@@ -56,7 +56,7 @@ export default function Hero({
                             {subtitle}
                         </p>
                     )}
-                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-medium text-gray-900 mb-6 leading-[1.15] tracking-tight">
+                    <h1 className="font-display text-3xl md:text-4xl lg:text-5xl text-gray-900 mb-6 leading-[1.15] tracking-tight">
                         {title}
                     </h1>
                     {intro && (

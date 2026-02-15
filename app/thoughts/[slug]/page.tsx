@@ -80,7 +80,7 @@ export default async function ThoughtPost({ params }: PageProps) {
 
         {/* Post header */}
         <header className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">{post.title}</h1>
+          <h1 className="font-display text-4xl text-gray-900 mb-4">{post.title}</h1>
           <time className="text-sm text-gray-500">
             {new Date(post.date).toLocaleDateString('en-US', {
               year: 'numeric',
@@ -96,13 +96,13 @@ export default async function ThoughtPost({ params }: PageProps) {
             remarkPlugins={[remarkGfm]}
             components={{
               h1: ({ node, ...props }) => (
-                <h1 className="text-3xl font-bold mt-8 mb-4 text-gray-900" {...props} />
+                <h1 className="font-display text-3xl mt-8 mb-4 text-gray-900" {...props} />
               ),
               h2: ({ node, ...props }) => (
-                <h2 className="text-2xl font-semibold mt-6 mb-3 text-gray-900" {...props} />
+                <h2 className="font-display text-2xl mt-6 mb-3 text-gray-900" {...props} />
               ),
               h3: ({ node, ...props }) => (
-                <h3 className="text-xl font-semibold mt-5 mb-2 text-gray-900" {...props} />
+                <h3 className="font-display text-xl mt-5 mb-2 text-gray-900" {...props} />
               ),
               p: ({ node, ...props }) => (
                 <p className="mb-4 text-gray-700 leading-7" {...props} />

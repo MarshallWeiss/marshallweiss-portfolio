@@ -19,7 +19,7 @@ export default function Navigation() {
     <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <Link href="/" className="text-xl font-medium text-gray-900 hover:text-gray-700 transition-colors">
+          <Link href="/" className="font-display text-xl text-gray-900 hover:text-gray-700 transition-colors">
             Marshall Weiss
           </Link>
 

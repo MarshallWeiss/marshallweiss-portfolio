@@ -10,7 +10,7 @@ export default function BookClubPage() {
   return (
     <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl font-semibold text-gray-900 mb-8">Book Club</h1>
+        <h1 className="font-display text-3xl text-gray-900 mb-8">Book Club</h1>
         
         {featuredBook && (
           <FeaturedBook book={featuredBook} />

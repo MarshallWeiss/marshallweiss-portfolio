@@ -133,7 +133,7 @@ export default function ContentCards({
                             )}
                         >
                             {card.title && (
-                                <h3 className="text-lg md:text-xl font-medium text-gray-900 mb-3">
+                                <h3 className="font-display text-lg md:text-xl text-gray-900 mb-3">
                                     {card.title}
                                 </h3>
                             )}

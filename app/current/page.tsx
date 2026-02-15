@@ -13,7 +13,7 @@ export default async function TheseDaysPage() {
   return (
     <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-semibold text-gray-900 mb-2">Current</h1>
+        <h1 className="font-display text-3xl text-gray-900 mb-2">Current</h1>
         <p className="text-gray-600 mb-12">
           What I'm working on, reading, and thinking about right now.
         </p>
