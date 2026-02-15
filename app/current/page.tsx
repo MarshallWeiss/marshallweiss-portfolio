@@ -2,6 +2,21 @@ import { getCurrentlyReading, getPastBooks, getWorkProjects, getFunProjects } fr
 
 export const revalidate = 3600; // Revalidate every hour
 
+const doingItems = [
+  {
+    title: 'Singing lessons',
+    description: 'Taking voice lessons weekly, working on breath control and expanding range.',
+  },
+  {
+    title: 'Cycling around Madrid',
+    description: 'Exploring new routes through Casa de Campo and along the Manzanares river.',
+  },
+  {
+    title: 'Learning fingerpicking guitar',
+    description: 'Working through folk and classical fingerstyle patterns in the evenings.',
+  },
+];
+
 export default async function TheseDaysPage() {
   const [currentlyReading, pastBooks, workProjects, funProjects] = await Promise.all([
     getCurrentlyReading(),
@@ -12,17 +27,17 @@ export default async function TheseDaysPage() {
 
   return (
     <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <h1 className="font-display text-3xl text-gray-900 mb-2">Current</h1>
         <p className="text-gray-600 mb-12">
-          What I'm working on, reading, and thinking about right now.
+          What I'm working on, reading, and doing right now.
         </p>
 
-        {/* Three-column layout */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-          {/* Work */}
-          <section className="min-h-[400px]">
-            <h2 className="font-display text-xl text-gray-900 mb-6">Work</h2>
+        {/* 2x2 grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-14">
+          {/* Working */}
+          <section>
+            <h2 className="font-display text-xl text-gray-900 mb-6">Working</h2>
             <div className="space-y-6">
               {workProjects.length > 0 ? (
                 workProjects.map((project: any) => (
@@ -60,9 +75,9 @@ export default async function TheseDaysPage() {
             </div>
           </section>
 
-          {/* Play */}
-          <section className="min-h-[400px]">
-            <h2 className="font-display text-xl text-gray-900 mb-6">Play</h2>
+          {/* Playing */}
+          <section>
+            <h2 className="font-display text-xl text-gray-900 mb-6">Playing</h2>
             <div className="space-y-6">
               {funProjects.length > 0 ? (
                 funProjects.map((project: any) => (
@@ -104,7 +119,7 @@ export default async function TheseDaysPage() {
           </section>
 
           {/* Reading */}
-          <section className="min-h-[400px]">
+          <section>
             <h2 className="font-display text-xl text-gray-900 mb-6">Reading</h2>
             {currentlyReading ? (
               <div className="border-t border-gray-200 pt-5 flex gap-4">
@@ -143,6 +158,19 @@ export default async function TheseDaysPage() {
                 </div>
               </div>
             )}
+          </section>
+
+          {/* Doing */}
+          <section>
+            <h2 className="font-display text-xl text-gray-900 mb-6">Doing</h2>
+            <div className="space-y-6">
+              {doingItems.map((item, i) => (
+                <div key={i} className="border-t border-gray-200 pt-5">
+                  <h3 className="text-base font-medium text-gray-900 mb-1">{item.title}</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">{item.description}</p>
+                </div>
+              ))}
+            </div>
           </section>
         </div>
       </div>
