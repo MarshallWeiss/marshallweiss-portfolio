@@ -48,9 +48,9 @@ export default async function TheseDaysPage() {
                           href={project.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-xs text-gray-500 hover:text-gray-900 shrink-0 ml-2"
+                          className="text-xs font-medium text-gray-900 px-3 py-1 border border-gray-300 rounded-full hover:bg-gray-100 transition-colors shrink-0 ml-2"
                         >
-                          View →
+                          View live experiment ↗
                         </a>
                       )}
                     </div>

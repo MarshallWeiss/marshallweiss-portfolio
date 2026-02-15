@@ -36,7 +36,7 @@ export default function RootLayout({
             <p>&copy; {new Date().getFullYear()} Marshall Weiss</p>
             <div className="flex items-center gap-5">
               <a href="mailto:marshall.weiss@gmail.com" className="hover:text-gray-600 transition-colors">marshall.weiss@gmail.com</a>
-              <a href="https://www.linkedin.com/in/marshallweiss/" target="_blank" rel="noopener noreferrer" className="hover:text-gray-600 transition-colors">LinkedIn</a>
+              <a href="https://www.linkedin.com/in/marshallweissdesign/" target="_blank" rel="noopener noreferrer" className="hover:text-gray-600 transition-colors">LinkedIn</a>
             </div>
           </div>
         </footer>
