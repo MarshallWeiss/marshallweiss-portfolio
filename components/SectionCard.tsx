@@ -8,6 +8,8 @@ export interface SectionItem {
   date: string;
   slug: string;
   image?: string;
+  category?: string;
+  readingTime?: number;
 }
 
 interface SectionCardProps {
