@@ -31,6 +31,15 @@ export default function RootLayout({
       <body className="font-sans">
         <Navigation />
         <main>{children}</main>
+        <footer className="bg-gray-100 py-4 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-gray-400">
+            <p>&copy; {new Date().getFullYear()} Marshall Weiss</p>
+            <div className="flex items-center gap-5">
+              <a href="mailto:marshall.weiss@gmail.com" className="hover:text-gray-600 transition-colors">marshall.weiss@gmail.com</a>
+              <a href="https://www.linkedin.com/in/marshallweiss/" target="_blank" rel="noopener noreferrer" className="hover:text-gray-600 transition-colors">LinkedIn</a>
+            </div>
+          </div>
+        </footer>
       </body>
     </html>
   );

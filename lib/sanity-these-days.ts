@@ -92,6 +92,31 @@ export async function getDoingItems(limit: number = 5) {
   }));
 }
 
+// Fetch curated articles
+export async function getCuratedArticles() {
+  const query = `*[_type == "curatedArticle"] | order(addedAt desc) {
+    _id,
+    title,
+    url,
+    source,
+    description,
+    category,
+    addedAt
+  }`;
+
+  const articles = await client.fetch(query);
+
+  return articles.map((article: any) => ({
+    id: article._id,
+    title: article.title,
+    url: article.url,
+    source: article.source,
+    description: article.description,
+    category: article.category,
+    addedAt: article.addedAt,
+  }));
+}
+
 // Fetch fun projects
 export async function getFunProjects(limit: number = 3) {
   const query = `*[_type == "funProject" && status == "in-progress"] | order(updatedAt desc) [0...${limit}] {
