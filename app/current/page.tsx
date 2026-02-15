@@ -33,15 +33,15 @@ export default async function TheseDaysPage() {
           What I'm working on, reading, and doing right now.
         </p>
 
-        {/* 2x2 grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-14">
+        {/* 2x2 card grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Working */}
-          <section>
+          <div className="border border-gray-200 rounded-xl p-8">
             <h2 className="font-display text-xl text-gray-900 mb-6">Working</h2>
-            <div className="space-y-6">
+            <div className="space-y-5">
               {workProjects.length > 0 ? (
                 workProjects.map((project: any) => (
-                  <div key={project.id} className="border-t border-gray-200 pt-5 relative">
+                  <div key={project.id} className="relative">
                     <div className="select-none">
                       <h3 className="text-base font-medium text-gray-900 mb-1 blur-[6px]">{project.title}</h3>
                       {project.company && (
@@ -59,7 +59,7 @@ export default async function TheseDaysPage() {
                   </div>
                 ))
               ) : (
-                <div className="border-t border-gray-200 pt-5 relative">
+                <div className="relative">
                   <div className="select-none">
                     <h3 className="text-base font-medium text-gray-900 mb-1 blur-[6px]">Subscription growth initiative</h3>
                     <p className="text-xs text-gray-500 mb-2 blur-[6px]">El Confidencial</p>
@@ -73,15 +73,15 @@ export default async function TheseDaysPage() {
                 </div>
               )}
             </div>
-          </section>
+          </div>
 
           {/* Playing */}
-          <section>
+          <div className="border border-gray-200 rounded-xl p-8">
             <h2 className="font-display text-xl text-gray-900 mb-6">Playing</h2>
-            <div className="space-y-6">
+            <div className="space-y-5">
               {funProjects.length > 0 ? (
                 funProjects.map((project: any) => (
-                  <div key={project.id} className="border-t border-gray-200 pt-5">
+                  <div key={project.id}>
                     <div className="flex justify-between items-start">
                       <h3 className="text-base font-medium text-gray-900 mb-1">{project.title}</h3>
                       {project.url && (
@@ -116,13 +116,13 @@ export default async function TheseDaysPage() {
                 <p className="text-sm text-gray-500">No fun projects right now.</p>
               )}
             </div>
-          </section>
+          </div>
 
           {/* Reading */}
-          <section>
+          <div className="border border-gray-200 rounded-xl p-8">
             <h2 className="font-display text-xl text-gray-900 mb-6">Reading</h2>
             {currentlyReading ? (
-              <div className="border-t border-gray-200 pt-5 flex gap-4">
+              <div className="flex gap-4">
                 {currentlyReading.cover && (
                   <img
                     src={currentlyReading.cover}
@@ -144,13 +144,12 @@ export default async function TheseDaysPage() {
               <p className="text-sm text-gray-500">Not reading anything right now.</p>
             )}
 
-            {/* Past Books */}
             {pastBooks.length > 0 && (
               <div className="mt-8">
                 <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-4">Previously</h3>
                 <div className="space-y-3">
                   {pastBooks.map((book: any) => (
-                    <div key={book.id} className="border-t border-gray-100 pt-3">
+                    <div key={book.id}>
                       <p className="text-sm font-medium text-gray-900 line-clamp-1">{book.title}</p>
                       <p className="text-xs text-gray-500">{book.author}</p>
                     </div>
@@ -158,20 +157,20 @@ export default async function TheseDaysPage() {
                 </div>
               </div>
             )}
-          </section>
+          </div>
 
           {/* Doing */}
-          <section>
+          <div className="border border-gray-200 rounded-xl p-8">
             <h2 className="font-display text-xl text-gray-900 mb-6">Doing</h2>
-            <div className="space-y-6">
+            <div className="space-y-5">
               {doingItems.map((item, i) => (
-                <div key={i} className="border-t border-gray-200 pt-5">
+                <div key={i}>
                   <h3 className="text-base font-medium text-gray-900 mb-1">{item.title}</h3>
                   <p className="text-sm text-gray-600 leading-relaxed">{item.description}</p>
                 </div>
               ))}
             </div>
-          </section>
+          </div>
         </div>
       </div>
     </div>
