@@ -82,7 +82,8 @@ export async function getFunProjects(limit: number = 3) {
     title,
     description,
     tags,
-    url
+    url,
+    image
   }`;
 
   const projects = await client.fetch(query);
@@ -93,5 +94,6 @@ export async function getFunProjects(limit: number = 3) {
     description: project.description,
     tags: project.tags || [],
     url: project.url,
+    image: project.image ? urlFor(project.image).url() : null,
   }));
 }

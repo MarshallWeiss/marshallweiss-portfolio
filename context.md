@@ -6,6 +6,33 @@ Session context for continuing work on this project.
 
 `antigravity-sanity-work` - Building out Sanity CMS integration for case studies
 
+## Recent Work (2026-02-15) — Session 4
+
+### Current Page Polish & Fun Project Images ✅
+**Added image support to fun projects and polished Current page card headings:**
+
+**Fun Project Image Support:**
+- Added `image` field (type: image with hotspot) to `funProject` Sanity schema
+- Updated GROQ query to fetch image data
+- Piped image through `urlFor()` in data layer
+- Rendered as square app icon (80px, rounded-2xl) inline with project text
+- Deployed updated schema to Sanity cloud
+
+**Current Page Card Subtitles:**
+- Added descriptive subtitles to all four card headings:
+  - Working — "Client and day-job projects"
+  - Playing — "Side projects and experiments"
+  - Reading — "What's on the nightstand"
+  - Doing — "Hobbies and habits"
+
+**Files Updated:**
+- `sanity/schemas/funProject.ts` — Added image field
+- `lib/sanity-these-days.ts` — Added image to query and data mapping
+- `app/current/page.tsx` — Image rendering, card subtitles
+- `components/ConfidentialCard.tsx` — Working card subtitle
+
+**Build Status:** ✓ Schema deployed, dev server running
+
 ## Recent Work (2026-02-15) — Session 3
 
 ### Typography Overhaul & Homepage Redesign ✅

@@ -44,6 +44,15 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'image',
+      title: 'Image',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+      description: 'Optional image for the project',
+    }),
+    defineField({
       name: 'url',
       title: 'Project URL',
       type: 'url',

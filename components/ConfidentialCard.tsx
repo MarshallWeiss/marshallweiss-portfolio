@@ -41,7 +41,8 @@ export default function ConfidentialCard({ projects }: ConfidentialCardProps) {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      <h2 className="font-display text-xl text-gray-900 mb-6">Working</h2>
+      <h2 className="font-display text-xl text-gray-900 mb-1">Working</h2>
+      <p className="text-sm text-gray-500 mb-6">Client and day-job projects</p>
       <div className="space-y-5">
         {projects.length > 0 ? (
           projects.map((project) =>

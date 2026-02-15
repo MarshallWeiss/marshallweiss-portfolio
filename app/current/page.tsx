@@ -41,11 +41,20 @@ export default async function TheseDaysPage() {
 
           {/* Playing */}
           <div className="border border-gray-200 rounded-xl p-8">
-            <h2 className="font-display text-xl text-gray-900 mb-6">Playing</h2>
+            <h2 className="font-display text-xl text-gray-900 mb-1">Playing</h2>
+            <p className="text-sm text-gray-500 mb-6">Side projects and experiments</p>
             <div className="space-y-5">
               {funProjects.length > 0 ? (
                 funProjects.map((project: any) => (
-                  <div key={project.id}>
+                  <div key={project.id} className="flex gap-4">
+                    {project.image && (
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-20 h-20 object-cover rounded-2xl shrink-0 shadow-sm"
+                      />
+                    )}
+                    <div className="flex-1 min-w-0">
                     <div className="flex justify-between items-start">
                       <h3 className="text-base font-medium text-gray-900 mb-1">{project.title}</h3>
                       {project.url && (
@@ -74,6 +83,7 @@ export default async function TheseDaysPage() {
                         ))}
                       </div>
                     )}
+                    </div>
                   </div>
                 ))
               ) : (
@@ -84,7 +94,8 @@ export default async function TheseDaysPage() {
 
           {/* Reading */}
           <div className="border border-gray-200 rounded-xl p-8">
-            <h2 className="font-display text-xl text-gray-900 mb-6">Reading</h2>
+            <h2 className="font-display text-xl text-gray-900 mb-1">Reading</h2>
+            <p className="text-sm text-gray-500 mb-6">What's on the nightstand</p>
             {currentlyReading ? (
               <div className="flex gap-4">
                 {currentlyReading.cover && (
@@ -125,7 +136,8 @@ export default async function TheseDaysPage() {
 
           {/* Doing */}
           <div className="border border-gray-200 rounded-xl p-8">
-            <h2 className="font-display text-xl text-gray-900 mb-6">Doing</h2>
+            <h2 className="font-display text-xl text-gray-900 mb-1">Doing</h2>
+            <p className="text-sm text-gray-500 mb-6">Hobbies and habits</p>
             <div className="space-y-5">
               {doingItems.map((item, i) => (
                 <div key={i}>
