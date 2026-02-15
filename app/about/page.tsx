@@ -1,9 +1,44 @@
 import Image from 'next/image';
+import { Download } from 'lucide-react';
+
+const workHistory = [
+  {
+    title: 'Senior Product Designer',
+    company: 'El Confidencial',
+    period: '2022 - Present',
+    description: 'Senior product designer for El Confidencial, a top digital newspaper in Spain (5M DUU, 60K paying subscribers). Involved in all aspects of product design, with a focus on long-term strategy, product discovery, user research, design system creation, subscription growth, and AI integration.',
+  },
+  {
+    title: 'Assistant Professor',
+    company: 'Universidad Europea',
+    period: '2025 - Present',
+    description: 'Assistant Professor in the Master in Communication and Digital Product Design at Universidad Europea de Madrid, helping students use design thinking and processes to take digital businesses from initial concept to final product.',
+  },
+  {
+    title: 'UX/UI Designer',
+    company: 'Portal Derecho, S.A.',
+    period: '2020 - 2022',
+    description: 'Led UX/UI research and design for Iustel, a legal document search platform. Responsible for all project phases, including user research, user persona and user-journey creation, wireframing, prototyping, design system development, and developer handoff.',
+  },
+  {
+    title: 'Web and Graphic Designer',
+    company: 'Freelance',
+    period: '2018 - 2020',
+    description: 'Completed a variety of web design/development and graphic design projects for businesses and organizations in both the United States and Spain. Worked with clients to create flexible, scalable, and maintainable design solutions.',
+  },
+];
+
+const education = [
+  { degree: 'Certificate, UX Design', school: 'CEI Escuela de Diseño (Madrid)', period: '2021 - 2022' },
+  { degree: 'Master, Design', school: 'CEI Escuela de Diseño (Madrid)', period: '2020 - 2021' },
+  { degree: 'M.A., Philosophy', school: 'Univ. Complutense de Madrid', period: '2018 - 2020' },
+  { degree: 'B.A., Psychology', school: 'University of Wisconsin-Madison', period: '2012 - 2016' },
+];
 
 export default function AboutPage() {
   return (
     <div className="min-h-screen">
-      {/* Hero Section with Gradient */}
+      {/* Hero Section */}
       <div className="relative bg-gradient-to-br from-gray-50 via-white to-gray-50 py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto">
           <div className="flex flex-col md:flex-row gap-12 items-start">
@@ -37,7 +72,60 @@ export default function AboutPage() {
                   After completing a UX design course, I started taking on freelance projects and gradually built my way into the field. Now, as a senior product designer, I'm fascinated by how AI is reshaping our workflows—the new possibilities it creates, and the ethical and political questions it raises.
                 </p>
               </div>
+
+              <a
+                href="/Marshall-Weiss-CV.pdf"
+                download
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors"
+              >
+                <Download className="w-4 h-4" />
+                Download CV
+              </a>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Work Experience Timeline */}
+      <div className="py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="font-display text-3xl text-gray-900 mb-10">Experience</h2>
+          <div className="relative">
+            {/* Timeline line */}
+            <div className="absolute left-0 md:left-[7px] top-2 bottom-2 w-px bg-gray-200" />
+
+            <div className="space-y-10">
+              {workHistory.map((job, i) => (
+                <div key={i} className="relative pl-8 md:pl-10">
+                  {/* Timeline dot */}
+                  <div className="absolute left-0 md:left-0 top-1.5 w-[15px] h-[15px] rounded-full border-2 border-gray-900 bg-white" />
+                  <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-2">
+                    <div>
+                      <h3 className="text-lg font-medium text-gray-900">{job.title}</h3>
+                      <p className="text-sm text-gray-500">{job.company}</p>
+                    </div>
+                    <span className="text-sm text-gray-400 shrink-0">{job.period}</span>
+                  </div>
+                  <p className="text-sm text-gray-600 leading-relaxed">{job.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Education */}
+      <div className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="font-display text-3xl text-gray-900 mb-10">Education</h2>
+          <div className="grid sm:grid-cols-2 gap-6">
+            {education.map((edu, i) => (
+              <div key={i} className="border-t border-gray-200 pt-4">
+                <h3 className="text-base font-medium text-gray-900">{edu.degree}</h3>
+                <p className="text-sm text-gray-500 mt-1">{edu.school}</p>
+                <p className="text-sm text-gray-400 mt-0.5">{edu.period}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -45,7 +133,7 @@ export default function AboutPage() {
       {/* Contact Section */}
       <div className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">Get in Touch</h2>
+          <h2 className="font-display text-3xl text-gray-900 mb-8">Get in Touch</h2>
           <div className="grid md:grid-cols-2 gap-6">
             <a
               href="mailto:marshallweiss94@gmail.com"
