@@ -1077,6 +1077,36 @@ export default defineType({
                             initialValue: 'medium',
                         }),
                         ...layoutFields,
+                        defineField({
+                            name: 'paddingTop',
+                            title: 'Padding Top',
+                            description: 'Override top padding independently (useful when this block serves as a title for the block below)',
+                            type: 'string',
+                            options: {
+                                list: [
+                                    { title: 'None', value: 'none' },
+                                    { title: 'Compact', value: 'compact' },
+                                    { title: 'Default', value: 'default' },
+                                    { title: 'Spacious', value: 'spacious' },
+                                ],
+                                layout: 'radio',
+                            },
+                        }),
+                        defineField({
+                            name: 'paddingBottom',
+                            title: 'Padding Bottom',
+                            description: 'Override bottom padding independently',
+                            type: 'string',
+                            options: {
+                                list: [
+                                    { title: 'None', value: 'none' },
+                                    { title: 'Compact', value: 'compact' },
+                                    { title: 'Default', value: 'default' },
+                                    { title: 'Spacious', value: 'spacious' },
+                                ],
+                                layout: 'radio',
+                            },
+                        }),
                     ],
                     preview: {
                         select: {
@@ -1117,18 +1147,25 @@ export default defineType({
                         }),
                         defineField({
                             name: 'layout',
-                            title: 'Annotation Layout',
+                            title: 'Layout',
                             type: 'string',
-                            description: 'Choose how annotations appear: overlaid on image with legend below, or stacked beside the image',
+                            description: 'Overlay: full-width image with tooltips. Side by Side: text on one side, annotated image on the other.',
                             options: {
                                 list: [
-                                    { title: 'Overlay with Legend Below', value: 'overlay' },
-                                    { title: 'Stack on Left', value: 'stackLeft' },
-                                    { title: 'Stack on Right', value: 'stackRight' },
+                                    { title: 'Overlay', value: 'overlay' },
+                                    { title: 'Side by Side', value: 'sideBySide' },
                                 ],
                                 layout: 'radio',
                             },
                             initialValue: 'overlay',
+                        }),
+                        defineField({
+                            name: 'reverseLayout',
+                            type: 'boolean',
+                            title: 'Image on Left',
+                            description: 'Put the image on the left and text on the right (default is text left, image right)',
+                            initialValue: false,
+                            hidden: ({ parent }) => parent?.layout !== 'sideBySide',
                         }),
                         defineField({
                             name: 'hotspots',
@@ -1173,10 +1210,9 @@ export default defineType({
                         defineField({
                             name: 'showLegend',
                             type: 'boolean',
-                            title: 'Show Legend Below Image',
-                            description: 'Display all hotspots as a numbered list below the image (only applies to Overlay layout)',
+                            title: 'Show Annotations',
+                            description: 'Show annotation cards (legend below in Overlay, sidebar in Stack layouts). When off, only tooltips on hover are shown.',
                             initialValue: true,
-                            hidden: ({ parent }) => parent?.layout === 'stackLeft' || parent?.layout === 'stackRight',
                         }),
                         aspectRatioField,
                         objectFitField,
@@ -1194,6 +1230,83 @@ export default defineType({
                                 title: `📍 Annotated Image${headline ? `: ${headline}` : ''}`,
                                 subtitle: `${count} hotspot${count !== 1 ? 's' : ''}`,
                                 media,
+                            }
+                        },
+                    },
+                }),
+                // Divider
+                defineField({
+                    name: 'divider',
+                    title: 'Divider',
+                    type: 'object',
+                    fields: [
+                        defineField({
+                            name: 'style',
+                            title: 'Style',
+                            type: 'string',
+                            options: {
+                                list: [
+                                    { title: 'Line', value: 'line' },
+                                    { title: 'Dots', value: 'dots' },
+                                    { title: 'Space Only', value: 'space' },
+                                ],
+                                layout: 'radio',
+                            },
+                            initialValue: 'line',
+                        }),
+                        defineField({
+                            name: 'width',
+                            title: 'Width',
+                            type: 'string',
+                            options: {
+                                list: [
+                                    { title: 'Narrow', value: 'narrow' },
+                                    { title: 'Medium', value: 'medium' },
+                                    { title: 'Wide', value: 'wide' },
+                                    { title: 'Full', value: 'full' },
+                                ],
+                                layout: 'radio',
+                            },
+                            initialValue: 'medium',
+                        }),
+                        defineField({
+                            name: 'spacing',
+                            title: 'Vertical Spacing',
+                            type: 'string',
+                            options: {
+                                list: [
+                                    { title: 'Compact', value: 'compact' },
+                                    { title: 'Default', value: 'default' },
+                                    { title: 'Spacious', value: 'spacious' },
+                                ],
+                                layout: 'radio',
+                            },
+                            initialValue: 'default',
+                        }),
+                        defineField({
+                            name: 'color',
+                            title: 'Color',
+                            type: 'string',
+                            options: {
+                                list: [
+                                    { title: 'Light', value: 'light' },
+                                    { title: 'Medium', value: 'medium' },
+                                    { title: 'Dark', value: 'dark' },
+                                ],
+                                layout: 'radio',
+                            },
+                            initialValue: 'light',
+                            hidden: ({ parent }) => parent?.style === 'space',
+                        }),
+                    ],
+                    preview: {
+                        select: {
+                            style: 'style',
+                        },
+                        prepare({ style }) {
+                            const styleLabel = style === 'dots' ? 'Dots' : style === 'space' ? 'Space' : 'Line'
+                            return {
+                                title: `── Divider (${styleLabel})`,
                             }
                         },
                     },

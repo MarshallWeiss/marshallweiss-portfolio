@@ -12,7 +12,9 @@ export default function Home() {
     <div className="min-h-screen flex flex-col justify-center px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto w-full">
         <h1 className="font-display text-5xl md:text-6xl lg:text-7xl text-gray-900 leading-[1.1] mb-16">
-          Marshall Weiss is a senior product designer for{' '}
+          Marshall Weiss<br />
+          is a senior product designer<br />
+          at{' '}
           <a href="https://www.elconfidencial.com/" target="_blank" rel="noopener noreferrer" className="underline decoration-gray-300 hover:decoration-gray-900 transition-colors">
             El Confidencial
           </a>

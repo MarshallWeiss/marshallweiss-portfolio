@@ -52,7 +52,7 @@ export default function SideBySideImages({
                 subheading={subheading}
                 headlineSize={headlineSize}
                 textAlign={textAlign}
-                className="mb-8"
+                className=""
             />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
                 {leftImage && (

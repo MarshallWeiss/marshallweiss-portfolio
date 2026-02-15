@@ -1,29 +1,15 @@
-import { getCurrentlyReading, getPastBooks, getWorkProjects, getFunProjects } from '@/lib/sanity-these-days';
+import { getCurrentlyReading, getPastBooks, getWorkProjects, getFunProjects, getDoingItems } from '@/lib/sanity-these-days';
 import ConfidentialCard from '@/components/ConfidentialCard';
 
 export const revalidate = 3600; // Revalidate every hour
 
-const doingItems = [
-  {
-    title: '🎤 Singing lessons',
-    description: 'Taking voice lessons weekly, working on breath control and expanding range.',
-  },
-  {
-    title: '🚴 Cycling around Madrid',
-    description: 'Exploring new routes through Casa de Campo and along the Manzanares river.',
-  },
-  {
-    title: '🎸 Learning fingerpicking guitar',
-    description: 'Working through folk and classical fingerstyle patterns in the evenings.',
-  },
-];
-
 export default async function TheseDaysPage() {
-  const [currentlyReading, pastBooks, workProjects, funProjects] = await Promise.all([
+  const [currentlyReading, pastBooks, workProjects, funProjects, doingItems] = await Promise.all([
     getCurrentlyReading(),
     getPastBooks(6),
     getWorkProjects(3),
     getFunProjects(3),
+    getDoingItems(),
   ]);
 
   return (
@@ -139,12 +125,18 @@ export default async function TheseDaysPage() {
             <h2 className="font-display text-xl text-gray-900 mb-1">Doing</h2>
             <p className="text-sm text-gray-500 mb-6">Hobbies and habits</p>
             <div className="space-y-5">
-              {doingItems.map((item, i) => (
-                <div key={i}>
-                  <h3 className="text-base font-medium text-gray-900 mb-1">{item.title}</h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">{item.description}</p>
-                </div>
-              ))}
+              {doingItems.length > 0 ? (
+                doingItems.map((item: any) => (
+                  <div key={item.id}>
+                    <h3 className="text-base font-medium text-gray-900 mb-1">{item.title}</h3>
+                    {item.description && (
+                      <p className="text-sm text-gray-600 leading-relaxed">{item.description}</p>
+                    )}
+                  </div>
+                ))
+              ) : (
+                <p className="text-sm text-gray-500">Nothing here yet.</p>
+              )}
             </div>
           </div>
         </div>

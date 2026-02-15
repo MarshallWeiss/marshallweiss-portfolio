@@ -57,7 +57,7 @@ export default function Comparison({
                 subheading={subheading}
                 headlineSize={headlineSize}
                 textAlign={textAlign}
-                className="mb-4"
+                className=""
             />
             {description && (
                 <p className={cn("text-gray-600 text-lg leading-relaxed mb-12 md:mb-16", alignmentClass)}>

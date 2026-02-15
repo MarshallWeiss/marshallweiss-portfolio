@@ -12,6 +12,7 @@ import Comparison from './Comparison';
 import SideBySideImages from './SideBySideImages';
 import TextBlock from './TextBlock';
 import AnnotatedImage from './AnnotatedImage';
+import Divider from './Divider';
 import LazyBlock from './LazyBlock';
 
 interface BlockRendererProps {
@@ -50,6 +51,8 @@ function renderBlock(module: any, eager = false) {
             return <TextBlock {...module} />;
         case 'annotatedImage':
             return <AnnotatedImage {...module} />;
+        case 'divider':
+            return <Divider {...module} />;
         default:
             console.warn(`Unknown block type: ${module._type}`);
             return (

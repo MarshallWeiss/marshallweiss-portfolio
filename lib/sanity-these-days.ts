@@ -75,6 +75,23 @@ export async function getWorkProjects(limit: number = 3) {
   }));
 }
 
+// Fetch doing items
+export async function getDoingItems(limit: number = 5) {
+  const query = `*[_type == "doingItem" && status == "active"] | order(priority asc) [0...${limit}] {
+    _id,
+    title,
+    description
+  }`;
+
+  const items = await client.fetch(query);
+
+  return items.map((item: any) => ({
+    id: item._id,
+    title: item.title,
+    description: item.description,
+  }));
+}
+
 // Fetch fun projects
 export async function getFunProjects(limit: number = 3) {
   const query = `*[_type == "funProject" && status == "in-progress"] | order(updatedAt desc) [0...${limit}] {

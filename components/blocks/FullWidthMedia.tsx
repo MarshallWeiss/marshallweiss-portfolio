@@ -93,7 +93,7 @@ export default function FullWidthMedia({
                 subheading={subheading}
                 headlineSize={headlineSize}
                 textAlign={textAlign}
-                className="mb-8 md:mb-10"
+                className=""
             />
             {caption && (
                 <p className={cn("text-gray-600 text-lg leading-relaxed mb-10 md:mb-14", alignmentClass)}>

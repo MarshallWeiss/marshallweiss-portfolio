@@ -43,41 +43,27 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen py-12 md:py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto">
-        {/* Header */}
-        <div className="flex items-start gap-8 md:gap-12 mb-12">
-          <div className="flex-1">
-            <h1 className="font-display text-5xl md:text-6xl text-gray-900 mb-4">Marshall Weiss</h1>
-            <p className="text-lg text-gray-700 max-w-2xl">
-              <span className="font-medium">AI-first product designer and developer with four years of experience in a bilingual, bicultural environment.</span>{' '}
-              Passionate about amplifying the impact of socially conscious products through excellent design.
-            </p>
-            <a
-              href="/Marshall-Weiss-CV.pdf"
-              download
-              className="inline-flex items-center gap-2 mt-6 px-5 py-2.5 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors"
-            >
-              <Download className="w-4 h-4" />
-              Download CV
-            </a>
-          </div>
-          <div className="hidden md:block flex-shrink-0">
-            <div className="relative w-36 h-36 lg:w-44 lg:h-44 rounded-full overflow-hidden ring-1 ring-gray-900/5">
-              <Image
-                src="/images/about/profile.jpg"
-                alt="Marshall Weiss"
-                fill
-                className="object-cover"
-                sizes="176px"
-                priority
-              />
-            </div>
-          </div>
-        </div>
-
         {/* Two-column layout */}
         <div className="grid grid-cols-1 md:grid-cols-[1fr_300px] gap-16">
           {/* Left column */}
           <div className="space-y-12">
+            {/* Header */}
+            <div>
+              <h1 className="font-display text-5xl md:text-6xl text-gray-900 mb-4">Marshall Weiss</h1>
+              <p className="text-lg text-gray-700">
+                <span className="font-medium">AI-first product designer and developer with four years of experience in a bilingual, bicultural environment.</span>{' '}
+                Passionate about amplifying the impact of socially conscious products through excellent design.
+              </p>
+              <a
+                href="/Marshall-Weiss-CV.pdf"
+                download
+                className="inline-flex items-center gap-2 mt-6 px-5 py-2.5 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors"
+              >
+                <Download className="w-4 h-4" />
+                Download CV
+              </a>
+            </div>
+
             {/* Work Experience */}
             <section>
               <h2 className="font-display text-2xl text-gray-900 mb-8">Selected Work Experience</h2>
@@ -112,6 +98,20 @@ export default function AboutPage() {
 
           {/* Right column */}
           <div className="space-y-10">
+            {/* Photo */}
+            <div className="flex justify-center">
+              <div className="relative w-36 h-36 lg:w-44 lg:h-44 rounded-full overflow-hidden ring-1 ring-gray-900/5">
+                <Image
+                  src="/images/about/profile.jpg"
+                  alt="Marshall Weiss"
+                  fill
+                  className="object-cover"
+                  sizes="176px"
+                  priority
+                />
+              </div>
+            </div>
+
             {/* Contact */}
             <section>
               <h2 className="font-display text-2xl text-gray-900 mb-4">Contact</h2>

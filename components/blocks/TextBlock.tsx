@@ -2,6 +2,8 @@ import { cn } from '@/lib/utils'
 import BlockHeading from './BlockHeading'
 import BlockWrapper from './BlockWrapper'
 
+type SpacingValue = 'none' | 'compact' | 'default' | 'spacious'
+
 interface TextBlockProps {
     headline?: string
     subheading?: string
@@ -12,7 +14,9 @@ interface TextBlockProps {
     maxWidth?: 'narrow' | 'medium' | 'wide'
     width?: 'contained' | 'wide' | 'full'
     background?: 'none' | 'white' | 'gray'
-    spacing?: 'none' | 'compact' | 'default' | 'spacious'
+    spacing?: SpacingValue
+    paddingTop?: SpacingValue
+    paddingBottom?: SpacingValue
 }
 
 export default function TextBlock({
@@ -26,6 +30,8 @@ export default function TextBlock({
     width = 'contained',
     background = 'none',
     spacing = 'default',
+    paddingTop,
+    paddingBottom,
 }: TextBlockProps) {
     const alignmentClasses = {
         left: 'text-left',
@@ -46,8 +52,25 @@ export default function TextBlock({
         xlarge: 'text-2xl md:text-3xl leading-relaxed',
     }
 
+    const hasIndependentPadding = paddingTop || paddingBottom
+
+    const paddingClasses: Record<SpacingValue, { top: string; bottom: string }> = {
+        none: { top: '', bottom: '' },
+        compact: { top: 'pt-8 md:pt-12', bottom: 'pb-8 md:pb-12' },
+        default: { top: 'pt-12 md:pt-24', bottom: 'pb-12 md:pb-24' },
+        spacious: { top: 'pt-16 md:pt-32', bottom: 'pb-16 md:pb-32' },
+    }
+
     return (
-        <BlockWrapper width={width} background={background} spacing={spacing}>
+        <BlockWrapper
+            width={width}
+            background={background}
+            spacing={hasIndependentPadding ? 'none' : spacing}
+            className={hasIndependentPadding ? cn(
+                paddingClasses[paddingTop || spacing].top,
+                paddingClasses[paddingBottom || spacing].bottom,
+            ) : undefined}
+        >
             <div className={cn(
                 'mx-auto',
                 maxWidthClasses[maxWidth],
