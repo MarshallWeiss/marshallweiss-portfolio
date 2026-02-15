@@ -59,7 +59,8 @@ export async function getWorkProjects(limit: number = 3) {
     title,
     description,
     company,
-    startDate
+    startDate,
+    confidential
   }`;
 
   const projects = await client.fetch(query);
@@ -70,6 +71,7 @@ export async function getWorkProjects(limit: number = 3) {
     description: project.description,
     company: project.company,
     startDate: project.startDate,
+    confidential: project.confidential ?? true,
   }));
 }
 

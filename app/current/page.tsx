@@ -1,18 +1,19 @@
 import { getCurrentlyReading, getPastBooks, getWorkProjects, getFunProjects } from '@/lib/sanity-these-days';
+import ConfidentialCard from '@/components/ConfidentialCard';
 
 export const revalidate = 3600; // Revalidate every hour
 
 const doingItems = [
   {
-    title: 'Singing lessons',
+    title: '🎤 Singing lessons',
     description: 'Taking voice lessons weekly, working on breath control and expanding range.',
   },
   {
-    title: 'Cycling around Madrid',
+    title: '🚴 Cycling around Madrid',
     description: 'Exploring new routes through Casa de Campo and along the Manzanares river.',
   },
   {
-    title: 'Learning fingerpicking guitar',
+    title: '🎸 Learning fingerpicking guitar',
     description: 'Working through folk and classical fingerstyle patterns in the evenings.',
   },
 ];
@@ -35,45 +36,8 @@ export default async function TheseDaysPage() {
 
         {/* 2x2 card grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Working */}
-          <div className="border border-gray-200 rounded-xl p-8">
-            <h2 className="font-display text-xl text-gray-900 mb-6">Working</h2>
-            <div className="space-y-5">
-              {workProjects.length > 0 ? (
-                workProjects.map((project: any) => (
-                  <div key={project.id} className="relative">
-                    <div className="select-none">
-                      <h3 className="text-base font-medium text-gray-900 mb-1 blur-[6px]">{project.title}</h3>
-                      {project.company && (
-                        <p className="text-xs text-gray-500 mb-2 blur-[6px]">{project.company}</p>
-                      )}
-                      {project.description && (
-                        <p className="text-sm text-gray-600 leading-relaxed blur-[6px]">{project.description}</p>
-                      )}
-                    </div>
-                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                      <span className="text-xs font-medium text-gray-400 bg-white/80 px-3 py-1 rounded-full border border-gray-200">
-                        Confidential
-                      </span>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className="relative">
-                  <div className="select-none">
-                    <h3 className="text-base font-medium text-gray-900 mb-1 blur-[6px]">Subscription growth initiative</h3>
-                    <p className="text-xs text-gray-500 mb-2 blur-[6px]">El Confidencial</p>
-                    <p className="text-sm text-gray-600 leading-relaxed blur-[6px]">Leading product discovery and design for a new subscriber conversion flow targeting engaged readers.</p>
-                  </div>
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <span className="text-xs font-medium text-gray-400 bg-white/80 px-3 py-1 rounded-full border border-gray-200">
-                      Confidential
-                    </span>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
+          {/* Working - client component with cursor tooltip */}
+          <ConfidentialCard projects={workProjects} />
 
           {/* Playing */}
           <div className="border border-gray-200 rounded-xl p-8">

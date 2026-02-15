@@ -47,6 +47,13 @@ export default defineType({
       initialValue: 3,
     }),
     defineField({
+      name: 'confidential',
+      title: 'Confidential',
+      type: 'boolean',
+      description: 'Blur project details and show cursor tooltip on hover',
+      initialValue: true,
+    }),
+    defineField({
       name: 'startDate',
       title: 'Start Date',
       type: 'date',
