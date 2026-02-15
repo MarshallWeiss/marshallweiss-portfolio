@@ -6,6 +6,52 @@ Session context for continuing work on this project.
 
 `antigravity-sanity-work` - Building out Sanity CMS integration for case studies
 
+## Recent Work (2026-02-15) — Session 5
+
+### Sanity Content Edits, Curated Articles Tab, Footer & Favicon ✅
+**Shortened case study text, added Thoughts page tabs, global footer, and new branding:**
+
+**Case Study Content Edits (Sanity patches):**
+- Shortened benchmarking description and 5 key changes descriptions in Checkout Optimization
+- Shortened 6 insight cards and research process text in CMS Modernization
+- Shortened and uniformized 6 key question titles/answers in Paywall Redesign
+
+**Curated Articles Tab on Thoughts Page:**
+- Created `curatedArticle` Sanity schema (title, url, source, description, category, addedAt)
+- Added `getCuratedArticles()` query function to data layer
+- Updated ThoughtsFilter component with "Mine" and "Others" tab UI
+- Seeded 6 curated articles (Dario Amodei, The Atlantic x2, NYT x2, MIT News)
+- External articles open in new tab with ↗ indicator
+
+**Sanity-Driven Doing Items:**
+- Created `doingItem` Sanity schema (title, description, status, priority)
+- Replaced hardcoded doing items with Sanity query on Current page
+- Seeded 3 items: Singing lessons, Cycling, Fingerpicking guitar
+
+**Global Footer:**
+- Added to root layout — copyright, email, LinkedIn link
+- Iterated styling: settled on bg-gray-100, text-gray-400, max-w-7xl matching nav
+- Fixed LinkedIn URL to correct profile (/marshallweissdesign/)
+
+**Favicon:**
+- Replaced MW text monogram with circular M logo SVG
+
+**Playing Card Button:**
+- Made experiment link more prominent: pill-shaped "View live experiment ↗" button
+
+**Files Updated:**
+- `sanity/schemas/curatedArticle.ts` — New curated article schema
+- `sanity/schemas/doingItem.ts` — New doing item schema
+- `sanity/schema.ts` — Registered both new schemas
+- `lib/sanity-these-days.ts` — Added getCuratedArticles() and getDoingItems()
+- `app/thoughts/page.tsx` — Async server component fetching curated articles
+- `components/ThoughtsFilter.tsx` — Mine/Others tab UI
+- `app/current/page.tsx` — Sanity-driven doing items, prominent experiment button
+- `app/layout.tsx` — Footer with correct LinkedIn URL
+- `app/icon.svg` — Circular M logo favicon
+
+**Build Status:** ✓ Deployed to Vercel
+
 ## Recent Work (2026-02-15) — Session 4
 
 ### Current Page Polish & Fun Project Images ✅
