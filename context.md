@@ -6,6 +6,43 @@ Session context for continuing work on this project.
 
 `antigravity-sanity-work` - Building out Sanity CMS integration for case studies
 
+## Recent Work (2026-02-15) — Session 3
+
+### Typography Overhaul & Homepage Redesign ✅
+**New font system, homepage redesign, and Current page layout improvement:**
+
+**Typography:**
+- Added PP Right Slab Medium (Pangram Pangram) as display font for all headings
+- Replaced Inter with Instrument Sans (Google Fonts) as body/sans-serif font
+- `font-display` Tailwind class applied to all h1s, block headings, nav logo, card titles, thought titles, case study titles
+- Updated BlockHeading, Hero, SplitAccordion, ContentCards components
+
+**Homepage Redesign:**
+- Large claim in Right Slab: "Marshall Weiss is a senior product designer for El Confidencial"
+- "El Confidencial" links to elconfidencial.com (opens new tab, subtle underline)
+- 3-column navigation grid below: Case Studies, Thoughts, Current (with descriptions + arrow hover)
+
+**Current Page:**
+- Switched from vertical stacked layout to 3-column grid (Work | Play | Reading)
+- Widened container to max-w-6xl
+- Reading section: book cover left, title/author/description right, past reads as text list
+- Compact, scannable layout viewable in single scroll
+
+**Files Updated:**
+- `app/layout.tsx` — Instrument Sans + PP Right Slab setup via next/font
+- `tailwind.config.js` — font-display family added
+- `public/fonts/PPRightSlab-Medium.woff2` — New display font
+- `app/page.tsx` — Homepage redesign with claim + nav grid
+- `app/current/page.tsx` — 3-column layout
+- All page h1s — font-display applied
+- `components/Navigation.tsx` — Logo in Right Slab
+- `components/ThoughtsFilter.tsx` — Titles in Right Slab
+- `components/WorkCard.tsx` — Case study titles in Right Slab
+- `components/blocks/BlockHeading.tsx` — Display font
+- `components/blocks/Hero.tsx`, `SplitAccordion.tsx`, `ContentCards.tsx` — Display font
+
+**Build Status:** ✓ Build passes
+
 ## Recent Work (2026-02-14) — Session 2
 
 ### Performance, Polish & Content Cleanup ✅
