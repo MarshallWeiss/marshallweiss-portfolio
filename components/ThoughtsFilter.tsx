@@ -18,7 +18,7 @@ export default function ThoughtsFilter({ items }: ThoughtsFilterProps) {
             className="group block py-3 border-b border-gray-200 transition-colors"
           >
             <div>
-              <h3 className="font-display text-lg text-gray-900 group-hover:text-gray-600 transition-colors">
+              <h3 className="font-display text-2xl text-gray-900 group-hover:text-gray-600 transition-colors">
                 {item.title}
               </h3>
               <p className="text-sm text-gray-500 mt-1 line-clamp-2">
