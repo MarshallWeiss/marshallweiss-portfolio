@@ -9,9 +9,9 @@ const sections = [
 
 export default function Home() {
   return (
-    <div className="min-h-screen flex flex-col justify-center px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex flex-col md:justify-center px-4 sm:px-6 lg:px-8 pt-14 md:pt-0">
       <div className="max-w-4xl mx-auto w-full">
-        <h1 className="font-display text-5xl md:text-6xl lg:text-7xl text-gray-900 leading-[1.1] mb-16">
+        <h1 className="font-display text-4xl md:text-6xl lg:text-7xl text-gray-900 leading-[1.1] mb-10 md:mb-16">
           Marshall Weiss<br />
           is a senior product designer<br />
           at{' '}
@@ -25,7 +25,7 @@ export default function Home() {
             <Link
               key={section.path}
               href={section.path}
-              className="group flex items-center justify-between py-4 border-t border-gray-200 hover:border-gray-900 transition-colors"
+              className="group flex items-center justify-between py-4 border-t border-gray-200 md:hover:border-gray-900 transition-colors"
             >
               <div>
                 <span className="font-display text-lg text-gray-900">{section.name}</span>

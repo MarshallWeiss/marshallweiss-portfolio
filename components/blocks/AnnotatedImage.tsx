@@ -154,55 +154,59 @@ export default function AnnotatedImage({
                             {index + 1}
                         </button>
 
-                        {/* Tooltip on hover */}
+                        {/* Tooltip — desktop: beside hotspot, mobile: below image */}
                         {isActive && (
-                            <div
-                                className={cn(
-                                    'absolute z-20 w-72 p-4 rounded-lg shadow-xl border bg-white',
-                                    'animate-fade-slide'
-                                )}
-                                style={{
-                                    left: hotspot.x > 70 ? 'auto' : '100%',
-                                    right: hotspot.x > 70 ? '100%' : 'auto',
-                                    top: '50%',
-                                    transform: 'translateY(-50%)',
-                                    marginLeft: hotspot.x > 70 ? 0 : 12,
-                                    marginRight: hotspot.x > 70 ? 12 : 0,
-                                    '--slide-direction': hotspot.x > 70 ? '10px' : '-10px',
-                                } as any}
-                                onMouseEnter={() => setActiveHotspot(hotspot._key)}
-                                onMouseLeave={() => setActiveHotspot(null)}
-                            >
-                                <div className="flex items-start gap-3">
-                                    <div
-                                        className={cn(
-                                            'flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold',
-                                            colors.bg
-                                        )}
-                                    >
-                                        {index + 1}
-                                    </div>
-                                    <div className="flex-1 min-w-0">
-                                        <div className="flex items-center gap-2 mb-1">
-                                            <span className={cn('text-xs font-medium uppercase tracking-wide', colors.text)}>
-                                                {getTypeLabel(hotspot.type)}
-                                            </span>
+                            <>
+                                {/* Desktop tooltip */}
+                                <div
+                                    className={cn(
+                                        'hidden md:block absolute z-20 w-72 p-4 rounded-lg shadow-xl border bg-white',
+                                        'animate-fade-slide'
+                                    )}
+                                    style={{
+                                        left: hotspot.x > 70 ? 'auto' : '100%',
+                                        right: hotspot.x > 70 ? '100%' : 'auto',
+                                        top: '50%',
+                                        transform: 'translateY(-50%)',
+                                        marginLeft: hotspot.x > 70 ? 0 : 12,
+                                        marginRight: hotspot.x > 70 ? 12 : 0,
+                                        '--slide-direction': hotspot.x > 70 ? '10px' : '-10px',
+                                    } as any}
+                                    onMouseEnter={() => setActiveHotspot(hotspot._key)}
+                                    onMouseLeave={() => setActiveHotspot(null)}
+                                >
+                                    <div className="flex items-start gap-3">
+                                        <div
+                                            className={cn(
+                                                'flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold',
+                                                colors.bg
+                                            )}
+                                        >
+                                            {index + 1}
                                         </div>
-                                        <h4 className="font-medium text-gray-900 mb-1">
-                                            {hotspot.title}
-                                        </h4>
-                                        {hotspot.description && (
-                                            <p className="text-sm text-gray-600 leading-relaxed">
-                                                {hotspot.description}
-                                            </p>
-                                        )}
+                                        <div className="flex-1 min-w-0">
+                                            <div className="flex items-center gap-2 mb-1">
+                                                <span className={cn('text-xs font-medium uppercase tracking-wide', colors.text)}>
+                                                    {getTypeLabel(hotspot.type)}
+                                                </span>
+                                            </div>
+                                            <h4 className="font-medium text-gray-900 mb-1">
+                                                {hotspot.title}
+                                            </h4>
+                                            {hotspot.description && (
+                                                <p className="text-sm text-gray-600 leading-relaxed">
+                                                    {hotspot.description}
+                                                </p>
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </>
                         )}
                     </div>
                 );
             })}
+
         </div>
     );
 
@@ -261,6 +265,44 @@ export default function AnnotatedImage({
         );
     };
 
+    // Mobile tooltip overlay — fixed to center of screen, tap backdrop to dismiss
+    const renderMobileTooltip = () => {
+        const activeIdx = hotspots.findIndex(h => h._key === activeHotspot);
+        if (activeIdx === -1) return null;
+        const hotspot = hotspots[activeIdx];
+        const colors = getHotspotColor(hotspot.type);
+        return (
+            <div
+                className="md:hidden fixed inset-0 z-50 flex items-center justify-center px-6"
+                onClick={() => setActiveHotspot(null)}
+            >
+                <div className="absolute inset-0 bg-black/20" />
+                <div
+                    className="relative w-full max-w-sm p-4 rounded-lg shadow-xl border bg-white animate-fade-slide"
+                    style={{ '--slide-direction': '0px' } as any}
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    <div className="flex items-start gap-3">
+                        <div className={cn('flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold', colors.bg)}>
+                            {activeIdx + 1}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-1">
+                                <span className={cn('text-xs font-medium uppercase tracking-wide', colors.text)}>
+                                    {getTypeLabel(hotspot.type)}
+                                </span>
+                            </div>
+                            <h4 className="font-medium text-gray-900 mb-1">{hotspot.title}</h4>
+                            {hotspot.description && (
+                                <p className="text-sm text-gray-600 leading-relaxed">{hotspot.description}</p>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
     // Side-by-side layout: text on one side, annotated image on the other
     if (isSideBySide) {
         const textContent = (
@@ -294,35 +336,41 @@ export default function AnnotatedImage({
         );
 
         return (
-            <BlockWrapper width={width} background={background} spacing={spacing}>
-                <div className={cn(
-                    'grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center',
-                    reverseLayout && 'md:grid-flow-dense'
-                )}>
-                    {textContent}
-                    {imageContent}
-                </div>
-            </BlockWrapper>
+            <>
+                <BlockWrapper width={width} background={background} spacing={spacing}>
+                    <div className={cn(
+                        'grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center',
+                        reverseLayout && 'md:grid-flow-dense'
+                    )}>
+                        {textContent}
+                        {imageContent}
+                    </div>
+                </BlockWrapper>
+                {renderMobileTooltip()}
+            </>
         );
     }
 
     // Overlay layout: image full width with hotspots, text above, legend below
     return (
-        <BlockWrapper width={width} background={background} spacing={spacing}>
-            <BlockHeading
-                headline={headline}
-                subheading={subheading}
-                headlineSize={headlineSize}
-                textAlign={textAlign}
-                className=""
-            />
-            {description && (
-                <p className={cn("text-gray-600 text-lg leading-relaxed mb-10 md:mb-14", alignmentClass)}>
-                    {description}
-                </p>
-            )}
-            {renderAnnotatedImage()}
-            {renderLegend()}
-        </BlockWrapper>
+        <>
+            <BlockWrapper width={width} background={background} spacing={spacing}>
+                <BlockHeading
+                    headline={headline}
+                    subheading={subheading}
+                    headlineSize={headlineSize}
+                    textAlign={textAlign}
+                    className=""
+                />
+                {description && (
+                    <p className={cn("text-gray-600 text-lg leading-relaxed mb-10 md:mb-14", alignmentClass)}>
+                        {description}
+                    </p>
+                )}
+                {renderAnnotatedImage()}
+                {renderLegend()}
+            </BlockWrapper>
+            {renderMobileTooltip()}
+        </>
     );
 }

@@ -147,14 +147,14 @@ export default function Carousel({
             />
 
 {arrowPosition === 'outside' ? (
-                // Outside positioning - arrows in flex layout
-                <div className="flex items-center gap-4">
-                    {/* Left Arrow */}
+                // Outside on desktop, overlapping on mobile
+                <div className="relative md:flex md:items-center md:gap-4">
+                    {/* Left Arrow - outside on desktop */}
                     <button
                         onClick={() => scroll('left')}
                         disabled={!canScrollLeft}
                         className={cn(
-                            "flex-shrink-0 w-12 h-12 rounded-full border border-gray-300 bg-white flex items-center justify-center transition-all hover:border-gray-400",
+                            "hidden md:flex flex-shrink-0 w-12 h-12 rounded-full border border-gray-300 bg-white items-center justify-center transition-all hover:border-gray-400",
                             !canScrollLeft && "opacity-30 cursor-not-allowed"
                         )}
                         aria-label="Previous slide"
@@ -165,7 +165,7 @@ export default function Carousel({
                     {/* Slides Container */}
                     <div
                         ref={scrollContainerRef}
-                        className={cn("flex-1 flex gap-12 overflow-x-auto scrollbar-hide", alignmentClass)}
+                        className={cn("md:flex-1 flex gap-12 overflow-x-auto scrollbar-hide", alignmentClass)}
                         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                         onScroll={checkScrollButtons}
                     >
@@ -182,17 +182,43 @@ export default function Carousel({
                         ))}
                     </div>
 
-                    {/* Right Arrow */}
+                    {/* Right Arrow - outside on desktop */}
                     <button
                         onClick={() => scroll('right')}
                         disabled={!canScrollRight}
                         className={cn(
-                            "flex-shrink-0 w-12 h-12 rounded-full border border-gray-300 bg-white flex items-center justify-center transition-all hover:border-gray-400",
+                            "hidden md:flex flex-shrink-0 w-12 h-12 rounded-full border border-gray-300 bg-white items-center justify-center transition-all hover:border-gray-400",
                             !canScrollRight && "opacity-30 cursor-not-allowed"
                         )}
                         aria-label="Next slide"
                     >
                         <ArrowRight className="w-5 h-5 text-gray-700" />
+                    </button>
+
+                    {/* Left Arrow - overlapping on mobile */}
+                    <button
+                        onClick={() => scroll('left')}
+                        disabled={!canScrollLeft}
+                        className={cn(
+                            "md:hidden absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full border border-gray-300 bg-white/90 flex items-center justify-center transition-all shadow-lg",
+                            !canScrollLeft && "opacity-30 cursor-not-allowed"
+                        )}
+                        aria-label="Previous slide"
+                    >
+                        <ArrowLeft className="w-4 h-4 text-gray-700" />
+                    </button>
+
+                    {/* Right Arrow - overlapping on mobile */}
+                    <button
+                        onClick={() => scroll('right')}
+                        disabled={!canScrollRight}
+                        className={cn(
+                            "md:hidden absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full border border-gray-300 bg-white/90 flex items-center justify-center transition-all shadow-lg",
+                            !canScrollRight && "opacity-30 cursor-not-allowed"
+                        )}
+                        aria-label="Next slide"
+                    >
+                        <ArrowRight className="w-4 h-4 text-gray-700" />
                     </button>
                 </div>
             ) : (
