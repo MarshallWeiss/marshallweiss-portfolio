@@ -6,6 +6,37 @@ Session context for continuing work on this project.
 
 `antigravity-sanity-work` - Building out Sanity CMS integration for case studies
 
+## Recent Work (2026-02-18) — Session 6
+
+### Spitballing Session + Skill Improvements + Dictation Fix ✅
+**Deep spitballing on "Claude Code as Second Brain" article, improved spitballing skill, fixed dictation bug:**
+
+**Spitballing Session (Article: Claude Code as Second Brain):**
+- Continued from Session 1 notes, significantly developed the "dark side" threads
+- Explored: productivity gap / seeing the wave, creation as human nature, climate change analogy, privacy/surveillance, autonomous weapons, coerced complicity, impossibility of ethical participation
+- Identified key tensions: enthusiasm + dread as simultaneous responses, AI hooking through production not consumption, informed concern not changing behavior
+- Built reading list: Ellul, Illich, Varoufakis, Zuboff, Harari, Stuart Russell, Langdon Winner, Christensen
+- Updated spitball notes: `content/articles/spitball-notes/2026-02-17-claude-code-second-brain.md`
+
+**Spitballing Skill Updates:**
+- Added rule: don't make editorial calls — pushback is fine, but deciding what's worth keeping is the user's job
+- Added reading list requirement to session capture format
+
+**Dictation Fix (Hammerspoon):**
+- Fixed bug where long recordings would hang on "Listening" — sox wasn't flushing WAV header on SIGTERM
+- Changed `recTask:terminate()` to `recTask:interrupt()` (SIGINT) with 200ms flush delay
+- Added 30-second timeout on Whisper task to prevent infinite hangs
+- Shows alert if transcription times out
+
+**Files Updated:**
+- `content/articles/spitball-notes/2026-02-17-claude-code-second-brain.md` — comprehensive session notes
+- `.claude/skills/spitballing/skill.md` — editorial calls rule + reading list in captures
+- `~/.hammerspoon/init.lua` — SIGINT fix + whisper timeout
+
+**Open Thread:** User interested in a persistent "intellectual journal" system that accumulates across spitball sessions — threads, questions, reading lists, connections between ideas. To design next session.
+
+---
+
 ## Recent Work (2026-02-15) — Session 5
 
 ### Sanity Content Edits, Curated Articles Tab, Footer & Favicon ✅
