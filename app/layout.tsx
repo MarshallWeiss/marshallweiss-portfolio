@@ -35,7 +35,7 @@ export default function RootLayout({
           <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-gray-400">
             <p>&copy; {new Date().getFullYear()} Marshall Weiss</p>
             <div className="flex items-center gap-5">
-              <a href="mailto:marshall.weiss@gmail.com" className="hover:text-gray-600 transition-colors">marshall.weiss@gmail.com</a>
+              <a href="mailto:marshallweiss94@gmail.com" className="hover:text-gray-600 transition-colors">marshallweiss94@gmail.com</a>
               <a href="https://www.linkedin.com/in/marshallweissdesign/" target="_blank" rel="noopener noreferrer" className="hover:text-gray-600 transition-colors">LinkedIn</a>
             </div>
           </div>
