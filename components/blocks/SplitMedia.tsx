@@ -185,7 +185,7 @@ export default function SplitMedia({
         <div className={cn(
             "prose prose-lg text-gray-600",
             layout === 'sideBySide' ? columnSpans.text : 'max-w-4xl',
-            layout !== 'sideBySide' && textAlign === 'center' && 'mx-auto',
+            layout !== 'sideBySide' && textAlign === 'center' && 'md:mx-auto',
             textPaddingClass,
             layout === 'sideBySide' && reverseLayout ? "md:col-start-auto md:row-start-1" : ""
         )}>
@@ -197,8 +197,8 @@ export default function SplitMedia({
             />
             <p className={cn(
                 "whitespace-pre-wrap leading-relaxed",
-                textAlign === 'center' && 'text-center',
-                textAlign === 'right' && 'text-right'
+                textAlign === 'center' && 'md:text-center',
+                textAlign === 'right' && 'md:text-right'
             )}>
                 {text}
             </p>

@@ -26,8 +26,8 @@ export default function BlockHeading({
 
     const alignmentClasses = {
         left: 'text-left',
-        center: 'text-center',
-        right: 'text-right',
+        center: 'text-left md:text-center',
+        right: 'text-left md:text-right',
     }
 
     return (

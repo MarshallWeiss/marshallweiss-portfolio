@@ -42,7 +42,7 @@ export default function Comparison({
 }: ComparisonProps) {
     if (!leftImage && !rightImage) return null;
 
-    const alignmentClass = textAlign === 'center' ? 'text-center' : textAlign === 'right' ? 'text-right' : 'text-left';
+    const alignmentClass = textAlign === 'center' ? 'text-left md:text-center' : textAlign === 'right' ? 'text-left md:text-right' : 'text-left';
 
     const labelSizeClasses = {
         small: 'text-sm',

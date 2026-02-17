@@ -55,7 +55,7 @@ export default function AnnotatedImage({
 
     if (!image) return null;
 
-    const alignmentClass = textAlign === 'center' ? 'text-center' : textAlign === 'right' ? 'text-right' : 'text-left';
+    const alignmentClass = textAlign === 'center' ? 'text-left md:text-center' : textAlign === 'right' ? 'text-left md:text-right' : 'text-left';
     const isSideBySide = layout === 'sideBySide';
 
     const getHotspotColor = (type: string) => {

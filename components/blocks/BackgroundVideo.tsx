@@ -96,11 +96,11 @@ export default function BackgroundVideo({
             {(headline || subheading || text) && (
                 <div className={cn(
                     "relative z-10 h-full flex items-center justify-center px-6 md:px-12 pointer-events-none",
-                    textAlign === 'left' ? 'justify-start' : textAlign === 'right' ? 'justify-end' : 'justify-center'
+                    textAlign === 'left' ? 'justify-start' : textAlign === 'right' ? 'md:justify-end' : 'md:justify-center'
                 )}>
                     <div className={cn(
                         "max-w-4xl",
-                        textAlign === 'left' ? 'text-left' : textAlign === 'right' ? 'text-right' : 'text-center'
+                        textAlign === 'left' ? 'text-left' : textAlign === 'right' ? 'text-left md:text-right' : 'text-left md:text-center'
                     )}>
                         {subheading && (
                             <p className={cn(

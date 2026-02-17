@@ -61,7 +61,7 @@ export default function MediaGrid({
         }
     };
 
-    const alignmentClass = textAlign === 'center' ? 'text-center' : textAlign === 'right' ? 'text-right' : 'text-left';
+    const alignmentClass = textAlign === 'center' ? 'text-left md:text-center' : textAlign === 'right' ? 'text-left md:text-right' : 'text-left';
 
     return (
         <BlockWrapper width={width} background={background} spacing={spacing}>

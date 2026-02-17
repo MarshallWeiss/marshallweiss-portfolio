@@ -79,7 +79,7 @@ export default function ContentCards({
         setShowCursorHint(false);
     };
 
-    const alignmentClass = textAlign === 'center' ? 'text-center' : textAlign === 'right' ? 'text-right' : 'text-left';
+    const alignmentClass = textAlign === 'center' ? 'text-left md:text-center' : textAlign === 'right' ? 'text-left md:text-right' : 'text-left';
 
     const headingSpacingClasses = {
         compact: 'mb-4',
@@ -100,7 +100,7 @@ export default function ContentCards({
                 <p className={cn(
                     "text-gray-600 text-lg max-w-3xl mb-10 md:mb-14",
                     alignmentClass,
-                    textAlign === 'center' && 'mx-auto'
+                    textAlign === 'center' && 'md:mx-auto'
                 )}>
                     {description}
                 </p>
