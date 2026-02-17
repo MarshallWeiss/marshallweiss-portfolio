@@ -1,0 +1,3937 @@
+[
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "slug"
+      }
+    ],
+    "name": "media.tag",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "max_width",
+        "type": "number"
+      },
+      {
+        "name": "max_frame_rate",
+        "type": "number"
+      },
+      {
+        "name": "duration",
+        "type": "number"
+      },
+      {
+        "name": "max_height",
+        "type": "number"
+      }
+    ],
+    "name": "mux.track",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "policy",
+        "type": "string"
+      }
+    ],
+    "name": "mux.playbackId",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "name": "ext",
+        "type": "string"
+      },
+      {
+        "name": "height",
+        "type": "number"
+      },
+      {
+        "name": "width",
+        "type": "number"
+      },
+      {
+        "name": "bitrate",
+        "type": "number"
+      },
+      {
+        "name": "filesize",
+        "type": "string"
+      },
+      {
+        "name": "type",
+        "type": "string"
+      },
+      {
+        "name": "status",
+        "type": "string"
+      },
+      {
+        "name": "resolution_tier",
+        "type": "string"
+      },
+      {
+        "name": "resolution",
+        "type": "string"
+      },
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "passthrough",
+        "type": "string"
+      }
+    ],
+    "name": "mux.staticRenditionFile",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "name": "status",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "type": "mux.staticRenditionFile"
+          }
+        ],
+        "name": "files",
+        "type": "array"
+      }
+    ],
+    "name": "mux.staticRenditions",
+    "type": "object"
+  },
+  {
+    "fields": [
+      {
+        "name": "resolution_tier",
+        "type": "string"
+      },
+      {
+        "name": "upload_id",
+        "type": "string"
+      },
+      {
+        "name": "created_at",
+        "type": "string"
+      },
+      {
+        "name": "id",
+        "type": "string"
+      },
+      {
+        "name": "status",
+        "type": "string"
+      },
+      {
+        "name": "max_stored_resolution",
+        "type": "string"
+      },
+      {
+        "name": "passthrough",
+        "type": "string"
+      },
+      {
+        "name": "encoding_tier",
+        "type": "string"
+      },
+      {
+        "name": "video_quality",
+        "type": "string"
+      },
+      {
+        "name": "master_access",
+        "type": "string"
+      },
+      {
+        "name": "aspect_ratio",
+        "type": "string"
+      },
+      {
+        "name": "duration",
+        "type": "number"
+      },
+      {
+        "name": "max_stored_frame_rate",
+        "type": "number"
+      },
+      {
+        "name": "mp4_support",
+        "type": "string"
+      },
+      {
+        "name": "max_resolution_tier",
+        "type": "string"
+      },
+      {
+        "of": [
+          {
+            "type": "mux.track"
+          }
+        ],
+        "name": "tracks",
+        "type": "array"
+      },
+      {
+        "of": [
+          {
+            "type": "mux.playbackId"
+          }
+        ],
+        "name": "playback_ids",
+        "type": "array"
+      },
+      {
+        "name": "static_renditions",
+        "type": "mux.staticRenditions"
+      }
+    ],
+    "name": "mux.assetData",
+    "type": "object",
+    "title": "Mux asset data"
+  },
+  {
+    "fields": [
+      {
+        "name": "status",
+        "type": "string"
+      },
+      {
+        "name": "assetId",
+        "type": "string"
+      },
+      {
+        "name": "playbackId",
+        "type": "string"
+      },
+      {
+        "name": "filename",
+        "type": "string"
+      },
+      {
+        "name": "thumbTime",
+        "type": "number"
+      },
+      {
+        "name": "data",
+        "type": "mux.assetData"
+      }
+    ],
+    "name": "mux.videoAsset",
+    "type": "document",
+    "title": "Video asset"
+  },
+  {
+    "fields": [
+      {
+        "weak": true,
+        "to": [
+          {
+            "type": "mux.videoAsset"
+          }
+        ],
+        "name": "asset",
+        "type": "reference",
+        "title": "Video"
+      }
+    ],
+    "name": "mux.video",
+    "type": "object",
+    "title": "Video asset reference"
+  },
+  {
+    "fields": [
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "title",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Image",
+              "value": "image"
+            },
+            {
+              "title": "Video",
+              "value": "video"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "image",
+        "description": "Choose between image or video for the case studies listing page thumbnail",
+        "name": "thumbnailType",
+        "type": "string"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "description": "Optional: Custom thumbnail for the case studies listing page. If not set, will use the hero image.",
+        "hidden": "conditional",
+        "name": "thumbnailImage",
+        "type": "image"
+      },
+      {
+        "description": "Video thumbnail for the case studies listing page. Will autoplay, loop, and be muted.",
+        "hidden": "conditional",
+        "name": "thumbnailVideo",
+        "type": "mux.video"
+      },
+      {
+        "description": "Upload all images used in this case study. These images can be referenced in blocks below.",
+        "of": [
+          {
+            "options": {
+              "hotspot": true
+            },
+            "fields": [
+              {
+                "description": "Auto-filled from filename, but can be edited",
+                "name": "alt",
+                "type": "string",
+                "title": "Alt text"
+              },
+              {
+                "description": "Optional caption",
+                "name": "caption",
+                "type": "string"
+              }
+            ],
+            "type": "image"
+          }
+        ],
+        "name": "images",
+        "type": "array",
+        "title": "Case Study Images"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "title",
+                "type": "string"
+              },
+              {
+                "name": "subtitle",
+                "type": "string",
+                "title": "Subtitle (Role/Tools)"
+              },
+              {
+                "name": "intro",
+                "type": "text",
+                "title": "Introduction"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "image",
+                "type": "image",
+                "title": "Cover Image"
+              },
+              {
+                "initialValue": true,
+                "description": "Uncheck to hide the cover image and use the next block as the visual instead.",
+                "name": "showImage",
+                "type": "boolean",
+                "title": "Show Cover Image"
+              },
+              {
+                "name": "role",
+                "type": "string"
+              },
+              {
+                "name": "client",
+                "type": "string"
+              },
+              {
+                "name": "year",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Auto (original)",
+                      "value": "auto"
+                    },
+                    {
+                      "title": "Square (1:1)",
+                      "value": "square"
+                    },
+                    {
+                      "title": "Landscape 4:3",
+                      "value": "4:3"
+                    },
+                    {
+                      "title": "Landscape 16:9",
+                      "value": "16:9"
+                    },
+                    {
+                      "title": "Portrait 3:4",
+                      "value": "3:4"
+                    },
+                    {
+                      "title": "Portrait 9:16",
+                      "value": "9:16"
+                    }
+                  ],
+                  "layout": "dropdown"
+                },
+                "initialValue": "auto",
+                "name": "aspectRatio",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Cover (fill, may crop)",
+                      "value": "cover"
+                    },
+                    {
+                      "title": "Contain (fit, no crop)",
+                      "value": "contain"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "cover",
+                "description": "How the image should fit within its container",
+                "name": "objectFit",
+                "type": "string",
+                "title": "Image Fit"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "None",
+                      "value": "none"
+                    },
+                    {
+                      "title": "Gray",
+                      "value": "gray"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "none",
+                "description": "Add a subtle background behind the image",
+                "name": "imageBackground",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "None",
+                      "value": "none"
+                    },
+                    {
+                      "title": "Small",
+                      "value": "small"
+                    },
+                    {
+                      "title": "Medium",
+                      "value": "medium"
+                    },
+                    {
+                      "title": "Large",
+                      "value": "large"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "none",
+                "name": "imageShadow",
+                "type": "string"
+              },
+              {
+                "initialValue": false,
+                "description": "Allow clicking image to view full-screen",
+                "name": "enableLightbox",
+                "type": "boolean"
+              },
+              {
+                "name": "imageCaption",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Contained (default)",
+                      "value": "contained"
+                    },
+                    {
+                      "title": "Wide",
+                      "value": "wide"
+                    },
+                    {
+                      "title": "Full Width",
+                      "value": "full"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "contained",
+                "name": "width",
+                "type": "string",
+                "title": "Container Width"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "None",
+                      "value": "none"
+                    },
+                    {
+                      "title": "White",
+                      "value": "white"
+                    },
+                    {
+                      "title": "Gray",
+                      "value": "gray"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "none",
+                "name": "background",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "None",
+                      "value": "none"
+                    },
+                    {
+                      "title": "Compact",
+                      "value": "compact"
+                    },
+                    {
+                      "title": "Default",
+                      "value": "default"
+                    },
+                    {
+                      "title": "Spacious",
+                      "value": "spacious"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "default",
+                "name": "spacing",
+                "type": "string",
+                "title": "Vertical Spacing"
+              }
+            ],
+            "type": "object",
+            "name": "hero"
+          },
+          {
+            "fields": [
+              {
+                "name": "role",
+                "type": "string"
+              },
+              {
+                "name": "client",
+                "type": "string"
+              },
+              {
+                "name": "year",
+                "type": "string"
+              }
+            ],
+            "type": "object",
+            "name": "metadata"
+          },
+          {
+            "fields": [
+              {
+                "name": "headline",
+                "type": "string"
+              },
+              {
+                "name": "subheading",
+                "type": "string",
+                "title": "Subheading (optional)"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Extra Small",
+                      "value": "xsmall"
+                    },
+                    {
+                      "title": "Small",
+                      "value": "small"
+                    },
+                    {
+                      "title": "Medium",
+                      "value": "medium"
+                    },
+                    {
+                      "title": "Large",
+                      "value": "large"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "medium",
+                "name": "headlineSize",
+                "type": "string"
+              },
+              {
+                "rows": 6,
+                "name": "text",
+                "type": "text"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Left",
+                      "value": "left"
+                    },
+                    {
+                      "title": "Center",
+                      "value": "center"
+                    },
+                    {
+                      "title": "Right",
+                      "value": "right"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "left",
+                "name": "textAlign",
+                "type": "string",
+                "title": "Text Alignment"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Side by Side",
+                      "value": "sideBySide"
+                    },
+                    {
+                      "title": "Text Above, Media Below",
+                      "value": "textAbove"
+                    },
+                    {
+                      "title": "Media Above, Text Below",
+                      "value": "mediaAbove"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "sideBySide",
+                "description": "How to arrange text and media.",
+                "name": "layout",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Single Image",
+                      "value": "image"
+                    },
+                    {
+                      "title": "Multiple Images",
+                      "value": "images"
+                    },
+                    {
+                      "title": "Video",
+                      "value": "video"
+                    },
+                    {
+                      "title": "Figma Prototype",
+                      "value": "figma"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "image",
+                "name": "mediaType",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "hidden": "conditional",
+                "name": "image",
+                "type": "image"
+              },
+              {
+                "description": "Add multiple images to display side by side. Each image can have its own aspect ratio.",
+                "of": [
+                  {
+                    "fields": [
+                      {
+                        "options": {
+                          "hotspot": true
+                        },
+                        "name": "image",
+                        "type": "image"
+                      },
+                      {
+                        "options": {
+                          "list": [
+                            {
+                              "title": "Auto (original)",
+                              "value": "auto"
+                            },
+                            {
+                              "title": "Square (1:1)",
+                              "value": "square"
+                            },
+                            {
+                              "title": "Landscape 4:3",
+                              "value": "4:3"
+                            },
+                            {
+                              "title": "Landscape 16:9",
+                              "value": "16:9"
+                            },
+                            {
+                              "title": "Portrait 3:4",
+                              "value": "3:4"
+                            },
+                            {
+                              "title": "Portrait 9:16",
+                              "value": "9:16"
+                            }
+                          ],
+                          "layout": "dropdown"
+                        },
+                        "initialValue": "auto",
+                        "description": "Override the default aspect ratio for this specific image",
+                        "name": "aspectRatio",
+                        "type": "string"
+                      }
+                    ],
+                    "type": "object",
+                    "name": "imageWithAspectRatio"
+                  }
+                ],
+                "hidden": "conditional",
+                "name": "images",
+                "type": "array"
+              },
+              {
+                "hidden": "conditional",
+                "name": "video",
+                "type": "mux.video"
+              },
+              {
+                "initialValue": true,
+                "description": "Start playing automatically when the video comes into view",
+                "hidden": "conditional",
+                "name": "autoplay",
+                "type": "boolean"
+              },
+              {
+                "initialValue": true,
+                "description": "Restart the video when it ends",
+                "hidden": "conditional",
+                "name": "loop",
+                "type": "boolean"
+              },
+              {
+                "initialValue": true,
+                "description": "Play without sound (required for autoplay to work)",
+                "hidden": "conditional",
+                "name": "muted",
+                "type": "boolean"
+              },
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "uri",
+                        "constraint": {
+                          "options": {
+                            "scheme": [
+                              "/^https$/"
+                            ],
+                            "allowRelative": false,
+                            "relativeOnly": false,
+                            "allowCredentials": false
+                          }
+                        }
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "description": "Paste the Figma prototype embed URL here. In Figma: Share → \"Get embed code\" → copy the URL from the iframe src.",
+                "hidden": "conditional",
+                "name": "figmaUrl",
+                "type": "url",
+                "title": "Figma Prototype URL"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Auto (original)",
+                      "value": "auto"
+                    },
+                    {
+                      "title": "Square (1:1)",
+                      "value": "square"
+                    },
+                    {
+                      "title": "Landscape 4:3",
+                      "value": "4:3"
+                    },
+                    {
+                      "title": "Landscape 16:9",
+                      "value": "16:9"
+                    },
+                    {
+                      "title": "Portrait 3:4",
+                      "value": "3:4"
+                    },
+                    {
+                      "title": "Portrait 9:16",
+                      "value": "9:16"
+                    }
+                  ],
+                  "layout": "dropdown"
+                },
+                "initialValue": "auto",
+                "name": "aspectRatio",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Cover (fill, may crop)",
+                      "value": "cover"
+                    },
+                    {
+                      "title": "Contain (fit, no crop)",
+                      "value": "contain"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "cover",
+                "description": "How the image should fit within its container",
+                "name": "objectFit",
+                "type": "string",
+                "title": "Image Fit"
+              },
+              {
+                "initialValue": 600,
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "min",
+                        "constraint": 200
+                      },
+                      {
+                        "flag": "max",
+                        "constraint": 1200
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "description": "Set a fixed height for multiple images to ensure they match. Only applies when using multiple images.",
+                "hidden": "conditional",
+                "name": "imageHeight",
+                "type": "number"
+              },
+              {
+                "initialValue": false,
+                "description": "Only applies to side-by-side layout.",
+                "hidden": "conditional",
+                "name": "reverseLayout",
+                "type": "boolean",
+                "title": "Reverse Layout (Media on Left)"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "40/60 - Text Larger",
+                      "value": "40/60"
+                    },
+                    {
+                      "title": "50/50 - Balanced",
+                      "value": "50/50"
+                    },
+                    {
+                      "title": "60/40 - Media Larger",
+                      "value": "60/40"
+                    },
+                    {
+                      "title": "70/30 - Media Dominant",
+                      "value": "70/30"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "50/50",
+                "description": "Control how much space the media takes vs. text. Only applies to side-by-side layout.",
+                "hidden": "conditional",
+                "name": "mediaRatio",
+                "type": "string",
+                "title": "Media/Text Width Ratio"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "None",
+                      "value": "none"
+                    },
+                    {
+                      "title": "Small",
+                      "value": "small"
+                    },
+                    {
+                      "title": "Medium",
+                      "value": "medium"
+                    },
+                    {
+                      "title": "Large",
+                      "value": "large"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "none",
+                "description": "Add extra padding around the text content.",
+                "name": "textPadding",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "None",
+                      "value": "none"
+                    },
+                    {
+                      "title": "Gray",
+                      "value": "gray"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "none",
+                "description": "Add a subtle background behind the image",
+                "name": "imageBackground",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "None",
+                      "value": "none"
+                    },
+                    {
+                      "title": "Small",
+                      "value": "small"
+                    },
+                    {
+                      "title": "Medium",
+                      "value": "medium"
+                    },
+                    {
+                      "title": "Large",
+                      "value": "large"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "none",
+                "name": "imageShadow",
+                "type": "string"
+              },
+              {
+                "initialValue": false,
+                "description": "Allow clicking image to view full-screen",
+                "name": "enableLightbox",
+                "type": "boolean"
+              },
+              {
+                "name": "imageCaption",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Contained (default)",
+                      "value": "contained"
+                    },
+                    {
+                      "title": "Wide",
+                      "value": "wide"
+                    },
+                    {
+                      "title": "Full Width",
+                      "value": "full"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "contained",
+                "name": "width",
+                "type": "string",
+                "title": "Container Width"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "None",
+                      "value": "none"
+                    },
+                    {
+                      "title": "White",
+                      "value": "white"
+                    },
+                    {
+                      "title": "Gray",
+                      "value": "gray"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "none",
+                "name": "background",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "None",
+                      "value": "none"
+                    },
+                    {
+                      "title": "Compact",
+                      "value": "compact"
+                    },
+                    {
+                      "title": "Default",
+                      "value": "default"
+                    },
+                    {
+                      "title": "Spacious",
+                      "value": "spacious"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "default",
+                "name": "spacing",
+                "type": "string",
+                "title": "Vertical Spacing"
+              }
+            ],
+            "type": "object",
+            "name": "splitMedia",
+            "title": "Text and Media"
+          },
+          {
+            "fields": [
+              {
+                "name": "headline",
+                "type": "string"
+              },
+              {
+                "name": "subheading",
+                "type": "string",
+                "title": "Subheading (optional)"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Extra Small",
+                      "value": "xsmall"
+                    },
+                    {
+                      "title": "Small",
+                      "value": "small"
+                    },
+                    {
+                      "title": "Medium",
+                      "value": "medium"
+                    },
+                    {
+                      "title": "Large",
+                      "value": "large"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "medium",
+                "name": "headlineSize",
+                "type": "string"
+              },
+              {
+                "rows": 3,
+                "name": "description",
+                "type": "text"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Left",
+                      "value": "left"
+                    },
+                    {
+                      "title": "Center",
+                      "value": "center"
+                    },
+                    {
+                      "title": "Right",
+                      "value": "right"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "left",
+                "name": "textAlign",
+                "type": "string",
+                "title": "Text Alignment"
+              },
+              {
+                "of": [
+                  {
+                    "options": {
+                      "hotspot": true
+                    },
+                    "type": "image"
+                  }
+                ],
+                "name": "images",
+                "type": "array"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "1 Column",
+                      "value": "1"
+                    },
+                    {
+                      "title": "2 Columns",
+                      "value": "2"
+                    },
+                    {
+                      "title": "3 Columns",
+                      "value": "3"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "2",
+                "name": "columns",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Auto (original)",
+                      "value": "auto"
+                    },
+                    {
+                      "title": "Square (1:1)",
+                      "value": "square"
+                    },
+                    {
+                      "title": "Landscape 4:3",
+                      "value": "4:3"
+                    },
+                    {
+                      "title": "Landscape 16:9",
+                      "value": "16:9"
+                    },
+                    {
+                      "title": "Portrait 3:4",
+                      "value": "3:4"
+                    },
+                    {
+                      "title": "Portrait 9:16",
+                      "value": "9:16"
+                    }
+                  ],
+                  "layout": "dropdown"
+                },
+                "initialValue": "auto",
+                "name": "aspectRatio",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Cover (fill, may crop)",
+                      "value": "cover"
+                    },
+                    {
+                      "title": "Contain (fit, no crop)",
+                      "value": "contain"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "cover",
+                "description": "How the image should fit within its container",
+                "name": "objectFit",
+                "type": "string",
+                "title": "Image Fit"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Contained (default)",
+                      "value": "contained"
+                    },
+                    {
+                      "title": "Wide",
+                      "value": "wide"
+                    },
+                    {
+                      "title": "Full Width",
+                      "value": "full"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "contained",
+                "name": "width",
+                "type": "string",
+                "title": "Container Width"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "None",
+                      "value": "none"
+                    },
+                    {
+                      "title": "White",
+                      "value": "white"
+                    },
+                    {
+                      "title": "Gray",
+                      "value": "gray"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "none",
+                "name": "background",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "None",
+                      "value": "none"
+                    },
+                    {
+                      "title": "Compact",
+                      "value": "compact"
+                    },
+                    {
+                      "title": "Default",
+                      "value": "default"
+                    },
+                    {
+                      "title": "Spacious",
+                      "value": "spacious"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "default",
+                "name": "spacing",
+                "type": "string",
+                "title": "Vertical Spacing"
+              }
+            ],
+            "type": "object",
+            "name": "mediaGrid"
+          },
+          {
+            "fields": [
+              {
+                "name": "headline",
+                "type": "string"
+              },
+              {
+                "name": "subheading",
+                "type": "string",
+                "title": "Subheading (optional)"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Extra Small",
+                      "value": "xsmall"
+                    },
+                    {
+                      "title": "Small",
+                      "value": "small"
+                    },
+                    {
+                      "title": "Medium",
+                      "value": "medium"
+                    },
+                    {
+                      "title": "Large",
+                      "value": "large"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "medium",
+                "name": "headlineSize",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Image",
+                      "value": "image"
+                    },
+                    {
+                      "title": "Video",
+                      "value": "video"
+                    },
+                    {
+                      "title": "Figma Prototype",
+                      "value": "figma"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "image",
+                "name": "mediaType",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "hidden": "conditional",
+                "name": "image",
+                "type": "image"
+              },
+              {
+                "hidden": "conditional",
+                "name": "video",
+                "type": "mux.video"
+              },
+              {
+                "initialValue": true,
+                "description": "Start playing automatically when the video comes into view",
+                "hidden": "conditional",
+                "name": "autoplay",
+                "type": "boolean"
+              },
+              {
+                "initialValue": true,
+                "description": "Restart the video when it ends",
+                "hidden": "conditional",
+                "name": "loop",
+                "type": "boolean"
+              },
+              {
+                "initialValue": true,
+                "description": "Play without sound (required for autoplay to work)",
+                "hidden": "conditional",
+                "name": "muted",
+                "type": "boolean"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Auto (original)",
+                      "value": "auto"
+                    },
+                    {
+                      "title": "Square (1:1)",
+                      "value": "square"
+                    },
+                    {
+                      "title": "Landscape 4:3",
+                      "value": "4:3"
+                    },
+                    {
+                      "title": "Landscape 16:9",
+                      "value": "16:9"
+                    },
+                    {
+                      "title": "Portrait 3:4",
+                      "value": "3:4"
+                    },
+                    {
+                      "title": "Portrait 9:16",
+                      "value": "9:16"
+                    }
+                  ],
+                  "layout": "dropdown"
+                },
+                "initialValue": "auto",
+                "name": "aspectRatio",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Cover (fill, may crop)",
+                      "value": "cover"
+                    },
+                    {
+                      "title": "Contain (fit, no crop)",
+                      "value": "contain"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "cover",
+                "description": "How the image should fit within its container",
+                "name": "objectFit",
+                "type": "string",
+                "title": "Image Fit"
+              },
+              {
+                "name": "caption",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "None",
+                      "value": "none"
+                    },
+                    {
+                      "title": "Gray",
+                      "value": "gray"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "none",
+                "description": "Add a subtle background behind the image",
+                "name": "imageBackground",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "None",
+                      "value": "none"
+                    },
+                    {
+                      "title": "Small",
+                      "value": "small"
+                    },
+                    {
+                      "title": "Medium",
+                      "value": "medium"
+                    },
+                    {
+                      "title": "Large",
+                      "value": "large"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "none",
+                "name": "imageShadow",
+                "type": "string"
+              },
+              {
+                "initialValue": false,
+                "description": "Allow clicking image to view full-screen",
+                "name": "enableLightbox",
+                "type": "boolean"
+              },
+              {
+                "name": "imageCaption",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Contained (default)",
+                      "value": "contained"
+                    },
+                    {
+                      "title": "Wide",
+                      "value": "wide"
+                    },
+                    {
+                      "title": "Full Width",
+                      "value": "full"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "contained",
+                "name": "width",
+                "type": "string",
+                "title": "Container Width"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "None",
+                      "value": "none"
+                    },
+                    {
+                      "title": "White",
+                      "value": "white"
+                    },
+                    {
+                      "title": "Gray",
+                      "value": "gray"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "none",
+                "name": "background",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "None",
+                      "value": "none"
+                    },
+                    {
+                      "title": "Compact",
+                      "value": "compact"
+                    },
+                    {
+                      "title": "Default",
+                      "value": "default"
+                    },
+                    {
+                      "title": "Spacious",
+                      "value": "spacious"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "default",
+                "name": "spacing",
+                "type": "string",
+                "title": "Vertical Spacing"
+              }
+            ],
+            "type": "object",
+            "name": "fullWidthMedia"
+          },
+          {
+            "fields": [
+              {
+                "name": "headline",
+                "type": "string"
+              },
+              {
+                "name": "subheading",
+                "type": "string",
+                "title": "Subheading (optional)"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Extra Small",
+                      "value": "xsmall"
+                    },
+                    {
+                      "title": "Small",
+                      "value": "small"
+                    },
+                    {
+                      "title": "Medium",
+                      "value": "medium"
+                    },
+                    {
+                      "title": "Large",
+                      "value": "large"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "medium",
+                "name": "headlineSize",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Left",
+                      "value": "left"
+                    },
+                    {
+                      "title": "Center",
+                      "value": "center"
+                    },
+                    {
+                      "title": "Right",
+                      "value": "right"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "left",
+                "name": "textAlign",
+                "type": "string",
+                "title": "Text Alignment"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Tight",
+                      "value": "tight"
+                    },
+                    {
+                      "title": "Compact",
+                      "value": "compact"
+                    },
+                    {
+                      "title": "Default",
+                      "value": "default"
+                    },
+                    {
+                      "title": "Spacious",
+                      "value": "spacious"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "default",
+                "name": "headingSpacing",
+                "type": "string",
+                "title": "Heading to Carousel Spacing"
+              },
+              {
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "presence",
+                        "constraint": "required"
+                      },
+                      {
+                        "flag": "min",
+                        "constraint": 2
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "of": [
+                  {
+                    "fields": [
+                      {
+                        "options": {
+                          "hotspot": true
+                        },
+                        "name": "image",
+                        "type": "image"
+                      },
+                      {
+                        "name": "title",
+                        "type": "string"
+                      },
+                      {
+                        "rows": 3,
+                        "name": "description",
+                        "type": "text"
+                      }
+                    ],
+                    "type": "object",
+                    "name": "slide"
+                  }
+                ],
+                "name": "slides",
+                "type": "array"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "1 (Lightbox Style - Largest)",
+                      "value": "1"
+                    },
+                    {
+                      "title": "2 (Large)",
+                      "value": "2"
+                    },
+                    {
+                      "title": "3 (Medium)",
+                      "value": "3"
+                    },
+                    {
+                      "title": "4 (Compact)",
+                      "value": "4"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "2",
+                "description": "How many slides to show at once. Use 1 for large lightbox-style display.",
+                "name": "slidesPerView",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Top",
+                      "value": "top"
+                    },
+                    {
+                      "title": "Center",
+                      "value": "center"
+                    },
+                    {
+                      "title": "Bottom",
+                      "value": "bottom"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "center",
+                "description": "Align images to top, center, or bottom of the carousel container.",
+                "name": "verticalAlign",
+                "type": "string",
+                "title": "Vertical Alignment"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Overlapping Images",
+                      "value": "overlapping"
+                    },
+                    {
+                      "title": "Outside Images",
+                      "value": "outside"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "overlapping",
+                "description": "Place arrows overlapping images or outside (outside works best with contained/wide widths).",
+                "name": "arrowPosition",
+                "type": "string"
+              },
+              {
+                "initialValue": false,
+                "description": "Enable continuous scrolling - arrows loop back to start/end instead of disabling.",
+                "name": "infiniteLoop",
+                "type": "boolean"
+              },
+              {
+                "initialValue": true,
+                "description": "Display gray background behind images. Disable for transparent/dynamic height images.",
+                "name": "showBackground",
+                "type": "boolean",
+                "title": "Show Image Background"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Auto (original)",
+                      "value": "auto"
+                    },
+                    {
+                      "title": "Square (1:1)",
+                      "value": "square"
+                    },
+                    {
+                      "title": "Landscape 4:3",
+                      "value": "4:3"
+                    },
+                    {
+                      "title": "Landscape 16:9",
+                      "value": "16:9"
+                    },
+                    {
+                      "title": "Portrait 3:4",
+                      "value": "3:4"
+                    },
+                    {
+                      "title": "Portrait 9:16",
+                      "value": "9:16"
+                    }
+                  ],
+                  "layout": "dropdown"
+                },
+                "initialValue": "auto",
+                "name": "aspectRatio",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Cover (fill, may crop)",
+                      "value": "cover"
+                    },
+                    {
+                      "title": "Contain (fit, no crop)",
+                      "value": "contain"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "cover",
+                "description": "How the image should fit within its container",
+                "name": "objectFit",
+                "type": "string",
+                "title": "Image Fit"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Contained (default)",
+                      "value": "contained"
+                    },
+                    {
+                      "title": "Wide",
+                      "value": "wide"
+                    },
+                    {
+                      "title": "Full Width",
+                      "value": "full"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "contained",
+                "name": "width",
+                "type": "string",
+                "title": "Container Width"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "None",
+                      "value": "none"
+                    },
+                    {
+                      "title": "White",
+                      "value": "white"
+                    },
+                    {
+                      "title": "Gray",
+                      "value": "gray"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "none",
+                "name": "background",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "None",
+                      "value": "none"
+                    },
+                    {
+                      "title": "Compact",
+                      "value": "compact"
+                    },
+                    {
+                      "title": "Default",
+                      "value": "default"
+                    },
+                    {
+                      "title": "Spacious",
+                      "value": "spacious"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "default",
+                "name": "spacing",
+                "type": "string",
+                "title": "Vertical Spacing"
+              }
+            ],
+            "type": "object",
+            "name": "carousel",
+            "title": "Carousel Gallery"
+          },
+          {
+            "fields": [
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Full Width",
+                      "value": "fullWidth"
+                    },
+                    {
+                      "title": "Split (Text + Accordion)",
+                      "value": "split"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "fullWidth",
+                "name": "layout",
+                "type": "string"
+              },
+              {
+                "name": "headline",
+                "type": "string"
+              },
+              {
+                "name": "subheading",
+                "type": "string",
+                "title": "Subheading (optional)"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Extra Small",
+                      "value": "xsmall"
+                    },
+                    {
+                      "title": "Small",
+                      "value": "small"
+                    },
+                    {
+                      "title": "Medium",
+                      "value": "medium"
+                    },
+                    {
+                      "title": "Large",
+                      "value": "large"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "medium",
+                "name": "headlineSize",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Left",
+                      "value": "left"
+                    },
+                    {
+                      "title": "Center",
+                      "value": "center"
+                    },
+                    {
+                      "title": "Right",
+                      "value": "right"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "left",
+                "name": "textAlign",
+                "type": "string",
+                "title": "Text Alignment"
+              },
+              {
+                "rows": 6,
+                "description": "Only shown in Split layout",
+                "hidden": "conditional",
+                "name": "text",
+                "type": "text",
+                "title": "Body Text"
+              },
+              {
+                "of": [
+                  {
+                    "fields": [
+                      {
+                        "name": "title",
+                        "type": "string"
+                      },
+                      {
+                        "rows": 4,
+                        "name": "content",
+                        "type": "text"
+                      }
+                    ],
+                    "type": "object",
+                    "name": "accordionItem"
+                  }
+                ],
+                "name": "items",
+                "type": "array",
+                "title": "Accordion Items"
+              },
+              {
+                "initialValue": false,
+                "hidden": "conditional",
+                "name": "reverseLayout",
+                "type": "boolean",
+                "title": "Reverse Layout (Accordion on Left)"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Contained (default)",
+                      "value": "contained"
+                    },
+                    {
+                      "title": "Wide",
+                      "value": "wide"
+                    },
+                    {
+                      "title": "Full Width",
+                      "value": "full"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "contained",
+                "name": "width",
+                "type": "string",
+                "title": "Container Width"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "None",
+                      "value": "none"
+                    },
+                    {
+                      "title": "White",
+                      "value": "white"
+                    },
+                    {
+                      "title": "Gray",
+                      "value": "gray"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "none",
+                "name": "background",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "None",
+                      "value": "none"
+                    },
+                    {
+                      "title": "Compact",
+                      "value": "compact"
+                    },
+                    {
+                      "title": "Default",
+                      "value": "default"
+                    },
+                    {
+                      "title": "Spacious",
+                      "value": "spacious"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "default",
+                "name": "spacing",
+                "type": "string",
+                "title": "Vertical Spacing"
+              }
+            ],
+            "type": "object",
+            "name": "accordion"
+          },
+          {
+            "fields": [
+              {
+                "name": "headline",
+                "type": "string"
+              },
+              {
+                "name": "subheading",
+                "type": "string",
+                "title": "Subheading (optional)"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Extra Small",
+                      "value": "xsmall"
+                    },
+                    {
+                      "title": "Small",
+                      "value": "small"
+                    },
+                    {
+                      "title": "Medium",
+                      "value": "medium"
+                    },
+                    {
+                      "title": "Large",
+                      "value": "large"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "medium",
+                "name": "headlineSize",
+                "type": "string"
+              },
+              {
+                "name": "description",
+                "type": "text",
+                "title": "Description (optional)"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Left",
+                      "value": "left"
+                    },
+                    {
+                      "title": "Center",
+                      "value": "center"
+                    },
+                    {
+                      "title": "Right",
+                      "value": "right"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "left",
+                "name": "textAlign",
+                "type": "string",
+                "title": "Text Alignment"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Compact",
+                      "value": "compact"
+                    },
+                    {
+                      "title": "Default",
+                      "value": "default"
+                    },
+                    {
+                      "title": "Spacious",
+                      "value": "spacious"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "default",
+                "name": "headingSpacing",
+                "type": "string",
+                "title": "Heading to Cards Spacing"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "White with border",
+                      "value": "bordered"
+                    },
+                    {
+                      "title": "Gray background",
+                      "value": "filled"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "bordered",
+                "name": "style",
+                "type": "string",
+                "title": "Card Style"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "2 Columns",
+                      "value": "2"
+                    },
+                    {
+                      "title": "3 Columns",
+                      "value": "3"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "3",
+                "name": "columns",
+                "type": "string"
+              },
+              {
+                "initialValue": false,
+                "description": "Hide card content until clicked. Great for Q&A, tips, or interactive reveals!",
+                "name": "revealOnClick",
+                "type": "boolean",
+                "title": "Reveal on Click"
+              },
+              {
+                "initialValue": "👆 Click to reveal",
+                "description": "Text to show on cards before they're clicked (e.g., \"Click to reveal\", \"Tap for answer\")",
+                "hidden": "conditional",
+                "name": "revealHint",
+                "type": "string",
+                "title": "Reveal Hint Text"
+              },
+              {
+                "of": [
+                  {
+                    "fields": [
+                      {
+                        "name": "title",
+                        "type": "string",
+                        "title": "Card Title"
+                      },
+                      {
+                        "rows": 4,
+                        "name": "text",
+                        "type": "text",
+                        "title": "Paragraph Text"
+                      },
+                      {
+                        "of": [
+                          {
+                            "type": "string"
+                          }
+                        ],
+                        "name": "items",
+                        "type": "array",
+                        "title": "Bullet Points (optional)"
+                      }
+                    ],
+                    "type": "object",
+                    "name": "card"
+                  }
+                ],
+                "name": "cards",
+                "type": "array"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Contained (default)",
+                      "value": "contained"
+                    },
+                    {
+                      "title": "Wide",
+                      "value": "wide"
+                    },
+                    {
+                      "title": "Full Width",
+                      "value": "full"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "contained",
+                "name": "width",
+                "type": "string",
+                "title": "Container Width"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "None",
+                      "value": "none"
+                    },
+                    {
+                      "title": "White",
+                      "value": "white"
+                    },
+                    {
+                      "title": "Gray",
+                      "value": "gray"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "none",
+                "name": "background",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "None",
+                      "value": "none"
+                    },
+                    {
+                      "title": "Compact",
+                      "value": "compact"
+                    },
+                    {
+                      "title": "Default",
+                      "value": "default"
+                    },
+                    {
+                      "title": "Spacious",
+                      "value": "spacious"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "default",
+                "name": "spacing",
+                "type": "string",
+                "title": "Vertical Spacing"
+              }
+            ],
+            "type": "object",
+            "name": "contentCards"
+          },
+          {
+            "fields": [
+              {
+                "name": "video",
+                "type": "mux.video"
+              },
+              {
+                "name": "headline",
+                "type": "string"
+              },
+              {
+                "name": "subheading",
+                "type": "string",
+                "title": "Subheading (optional)"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Extra Small",
+                      "value": "xsmall"
+                    },
+                    {
+                      "title": "Small",
+                      "value": "small"
+                    },
+                    {
+                      "title": "Medium",
+                      "value": "medium"
+                    },
+                    {
+                      "title": "Large",
+                      "value": "large"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "medium",
+                "name": "headlineSize",
+                "type": "string"
+              },
+              {
+                "name": "text",
+                "type": "text"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Left",
+                      "value": "left"
+                    },
+                    {
+                      "title": "Center",
+                      "value": "center"
+                    },
+                    {
+                      "title": "Right",
+                      "value": "right"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "left",
+                "name": "textAlign",
+                "type": "string",
+                "title": "Text Alignment"
+              },
+              {
+                "initialValue": 50,
+                "validation": [
+                  {
+                    "rules": [
+                      {
+                        "flag": "min",
+                        "constraint": 0
+                      },
+                      {
+                        "flag": "max",
+                        "constraint": 100
+                      }
+                    ],
+                    "level": "error"
+                  }
+                ],
+                "name": "overlayOpacity",
+                "type": "number",
+                "title": "Overlay Opacity (%)"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Dark",
+                      "value": "dark"
+                    },
+                    {
+                      "title": "Light",
+                      "value": "light"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "dark",
+                "name": "overlayColor",
+                "type": "string"
+              },
+              {
+                "initialValue": true,
+                "name": "autoplay",
+                "type": "boolean"
+              },
+              {
+                "initialValue": true,
+                "name": "loop",
+                "type": "boolean"
+              },
+              {
+                "initialValue": true,
+                "name": "muted",
+                "type": "boolean"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Auto (original)",
+                      "value": "auto"
+                    },
+                    {
+                      "title": "Square (1:1)",
+                      "value": "square"
+                    },
+                    {
+                      "title": "Landscape 4:3",
+                      "value": "4:3"
+                    },
+                    {
+                      "title": "Landscape 16:9",
+                      "value": "16:9"
+                    },
+                    {
+                      "title": "Portrait 3:4",
+                      "value": "3:4"
+                    },
+                    {
+                      "title": "Portrait 9:16",
+                      "value": "9:16"
+                    }
+                  ],
+                  "layout": "dropdown"
+                },
+                "initialValue": "auto",
+                "name": "aspectRatio",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Contained (default)",
+                      "value": "contained"
+                    },
+                    {
+                      "title": "Wide",
+                      "value": "wide"
+                    },
+                    {
+                      "title": "Full Width",
+                      "value": "full"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "contained",
+                "name": "width",
+                "type": "string",
+                "title": "Container Width"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "None",
+                      "value": "none"
+                    },
+                    {
+                      "title": "White",
+                      "value": "white"
+                    },
+                    {
+                      "title": "Gray",
+                      "value": "gray"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "none",
+                "name": "background",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "None",
+                      "value": "none"
+                    },
+                    {
+                      "title": "Compact",
+                      "value": "compact"
+                    },
+                    {
+                      "title": "Default",
+                      "value": "default"
+                    },
+                    {
+                      "title": "Spacious",
+                      "value": "spacious"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "default",
+                "name": "spacing",
+                "type": "string",
+                "title": "Vertical Spacing"
+              }
+            ],
+            "type": "object",
+            "name": "backgroundVideo"
+          },
+          {
+            "fields": [
+              {
+                "name": "headline",
+                "type": "string"
+              },
+              {
+                "name": "subheading",
+                "type": "string",
+                "title": "Subheading (optional)"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Extra Small",
+                      "value": "xsmall"
+                    },
+                    {
+                      "title": "Small",
+                      "value": "small"
+                    },
+                    {
+                      "title": "Medium",
+                      "value": "medium"
+                    },
+                    {
+                      "title": "Large",
+                      "value": "large"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "medium",
+                "name": "headlineSize",
+                "type": "string"
+              },
+              {
+                "rows": 3,
+                "name": "description",
+                "type": "text"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Left",
+                      "value": "left"
+                    },
+                    {
+                      "title": "Center",
+                      "value": "center"
+                    },
+                    {
+                      "title": "Right",
+                      "value": "right"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "left",
+                "name": "textAlign",
+                "type": "string",
+                "title": "Text Alignment"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "leftImage",
+                "type": "image"
+              },
+              {
+                "name": "leftLabel",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "rightImage",
+                "type": "image"
+              },
+              {
+                "name": "rightLabel",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Small",
+                      "value": "small"
+                    },
+                    {
+                      "title": "Medium",
+                      "value": "medium"
+                    },
+                    {
+                      "title": "Large",
+                      "value": "large"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "small",
+                "name": "labelSize",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Auto (original)",
+                      "value": "auto"
+                    },
+                    {
+                      "title": "Square (1:1)",
+                      "value": "square"
+                    },
+                    {
+                      "title": "Landscape 4:3",
+                      "value": "4:3"
+                    },
+                    {
+                      "title": "Landscape 16:9",
+                      "value": "16:9"
+                    },
+                    {
+                      "title": "Portrait 3:4",
+                      "value": "3:4"
+                    },
+                    {
+                      "title": "Portrait 9:16",
+                      "value": "9:16"
+                    }
+                  ],
+                  "layout": "dropdown"
+                },
+                "initialValue": "auto",
+                "name": "aspectRatio",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Cover (fill, may crop)",
+                      "value": "cover"
+                    },
+                    {
+                      "title": "Contain (fit, no crop)",
+                      "value": "contain"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "cover",
+                "description": "How the image should fit within its container",
+                "name": "objectFit",
+                "type": "string",
+                "title": "Image Fit"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Contained (default)",
+                      "value": "contained"
+                    },
+                    {
+                      "title": "Wide",
+                      "value": "wide"
+                    },
+                    {
+                      "title": "Full Width",
+                      "value": "full"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "contained",
+                "name": "width",
+                "type": "string",
+                "title": "Container Width"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "None",
+                      "value": "none"
+                    },
+                    {
+                      "title": "White",
+                      "value": "white"
+                    },
+                    {
+                      "title": "Gray",
+                      "value": "gray"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "none",
+                "name": "background",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "None",
+                      "value": "none"
+                    },
+                    {
+                      "title": "Compact",
+                      "value": "compact"
+                    },
+                    {
+                      "title": "Default",
+                      "value": "default"
+                    },
+                    {
+                      "title": "Spacious",
+                      "value": "spacious"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "default",
+                "name": "spacing",
+                "type": "string",
+                "title": "Vertical Spacing"
+              }
+            ],
+            "type": "object",
+            "name": "comparison"
+          },
+          {
+            "fields": [
+              {
+                "name": "headline",
+                "type": "string"
+              },
+              {
+                "name": "subheading",
+                "type": "string",
+                "title": "Subheading (optional)"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Extra Small",
+                      "value": "xsmall"
+                    },
+                    {
+                      "title": "Small",
+                      "value": "small"
+                    },
+                    {
+                      "title": "Medium",
+                      "value": "medium"
+                    },
+                    {
+                      "title": "Large",
+                      "value": "large"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "medium",
+                "name": "headlineSize",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Left",
+                      "value": "left"
+                    },
+                    {
+                      "title": "Center",
+                      "value": "center"
+                    },
+                    {
+                      "title": "Right",
+                      "value": "right"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "left",
+                "name": "textAlign",
+                "type": "string",
+                "title": "Text Alignment"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "leftImage",
+                "type": "image"
+              },
+              {
+                "name": "leftLabel",
+                "type": "string",
+                "title": "Left Label (optional)"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "rightImage",
+                "type": "image"
+              },
+              {
+                "name": "rightLabel",
+                "type": "string",
+                "title": "Right Label (optional)"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Small",
+                      "value": "small"
+                    },
+                    {
+                      "title": "Medium",
+                      "value": "medium"
+                    },
+                    {
+                      "title": "Large",
+                      "value": "large"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "small",
+                "name": "labelSize",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Auto (original)",
+                      "value": "auto"
+                    },
+                    {
+                      "title": "Square (1:1)",
+                      "value": "square"
+                    },
+                    {
+                      "title": "Landscape 4:3",
+                      "value": "4:3"
+                    },
+                    {
+                      "title": "Landscape 16:9",
+                      "value": "16:9"
+                    },
+                    {
+                      "title": "Portrait 3:4",
+                      "value": "3:4"
+                    },
+                    {
+                      "title": "Portrait 9:16",
+                      "value": "9:16"
+                    }
+                  ],
+                  "layout": "dropdown"
+                },
+                "initialValue": "auto",
+                "name": "aspectRatio",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Cover (fill, may crop)",
+                      "value": "cover"
+                    },
+                    {
+                      "title": "Contain (fit, no crop)",
+                      "value": "contain"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "cover",
+                "description": "How the image should fit within its container",
+                "name": "objectFit",
+                "type": "string",
+                "title": "Image Fit"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Contained (default)",
+                      "value": "contained"
+                    },
+                    {
+                      "title": "Wide",
+                      "value": "wide"
+                    },
+                    {
+                      "title": "Full Width",
+                      "value": "full"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "contained",
+                "name": "width",
+                "type": "string",
+                "title": "Container Width"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "None",
+                      "value": "none"
+                    },
+                    {
+                      "title": "White",
+                      "value": "white"
+                    },
+                    {
+                      "title": "Gray",
+                      "value": "gray"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "none",
+                "name": "background",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "None",
+                      "value": "none"
+                    },
+                    {
+                      "title": "Compact",
+                      "value": "compact"
+                    },
+                    {
+                      "title": "Default",
+                      "value": "default"
+                    },
+                    {
+                      "title": "Spacious",
+                      "value": "spacious"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "default",
+                "name": "spacing",
+                "type": "string",
+                "title": "Vertical Spacing"
+              }
+            ],
+            "type": "object",
+            "name": "sideBySideImages",
+            "title": "Side by Side Images"
+          },
+          {
+            "fields": [
+              {
+                "name": "headline",
+                "type": "string"
+              },
+              {
+                "name": "subheading",
+                "type": "string",
+                "title": "Subheading (optional)"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Extra Small",
+                      "value": "xsmall"
+                    },
+                    {
+                      "title": "Small",
+                      "value": "small"
+                    },
+                    {
+                      "title": "Medium",
+                      "value": "medium"
+                    },
+                    {
+                      "title": "Large",
+                      "value": "large"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "medium",
+                "name": "headlineSize",
+                "type": "string"
+              },
+              {
+                "rows": 6,
+                "name": "text",
+                "type": "text"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Small",
+                      "value": "small"
+                    },
+                    {
+                      "title": "Medium",
+                      "value": "medium"
+                    },
+                    {
+                      "title": "Large",
+                      "value": "large"
+                    },
+                    {
+                      "title": "Extra Large",
+                      "value": "xlarge"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "medium",
+                "name": "textSize",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Left",
+                      "value": "left"
+                    },
+                    {
+                      "title": "Center",
+                      "value": "center"
+                    },
+                    {
+                      "title": "Right",
+                      "value": "right"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "center",
+                "name": "alignment",
+                "type": "string",
+                "title": "Text Alignment"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Narrow (prose)",
+                      "value": "narrow"
+                    },
+                    {
+                      "title": "Medium",
+                      "value": "medium"
+                    },
+                    {
+                      "title": "Wide",
+                      "value": "wide"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "medium",
+                "name": "maxWidth",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Contained (default)",
+                      "value": "contained"
+                    },
+                    {
+                      "title": "Wide",
+                      "value": "wide"
+                    },
+                    {
+                      "title": "Full Width",
+                      "value": "full"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "contained",
+                "name": "width",
+                "type": "string",
+                "title": "Container Width"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "None",
+                      "value": "none"
+                    },
+                    {
+                      "title": "White",
+                      "value": "white"
+                    },
+                    {
+                      "title": "Gray",
+                      "value": "gray"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "none",
+                "name": "background",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "None",
+                      "value": "none"
+                    },
+                    {
+                      "title": "Compact",
+                      "value": "compact"
+                    },
+                    {
+                      "title": "Default",
+                      "value": "default"
+                    },
+                    {
+                      "title": "Spacious",
+                      "value": "spacious"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "default",
+                "name": "spacing",
+                "type": "string",
+                "title": "Vertical Spacing"
+              }
+            ],
+            "type": "object",
+            "name": "textBlock"
+          },
+          {
+            "fields": [
+              {
+                "name": "headline",
+                "type": "string"
+              },
+              {
+                "name": "subheading",
+                "type": "string",
+                "title": "Subheading (optional)"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Extra Small",
+                      "value": "xsmall"
+                    },
+                    {
+                      "title": "Small",
+                      "value": "small"
+                    },
+                    {
+                      "title": "Medium",
+                      "value": "medium"
+                    },
+                    {
+                      "title": "Large",
+                      "value": "large"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "medium",
+                "name": "headlineSize",
+                "type": "string"
+              },
+              {
+                "rows": 2,
+                "name": "description",
+                "type": "text"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Left",
+                      "value": "left"
+                    },
+                    {
+                      "title": "Center",
+                      "value": "center"
+                    },
+                    {
+                      "title": "Right",
+                      "value": "right"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "left",
+                "name": "textAlign",
+                "type": "string",
+                "title": "Text Alignment"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "image",
+                "type": "image"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Overlay with Legend Below",
+                      "value": "overlay"
+                    },
+                    {
+                      "title": "Stack on Left",
+                      "value": "stackLeft"
+                    },
+                    {
+                      "title": "Stack on Right",
+                      "value": "stackRight"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "overlay",
+                "description": "Choose how annotations appear: overlaid on image with legend below, or stacked beside the image",
+                "name": "layout",
+                "type": "string",
+                "title": "Annotation Layout"
+              },
+              {
+                "of": [
+                  {
+                    "fields": [
+                      {
+                        "name": "x",
+                        "type": "number",
+                        "title": "X Position (%)"
+                      },
+                      {
+                        "name": "y",
+                        "type": "number",
+                        "title": "Y Position (%)"
+                      },
+                      {
+                        "name": "title",
+                        "type": "string"
+                      },
+                      {
+                        "rows": 2,
+                        "name": "description",
+                        "type": "text"
+                      },
+                      {
+                        "options": {
+                          "list": [
+                            {
+                              "title": "Problem",
+                              "value": "problem"
+                            },
+                            {
+                              "title": "Improvement",
+                              "value": "improvement"
+                            },
+                            {
+                              "title": "Neutral",
+                              "value": "neutral"
+                            }
+                          ]
+                        },
+                        "initialValue": "neutral",
+                        "name": "type",
+                        "type": "string"
+                      }
+                    ],
+                    "type": "object",
+                    "name": "hotspot"
+                  }
+                ],
+                "name": "hotspots",
+                "type": "array"
+              },
+              {
+                "initialValue": true,
+                "description": "Display all hotspots as a numbered list below the image (only applies to Overlay layout)",
+                "hidden": "conditional",
+                "name": "showLegend",
+                "type": "boolean",
+                "title": "Show Legend Below Image"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Auto (original)",
+                      "value": "auto"
+                    },
+                    {
+                      "title": "Square (1:1)",
+                      "value": "square"
+                    },
+                    {
+                      "title": "Landscape 4:3",
+                      "value": "4:3"
+                    },
+                    {
+                      "title": "Landscape 16:9",
+                      "value": "16:9"
+                    },
+                    {
+                      "title": "Portrait 3:4",
+                      "value": "3:4"
+                    },
+                    {
+                      "title": "Portrait 9:16",
+                      "value": "9:16"
+                    }
+                  ],
+                  "layout": "dropdown"
+                },
+                "initialValue": "auto",
+                "name": "aspectRatio",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Cover (fill, may crop)",
+                      "value": "cover"
+                    },
+                    {
+                      "title": "Contain (fit, no crop)",
+                      "value": "contain"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "cover",
+                "description": "How the image should fit within its container",
+                "name": "objectFit",
+                "type": "string",
+                "title": "Image Fit"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "Contained (default)",
+                      "value": "contained"
+                    },
+                    {
+                      "title": "Wide",
+                      "value": "wide"
+                    },
+                    {
+                      "title": "Full Width",
+                      "value": "full"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "contained",
+                "name": "width",
+                "type": "string",
+                "title": "Container Width"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "None",
+                      "value": "none"
+                    },
+                    {
+                      "title": "White",
+                      "value": "white"
+                    },
+                    {
+                      "title": "Gray",
+                      "value": "gray"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "none",
+                "name": "background",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    {
+                      "title": "None",
+                      "value": "none"
+                    },
+                    {
+                      "title": "Compact",
+                      "value": "compact"
+                    },
+                    {
+                      "title": "Default",
+                      "value": "default"
+                    },
+                    {
+                      "title": "Spacious",
+                      "value": "spacious"
+                    }
+                  ],
+                  "layout": "radio"
+                },
+                "initialValue": "default",
+                "name": "spacing",
+                "type": "string",
+                "title": "Vertical Spacing"
+              }
+            ],
+            "type": "object",
+            "name": "annotatedImage"
+          }
+        ],
+        "name": "modules",
+        "type": "array"
+      }
+    ],
+    "name": "caseStudy",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "Book Title"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "author",
+        "type": "string"
+      },
+      {
+        "description": "What you're learning or thinking about",
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "name": "cover",
+        "type": "image",
+        "title": "Book Cover"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Reading",
+              "value": "reading"
+            },
+            {
+              "title": "Want to Read",
+              "value": "want-to-read"
+            },
+            {
+              "title": "Finished",
+              "value": "finished"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "reading",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "reading",
+                  "want-to-read",
+                  "finished"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "status",
+        "type": "string"
+      },
+      {
+        "name": "startedAt",
+        "type": "date",
+        "title": "Started Reading"
+      }
+    ],
+    "name": "currentlyReading",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "Project Title"
+      },
+      {
+        "description": "What you're working on",
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "name": "company",
+        "type": "string",
+        "title": "Company/Client"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "In Progress",
+              "value": "in-progress"
+            },
+            {
+              "title": "Planned",
+              "value": "planned"
+            },
+            {
+              "title": "Completed",
+              "value": "completed"
+            },
+            {
+              "title": "On Hold",
+              "value": "on-hold"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "in-progress",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "in-progress",
+                  "planned",
+                  "completed",
+                  "on-hold"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "status",
+        "type": "string"
+      },
+      {
+        "initialValue": 3,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 1
+              },
+              {
+                "flag": "max",
+                "constraint": 5
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "1 = highest priority, 5 = lowest",
+        "name": "priority",
+        "type": "number"
+      },
+      {
+        "initialValue": true,
+        "description": "Blur project details and show cursor tooltip on hover",
+        "name": "confidential",
+        "type": "boolean"
+      },
+      {
+        "name": "startDate",
+        "type": "date"
+      }
+    ],
+    "name": "workProject",
+    "type": "document",
+    "title": "Work Projects"
+  },
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string",
+        "title": "Project Title"
+      },
+      {
+        "description": "What it is",
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "options": {
+          "layout": "tags"
+        },
+        "description": "Technologies, categories (e.g., AI, Music, Design)",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "tags",
+        "type": "array"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "In Progress",
+              "value": "in-progress"
+            },
+            {
+              "title": "Idea",
+              "value": "idea"
+            },
+            {
+              "title": "Completed",
+              "value": "completed"
+            },
+            {
+              "title": "Paused",
+              "value": "paused"
+            }
+          ],
+          "layout": "radio"
+        },
+        "initialValue": "in-progress",
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "in-progress",
+                  "idea",
+                  "completed",
+                  "paused"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "status",
+        "type": "string"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "description": "Optional image for the project",
+        "name": "image",
+        "type": "image"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Link to project, repo, or demo",
+        "name": "url",
+        "type": "url",
+        "title": "Project URL"
+      },
+      {
+        "description": "When you last worked on this",
+        "name": "updatedAt",
+        "type": "datetime",
+        "title": "Last Updated"
+      }
+    ],
+    "name": "funProject",
+    "type": "document",
+    "title": "Fun Projects"
+  }
+]

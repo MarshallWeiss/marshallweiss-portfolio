@@ -70,10 +70,10 @@ export default function MediaGrid({
                 subheading={subheading}
                 headlineSize={headlineSize}
                 textAlign={textAlign}
-                className=""
+                className={cn("", textAlign === 'center' && "max-w-3xl md:mx-auto")}
             />
             {description && (
-                <p className={cn("text-gray-600 text-lg leading-relaxed mb-8 md:mb-12", alignmentClass)}>
+                <p className={cn("text-gray-600 text-base md:text-lg leading-relaxed mb-8 md:mb-12 max-w-3xl", alignmentClass, textAlign === 'center' && "md:mx-auto")}>
                     {description}
                 </p>
             )}

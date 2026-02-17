@@ -98,7 +98,7 @@ export default function ContentCards({
             />
             {description && (
                 <p className={cn(
-                    "text-gray-600 text-lg max-w-3xl mb-10 md:mb-14",
+                    "text-gray-600 text-base md:text-lg max-w-3xl mb-10 md:mb-14",
                     alignmentClass,
                     textAlign === 'center' && 'md:mx-auto'
                 )}>

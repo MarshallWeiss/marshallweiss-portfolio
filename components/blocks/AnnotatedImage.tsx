@@ -318,7 +318,7 @@ export default function AnnotatedImage({
                     className=""
                 />
                 {description && (
-                    <p className="text-gray-600 text-lg leading-relaxed mb-6">
+                    <p className="text-gray-600 text-base md:text-lg leading-relaxed mb-6">
                         {description}
                     </p>
                 )}
@@ -363,7 +363,7 @@ export default function AnnotatedImage({
                     className=""
                 />
                 {description && (
-                    <p className={cn("text-gray-600 text-lg leading-relaxed mb-10 md:mb-14", alignmentClass)}>
+                    <p className={cn("text-gray-600 text-base md:text-lg leading-relaxed mb-10 md:mb-14", alignmentClass)}>
                         {description}
                     </p>
                 )}

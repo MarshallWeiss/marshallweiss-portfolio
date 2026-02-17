@@ -18,8 +18,8 @@ export default function BlockWrapper({
 }: BlockWrapperProps) {
     // Width classes
     const widthClasses = {
-        contained: 'max-w-6xl mx-auto px-6',
-        wide: 'max-w-7xl mx-auto px-6',
+        contained: 'max-w-6xl mx-auto px-0 md:px-6',
+        wide: 'max-w-7xl mx-auto px-0 md:px-6',
         full: 'w-full',
     }
 
@@ -42,8 +42,10 @@ export default function BlockWrapper({
         <section className={cn(
             spacingClasses[spacing],
             backgroundClasses[background],
-            // Break out of parent padding for full-width backgrounds
-            width === 'full' && background !== 'none' && '-mx-6 md:-mx-12',
+            // Break out of parent padding for full-width backgrounds on mobile
+            background !== 'none' && '-mx-6 md:mx-0',
+            // Also break out on desktop for full-width blocks
+            width === 'full' && background !== 'none' && 'md:-mx-12',
             className
         )}>
             <div className={cn(
@@ -51,7 +53,10 @@ export default function BlockWrapper({
                 background !== 'none' ? 'w-full' : ''
             )}>
                 {background !== 'none' && width !== 'full' && (
-                    <div className={widthClasses[width]}>
+                    <div className={cn(
+                        width === 'contained' ? 'max-w-6xl' : 'max-w-7xl',
+                        'mx-auto px-6'
+                    )}>
                         {children}
                     </div>
                 )}

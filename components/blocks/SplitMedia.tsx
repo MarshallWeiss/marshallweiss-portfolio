@@ -183,7 +183,7 @@ export default function SplitMedia({
     // Render text content
     const renderTextContent = () => (
         <div className={cn(
-            "prose prose-lg text-gray-600",
+            "text-gray-600",
             layout === 'sideBySide' ? columnSpans.text : 'max-w-4xl',
             layout !== 'sideBySide' && textAlign === 'center' && 'md:mx-auto',
             textPaddingClass,
@@ -196,7 +196,7 @@ export default function SplitMedia({
                 textAlign={textAlign}
             />
             <p className={cn(
-                "whitespace-pre-wrap leading-relaxed",
+                "whitespace-pre-wrap leading-relaxed text-base md:text-lg",
                 textAlign === 'center' && 'md:text-center',
                 textAlign === 'right' && 'md:text-right'
             )}>

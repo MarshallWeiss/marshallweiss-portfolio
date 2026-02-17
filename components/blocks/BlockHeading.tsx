@@ -41,7 +41,7 @@ export default function BlockHeading({
                 </h2>
             )}
             {subheading && (
-                <p className="text-lg text-gray-600 mt-2">
+                <p className="text-base md:text-lg text-gray-600 mt-2">
                     {subheading}
                 </p>
             )}
