@@ -87,6 +87,7 @@ The skill analyzes your idea and routes it automatically. Article-worthy ideas g
 
 - **Use "spec-driven development" not "vibe coding"** when describing AI-assisted development workflows. Vibe coding can be referenced as a cultural term others use, but our framing is spec-driven: documentation first, specifications as source of truth, AI builds against specs.
 - **Articles must have a personal voice.** No generic listicle content. Every article should include specific experiences, opinions, or anecdotes. If it could have been written by anyone, it shouldn't be published.
+- **Never fabricate personal details.** Do not invent biographical facts, family situations, or experiences. Marshall is a 31-year-old product designer living and working in Madrid, Spain, for El Confidencial (a major Spanish newspaper). When writing articles that reference personal context, ask rather than assume.
 
 ## Documentation
 

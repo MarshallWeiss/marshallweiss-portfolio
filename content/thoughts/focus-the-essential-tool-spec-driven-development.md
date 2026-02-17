@@ -60,7 +60,7 @@ Not a suggestion. A requirement.
 
 Open offices, shared spaces, coffee shops - these work fine for traditional coding where you can pause and resume. They're death for spec-driven development. Every conversation happening nearby is a potential distraction. Every person walking by is a context switch.
 
-When I'm spec-driven development, I close my office door. I put a sign on it: "AI session - do not disturb unless urgent." My wife and kids know this means I'm genuinely unavailable, not just "focused."
+During a deep development session, I close my office door. I put a sign on it: "AI session - do not disturb unless urgent." Anyone around knows this means I'm genuinely unavailable, not just "focused."
 
 If you don't have a room with a door, find one. Book a conference room. Work from home on deep development days. Go to a library study room. This isn't luxury - it's the baseline requirement for the work.
 
