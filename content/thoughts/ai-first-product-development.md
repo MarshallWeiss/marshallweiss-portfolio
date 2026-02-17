@@ -223,7 +223,7 @@ And add a subtle animation when saving."
 
 AI adjusts. I review again. Repeat until it's right.
 
-This is "[vibe coding](https://blog.replit.com/what-is-vibe-coding)" - a term coined by AI researcher Andrej Karpathy in February 2025 that became [Collins Dictionary's Word of the Year for 2026](https://www.knack.com/blog/vibe-coding-tools-guide/). One designer [built 3 apps and shipped them in 2 weeks](https://adplist.substack.com/p/claude-code-guide-for-designers), claiming designers who vibe-code "ship 10x faster."
+Some call this "[vibe coding](https://blog.replit.com/what-is-vibe-coding)" - a term coined by AI researcher Andrej Karpathy in February 2025 that became [Collins Dictionary's Word of the Year for 2026](https://www.knack.com/blog/vibe-coding-tools-guide/). But that undersells it. What we're doing is closer to spec-driven development: writing detailed specifications, directing AI to build against them, and reviewing the output. One designer [built 3 apps and shipped them in 2 weeks](https://adplist.substack.com/p/claude-code-guide-for-designers) using this approach.
 
 I'm not reviewing code quality. I'm reviewing functionality and design. This is what I'm good at. The code quality gets checked next.
 

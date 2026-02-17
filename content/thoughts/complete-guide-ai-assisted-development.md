@@ -1,15 +1,15 @@
 ---
-title: "The Complete Guide to AI-Assisted Development: Best Practices for Vibe Coding"
+title: "The Complete Guide to AI-Assisted Development: A Spec-Driven Approach"
 description: "A comprehensive, documentation-first system for building production-quality software with AI coding assistants. Learn the workflows, tools, and patterns that separate successful AI-assisted projects from failed experiments."
 date: "2026-02-09"
 slug: "complete-guide-ai-assisted-development"
-tags: ["AI", "Vibe Coding", "Development", "Workflow", "Documentation", "Best Practices"]
+tags: ["AI", "Spec-Driven Development", "Development", "Workflow", "Documentation", "Best Practices"]
 readingTime: "45 min read"
 ---
 
-# The Complete Guide to AI-Assisted Development: Best Practices for Vibe Coding
+# The Complete Guide to AI-Assisted Development: A Spec-Driven Approach
 
-AI-assisted development—often called "vibe coding"—has fundamentally changed how we build software. Tools like Claude Code, Cursor, and GitHub Copilot promise to turn ideas into working code through natural language. Yet many developers find themselves frustrated: broken implementations, inconsistent UI, components that don't connect properly, and apps that work until they don't.
+AI-assisted development has fundamentally changed how we build software. Tools like Claude Code, Cursor, and GitHub Copilot promise to turn ideas into working code through natural language. Yet many developers find themselves frustrated: broken implementations, inconsistent UI, components that don't connect properly, and apps that work until they don't.
 
 The issue isn't the AI. It's the approach.
 
@@ -653,7 +653,7 @@ Cursor sees your entire project, understands file relationships, and edits acros
 
 **Plan mode**: Architecture before code. Describe what you want and Cursor creates detailed implementation plans with steps, asks clarifying questions, can generate visual diagrams. Use at the start of every new feature. Review the plan, adjust it, approve steps, then send to Agent mode.
 
-**Agent mode**: The workhorse. AI autonomously writes code, edits files, runs terminal commands, installs packages, fixes errors. Reads your entire project, follows rules files, implements features end-to-end. Most vibe coding happens here.
+**Agent mode**: The workhorse. AI autonomously writes code, edits files, runs terminal commands, installs packages, fixes errors. Reads your entire project, follows rules files, implements features end-to-end. Most spec-driven development happens here.
 
 **Debug mode**: Structured debugging loop. When you hit stubborn bugs, Debug mode instruments your code with runtime logs, generates hypotheses, asks you to reproduce the bug, tests its fix, asks you to verify.
 
@@ -716,7 +716,7 @@ Basics:
 - `git push` uploads to GitHub
 - `git pull` downloads latest changes
 
-When vibe coding, commit often. After every major working feature: "Added user login", "Added product grid", "Fixed checkout bug." If you break something, you can always go back.
+When building with AI, commit often. After every major working feature: "Added user login", "Added product grid", "Fixed checkout bug." If you break something, you can always go back.
 
 Connect to progress.txt system: Commit code, update progress.txt, push both. Now GitHub has your code and your context file. Next session: pull down, read progress.txt, keep building.
 
@@ -829,7 +829,7 @@ When AI generates code, ask:
 
 Over time, you'll start recognizing patterns. You'll see an import statement and know it's pulling in another file. You'll see useState and know it's tracking something that changes. You'll see an API call and know it's fetching data.
 
-This is how you go from vibe coder to builder. Not by memorizing syntax, but by understanding patterns.
+This is how you go from AI user to builder. Not by memorizing syntax, but by understanding patterns.
 
 ## Iteration Strategy
 

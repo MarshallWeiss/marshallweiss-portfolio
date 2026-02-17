@@ -83,6 +83,11 @@ The skill analyzes your idea and routes it automatically. Article-worthy ideas g
 - `content/music/backlog.md` - Songs to learn, music practice goals
 - `content/design/backlog.md` - Design concepts and UI/UX explorations
 
+## Content Voice & Framing
+
+- **Use "spec-driven development" not "vibe coding"** when describing AI-assisted development workflows. Vibe coding can be referenced as a cultural term others use, but our framing is spec-driven: documentation first, specifications as source of truth, AI builds against specs.
+- **Articles must have a personal voice.** No generic listicle content. Every article should include specific experiences, opinions, or anecdotes. If it could have been written by anyone, it shouldn't be published.
+
 ## Documentation
 
 - `docs/PROJECT_AUDIT.md` - Current state audit of the project

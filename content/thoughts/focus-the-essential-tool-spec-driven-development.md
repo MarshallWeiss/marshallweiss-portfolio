@@ -1,13 +1,13 @@
 ---
-title: "Focus: The Most Important Tool in Vibe Coding"
-description: "Why traditional productivity advice fails when working with AI agents, and how to build an environment that sustains the deep attention vibe coding demands."
+title: "Focus: The Most Important Tool in Spec-Driven Development"
+description: "Why traditional productivity advice fails when working with AI agents, and how to build an environment that sustains the deep attention spec-driven development demands."
 date: "2026-02-12"
-slug: "focus-the-essential-tool-vibe-coding"
-tags: ["AI", "Productivity", "Vibe Coding", "Workflow", "Focus"]
+slug: "focus-the-essential-tool-spec-driven-development"
+tags: ["AI", "Productivity", "Spec-Driven Development", "Workflow", "Focus"]
 readingTime: "14 min read"
 ---
 
-# Focus: The Most Important Tool in Vibe Coding
+# Focus: The Most Important Tool in Spec-Driven Development
 
 ## The Fundamental Shift Nobody Talks About
 
@@ -15,13 +15,13 @@ When you write code yourself, you control when you stop.
 
 Need to check Slack? You pause between functions. Want to grab coffee? You finish the component you're working on. Phone buzzes? You're already context-switching anyway, what's one more distraction?
 
-This doesn't work when you're vibe coding.
+This doesn't work when you're spec-driven development.
 
-Vibe coding - directing AI to build software through natural language conversation - has a completely different rhythm. You describe what you want, hit enter, and then you wait. The AI agent is working. Reading your codebase. Understanding context. Generating a solution. Running tests. Creating a pull request.
+Spec-driven development - writing detailed specifications and directing AI agents to build software against them - has a completely different rhythm. You describe what you want, hit enter, and then you wait. The AI agent is working. Reading your codebase. Understanding context. Generating a solution. Running tests. Creating a pull request.
 
 You can't pause it mid-thought. You can't save your progress and pick it up later without losing critical context. You're not typing - you're observing, guiding, and making decisions at key moments.
 
-**The shift**: Traditional coding is stationary and self-paced. Vibe coding is dynamic and agent-paced. You move around. You think out loud. You watch things happen. And crucially, you must maintain sustained attention for much longer stretches.
+**The shift**: Traditional coding is stationary and self-paced. Spec-driven development is dynamic and agent-paced. You move around. You think out loud. You watch things happen. And crucially, you must maintain sustained attention for much longer stretches.
 
 This changes everything about focus.
 
@@ -33,7 +33,7 @@ But what happens when the AI is 18 minutes into analyzing your codebase and abou
 
 The cost of distraction is also fundamentally different. When you're writing code manually, getting distracted means you lose your train of thought. Annoying, but you can rebuild it.
 
-When you're vibe coding, getting distracted means:
+When you're spec-driven development, getting distracted means:
 - You miss the moment the agent needs guidance
 - You lose context on what it's doing and why
 - You can't evaluate whether the output is right
@@ -42,13 +42,13 @@ When you're vibe coding, getting distracted means:
 
 I've had this happen. I asked Claude Code to refactor a complex component system. Stepped away to check a message. Came back 10 minutes later to find it had completed the work - but made assumptions I would have corrected if I'd been present. I had to throw it all away and start over.
 
-**The lesson**: Vibe coding isn't just coding with AI assistance. It's a collaboration that requires your continuous presence.
+**The lesson**: Spec-driven development isn't passive delegation. It's a collaboration that requires your continuous presence.
 
 ## The Environment is the Tool
 
 If focus is the constraint, your environment is the leverage point.
 
-I used to think environment was about comfort. Nice chair, good lighting, pleasant music. That's part of it. But for vibe coding, environment is about eliminating every possible source of distraction and maximizing your ability to sustain deep attention for 2-4 hour blocks.
+I used to think environment was about comfort. Nice chair, good lighting, pleasant music. That's part of it. But for spec-driven development, environment is about eliminating every possible source of distraction and maximizing your ability to sustain deep attention for 2-4 hour blocks.
 
 Here's what actually matters, and why.
 
@@ -58,11 +58,11 @@ Work in a room with a door you can close.
 
 Not a suggestion. A requirement.
 
-Open offices, shared spaces, coffee shops - these work fine for traditional coding where you can pause and resume. They're death for vibe coding. Every conversation happening nearby is a potential distraction. Every person walking by is a context switch.
+Open offices, shared spaces, coffee shops - these work fine for traditional coding where you can pause and resume. They're death for spec-driven development. Every conversation happening nearby is a potential distraction. Every person walking by is a context switch.
 
-When I'm vibe coding, I close my office door. I put a sign on it: "AI session - do not disturb unless urgent." My wife and kids know this means I'm genuinely unavailable, not just "focused."
+When I'm spec-driven development, I close my office door. I put a sign on it: "AI session - do not disturb unless urgent." My wife and kids know this means I'm genuinely unavailable, not just "focused."
 
-If you don't have a room with a door, find one. Book a conference room. Work from home on vibe coding days. Go to a library study room. This isn't luxury - it's the baseline requirement for the work.
+If you don't have a room with a door, find one. Book a conference room. Work from home on deep development days. Go to a library study room. This isn't luxury - it's the baseline requirement for the work.
 
 ### Room Tidiness
 
@@ -70,7 +70,7 @@ Visual clutter creates mental clutter.
 
 Your brain constantly processes everything in your visual field, even peripherally. A messy room means your brain is working overtime to filter out irrelevant stimuli.
 
-Before every vibe coding session, I spend 5 minutes:
+Before every development session, I spend 5 minutes:
 - Clearing my desk completely (only laptop, monitor, keyboard, mouse, notebook)
 - Putting away anything I'm not using
 - Closing all the tabs on my desktop
@@ -86,7 +86,7 @@ The research on music and focus is mixed because it depends entirely on the task
 
 For mechanical work - typing code you've already designed - music can help. It masks environmental noise and creates a rhythm.
 
-For vibe coding - where you're actively thinking, problem-solving, and making decisions - music is often a distraction. Especially music with lyrics. Your brain can't help but process language, and that competes with processing the AI's output.
+For spec-driven development - where you're actively thinking, problem-solving, and making decisions - music is often a distraction. Especially music with lyrics. Your brain can't help but process language, and that competes with processing the AI's output.
 
 What works for me:
 - **Complete silence** for complex problem-solving sessions
@@ -126,7 +126,7 @@ Phone out of the room handles mobile distraction. But what about your computer?
 
 I use three layers of defense:
 
-**Layer 1: App blockers** - I use [Cold Turkey](https://getcoldturkey.com/) on Mac (Windows has similar tools). During vibe coding sessions:
+**Layer 1: App blockers** - I use [Cold Turkey](https://getcoldturkey.com/) on Mac (Windows has similar tools). During development sessions:
 - Slack is blocked
 - Discord is blocked
 - Twitter/X is blocked
@@ -137,13 +137,13 @@ You can't just click "disable" on a whim. Cold Turkey requires you to restart yo
 
 **Layer 2: Notification silence** - Not just Do Not Disturb. Actually turning off notifications at the system level for the session. No badges. No banners. No sounds.
 
-**Layer 3: Browser discipline** - I use separate browser profiles for work. My "vibe coding" profile has:
+**Layer 3: Browser discipline** - I use separate browser profiles for work. My "spec-driven development" profile has:
 - Only developer documentation bookmarked
 - No social media accounts logged in
 - No shortcuts to distracting sites
 - Extensions for blocking Reddit, HN, YouTube (except when explicitly needed)
 
-This sounds extreme. It is. But vibe coding demands it.
+This sounds extreme. It is. But spec-driven development demands it.
 
 When Claude Code is in the middle of refactoring your component system and you need to evaluate whether its approach aligns with your architecture, you can't have Slack pinging you about lunch plans. The context switch costs 10-20 minutes of recovery time.
 
@@ -155,9 +155,9 @@ I work with my laptop closed, connected to a 27-inch monitor via HDMI, with the 
 
 Why this matters:
 
-**Prevents hunching** - When you're vibe coding, you're reading a lot. AI outputs are verbose. You're reviewing code, reading documentation, analyzing error messages. If you're hunched over a laptop, your posture degrades fast. Within an hour, your neck and shoulders are tense. Tension destroys focus.
+**Prevents hunching** - When you're spec-driven development, you're reading a lot. AI outputs are verbose. You're reviewing code, reading documentation, analyzing error messages. If you're hunched over a laptop, your posture degrades fast. Within an hour, your neck and shoulders are tense. Tension destroys focus.
 
-**Encourages movement** - With the laptop closed and monitor at a distance, you can't lean in. You sit back. You stand up. You pace while thinking. This movement is crucial - vibe coding isn't sedentary the way traditional coding is.
+**Encourages movement** - With the laptop closed and monitor at a distance, you can't lean in. You sit back. You stand up. You pace while thinking. This movement is crucial - spec-driven development isn't sedentary the way traditional coding is.
 
 **Reduces eye strain** - A larger monitor at proper distance means less squinting, less fatigue, longer sustainable sessions.
 
@@ -208,7 +208,7 @@ Even in a quiet room, there's ambient noise. HVAC hum. Traffic outside. Someone 
 
 AirPods Pro with active noise cancellation eliminate this completely.
 
-I wear them during every vibe coding session, even when I'm not playing any audio. The silence is absolute. It's like being in a sensory deprivation tank, but just for sound.
+I wear them during every development session, even when I'm not playing any audio. The silence is absolute. It's like being in a sensory deprivation tank, but just for sound.
 
 This does two things:
 
@@ -224,7 +224,7 @@ One warning: don't use them all day. Constant active noise cancellation can caus
 
 This gets technical but it matters: **optimize your tools for sustained reading, not just writing**.
 
-Vibe coding means you're reading far more than you're writing. You're reading AI-generated code. You're reading error messages. You're reading documentation. Your tools need to support this.
+Spec-driven development means you're reading far more than you're writing. You're reading AI-generated code. You're reading error messages. You're reading documentation. Your tools need to support this.
 
 **Terminal font size** - I increased mine from 12pt to 16pt. Sounds huge. But when you're reading Claude Code's output about why it chose a particular architectural approach, 16pt means less eye strain and faster comprehension.
 
@@ -257,7 +257,7 @@ My pre-session checklist (printed and taped to my monitor):
 □ Phone to kitchen on charger (Do Not Disturb)
 □ Enable Cold Turkey blocker (4-hour session)
 □ Turn off system notifications
-□ Switch to "Vibe Coding" browser profile
+□ Switch to "Dev Focus" browser profile
 □ Monitor position check (arm's length, top at eye level)
 □ Chair adjustment check (lumbar support, armrests)
 □ Tea prepared and in position
@@ -276,7 +276,7 @@ You might be thinking: "This is overkill. I can just be more disciplined."
 
 Maybe. But consider the math.
 
-Let's say you're vibe coding for 3 hours with "good" focus:
+Let's say you're spec-driven development for 3 hours with "good" focus:
 - 5 quick Slack checks (2 minutes each) = 10 minutes
 - 3 phone checks (1 minute each) = 3 minutes
 - 2 bathroom breaks without closing laptop (5 minutes each) = 10 minutes
@@ -298,9 +298,9 @@ Compare that to a properly structured session with the full focus environment:
 
 You get 2.5-3 hours of actual deep focus. The difference isn't 14%. It's 2-3x more effective work.
 
-## What Optimal Vibe Coding Sessions Feel Like
+## What Optimal Sessions Feel Like
 
-When everything is right, vibe coding enters a flow state that's different from any other kind of work.
+When everything is right, spec-driven development enters a flow state that's different from any other kind of work.
 
 **You forget time** - Not in a "where did the day go" way. In a "I'm fully present in this moment" way. You look up and 90 minutes have passed but it feels like 20.
 
@@ -328,7 +328,7 @@ Building this environment has effects beyond just getting more work done.
 
 **Clearer boundaries** - When work sessions are this focused, you can truly disconnect afterward. No guilt about not being productive. You were deeply productive during the session.
 
-**Enjoyment** - This sounds weird, but vibe coding in a proper focus environment is genuinely enjoyable. It's challenging in the way puzzles are challenging. The AI handles the tedious parts, leaving you to engage with the interesting problems.
+**Enjoyment** - This sounds weird, but spec-driven development in a proper focus environment is genuinely enjoyable. It's challenging in the way puzzles are challenging. The AI handles the tedious parts, leaving you to engage with the interesting problems.
 
 ## The Hard Part: Actually Doing It
 
@@ -344,7 +344,7 @@ You will be tempted to check Slack "real quick" mid-session. Don't. Use the bloc
 
 The setup overhead feels like a tax. "I'm wasting time preparing instead of working." But it's not a tax - it's an investment with a 3-5x return.
 
-Track this yourself. Do three vibe coding sessions without the full setup. Measure what you accomplish. Then do three sessions with the full environment. Measure again.
+Track this yourself. Do three development sessions without the full setup. Measure what you accomplish. Then do three sessions with the full environment. Measure again.
 
 You'll see the difference. And once you see it, you won't want to work any other way.
 
@@ -366,7 +366,7 @@ The goal isn't perfection. It's creating conditions where deep focus is the defa
 
 ## The Broader Shift
 
-Vibe coding is forcing a fundamental rethinking of productivity.
+Spec-driven development is forcing a fundamental rethinking of productivity.
 
 We're moving from "how much code can I type" to "how well can I direct AI to build what I envision."
 
