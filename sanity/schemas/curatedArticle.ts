@@ -31,6 +31,12 @@ export default defineType({
       description: 'Brief note on why this is worth reading',
     }),
     defineField({
+      name: 'ogImage',
+      title: 'OG Image URL',
+      type: 'url',
+      description: 'Open Graph image URL auto-fetched from the article',
+    }),
+    defineField({
       name: 'category',
       title: 'Category',
       type: 'string',

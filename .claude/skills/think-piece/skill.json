@@ -1,9 +1,0 @@
-{
-  "name": "think-piece",
-  "description": "Guide through writing Atlantic-style philosophical essays and cultural analysis",
-  "triggers": {
-    "keywords": ["/think-piece", "/essay", "/analysis"]
-  },
-  "author": "custom",
-  "version": "1.0.0"
-}

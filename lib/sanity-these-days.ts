@@ -100,6 +100,7 @@ export async function getCuratedArticles() {
     url,
     source,
     description,
+    ogImage,
     category,
     addedAt
   }`;
@@ -112,6 +113,7 @@ export async function getCuratedArticles() {
     url: article.url,
     source: article.source,
     description: article.description,
+    ogImage: article.ogImage,
     category: article.category,
     addedAt: article.addedAt,
   }));
