@@ -6,6 +6,48 @@ Session context for continuing work on this project.
 
 `main`
 
+## Recent Work (2026-02-26) — Session 8
+
+### Music Recorder Visual Overhaul + Bug Fixes ✅
+**GarageBand-level skeuomorphic realism + three critical bug fixes:**
+
+**Visual Overhaul (complete component rewrites for dramatic improvement):**
+- **CassetteDeck** — Full rewrite: 6-tooth drive hub spindle holes, concentric tape-wound rings, off-white hub flanges with spokes, brown tape ribbon via chrome guide posts, cassette label with ruled lines/Type I/C-60 markings, 5 Phillips head screws, head access slots, plastic mold texture, gloss reflection
+- **TransportButtons** — 3D bevel effect (bright top edge, dark bottom, shadow shelf), press-down animation (translateY + shadow change), richer ruby-red record button with glow, larger sizing (54px default, 62px record)
+- **VUMeter** — Cream/ivory face like real VU meters, dark markings with red zone on light background, tapered needle (triangle), pivot screw detail, deeper recessed housing
+- **VerticalFader** — Chrome-like thumb with 10+ color stop gradient, grip ridges, center indicator line, deeper slot with multi-layer inset shadows, scale marks both sides
+- **RotaryKnob** — 3D sphere lighting with stronger gradients, knurled edge ring, better indicator line visibility
+- **WoodPanel** — Wider (56px), richer grain, more contrast, deeper shadows
+- **ChannelStrip** — Better arm/mute/solo buttons with 3D bevels and press animations
+- **MixerSection** — Deeper recessed panel shadow
+- **App mode toggle** — Redesigned as segmented control with recessed active state
+- **index.css** — Brighter wood clear coat, stronger grain contrasts, richer base walnut
+
+**Bug Fixes (3 regressions from visual changes):**
+1. **VU meters not responding during recording** — Animation loop restarted via useEffect when analyser prop changed, causing timing issues. Fixed by storing analyser in a ref that the continuously-running draw loop reads directly, removing analyser from effect deps.
+2. **Cassette position jumping between modes** — CassetteDeck was in different parent containers (multitrack flex-row vs looper flex-column). Fixed by extracting CassetteDeck above the mode-specific content area so it always renders in the same wrapper regardless of mode. LooperView no longer renders its own CassetteDeck.
+3. **Looper spacebar not working** — Mode toggle buttons retained browser focus after clicking. Spacebar on focused "Looper" button triggered toggleMode, switching back to multitrack. Fixed with tabIndex={-1} and blur() on click for mode toggle buttons and StompButton.
+
+**Files Modified (music-recorder submodule):**
+- `src/App.tsx` — Cassette extracted above mode content, mode toggle blur fix
+- `src/components/skeuomorphic/CassetteDeck.tsx` — Complete rewrite
+- `src/components/skeuomorphic/TransportButtons.tsx` — Complete rewrite
+- `src/components/skeuomorphic/VUMeter.tsx` — Cream face, tapered needle, analyser ref fix
+- `src/components/skeuomorphic/VerticalFader.tsx` — Chrome fader rewrite
+- `src/components/skeuomorphic/RotaryKnob.tsx` — 3D sphere rewrite
+- `src/components/skeuomorphic/ChannelStrip.tsx` — Button styling
+- `src/components/skeuomorphic/MetalPanel.tsx` — VU sizing, panel styling
+- `src/components/skeuomorphic/MixerSection.tsx` — Deeper shadow
+- `src/components/skeuomorphic/WoodPanel.tsx` — Wider, richer
+- `src/components/skeuomorphic/LooperView.tsx` — Removed CassetteDeck (now in App)
+- `src/components/skeuomorphic/StompButton.tsx` — tabIndex fix
+- `src/styles/index.css` — Wood/metal texture improvements, unified button classes
+- `tailwind.config.js` — Shadow token warmth
+
+**Build Status:** ✓ Build passes, all TypeScript clean
+
+---
+
 ## Recent Work (2026-02-26) — Session 7
 
 ### Patent Article Research & Draft + Dictation Hardening ✅
