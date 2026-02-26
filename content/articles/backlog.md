@@ -6,6 +6,19 @@ Structured article projects for AI-assisted writing. Add new ideas at the top.
 
 ## Backlog
 
+### The Golden Age of Web Design
+- **Added**: 2026-02-22
+- **Status**: captured
+- **Source**: Ideas backlog (cross-posted)
+- **Angle**: We're in a brief golden age of web design — tools let us build faster and easier than ever, but AI hasn't yet ruined it. The window where AI empowers skilled designers without replacing or homogenizing them. What happens when AI-generated sites flood the market? When every template looks the same, when clients stop seeing value in craft? This moment is worth documenting before it passes. Could explore the historical parallel with other "golden ages" that preceded disruption (desktop publishing before clip art hell, early Instagram before the algorithm, etc.).
+
+### What I Learned Rebuilding My Portfolio in Claude Code
+
+- **Added**: 2026-02-20
+- **Status**: captured
+- **Source**: Direct experience
+- **Angle**: A retrospective on rebuilding the portfolio from scratch using Claude Code as the primary development environment. What actually worked, what didn't, what surprised you. The real workflow — not the idealized version. Concrete lessons: how spec-driven development played out in practice, when Claude Code saved hours vs. when it cost them, the customization feedback loop (skills, agents, CLAUDE.md), how thinking about the tool changed the way you think about building software. Could overlap with the "Second Brain" piece but this is more grounded and practical — show don't tell, with the portfolio itself as the case study.
+
 ### The Privacy Illusion: How Little Privacy We Actually Have on the Internet
 
 - **Added**: 2026-02-14

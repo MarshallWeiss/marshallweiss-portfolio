@@ -4,7 +4,52 @@ Session context for continuing work on this project.
 
 ## Current Branch
 
-`antigravity-sanity-work` - Building out Sanity CMS integration for case studies
+`main`
+
+## Recent Work (2026-02-26) — Session 7
+
+### Patent Article Research & Draft + Dictation Hardening ✅
+**Researched patent/IP history, wrote ~6,200 word article draft, and fixed dictation reliability:**
+
+**Article: "The Grand Bargain Is Broken":**
+- Full ai-news-research agent workflow (Stages 3-6) on patents and IP in the AI era
+- Pivoted from copyright to patents mid-session after realizing the competitive landscape question is about patents, not copyright
+- Three research files produced: AI copyright cases, copyright history, patent/IP history
+- Article shape document with 6-section structure, key anecdotes, open questions
+- Final draft: ~6,200 words, 40+ citations, long-form Atlantic-style
+- Thesis: the patent system's "grand bargain" (disclose for protection) collapses when AI makes replication trivial
+- Key sections: Grand Bargain origins, Cotton Gin parallel, software patent history, speed as real moat, AI closing the window, where it's going
+
+**Dictation Tool Hardening (Hammerspoon):**
+- Added 2-minute max recording auto-stop timer (prevents stuck recordings)
+- Added Escape key force-stop listener (most accessible bailout)
+- Added menubar "Stop & Transcribe Now" option
+- Increased whisper timeout from 30s to 60s for longer recordings
+- All three safety nets prevent the "stuck on Listening" problem
+
+**CLAUDE.md Updates:**
+- Added Core Rules section with skill/agent respect rule
+
+**Ideas Captured:**
+- "Framer Sites as a Side Hustle" → ideas backlog
+- "The Golden Age of Web Design" → ideas + articles backlogs
+
+**Files Created:**
+- `content/articles/spitball-notes/2026-02-26-copyright-ai-research.md`
+- `content/articles/spitball-notes/2026-02-26-copyright-history-research.md`
+- `content/articles/spitball-notes/2026-02-26-patent-ip-history-research.md`
+- `content/articles/spitball-notes/2026-02-26-patent-article-shape.md`
+- `content/thoughts/drafts/the-grand-bargain-is-broken.md`
+
+**Files Modified:**
+- `CLAUDE.md` — Added Core Rules section
+- `content/ideas/backlog.md` — Two new ideas
+- `content/articles/backlog.md` — Golden Age cross-post
+- `~/.hammerspoon/init.lua` — Max timer, escape key, menubar stop
+
+**Build Status:** ✓ No build changes (content only)
+
+---
 
 ## Recent Work (2026-02-18) — Session 6
 
