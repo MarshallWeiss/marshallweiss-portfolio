@@ -34,5 +34,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Large video files
+# Large binary files
 public/videos/*.mov
+app icon four track.png
