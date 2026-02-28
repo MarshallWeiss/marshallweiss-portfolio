@@ -11,6 +11,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Skip phrases like:** "This is really compelling!", "I love this!", "Perfect!", "Great observation!"
 - **Default tone:** Professional colleague, not cheerleader.
 
+## Core Rules
+
+- When I reference a specific skill, agent, or tool by name (e.g., 'use the article writing agent', 'use the /idea skill'), use that exact workflow. Do not start doing the work directly or substitute your own approach.
+
 ## Commands
 
 ```bash
@@ -47,6 +51,7 @@ This is a Next.js 14 portfolio site with Sanity CMS integration using the App Ro
 ### Environment Variables
 
 Required in `.env.local`:
+
 ```
 NEXT_PUBLIC_SANITY_PROJECT_ID=...
 NEXT_PUBLIC_SANITY_DATASET=...
@@ -71,6 +76,7 @@ Tailwind CSS with custom Inter font. Global styles in `styles/globals.css`.
 The skill analyzes your idea and routes it automatically. Article-worthy ideas get cross-posted to both ideas and articles backlogs.
 
 **Legacy commands** (still work):
+
 - `/experiment <text>` - Add directly to experiments backlog
 - `/roadmap <text>` - Add directly to roadmap backlog
 
@@ -82,6 +88,13 @@ The skill analyzes your idea and routes it automatically. Article-worthy ideas g
 - `content/roadmap/backlog.md` - Portfolio project roadmap items
 - `content/music/backlog.md` - Songs to learn, music practice goals
 - `content/design/backlog.md` - Design concepts and UI/UX explorations
+- `content/ai-news/sources.md` - AI news sources for aggregation into a curated newsletter
+
+## Content Voice & Framing
+
+- **Use "spec-driven development" not "vibe coding"** when describing AI-assisted development workflows. Vibe coding can be referenced as a cultural term others use, but our framing is spec-driven: documentation first, specifications as source of truth, AI builds against specs.
+- **Articles must have a personal voice.** No generic listicle content. Every article should include specific experiences, opinions, or anecdotes. If it could have been written by anyone, it shouldn't be published.
+- **Never fabricate personal details.** Do not invent biographical facts, family situations, or experiences. Marshall is a 31-year-old product designer living and working in Madrid, Spain, for El Confidencial (a major Spanish newspaper). When writing articles that reference personal context, ask rather than assume.
 
 ## Documentation
 

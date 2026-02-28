@@ -8,6 +8,18 @@ Ideas for future articles. Add new ideas at the top.
 
     `<!-- New ideas go here -->`
 
+### The Golden Age of Web Design
+- **Added**: 2026-02-22
+- **Category**: Ideas, Articles
+- **Status**: captured
+- **Notes**: We might be living in the golden age of web design right now. Tools like Framer, AI-assisted coding, and modern frameworks let us create websites faster and more easily than ever — but AI hasn't yet degraded the craft. There's a window where the tools are empowering without being destructive. At some point AI-generated sites will flood the market, homogenize aesthetics further, and devalue the work. But right now, skilled designers can leverage these tools to produce great work at unprecedented speed. Worth capturing this moment before it passes.
+
+### Framer Sites as a Side Hustle
+- **Added**: 2026-02-22
+- **Category**: Ideas
+- **Status**: captured
+- **Notes**: Start making Framer sites for people — inserting content into templates and tweaking them. Low effort, fun, easy money. Leverages existing design skills with minimal overhead. Could be a quick freelance income stream without the weight of full custom projects.
+
 ### Article Thumbnail Generator Agent
 
 - **Added**: 2026-02-14

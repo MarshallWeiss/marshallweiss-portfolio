@@ -4,7 +4,168 @@ Session context for continuing work on this project.
 
 ## Current Branch
 
-`antigravity-sanity-work` - Building out Sanity CMS integration for case studies
+`main`
+
+## Recent Work (2026-02-28) — Session 9
+
+### Music Recorder: Tuning Dropdown, Custom Tunings, LED Tuner + Bug Fixes ✅
+**Added tuning selection system, redesigned tuner display, and fixed two playback bugs:**
+
+**Tuning Dropdown System:**
+- Replaced click-to-cycle tuning selection with grouped dropdown menu
+- Expanded built-in tunings from 8 to 16: added Drop C#, Drop C, Drop B, Double Drop D, Open E, Open A, Open C, Nashville
+- Organized into groups: Standard, Drop, Open, Other, Custom
+- Custom tuning creation with inline editor (name + 6 string inputs with note validation)
+- Custom tuning save/delete with IndexedDB persistence via idb-keyval
+- Selected tuning persists across reloads
+
+**Tuner Display Redesign:**
+- Went through multiple iterations: original bouncing ball → strobe segments (rejected) → LED sweep arc (final)
+- 13 LED dots arranged in semicircular arc — green center, orange middle, red edges
+- Active LED position maps to cents deviation from target note
+- Warm dark background with subtle glow, in-tune green glow effect
+
+**MetalPanel UI Restructure:**
+- Consistent toggle button row for Tuner + Metronome (round buttons with colored LEDs)
+- Progressive disclosure: sub-controls only appear when feature is active
+- BPM knob moves into metronome's expanded section
+- Blue LED for tuner toggle, green/amber LED for metronome toggle
+
+**Bug Fixes:**
+1. **VU meters only active during recording** — Changed getLeftAnalyser/getRightAnalyser to always fall back to input analyser when idle (mic stream is always connected)
+2. **Beat indicator skipping during overdub** — Metronome's setInterval scheduler could fire late, causing multiple onBeat calls that React batched. Fixed by only reporting the most recent beat per interval check
+
+**Files Modified (music-recorder submodule):**
+- `src/audio/tunings.ts` — Added `group` field, expanded to 16 tunings, grouping helpers
+- `src/storage/tuningStore.ts` — **New** — IndexedDB persistence for custom tunings + selected tuning
+- `src/components/skeuomorphic/TuningDropdown.tsx` — **New** — Grouped dropdown with custom tuning editor
+- `src/components/skeuomorphic/TunerDisplay.tsx` — Complete rewrite: LED sweep arc
+- `src/components/skeuomorphic/MetalPanel.tsx` — Toggle button row, dropdown integration, persistence
+- `src/components/skeuomorphic/StatusLED.tsx` — Added blue color
+- `src/audio/AudioEngine.ts` — Deduplicated onBeat callback in metronome scheduler
+- `tailwind.config.js` — Added led-blue shadow
+
+**Build Status:** ✓ Deployed to GitHub Pages
+
+---
+
+## Recent Work (2026-02-26) — Session 8
+
+### Music Recorder Visual Overhaul + Bug Fixes ✅
+**GarageBand-level skeuomorphic realism + three critical bug fixes:**
+
+**Visual Overhaul (complete component rewrites for dramatic improvement):**
+- **CassetteDeck** — Full rewrite: 6-tooth drive hub spindle holes, concentric tape-wound rings, off-white hub flanges with spokes, brown tape ribbon via chrome guide posts, cassette label with ruled lines/Type I/C-60 markings, 5 Phillips head screws, head access slots, plastic mold texture, gloss reflection
+- **TransportButtons** — 3D bevel effect (bright top edge, dark bottom, shadow shelf), press-down animation (translateY + shadow change), richer ruby-red record button with glow, larger sizing (54px default, 62px record)
+- **VUMeter** — Cream/ivory face like real VU meters, dark markings with red zone on light background, tapered needle (triangle), pivot screw detail, deeper recessed housing
+- **VerticalFader** — Chrome-like thumb with 10+ color stop gradient, grip ridges, center indicator line, deeper slot with multi-layer inset shadows, scale marks both sides
+- **RotaryKnob** — 3D sphere lighting with stronger gradients, knurled edge ring, better indicator line visibility
+- **WoodPanel** — Wider (56px), richer grain, more contrast, deeper shadows
+- **ChannelStrip** — Better arm/mute/solo buttons with 3D bevels and press animations
+- **MixerSection** — Deeper recessed panel shadow
+- **App mode toggle** — Redesigned as segmented control with recessed active state
+- **index.css** — Brighter wood clear coat, stronger grain contrasts, richer base walnut
+
+**Bug Fixes (3 regressions from visual changes):**
+1. **VU meters not responding during recording** — Animation loop restarted via useEffect when analyser prop changed, causing timing issues. Fixed by storing analyser in a ref that the continuously-running draw loop reads directly, removing analyser from effect deps.
+2. **Cassette position jumping between modes** — CassetteDeck was in different parent containers (multitrack flex-row vs looper flex-column). Fixed by extracting CassetteDeck above the mode-specific content area so it always renders in the same wrapper regardless of mode. LooperView no longer renders its own CassetteDeck.
+3. **Looper spacebar not working** — Mode toggle buttons retained browser focus after clicking. Spacebar on focused "Looper" button triggered toggleMode, switching back to multitrack. Fixed with tabIndex={-1} and blur() on click for mode toggle buttons and StompButton.
+
+**Files Modified (music-recorder submodule):**
+- `src/App.tsx` — Cassette extracted above mode content, mode toggle blur fix
+- `src/components/skeuomorphic/CassetteDeck.tsx` — Complete rewrite
+- `src/components/skeuomorphic/TransportButtons.tsx` — Complete rewrite
+- `src/components/skeuomorphic/VUMeter.tsx` — Cream face, tapered needle, analyser ref fix
+- `src/components/skeuomorphic/VerticalFader.tsx` — Chrome fader rewrite
+- `src/components/skeuomorphic/RotaryKnob.tsx` — 3D sphere rewrite
+- `src/components/skeuomorphic/ChannelStrip.tsx` — Button styling
+- `src/components/skeuomorphic/MetalPanel.tsx` — VU sizing, panel styling
+- `src/components/skeuomorphic/MixerSection.tsx` — Deeper shadow
+- `src/components/skeuomorphic/WoodPanel.tsx` — Wider, richer
+- `src/components/skeuomorphic/LooperView.tsx` — Removed CassetteDeck (now in App)
+- `src/components/skeuomorphic/StompButton.tsx` — tabIndex fix
+- `src/styles/index.css` — Wood/metal texture improvements, unified button classes
+- `tailwind.config.js` — Shadow token warmth
+
+**Build Status:** ✓ Build passes, all TypeScript clean
+
+---
+
+## Recent Work (2026-02-26) — Session 7
+
+### Patent Article Research & Draft + Dictation Hardening ✅
+**Researched patent/IP history, wrote ~6,200 word article draft, and fixed dictation reliability:**
+
+**Article: "The Grand Bargain Is Broken":**
+- Full ai-news-research agent workflow (Stages 3-6) on patents and IP in the AI era
+- Pivoted from copyright to patents mid-session after realizing the competitive landscape question is about patents, not copyright
+- Three research files produced: AI copyright cases, copyright history, patent/IP history
+- Article shape document with 6-section structure, key anecdotes, open questions
+- Final draft: ~6,200 words, 40+ citations, long-form Atlantic-style
+- Thesis: the patent system's "grand bargain" (disclose for protection) collapses when AI makes replication trivial
+- Key sections: Grand Bargain origins, Cotton Gin parallel, software patent history, speed as real moat, AI closing the window, where it's going
+
+**Dictation Tool Hardening (Hammerspoon):**
+- Added 2-minute max recording auto-stop timer (prevents stuck recordings)
+- Added Escape key force-stop listener (most accessible bailout)
+- Added menubar "Stop & Transcribe Now" option
+- Increased whisper timeout from 30s to 60s for longer recordings
+- All three safety nets prevent the "stuck on Listening" problem
+
+**CLAUDE.md Updates:**
+- Added Core Rules section with skill/agent respect rule
+
+**Ideas Captured:**
+- "Framer Sites as a Side Hustle" → ideas backlog
+- "The Golden Age of Web Design" → ideas + articles backlogs
+
+**Files Created:**
+- `content/articles/spitball-notes/2026-02-26-copyright-ai-research.md`
+- `content/articles/spitball-notes/2026-02-26-copyright-history-research.md`
+- `content/articles/spitball-notes/2026-02-26-patent-ip-history-research.md`
+- `content/articles/spitball-notes/2026-02-26-patent-article-shape.md`
+- `content/thoughts/drafts/the-grand-bargain-is-broken.md`
+
+**Files Modified:**
+- `CLAUDE.md` — Added Core Rules section
+- `content/ideas/backlog.md` — Two new ideas
+- `content/articles/backlog.md` — Golden Age cross-post
+- `~/.hammerspoon/init.lua` — Max timer, escape key, menubar stop
+
+**Build Status:** ✓ No build changes (content only)
+
+---
+
+## Recent Work (2026-02-18) — Session 6
+
+### Spitballing Session + Skill Improvements + Dictation Fix ✅
+**Deep spitballing on "Claude Code as Second Brain" article, improved spitballing skill, fixed dictation bug:**
+
+**Spitballing Session (Article: Claude Code as Second Brain):**
+- Continued from Session 1 notes, significantly developed the "dark side" threads
+- Explored: productivity gap / seeing the wave, creation as human nature, climate change analogy, privacy/surveillance, autonomous weapons, coerced complicity, impossibility of ethical participation
+- Identified key tensions: enthusiasm + dread as simultaneous responses, AI hooking through production not consumption, informed concern not changing behavior
+- Built reading list: Ellul, Illich, Varoufakis, Zuboff, Harari, Stuart Russell, Langdon Winner, Christensen
+- Updated spitball notes: `content/articles/spitball-notes/2026-02-17-claude-code-second-brain.md`
+
+**Spitballing Skill Updates:**
+- Added rule: don't make editorial calls — pushback is fine, but deciding what's worth keeping is the user's job
+- Added reading list requirement to session capture format
+
+**Dictation Fix (Hammerspoon):**
+- Fixed bug where long recordings would hang on "Listening" — sox wasn't flushing WAV header on SIGTERM
+- Changed `recTask:terminate()` to `recTask:interrupt()` (SIGINT) with 200ms flush delay
+- Added 30-second timeout on Whisper task to prevent infinite hangs
+- Shows alert if transcription times out
+
+**Files Updated:**
+- `content/articles/spitball-notes/2026-02-17-claude-code-second-brain.md` — comprehensive session notes
+- `.claude/skills/spitballing/skill.md` — editorial calls rule + reading list in captures
+- `~/.hammerspoon/init.lua` — SIGINT fix + whisper timeout
+
+**Open Thread:** User interested in a persistent "intellectual journal" system that accumulates across spitball sessions — threads, questions, reading lists, connections between ideas. To design next session.
+
+---
 
 ## Recent Work (2026-02-15) — Session 5
 

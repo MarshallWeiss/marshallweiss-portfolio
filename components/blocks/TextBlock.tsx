@@ -35,8 +35,8 @@ export default function TextBlock({
 }: TextBlockProps) {
     const alignmentClasses = {
         left: 'text-left',
-        center: 'text-center',
-        right: 'text-right',
+        center: 'text-left md:text-center',
+        right: 'text-left md:text-right',
     }
 
     const maxWidthClasses = {
@@ -47,9 +47,9 @@ export default function TextBlock({
 
     const textSizeClasses = {
         small: 'text-base leading-relaxed',
-        medium: 'text-lg leading-relaxed',
-        large: 'text-xl leading-relaxed',
-        xlarge: 'text-2xl md:text-3xl leading-relaxed',
+        medium: 'text-base md:text-lg leading-relaxed',
+        large: 'text-lg md:text-xl leading-relaxed',
+        xlarge: 'text-xl md:text-2xl lg:text-3xl leading-relaxed',
     }
 
     const hasIndependentPadding = paddingTop || paddingBottom

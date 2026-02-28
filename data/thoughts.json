@@ -1,11 +1,21 @@
 {
   "items": [
     {
-      "id": "focus-the-essential-tool-vibe-coding",
-      "title": "Focus: The Most Important Tool in Vibe Coding",
-      "description": "Why traditional productivity advice fails when working with AI agents, and how to build an environment that sustains the deep attention vibe coding demands.",
+      "id": "rebuilding-portfolio-in-claude-code",
+      "title": "What I Learned Rebuilding My Portfolio in Claude Code",
+      "description": "A product designer's honest retrospective on leaving Squarespace behind and building a portfolio entirely with AI — what worked, what didn't, and the unexpected thing that happened along the way.",
+      "date": "2026-02-20",
+      "slug": "rebuilding-portfolio-in-claude-code",
+      "stage": "growing",
+      "category": "AI & Development",
+      "readingTime": 10
+    },
+    {
+      "id": "focus-the-essential-tool-spec-driven-development",
+      "title": "Focus: The Most Important Tool in Spec-Driven Development",
+      "description": "Why traditional productivity advice fails when working with AI agents, and how to build an environment that sustains the deep attention spec-driven development demands.",
       "date": "2026-02-12",
-      "slug": "focus-the-essential-tool-vibe-coding",
+      "slug": "focus-the-essential-tool-spec-driven-development",
       "image": "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=400&h=400&fit=crop",
       "stage": "harvesting",
       "category": "AI & Development",
@@ -13,7 +23,7 @@
     },
     {
       "id": "complete-guide-ai-assisted-development",
-      "title": "The Complete Guide to AI-Assisted Development: Best Practices for Vibe Coding",
+      "title": "The Complete Guide to AI-Assisted Development: A Spec-Driven Approach",
       "description": "A comprehensive, documentation-first system for building production-quality software with AI coding assistants. Learn the workflows, tools, and patterns that separate successful AI-assisted projects from failed experiments.",
       "date": "2026-02-09",
       "slug": "complete-guide-ai-assisted-development",
@@ -32,50 +42,6 @@
       "stage": "growing",
       "category": "Product Design",
       "readingTime": 20
-    },
-    {
-      "id": "building-design-systems-that-scale",
-      "title": "Building Design Systems That Scale",
-      "description": "Lessons learned from creating and maintaining design systems for large organizations. How to balance consistency with flexibility and keep your system relevant as products evolve.",
-      "date": "2024-12-15",
-      "slug": "building-design-systems-that-scale",
-      "image": "https://images.unsplash.com/photo-1558655146-364adaf1fcc9?w=400&h=400&fit=crop",
-      "stage": "harvesting",
-      "category": "Design Systems",
-      "readingTime": 4
-    },
-    {
-      "id": "accessibility-beyond-compliance",
-      "title": "Accessibility Beyond Compliance",
-      "description": "Moving from checking boxes to creating truly inclusive experiences. A deep dive into accessibility as a design philosophy, not just a requirement, with real-world case studies.",
-      "date": "2024-12-05",
-      "slug": "accessibility-beyond-compliance",
-      "image": "https://images.unsplash.com/photo-1559028012-481c04fa702d?w=400&h=400&fit=crop",
-      "stage": "harvesting",
-      "category": "Accessibility",
-      "readingTime": 5
-    },
-    {
-      "id": "data-driven-design-decisions",
-      "title": "Data-Driven Design Decisions",
-      "description": "How to balance user research, analytics, and intuition when making design decisions. Practical frameworks for synthesizing multiple data sources into actionable insights.",
-      "date": "2024-11-28",
-      "slug": "data-driven-design-decisions",
-      "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=400&fit=crop",
-      "stage": "harvesting",
-      "category": "Product Design",
-      "readingTime": 5
-    },
-    {
-      "id": "prototyping-in-the-age-of-ai",
-      "title": "Prototyping in the Age of AI",
-      "description": "How AI tools are changing the prototyping landscape. From rapid iteration to intelligent component generation, exploring the new possibilities and maintaining design quality.",
-      "date": "2024-11-20",
-      "slug": "prototyping-in-the-age-of-ai",
-      "image": "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=400&h=400&fit=crop",
-      "stage": "planting",
-      "category": "AI & Development",
-      "readingTime": 5
     }
   ]
 }

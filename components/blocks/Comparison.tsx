@@ -42,7 +42,7 @@ export default function Comparison({
 }: ComparisonProps) {
     if (!leftImage && !rightImage) return null;
 
-    const alignmentClass = textAlign === 'center' ? 'text-center' : textAlign === 'right' ? 'text-right' : 'text-left';
+    const alignmentClass = textAlign === 'center' ? 'text-left md:text-center' : textAlign === 'right' ? 'text-left md:text-right' : 'text-left';
 
     const labelSizeClasses = {
         small: 'text-sm',
@@ -57,10 +57,10 @@ export default function Comparison({
                 subheading={subheading}
                 headlineSize={headlineSize}
                 textAlign={textAlign}
-                className=""
+                className={cn("", textAlign === 'center' && "max-w-3xl md:mx-auto")}
             />
             {description && (
-                <p className={cn("text-gray-600 text-lg leading-relaxed mb-12 md:mb-16", alignmentClass)}>
+                <p className={cn("text-gray-600 text-base md:text-lg leading-relaxed mb-12 md:mb-16 max-w-3xl", alignmentClass, textAlign === 'center' && "md:mx-auto")}>
                     {description}
                 </p>
             )}

@@ -55,7 +55,7 @@ export default function AnnotatedImage({
 
     if (!image) return null;
 
-    const alignmentClass = textAlign === 'center' ? 'text-center' : textAlign === 'right' ? 'text-right' : 'text-left';
+    const alignmentClass = textAlign === 'center' ? 'text-left md:text-center' : textAlign === 'right' ? 'text-left md:text-right' : 'text-left';
     const isSideBySide = layout === 'sideBySide';
 
     const getHotspotColor = (type: string) => {
@@ -318,7 +318,7 @@ export default function AnnotatedImage({
                     className=""
                 />
                 {description && (
-                    <p className="text-gray-600 text-lg leading-relaxed mb-6">
+                    <p className="text-gray-600 text-base md:text-lg leading-relaxed mb-6">
                         {description}
                     </p>
                 )}
@@ -363,7 +363,7 @@ export default function AnnotatedImage({
                     className=""
                 />
                 {description && (
-                    <p className={cn("text-gray-600 text-lg leading-relaxed mb-10 md:mb-14", alignmentClass)}>
+                    <p className={cn("text-gray-600 text-base md:text-lg leading-relaxed mb-10 md:mb-14", alignmentClass)}>
                         {description}
                     </p>
                 )}

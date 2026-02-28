@@ -70,7 +70,7 @@ export default function FullWidthMedia({
 
     if (!hasImage && !hasVideo && !hasFigma) return null;
 
-    const alignmentClass = textAlign === 'center' ? 'text-center' : textAlign === 'right' ? 'text-right' : 'text-left';
+    const alignmentClass = textAlign === 'center' ? 'text-left md:text-center' : textAlign === 'right' ? 'text-left md:text-right' : 'text-left';
 
     const aspectRatioClasses: Record<string, string> = {
         'auto': '',
@@ -93,10 +93,10 @@ export default function FullWidthMedia({
                 subheading={subheading}
                 headlineSize={headlineSize}
                 textAlign={textAlign}
-                className=""
+                className={cn("", textAlign === 'center' && "max-w-3xl md:mx-auto")}
             />
             {caption && (
-                <p className={cn("text-gray-600 text-lg leading-relaxed mb-10 md:mb-14", alignmentClass)}>
+                <p className={cn("text-gray-600 text-base md:text-lg leading-relaxed mb-10 md:mb-14 max-w-3xl", alignmentClass, textAlign === 'center' && "md:mx-auto")}>
                     {caption}
                 </p>
             )}

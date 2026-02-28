@@ -26,8 +26,8 @@ export default function BlockHeading({
 
     const alignmentClasses = {
         left: 'text-left',
-        center: 'text-center',
-        right: 'text-right',
+        center: 'text-left md:text-center',
+        right: 'text-left md:text-right',
     }
 
     return (
@@ -41,7 +41,7 @@ export default function BlockHeading({
                 </h2>
             )}
             {subheading && (
-                <p className="text-lg text-gray-600 mt-2">
+                <p className="text-base md:text-lg text-gray-600 mt-2">
                     {subheading}
                 </p>
             )}
