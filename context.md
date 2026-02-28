@@ -6,6 +6,49 @@ Session context for continuing work on this project.
 
 `main`
 
+## Recent Work (2026-02-28) — Session 9
+
+### Music Recorder: Tuning Dropdown, Custom Tunings, LED Tuner + Bug Fixes ✅
+**Added tuning selection system, redesigned tuner display, and fixed two playback bugs:**
+
+**Tuning Dropdown System:**
+- Replaced click-to-cycle tuning selection with grouped dropdown menu
+- Expanded built-in tunings from 8 to 16: added Drop C#, Drop C, Drop B, Double Drop D, Open E, Open A, Open C, Nashville
+- Organized into groups: Standard, Drop, Open, Other, Custom
+- Custom tuning creation with inline editor (name + 6 string inputs with note validation)
+- Custom tuning save/delete with IndexedDB persistence via idb-keyval
+- Selected tuning persists across reloads
+
+**Tuner Display Redesign:**
+- Went through multiple iterations: original bouncing ball → strobe segments (rejected) → LED sweep arc (final)
+- 13 LED dots arranged in semicircular arc — green center, orange middle, red edges
+- Active LED position maps to cents deviation from target note
+- Warm dark background with subtle glow, in-tune green glow effect
+
+**MetalPanel UI Restructure:**
+- Consistent toggle button row for Tuner + Metronome (round buttons with colored LEDs)
+- Progressive disclosure: sub-controls only appear when feature is active
+- BPM knob moves into metronome's expanded section
+- Blue LED for tuner toggle, green/amber LED for metronome toggle
+
+**Bug Fixes:**
+1. **VU meters only active during recording** — Changed getLeftAnalyser/getRightAnalyser to always fall back to input analyser when idle (mic stream is always connected)
+2. **Beat indicator skipping during overdub** — Metronome's setInterval scheduler could fire late, causing multiple onBeat calls that React batched. Fixed by only reporting the most recent beat per interval check
+
+**Files Modified (music-recorder submodule):**
+- `src/audio/tunings.ts` — Added `group` field, expanded to 16 tunings, grouping helpers
+- `src/storage/tuningStore.ts` — **New** — IndexedDB persistence for custom tunings + selected tuning
+- `src/components/skeuomorphic/TuningDropdown.tsx` — **New** — Grouped dropdown with custom tuning editor
+- `src/components/skeuomorphic/TunerDisplay.tsx` — Complete rewrite: LED sweep arc
+- `src/components/skeuomorphic/MetalPanel.tsx` — Toggle button row, dropdown integration, persistence
+- `src/components/skeuomorphic/StatusLED.tsx` — Added blue color
+- `src/audio/AudioEngine.ts` — Deduplicated onBeat callback in metronome scheduler
+- `tailwind.config.js` — Added led-blue shadow
+
+**Build Status:** ✓ Deployed to GitHub Pages
+
+---
+
 ## Recent Work (2026-02-26) — Session 8
 
 ### Music Recorder Visual Overhaul + Bug Fixes ✅
