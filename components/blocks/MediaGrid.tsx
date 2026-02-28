@@ -9,6 +9,13 @@ import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import BlockWrapper from './BlockWrapper';
 import BlockHeading from './BlockHeading';
 
+const shadowClasses: Record<string, string> = {
+    'none': '',
+    'small': 'shadow-sm',
+    'medium': 'shadow-md',
+    'large': 'shadow-lg',
+};
+
 interface MediaGridProps {
     images?: any[];
     columns?: '1' | '2' | '3';
@@ -19,6 +26,7 @@ interface MediaGridProps {
     textAlign?: 'left' | 'center' | 'right';
     aspectRatio?: 'auto' | 'square' | '4:3' | '16:9' | '3:4' | '9:16';
     objectFit?: 'cover' | 'contain';
+    imageShadow?: 'none' | 'small' | 'medium' | 'large';
     width?: 'contained' | 'wide' | 'full';
     background?: 'none' | 'white' | 'gray';
     spacing?: 'compact' | 'default' | 'spacious';
@@ -34,6 +42,7 @@ export default function MediaGrid({
     textAlign = 'center',
     aspectRatio = 'auto',
     objectFit = 'cover',
+    imageShadow = 'none',
     width = 'contained',
     background = 'none',
     spacing = 'default',
@@ -85,6 +94,7 @@ export default function MediaGrid({
                         onOpen={() => openLightbox(idx)}
                         aspectRatio={aspectRatio}
                         objectFit={objectFit}
+                        imageShadow={imageShadow}
                     />
                 ))}
             </div>
@@ -108,11 +118,13 @@ function GridItem({
     onOpen,
     aspectRatio = 'auto',
     objectFit = 'cover',
+    imageShadow = 'none',
 }: {
     image: any;
     onOpen: () => void;
     aspectRatio?: 'auto' | 'square' | '4:3' | '16:9' | '3:4' | '9:16';
     objectFit?: 'cover' | 'contain';
+    imageShadow?: 'none' | 'small' | 'medium' | 'large';
 }) {
     const imageProps = useNextSanityImage(client, image, {
         imageBuilder: (imageUrlBuilder, options) => {
@@ -137,7 +149,7 @@ function GridItem({
 
     return (
         <div
-            className="group relative cursor-pointer rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300"
+            className={cn("group relative cursor-pointer rounded-lg overflow-hidden transition-all duration-300", shadowClasses[imageShadow], imageShadow !== 'none' && "hover:shadow-lg")}
             onClick={onOpen}
         >
             <Image

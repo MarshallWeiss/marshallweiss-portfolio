@@ -30,6 +30,7 @@ interface SplitMediaProps {
 
     // Image styles
     imageBackground?: 'none' | 'gray'
+    imageShadow?: 'none' | 'small' | 'medium' | 'large'
 
     // Video controls
     autoplay?: boolean
@@ -50,18 +51,27 @@ interface SplitMediaProps {
 }
 
 // Separate component for individual images to use hooks properly
+const shadowClasses: Record<string, string> = {
+    'none': '',
+    'small': 'shadow-sm',
+    'medium': 'shadow-md',
+    'large': 'shadow-lg',
+}
+
 function SanityImage({
     image,
     aspectRatio = 'auto',
     objectFit = 'cover',
     fillHeight = false,
     imageBackground = 'none',
+    imageShadow = 'none',
 }: {
     image: any
     aspectRatio?: string
     objectFit?: string
     fillHeight?: boolean
     imageBackground?: string
+    imageShadow?: string
 }) {
     const imageProps = useNextSanityImage(client, image, {
         imageBuilder: (imageUrlBuilder, options) => {
@@ -93,6 +103,7 @@ function SanityImage({
     return (
         <div className={cn(
             'relative rounded-xl overflow-hidden',
+            shadowClasses[imageShadow],
             imageBackground === 'gray' && 'bg-gray-50',
             fillHeight ? 'h-full w-full flex items-center justify-center' : 'w-full',
             useAspectRatio && aspectRatioClasses[aspectRatio]
@@ -124,6 +135,7 @@ export default function SplitMedia({
     aspectRatio = 'auto',
     objectFit = 'cover',
     imageBackground = 'none',
+    imageShadow = 'none',
     autoplay = true,
     loop = true,
     muted = true,
@@ -214,7 +226,8 @@ export default function SplitMedia({
             {/* Video */}
             {hasVideo && (
                 <div className={cn(
-                    "relative rounded-xl overflow-hidden w-full",
+                    "relative rounded-xl overflow-hidden w-full bg-white",
+                    shadowClasses[imageShadow],
                     imageBackground === 'gray' && 'bg-gray-50',
                     aspectRatio && aspectRatioClasses[aspectRatio]
                 )}>
@@ -236,6 +249,7 @@ export default function SplitMedia({
             {hasFigma && (
                 <div className={cn(
                     "relative rounded-xl overflow-hidden w-full",
+                    shadowClasses[imageShadow],
                     imageBackground === 'gray' && 'bg-gray-50',
                     aspectRatio && aspectRatioClasses[aspectRatio]
                 )}>
@@ -255,6 +269,7 @@ export default function SplitMedia({
                     aspectRatio={displayImages[0].aspectRatio}
                     objectFit={objectFit}
                     imageBackground={imageBackground}
+                    imageShadow={imageShadow}
                 />
             )}
 
@@ -271,6 +286,7 @@ export default function SplitMedia({
                                     objectFit="contain"
                                     fillHeight={true}
                                     imageBackground={imageBackground}
+                                    imageShadow={imageShadow}
                                 />
                             </div>
                         );

@@ -1,5 +1,6 @@
 'use client';
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import BlockWrapper from './BlockWrapper';
 import BlockHeading from './BlockHeading';
@@ -22,6 +23,84 @@ interface AccordionProps {
     width?: 'contained' | 'wide' | 'full';
     background?: 'none' | 'white' | 'gray';
     spacing?: 'compact' | 'default' | 'spacious';
+}
+
+const contentVariants = {
+    collapsed: { height: 0, opacity: 0 },
+    expanded: { height: 'auto', opacity: 1 },
+};
+
+const contentTransition = {
+    height: { duration: 0.35, ease: [0.25, 0.1, 0.25, 1] as const },
+    opacity: { duration: 0.25, delay: 0.05 },
+};
+
+function AccordionItemPanel({
+    item,
+    isOpen,
+    onToggle,
+    variant = 'full',
+}: {
+    item: AccordionItem;
+    isOpen: boolean;
+    onToggle: () => void;
+    variant?: 'full' | 'split';
+}) {
+    return (
+        <div className={variant === 'full' ? 'border-b border-gray-200' : ''}>
+            <button
+                onClick={onToggle}
+                className={cn(
+                    "w-full flex items-center justify-between text-left hover:text-gray-600 transition-colors",
+                    variant === 'full' ? 'py-5' : 'py-4'
+                )}
+            >
+                <span className={cn(
+                    "text-gray-900 pr-8",
+                    variant === 'full' ? 'text-base md:text-lg font-normal' : 'text-lg font-medium'
+                )}>
+                    {item.title}
+                </span>
+                <motion.svg
+                    animate={{ rotate: isOpen ? 180 : 0 }}
+                    transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+                    className={cn(
+                        "w-5 h-5 flex-shrink-0",
+                        variant === 'full' ? 'text-gray-400' : 'text-gray-500'
+                    )}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
+                    <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={variant === 'full' ? 1.5 : 2}
+                        d="M19 9l-7 7-7-7"
+                    />
+                </motion.svg>
+            </button>
+            <AnimatePresence initial={false}>
+                {isOpen && (
+                    <motion.div
+                        initial="collapsed"
+                        animate="expanded"
+                        exit="collapsed"
+                        variants={contentVariants}
+                        transition={contentTransition}
+                        style={{ overflow: 'hidden' }}
+                    >
+                        <p className={cn(
+                            "text-gray-600 leading-relaxed",
+                            variant === 'full' ? 'pl-0 md:pl-12 max-w-3xl pb-6' : 'pb-4'
+                        )}>
+                            {item.content}
+                        </p>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </div>
+    );
 }
 
 export default function Accordion({
@@ -58,56 +137,26 @@ export default function Accordion({
                 />
                 <div className="border-t border-gray-200">
                     {items.map((item, index) => (
-                        <div key={item._key || index} className="border-b border-gray-200">
-                            <button
-                                onClick={() => toggleItem(index)}
-                                className="w-full flex items-center justify-between py-5 text-left hover:text-gray-600 transition-colors"
-                            >
-                                <span className="text-base md:text-lg font-normal text-gray-900 pr-8">
-                                    {item.title}
-                                </span>
-                                <svg
-                                    className={cn(
-                                        "w-5 h-5 text-gray-400 transition-transform duration-200 flex-shrink-0",
-                                        openIndex === index ? "rotate-180" : ""
-                                    )}
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={1.5}
-                                        d="M19 9l-7 7-7-7"
-                                    />
-                                </svg>
-                            </button>
-                            <div
-                                className={cn(
-                                    "overflow-hidden transition-all duration-300",
-                                    openIndex === index ? "max-h-[500px] pb-6" : "max-h-0"
-                                )}
-                            >
-                                <p className="text-gray-600 leading-relaxed pl-0 md:pl-12 max-w-3xl">
-                                    {item.content}
-                                </p>
-                            </div>
-                        </div>
+                        <AccordionItemPanel
+                            key={item._key || index}
+                            item={item}
+                            isOpen={openIndex === index}
+                            onToggle={() => toggleItem(index)}
+                            variant="full"
+                        />
                     ))}
                 </div>
             </BlockWrapper>
         );
     }
 
-    // Split Layout (original SplitAccordion)
+    // Split Layout
     return (
         <BlockWrapper width={width} background={background} spacing={spacing}>
             <div className={cn(
                 "grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24",
                 reverseLayout ? "lg:grid-flow-dense" : ""
             )}>
-                {/* Text Side */}
                 <div className={cn(
                     reverseLayout ? "lg:col-start-2" : "lg:col-start-1"
                 )}>
@@ -125,48 +174,18 @@ export default function Accordion({
                     )}
                 </div>
 
-                {/* Accordion Side */}
                 <div className={cn(
                     reverseLayout ? "lg:col-start-1" : "lg:col-start-2"
                 )}>
                     <div className="divide-y divide-gray-200 border-t border-gray-200">
                         {items.map((item, index) => (
-                            <div key={item._key || index}>
-                                <button
-                                    onClick={() => toggleItem(index)}
-                                    className="w-full flex items-center justify-between py-4 text-left hover:text-gray-600 transition-colors"
-                                >
-                                    <span className="text-lg font-medium text-gray-900">
-                                        {item.title}
-                                    </span>
-                                    <svg
-                                        className={cn(
-                                            "w-5 h-5 text-gray-500 transition-transform duration-200",
-                                            openIndex === index ? "rotate-180" : ""
-                                        )}
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M19 9l-7 7-7-7"
-                                        />
-                                    </svg>
-                                </button>
-                                <div
-                                    className={cn(
-                                        "overflow-hidden transition-all duration-200",
-                                        openIndex === index ? "max-h-96 pb-4" : "max-h-0"
-                                    )}
-                                >
-                                    <p className="text-gray-600 leading-relaxed">
-                                        {item.content}
-                                    </p>
-                                </div>
-                            </div>
+                            <AccordionItemPanel
+                                key={item._key || index}
+                                item={item}
+                                isOpen={openIndex === index}
+                                onToggle={() => toggleItem(index)}
+                                variant="split"
+                            />
                         ))}
                     </div>
                 </div>

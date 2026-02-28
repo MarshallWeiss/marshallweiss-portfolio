@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Instrument_Sans } from 'next/font/google';
 import localFont from 'next/font/local';
 import Navigation from '@/components/Navigation';
+import CustomCursor from '@/components/CustomCursor';
 import '../styles/globals.css';
 
 const instrumentSans = Instrument_Sans({
@@ -28,7 +29,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${instrumentSans.variable} ${rightSlab.variable}`}>
-      <body className="font-sans">
+      <body className="font-sans cursor-none">
+        <CustomCursor />
         <Navigation />
         <main>{children}</main>
         <footer className="bg-gray-100 py-4 px-4 sm:px-6 lg:px-8">

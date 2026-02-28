@@ -6,6 +6,13 @@ body {
   @apply bg-white text-gray-900 antialiased;
 }
 
+/* Hide default cursor globally — custom cursor replaces it */
+@media (pointer: fine) {
+  *, *::before, *::after {
+    cursor: none !important;
+  }
+}
+
 /* Lightbox slide animation */
 @keyframes fade-slide {
   from {
@@ -38,6 +45,11 @@ body {
   animation: fade-in 0.4s ease-out forwards;
 }
 
+
+/* Crop bottom recording artifact from Mux videos */
+mux-player {
+  clip-path: inset(0 0 2px 0);
+}
 
 /* Hide all Mux Player controls for thumbnail videos */
 .pointer-events-none mux-player::part(bottom),

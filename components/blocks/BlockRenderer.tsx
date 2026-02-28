@@ -1,4 +1,7 @@
+'use client';
+
 import React from 'react';
+import { motion } from 'framer-motion';
 import Hero from './Hero';
 import Metadata from './Metadata';
 import SplitMedia from './SplitMedia';
@@ -95,7 +98,20 @@ export default function BlockRenderer({ modules }: BlockRendererProps) {
                 const block = renderBlock(module, isEager);
 
                 if (isEager) {
-                    return <React.Fragment key={key}>{block}</React.Fragment>;
+                    return (
+                        <motion.div
+                            key={key}
+                            initial={{ opacity: 0, y: 40 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{
+                                duration: 0.7,
+                                delay: index * 0.2,
+                                ease: [0.25, 0.1, 0.25, 1],
+                            }}
+                        >
+                            {block}
+                        </motion.div>
+                    );
                 }
 
                 return (

@@ -27,20 +27,31 @@ Sanity Studio is embedded at `/studio` route - no separate command needed.
 
 ## Architecture
 
-This is a Next.js 14 portfolio site with Sanity CMS integration using the App Router.
+This is a Next.js 15 portfolio site with Sanity CMS integration using the App Router.
+
+### Routes
+
+- `/` — Home page with hero and 3-section navigation
+- `/case-studies` — Lists all Sanity case studies; `/case-studies/[slug]` for individual
+- `/thoughts` — Articles list with Mine/Others tabs; `/thoughts/[slug]` for individual
+- `/current` — "What I'm up to now" page (reading, work, fun projects, hobbies)
+- `/experiments` — Side projects list
+- `/about`, `/book-club`, `/contact`, `/tutorials`
+- `/studio` — Embedded Sanity Studio
 
 ### Content Sources
 
-- **Sanity CMS**: Case studies with modular block-based content (`caseStudy` document type)
+- **Sanity CMS**: Case studies (`caseStudy`), current page data (`currentlyReading`, `workProject`, `funProject`, `doingItem`), curated articles (`curatedArticle`)
 - **JSON files** (`data/`): Static content for thoughts, book-club, experiments, tutorials
+- **Markdown files** (`content/thoughts/`): Article drafts and published articles. Published articles are referenced in `data/thoughts.json`.
 
 ### Key Patterns
 
 **Modular Block System**: Case studies use a `modules` array containing different block types (hero, metadata, splitMedia, mediaGrid, fullWidthMedia, carousel, accordion, contentCards, backgroundVideo, comparison, annotatedImage). Each block type maps to a component in `components/blocks/`.
 
-**BlockRenderer** (`components/blocks/BlockRenderer.tsx`): Routes block types to their React components. Handles special case of combining consecutive hero + metadata blocks into side-by-side layout.
+**BlockRenderer** (`components/blocks/BlockRenderer.tsx`): Routes block types to their React components. Handles special case of combining consecutive hero + metadata blocks into side-by-side layout. First 2 blocks render eagerly; remaining blocks lazy-load via `LazyBlock` (Intersection Observer wrapper).
 
-**Sanity Schema**: Single document type defined in `sanity/schemas/caseStudy.tsx` with inline block type definitions. Uses custom input components for multi-image upload (`MultipleImageInput`), hotspot annotation (`HotspotImageInput`), and block conversion (`BlockWithConverter`).
+**Sanity Schema**: Document types defined in `sanity/schemas/`. The main `caseStudy` type uses inline block type definitions with shared fields from `sanity/schemas/shared-fields.ts` (layout, typography, aspect ratio, image styles). Custom input components: `MultipleImageInput`, `HotspotImageInput`, `BlockWithConverter`.
 
 **Video**: Uses Mux for video hosting via `mux.video` field type and `@mux/mux-player-react` for playback.
 
@@ -59,7 +70,17 @@ NEXT_PUBLIC_SANITY_DATASET=...
 
 ### Styling
 
-Tailwind CSS with custom Inter font. Global styles in `styles/globals.css`.
+Tailwind CSS with global styles in `styles/globals.css`. Two font families:
+- **Instrument Sans** (Google Font) → `font-sans` — body text
+- **Right Slab** (local, `public/fonts/`) → `font-display` — headings
+
+### Experiments
+
+The `experiments/` directory contains standalone apps (e.g., `experiments/music-recorder` is a Vite + React app) that are excluded from the Next.js build via webpack config and tsconfig. They have their own `package.json` and build pipelines.
+
+### Agents
+
+- `agents/ai-news-research/` — 7-stage article generation workflow (monitoring → selection → research → synthesis → refinement → style → writing). Outputs drafts to `content/thoughts/drafts/`. Invoke with: "Start a new AI news research session".
 
 ## Skills
 

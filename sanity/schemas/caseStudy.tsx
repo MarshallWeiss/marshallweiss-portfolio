@@ -429,6 +429,21 @@ export default defineType({
                         }),
                         aspectRatioField,
                         objectFitField,
+                        defineField({
+                            name: 'imageShadow',
+                            title: 'Image Shadow',
+                            type: 'string',
+                            options: {
+                                list: [
+                                    { title: 'None', value: 'none' },
+                                    { title: 'Small', value: 'small' },
+                                    { title: 'Medium', value: 'medium' },
+                                    { title: 'Large', value: 'large' },
+                                ],
+                                layout: 'radio',
+                            },
+                            initialValue: 'none',
+                        }),
                         ...layoutFields,
                     ],
                     preview: {
@@ -619,6 +634,21 @@ export default defineType({
                         }),
                         aspectRatioField,
                         objectFitField,
+                        defineField({
+                            name: 'imageShadow',
+                            title: 'Image Shadow',
+                            type: 'string',
+                            options: {
+                                list: [
+                                    { title: 'None', value: 'none' },
+                                    { title: 'Small', value: 'small' },
+                                    { title: 'Medium', value: 'medium' },
+                                    { title: 'Large', value: 'large' },
+                                ],
+                                layout: 'radio',
+                            },
+                            initialValue: 'none',
+                        }),
                         ...layoutFields,
                     ],
                     preview: {

@@ -79,7 +79,7 @@ export default function MediaItem({
     // Render video
     if (mediaType === 'video' && video?.asset) {
         return (
-            <div className={containerClasses}>
+            <div className={cn(containerClasses, 'bg-white')}>
                 <MuxPlayer
                     playbackId={video.asset.playbackId}
                     streamType="on-demand"

@@ -30,10 +30,18 @@ interface CarouselProps {
     arrowPosition?: 'overlapping' | 'outside';
     infiniteLoop?: boolean;
     showBackground?: boolean;
+    imageShadow?: 'none' | 'small' | 'medium' | 'large';
     width?: 'contained' | 'wide' | 'full';
     background?: 'none' | 'white' | 'gray';
     spacing?: 'compact' | 'default' | 'spacious';
 }
+
+const shadowClasses: Record<string, string> = {
+    'none': '',
+    'small': 'shadow-sm',
+    'medium': 'shadow-md',
+    'large': 'shadow-lg',
+};
 
 export default function Carousel({
     slides,
@@ -49,6 +57,7 @@ export default function Carousel({
     arrowPosition = 'overlapping',
     infiniteLoop = false,
     showBackground = true,
+    imageShadow = 'none',
     width = 'contained',
     background = 'none',
     spacing = 'compact',
@@ -178,6 +187,7 @@ export default function Carousel({
                                 objectFit={objectFit}
                                 slidesPerView={slidesPerView}
                                 showBackground={showBackground}
+                                imageShadow={imageShadow}
                             />
                         ))}
                     </div>
@@ -240,6 +250,7 @@ export default function Carousel({
                                 objectFit={objectFit}
                                 slidesPerView={slidesPerView}
                                 showBackground={showBackground}
+                                imageShadow={imageShadow}
                             />
                         ))}
                     </div>
@@ -293,6 +304,7 @@ function CarouselSlide({
     objectFit = 'cover',
     slidesPerView = '2',
     showBackground = true,
+    imageShadow = 'none',
 }: {
     slide: Slide;
     onOpen: () => void;
@@ -300,6 +312,7 @@ function CarouselSlide({
     objectFit?: 'cover' | 'contain';
     slidesPerView?: '1' | '2' | '3' | '4';
     showBackground?: boolean;
+    imageShadow?: 'none' | 'small' | 'medium' | 'large';
 }) {
     const imageProps = useNextSanityImage(client, slide.image, {
         imageBuilder: (imageUrlBuilder, options) => {
@@ -342,7 +355,8 @@ function CarouselSlide({
             {/* Image */}
             <div
                 className={cn(
-                    "relative rounded-lg overflow-hidden shadow-sm mb-4 cursor-pointer group",
+                    "relative rounded-lg overflow-hidden mb-4 cursor-pointer group",
+                    shadowClasses[imageShadow],
                     showBackground && "bg-gray-100",
                     aspectRatioClass
                 )}

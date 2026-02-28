@@ -6,6 +6,52 @@ Session context for continuing work on this project.
 
 `main`
 
+## Recent Work (2026-02-28) — Session 10
+
+### CMS imageShadow Feature, Accent Color, Case Study Ordering ✅
+**Added CMS-controlled image shadows across all media blocks, changed accent color, reordered case studies:**
+
+**imageShadow CMS Feature (Carousel + MediaGrid):**
+- Added `imageShadow` prop to Carousel and MediaGrid components (was already in FullWidthMedia, SplitMedia, MediaItem)
+- Added `shadowClasses` module-level constant and wired through to container elements
+- Added `imageShadow` field (radio: none/small/medium/large) to carousel and mediaGrid block schemas in caseStudy.tsx
+- Deployed schema with `npx sanity@latest schema deploy`
+- BlockRenderer auto-passes CMS fields via `{...module}` spread
+
+**Video Clip-Path Border Radius:**
+- Added `round 0.75rem` to mux-player clip-path for rounded corners: `clip-path: inset(0 0 2px 0 round 0.75rem)`
+- Later reverted to `clip-path: inset(0 0 2px 0)` (no round) due to shadow interaction issues
+- Added `bg-white` to video containers in FullWidthMedia, SplitMedia, MediaItem
+
+**Video Shadow Double-Line (ABANDONED):**
+- Attempted 6+ CSS approaches to fix double-line artifact when shadow applied to video containers
+- Tried: clip-path with round, margin-bottom collapse, border-radius inherit, bg-white paint order
+- None worked due to mux-player web component shadow DOM not respecting parent overflow/border-radius
+- User decided to abandon this issue
+
+**Accent Color Change:**
+- Changed WorkCard hover color from `text-blue-600` to `text-orange-500` (title and arrow icon)
+
+**Case Study Ordering:**
+- Added GROQ `select()` sort to pin CMS Redesign case study first on listing page and detail page navigation
+- `order(select(slug.current == "el-confidencial-cms-modernization" => 0, 1), _createdAt desc)`
+
+**Files Modified:**
+- `styles/globals.css` — mux-player clip-path
+- `components/blocks/Carousel.tsx` — imageShadow prop, shadowClasses
+- `components/blocks/MediaGrid.tsx` — imageShadow prop throughout (component + GridItem)
+- `components/blocks/FullWidthMedia.tsx` — bg-white for video containers
+- `components/blocks/SplitMedia.tsx` — bg-white for video containers
+- `components/blocks/MediaItem.tsx` — containerClasses refactor, bg-white for video
+- `components/WorkCard.tsx` — orange accent color
+- `app/case-studies/page.tsx` — GROQ ordering
+- `app/case-studies/[slug]/page.tsx` — GROQ ordering
+- `sanity/schemas/caseStudy.tsx` — imageShadow fields for carousel and mediaGrid
+
+**Build Status:** ✓ Build passes
+
+---
+
 ## Recent Work (2026-02-28) — Session 9
 
 ### Music Recorder: Tuning Dropdown, Custom Tunings, LED Tuner + Bug Fixes ✅

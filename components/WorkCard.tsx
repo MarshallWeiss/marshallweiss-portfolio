@@ -23,6 +23,7 @@ export default function WorkCard({ study }: { study: any }) {
         <Link
             href={`/case-studies/${study.slug.current}`}
             className="group block"
+            data-cursor-label="Explore"
         >
             <div className="relative aspect-[4/3] bg-gray-100 rounded-lg overflow-hidden mb-6">
                 {isVideoThumbnail ? (
@@ -61,14 +62,14 @@ export default function WorkCard({ study }: { study: any }) {
 
             <div className="flex justify-between items-start">
                 <div>
-                    <h2 className="font-display text-2xl text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+                    <h2 className="font-display text-2xl text-gray-900 mb-2 group-hover:text-orange-500 transition-colors">
                         {study.title}
                     </h2>
                     {study.heroSubtitle && (
                         <p className="text-gray-500">{study.heroSubtitle}</p>
                     )}
                 </div>
-                <ArrowRight className="w-6 h-6 text-gray-300 group-hover:text-blue-600 transition-colors -rotate-45 group-hover:rotate-0 transform duration-300" />
+                <ArrowRight className="w-6 h-6 text-gray-300 group-hover:text-orange-500 transition-colors -rotate-45 group-hover:rotate-0 transform duration-300" />
             </div>
         </Link>
     );

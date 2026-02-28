@@ -27,6 +27,7 @@ interface FullWidthMediaProps {
     aspectRatio?: 'auto' | 'square' | '4:3' | '16:9' | '3:4' | '9:16';
     objectFit?: 'cover' | 'contain';
     imageBackground?: 'none' | 'gray';
+    imageShadow?: 'none' | 'small' | 'medium' | 'large';
     autoplay?: boolean;
     loop?: boolean;
     muted?: boolean;
@@ -48,6 +49,7 @@ export default function FullWidthMedia({
     aspectRatio = 'auto',
     objectFit = 'cover',
     imageBackground = 'none',
+    imageShadow = 'none',
     autoplay = true,
     loop = true,
     muted = true,
@@ -86,6 +88,13 @@ export default function FullWidthMedia({
         contain: 'object-contain',
     };
 
+    const shadowClasses: Record<string, string> = {
+        'none': '',
+        'small': 'shadow-sm',
+        'medium': 'shadow-md',
+        'large': 'shadow-lg',
+    };
+
     return (
         <BlockWrapper width={width} background={background} spacing={spacing}>
             <BlockHeading
@@ -103,6 +112,8 @@ export default function FullWidthMedia({
             <figure className="w-full">
                 <div className={cn(
                     "rounded-lg overflow-hidden",
+                    shadowClasses[imageShadow],
+                    hasVideo && 'bg-white',
                     imageBackground === 'gray' && 'bg-gray-50',
                     aspectRatio !== 'auto' && aspectRatioClasses[aspectRatio]
                 )}>

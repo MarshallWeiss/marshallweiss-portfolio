@@ -75,7 +75,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
     }`;
 
     // Query to get all case studies for navigation
-    const allCaseStudiesQuery = groq`*[_type == "caseStudy" && defined(slug.current)] | order(_createdAt desc) {
+    const allCaseStudiesQuery = groq`*[_type == "caseStudy" && defined(slug.current)] | order(select(slug.current == "el-confidencial-cms-modernization" => 0, 1), _createdAt desc) {
         title,
         "slug": slug.current
     }`;
