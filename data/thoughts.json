@@ -1,6 +1,16 @@
 {
   "items": [
     {
+      "id": "rebuilding-portfolio-in-claude-code",
+      "title": "What I Learned Rebuilding My Portfolio in Claude Code",
+      "description": "A product designer's honest retrospective on leaving Squarespace behind and building a portfolio entirely with AI — what worked, what didn't, and the unexpected thing that happened along the way.",
+      "date": "2026-02-20",
+      "slug": "rebuilding-portfolio-in-claude-code",
+      "stage": "growing",
+      "category": "AI & Development",
+      "readingTime": 10
+    },
+    {
       "id": "focus-the-essential-tool-spec-driven-development",
       "title": "Focus: The Most Important Tool in Spec-Driven Development",
       "description": "Why traditional productivity advice fails when working with AI agents, and how to build an environment that sustains the deep attention spec-driven development demands.",

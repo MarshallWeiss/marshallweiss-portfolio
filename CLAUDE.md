@@ -88,6 +88,7 @@ The skill analyzes your idea and routes it automatically. Article-worthy ideas g
 - `content/roadmap/backlog.md` - Portfolio project roadmap items
 - `content/music/backlog.md` - Songs to learn, music practice goals
 - `content/design/backlog.md` - Design concepts and UI/UX explorations
+- `content/ai-news/sources.md` - AI news sources for aggregation into a curated newsletter
 
 ## Content Voice & Framing
 
