@@ -6,6 +6,29 @@ Session context for continuing work on this project.
 
 `main`
 
+## Recent Work (2026-03-02) — Session 11
+
+### El Confidencial CMS Case Study Enhancement + Skill Improvements ✅
+**Deepened the CMS case study via structured interview and updated the /case-study skill:**
+
+**Case Study Interview (El Confidencial CMS):**
+- Conducted extended discovery interview covering rollout strategy, stakeholder complexity, AI positioning, Argos tool, journalist reactions, what got cut, personal narrative
+- Key details captured: ~200 journalists, 6–8 devs, 1 designer (sole), ~15–20 research workshops, phased rollout (Culture/Vanity first, breaking news desk last), Argos now mandatory pre-publish
+
+**Sanity Updates (draft — needs to be published):**
+- Insights block: added 3 new cards (breaking news speed, proximity advantage, workarounds as symptoms) → 9 total
+- Research Process accordion: added "Progressive Rollout" as 6th item
+- Outcomes: new contentCards block with 6 cards — **needs dragging before Takeaways in Studio, then publish**
+- Pending: add Argos error reduction % when Marshall looks it up
+
+**Case Study Skill (`/case-study`) Updated:**
+- Interview phase expanded: added Team & Constraints, What Got Cut, Personal Angle categories
+- Critical probing rule added: never accept vague answers, push for specifics and stories
+- Phase 2 updated: explicit visual thinking guidance — new blocks, interactive media, process artifacts, scale stats
+
+**Files Modified:**
+- `.claude/skills/case-study/skill.md` — expanded interview + visual thinking guidance
+
 ## Recent Work (2026-02-28) — Session 10
 
 ### CMS imageShadow Feature, Accent Color, Case Study Ordering ✅
