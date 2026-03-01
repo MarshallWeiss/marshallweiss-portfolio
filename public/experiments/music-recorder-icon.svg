@@ -1,0 +1,39 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="120" height="120" rx="24" fill="url(#gradient)"/>
+
+  <!-- Cassette body -->
+  <rect x="20" y="30" width="80" height="60" rx="4" fill="#2D2D2D"/>
+
+  <!-- Top detail -->
+  <rect x="25" y="35" width="70" height="8" rx="2" fill="#3D3D3D"/>
+
+  <!-- Left reel -->
+  <circle cx="42" cy="60" r="12" fill="#4A4A4A"/>
+  <circle cx="42" cy="60" r="6" fill="#1A1A1A"/>
+  <circle cx="42" cy="60" r="3" fill="#3D3D3D"/>
+
+  <!-- Right reel -->
+  <circle cx="78" cy="60" r="12" fill="#4A4A4A"/>
+  <circle cx="78" cy="60" r="6" fill="#1A1A1A"/>
+  <circle cx="78" cy="60" r="3" fill="#3D3D3D"/>
+
+  <!-- Tape window -->
+  <rect x="48" y="52" width="24" height="16" rx="2" fill="#8B4513"/>
+
+  <!-- Bottom screws -->
+  <circle cx="30" cy="82" r="2" fill="#5A5A5A"/>
+  <circle cx="90" cy="82" r="2" fill="#5A5A5A"/>
+
+  <!-- Label area -->
+  <rect x="30" y="72" width="60" height="12" rx="2" fill="#F5F5DC"/>
+  <line x1="35" y1="76" x2="85" y2="76" stroke="#CCC" stroke-width="1"/>
+  <line x1="35" y1="80" x2="70" y2="80" stroke="#CCC" stroke-width="1"/>
+
+  <defs>
+    <linearGradient id="gradient" x1="0" y1="0" x2="120" y2="120">
+      <stop offset="0%" stop-color="#4A4A4A"/>
+      <stop offset="100%" stop-color="#2A2A2A"/>
+    </linearGradient>
+  </defs>
+</svg>

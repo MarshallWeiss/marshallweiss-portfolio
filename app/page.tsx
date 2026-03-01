@@ -1,40 +1,102 @@
-import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import HomeNavigation from '@/components/HomeNavigation';
+import GetInTouchButton from '@/components/GetInTouchButton';
+import { client } from '@/sanity/lib/client';
+import { urlFor } from '@/sanity/lib/image';
+import { groq } from 'next-sanity';
+import thoughtsData from '@/data/thoughts.json';
 
-const sections = [
-  { name: 'Case Studies', path: '/case-studies', description: 'Product design work' },
-  { name: 'Thoughts', path: '/thoughts', description: 'Writing on design and AI' },
-  { name: 'Current', path: '/current', description: 'What I\'m up to now' },
-];
+export default async function Home() {
+  // Fetch case studies for preview data
+  const caseStudiesQuery = groq`*[_type == "caseStudy" && defined(slug.current)] {
+    title,
+    slug,
+    "role": modules[_type == "metadata"][0].role,
+    "heroImage": coalesce(
+      thumbnailImage,
+      modules[_type == "hero" && showImage != false][0].image,
+      modules[_type == "fullWidthMedia" && mediaType == "image"][0].image
+    )
+  } | order(select(slug.current == "el-confidencial-cms-modernization" => 0, 1), _createdAt desc)[0...3]`;
 
-export default function Home() {
+  const caseStudies = await client.fetch(caseStudiesQuery);
+  const thoughts = thoughtsData.items;
+
+  const sections = [
+    {
+      name: 'Case Studies',
+      path: '/case-studies',
+      description: 'Product design work',
+      previews: [{
+        title: caseStudies[0]?.title || 'Case Studies',
+        image: caseStudies[0]?.heroImage ? urlFor(caseStudies[0].heroImage).width(640).url() : undefined,
+      }],
+    },
+    {
+      name: 'Thoughts',
+      path: '/thoughts',
+      description: 'Writing on design and AI',
+      previews: [{
+        title: thoughts[0]?.title || 'Thoughts',
+        image: thoughts[0]?.image,
+      }],
+    },
+    {
+      name: 'Current',
+      path: '/current',
+      description: 'What I\'m up to now',
+      previews: [{
+        title: 'Retro Four Track Recorder',
+        image: '/experiments/four-track-recorder.png',
+      }],
+    },
+  ];
+
   return (
-    <div className="min-h-screen flex flex-col md:justify-center px-4 sm:px-6 lg:px-8 pt-14 md:pt-0">
-      <div className="max-w-4xl mx-auto w-full">
-        <h1 className="font-display text-4xl md:text-6xl lg:text-7xl text-gray-900 leading-[1.1] mb-10 md:mb-16">
-          Marshall Weiss<br />
-          is a senior product designer<br />
-          at{' '}
-          <a href="https://www.elconfidencial.com/" target="_blank" rel="noopener noreferrer" className="underline decoration-gray-300 hover:decoration-gray-900 transition-colors">
-            El Confidencial
-          </a>
-        </h1>
-
-        <nav className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          {sections.map((section) => (
-            <Link
-              key={section.path}
-              href={section.path}
-              className="group flex items-center justify-between py-4 border-t border-gray-200 md:hover:border-gray-900 transition-colors"
-            >
-              <div>
-                <span className="font-display text-lg text-gray-900">{section.name}</span>
-                <p className="text-sm text-gray-500 mt-0.5">{section.description}</p>
+    <div className="min-h-screen flex items-center">
+      {/* Use exact same container structure as Navigation */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div className="flex flex-col gap-24 pt-8">
+          {/* Top row: Heading and Navigation */}
+          <div className="flex items-start justify-between gap-40">
+            {/* Left side - Heading */}
+            <div className="max-w-[705px]">
+              <div className="space-y-5">
+                <h1 className="font-display text-7xl text-gray-900 leading-[1.1]">
+                  Marshall Weiss<br />
+                  is a product designer<span className="text-orange-500">.</span>
+                </h1>
+                <p className="font-display text-4xl text-gray-500">
+                  exploring the intersection of <span className="text-gray-700">design</span>, <span className="text-gray-700">artificial intelligence</span>, and <span className="text-gray-700">philosophy</span>.
+                </p>
               </div>
-              <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-gray-900 group-hover:translate-x-1 transition-all" />
-            </Link>
-          ))}
-        </nav>
+            </div>
+
+            {/* Right side - Navigation with hover previews */}
+            <div>
+              <HomeNavigation sections={sections} />
+            </div>
+          </div>
+
+          {/* Bottom row: Profile/Currently and Contact */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-6">
+              <img
+                src="/images/about/marsh photo gray background.png"
+                alt="Marshall Weiss"
+                className="w-20 h-20 rounded-full object-cover"
+              />
+              <div className="flex flex-col">
+                <p className="font-display text-xl text-gray-900 mb-1">
+                  Currently: Senior Product Designer at <a href="https://www.elconfidencial.com/" target="_blank" rel="noopener noreferrer" className="underline decoration-orange-500 hover:text-orange-500 transition-colors">El Confidencial</a>.
+                </p>
+                <p className="text-base text-gray-500">
+                  (one of the <a href="https://www.similarweb.com/website/elconfidencial.com/?_gl=1*az3vw8*_up*MQ..*_ga*MTc1NTcxMTQ5NC4xNzcyMzYxMjI0*_ga_V5DSP51YD0*czE3NzIzNjEyMjQkbzEkZzAkdDE3NzIzNjEyMjQkajYwJGwwJGgxNTYyMDcwMjA0#overview" target="_blank" rel="noopener noreferrer" className="underline decoration-orange-500 hover:text-orange-500 transition-colors">most visited</a> news sites in Spain!)
+                </p>
+              </div>
+            </div>
+            <GetInTouchButton />
+          </div>
+        </div>
       </div>
     </div>
   );

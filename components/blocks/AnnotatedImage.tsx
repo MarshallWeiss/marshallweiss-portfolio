@@ -63,6 +63,7 @@ export default function AnnotatedImage({
             case 'problem':
                 return {
                     bg: 'bg-red-500',
+                    bgPulse: 'bg-red-400',
                     border: 'border-red-500',
                     text: 'text-red-600',
                     bgLight: 'bg-red-50',
@@ -71,6 +72,7 @@ export default function AnnotatedImage({
             case 'improvement':
                 return {
                     bg: 'bg-green-500',
+                    bgPulse: 'bg-green-400',
                     border: 'border-green-500',
                     text: 'text-green-600',
                     bgLight: 'bg-green-50',
@@ -79,6 +81,7 @@ export default function AnnotatedImage({
             default:
                 return {
                     bg: 'bg-blue-500',
+                    bgPulse: 'bg-blue-400',
                     border: 'border-blue-500',
                     text: 'text-blue-600',
                     bgLight: 'bg-blue-50',
@@ -126,15 +129,13 @@ export default function AnnotatedImage({
                         {/* Pulsing ring animation */}
                         <div
                             className={cn(
-                                'absolute inset-0 rounded-full animate-ping opacity-75',
-                                colors.bg
+                                'absolute top-0 left-0 rounded-full animate-ping opacity-40',
+                                colors.bgPulse
                             )}
                             style={{
                                 width: 32,
                                 height: 32,
-                                marginLeft: -16,
-                                marginTop: -16,
-                                animationDuration: '2s',
+                                animationDuration: '2.5s',
                             }}
                         />
 
