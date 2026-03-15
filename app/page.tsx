@@ -61,12 +61,12 @@ export default async function Home() {
             {/* Left side - Heading */}
             <div className="max-w-[705px]">
               <div className="space-y-5">
-                <h1 className="font-display text-7xl text-gray-900 leading-[1.1]">
+                <h1 className="font-display text-6xl text-stone-700 leading-[1.1]">
                   Marshall Weiss<br />
-                  is a product designer<span className="text-orange-500">.</span>
+                  is a product designer.
                 </h1>
-                <p className="font-display text-4xl text-gray-500">
-                  exploring the intersection of <span className="text-gray-700">design</span>, <span className="text-gray-700">artificial intelligence</span>, and <span className="text-gray-700">philosophy</span>.
+                <p className="font-display text-xl text-stone-500">
+                  exploring the intersection of <span className="text-stone-600">design</span>, <span className="text-stone-600">artificial intelligence</span>, and <span className="text-stone-600">philosophy</span>.
                 </p>
               </div>
             </div>
@@ -86,11 +86,11 @@ export default async function Home() {
                 className="w-20 h-20 rounded-full object-cover"
               />
               <div className="flex flex-col">
-                <p className="font-display text-xl text-gray-900 mb-1">
-                  Currently: Senior Product Designer at <a href="https://www.elconfidencial.com/" target="_blank" rel="noopener noreferrer" className="underline decoration-orange-500 hover:text-orange-500 transition-colors">El Confidencial</a>.
+                <p className="font-display text-xl text-stone-600 mb-1">
+                  Currently: Senior Product Designer at <a href="https://www.elconfidencial.com/" target="_blank" rel="noopener noreferrer" className="underline decoration-stone-400 hover:text-stone-800 transition-colors">El Confidencial</a>.
                 </p>
-                <p className="text-base text-gray-500">
-                  (one of the <a href="https://www.similarweb.com/website/elconfidencial.com/?_gl=1*az3vw8*_up*MQ..*_ga*MTc1NTcxMTQ5NC4xNzcyMzYxMjI0*_ga_V5DSP51YD0*czE3NzIzNjEyMjQkbzEkZzAkdDE3NzIzNjEyMjQkajYwJGwwJGgxNTYyMDcwMjA0#overview" target="_blank" rel="noopener noreferrer" className="underline decoration-orange-500 hover:text-orange-500 transition-colors">most visited</a> news sites in Spain!)
+                <p className="text-base text-stone-500">
+                  (one of the <a href="https://www.similarweb.com/website/elconfidencial.com/?_gl=1*az3vw8*_up*MQ..*_ga*MTc1NTcxMTQ5NC4xNzcyMzYxMjI0*_ga_V5DSP51YD0*czE3NzIzNjEyMjQkbzEkZzAkdDE3NzIzNjEyMjQkajYwJGwwJGgxNTYyMDcwMjA0#overview" target="_blank" rel="noopener noreferrer" className="underline decoration-stone-400 hover:text-stone-700 transition-colors">most visited</a> news sites in Spain!)
                 </p>
               </div>
             </div>

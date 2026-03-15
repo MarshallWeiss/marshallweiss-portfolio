@@ -16,10 +16,13 @@ export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm border-b border-gray-200">
+    <nav
+      className="sticky top-0 z-50 backdrop-blur-sm border-b border-stone-200 transition-[background-color] duration-500 ease-in-out"
+      style={{ backgroundColor: 'color-mix(in srgb, var(--page-bg) 80%, transparent)' }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <Link href="/" className="font-display text-xl text-gray-900 hover:text-gray-700 transition-colors">
+          <Link href="/" className="font-display text-xl text-stone-600 hover:text-stone-800 transition-colors">
             Marshall Weiss
           </Link>
 
@@ -33,8 +36,8 @@ export default function Navigation() {
                   href={item.path}
                   className={`text-sm font-medium transition-colors ${
                     isActive
-                      ? 'text-gray-900 border-b-2 border-gray-900 pb-1'
-                      : 'text-gray-600 hover:text-gray-900'
+                      ? 'text-stone-700 border-b-2 border-stone-500 pb-1'
+                      : 'text-stone-400 hover:text-stone-700'
                   }`}
                 >
                   {item.name}
@@ -45,7 +48,7 @@ export default function Navigation() {
 
           {/* Mobile menu button */}
           <button
-            className="md:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+            className="md:hidden p-2 rounded-md text-stone-500 hover:text-stone-700 hover:bg-stone-100"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -79,8 +82,8 @@ export default function Navigation() {
                   onClick={() => setIsMobileMenuOpen(false)}
                   className={`block px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                     isActive
-                      ? 'text-gray-900 bg-gray-100'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                      ? 'text-stone-700 bg-stone-100'
+                      : 'text-stone-500 hover:text-stone-700 hover:bg-stone-50'
                   }`}
                 >
                   {item.name}

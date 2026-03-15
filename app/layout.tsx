@@ -4,6 +4,7 @@ import localFont from 'next/font/local';
 import Script from 'next/script';
 import Navigation from '@/components/Navigation';
 import CustomCursor from '@/components/CustomCursor';
+import PageBackground from '@/components/PageBackground';
 import '../styles/globals.css';
 
 const instrumentSans = Instrument_Sans({
@@ -32,15 +33,16 @@ export default function RootLayout({
     <html lang="en" className={`${instrumentSans.variable} ${rightSlab.variable}`}>
       <Script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async />
       <body className="font-sans cursor-none">
+        <PageBackground />
         <CustomCursor />
         <Navigation />
         <main>{children}</main>
-        <footer className="bg-gray-100 py-4 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-gray-500">
+        <footer className="border-t border-stone-200/60 py-4 px-4 sm:px-6 lg:px-8 transition-[background-color] duration-500 ease-in-out" style={{ backgroundColor: 'var(--page-bg)' }}>
+          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-stone-400">
             <p>&copy; {new Date().getFullYear()} Marshall Weiss</p>
             <div className="flex items-center gap-5">
-              <a href="mailto:marshallweiss94@gmail.com" className="hover:text-gray-700 transition-colors">marshallweiss94@gmail.com</a>
-              <a href="https://www.linkedin.com/in/marshallweissdesign/" target="_blank" rel="noopener noreferrer" className="hover:text-gray-700 transition-colors">LinkedIn</a>
+              <a href="mailto:marshallweiss94@gmail.com" className="hover:text-stone-600 transition-colors">marshallweiss94@gmail.com</a>
+              <a href="https://www.linkedin.com/in/marshallweissdesign/" target="_blank" rel="noopener noreferrer" className="hover:text-stone-600 transition-colors">LinkedIn</a>
             </div>
           </div>
         </footer>

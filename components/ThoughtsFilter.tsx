@@ -31,7 +31,7 @@ export default function ThoughtsFilter({ items, curatedArticles = [] }: Thoughts
           className={`pb-3 text-sm font-medium transition-colors ${
             activeTab === 'mine'
               ? 'text-gray-900 border-b-2 border-gray-900'
-              : 'text-gray-500 hover:text-gray-600'
+              : 'text-gray-600 hover:text-gray-600'
           }`}
         >
           Mine
@@ -41,7 +41,7 @@ export default function ThoughtsFilter({ items, curatedArticles = [] }: Thoughts
           className={`pb-3 text-sm font-medium transition-colors ${
             activeTab === 'others'
               ? 'text-gray-900 border-b-2 border-gray-900'
-              : 'text-gray-500 hover:text-gray-600'
+              : 'text-gray-600 hover:text-gray-600'
           }`}
         >
           Others
@@ -55,7 +55,7 @@ export default function ThoughtsFilter({ items, curatedArticles = [] }: Thoughts
               <Link
                 key={item.id}
                 href={`/thoughts/${item.slug}`}
-                className="group flex h-32 border border-gray-200 rounded-lg overflow-hidden hover:border-gray-300 transition-colors"
+                className="group flex h-32 border border-gray-200/60 rounded-lg overflow-hidden hover:border-gray-300 transition-colors bg-white/50"
               >
                 <div className="flex-1 min-w-0 px-4 py-3 flex flex-col justify-between">
                   <div>
@@ -68,7 +68,7 @@ export default function ThoughtsFilter({ items, curatedArticles = [] }: Thoughts
                       </p>
                     )}
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-500">
+                  <div className="flex items-center gap-2 text-sm text-gray-600">
                     {item.category && (
                       <>
                         <span className="truncate">{item.category}</span>
@@ -110,7 +110,7 @@ export default function ThoughtsFilter({ items, curatedArticles = [] }: Thoughts
                 href={article.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex h-32 border border-gray-200 rounded-lg overflow-hidden hover:border-gray-300 transition-colors"
+                className="group flex h-32 border border-gray-200/60 rounded-lg overflow-hidden hover:border-gray-300 transition-colors bg-white/50"
               >
                 <div className="flex-1 min-w-0 px-4 py-3 flex flex-col justify-between">
                   <div>
@@ -123,7 +123,7 @@ export default function ThoughtsFilter({ items, curatedArticles = [] }: Thoughts
                       </p>
                     )}
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-500 truncate">
+                  <div className="flex items-center gap-2 text-sm text-gray-600 truncate">
                     <span className="truncate">{new URL(article.url).hostname.replace('www.', '')}</span>
                     {article.addedAt && (
                       <>

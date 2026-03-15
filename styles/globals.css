@@ -2,8 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --page-bg: #F7F5F2;
+}
+
 body {
-  @apply bg-white text-gray-900 antialiased;
+  @apply antialiased;
+  background-color: var(--page-bg);
+  color: #3C3A37;
+  transition: background-color 0.5s ease;
 }
 
 /* Hide default cursor globally — custom cursor replaces it */
@@ -57,12 +64,7 @@ body {
 }
 
 .gradient-text {
-  background: linear-gradient(90deg, #111827, #f97316, #111827, #f97316);
-  background-size: 300% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradient-shift 8s ease infinite;
+  color: #3C3A37;
 }
 
 /* Crop bottom recording artifact from Mux videos */

@@ -62,14 +62,14 @@ export default function WorkCard({ study }: { study: any }) {
 
             <div className="flex justify-between items-start">
                 <div>
-                    <h2 className="font-display text-2xl text-gray-900 mb-2 group-hover:text-orange-500 transition-colors">
+                    <h2 className="font-display text-2xl text-stone-700 mb-2 group-hover:text-stone-500 transition-colors">
                         {study.title}
                     </h2>
                     {study.heroSubtitle && (
-                        <p className="text-gray-500">{study.heroSubtitle}</p>
+                        <p className="text-stone-500">{study.heroSubtitle}</p>
                     )}
                 </div>
-                <ArrowRight className="w-6 h-6 text-gray-300 group-hover:text-orange-500 transition-colors -rotate-45 group-hover:rotate-0 transform duration-300" />
+                <ArrowRight className="w-6 h-6 text-stone-300 group-hover:text-stone-500 transition-colors -rotate-45 group-hover:rotate-0 transform duration-300" />
             </div>
         </Link>
     );

@@ -26,7 +26,7 @@ export default async function TheseDaysPage() {
           <ConfidentialCard projects={workProjects} />
 
           {/* Playing */}
-          <div className="border border-gray-200 rounded-xl p-8">
+          <div className="border border-gray-200/60 rounded-xl p-8 bg-white/50">
             <h2 className="font-display text-xl text-gray-900 mb-1">Playing</h2>
             <p className="text-sm text-gray-500 mb-6">Side projects and experiments</p>
             <div className="space-y-5">
@@ -79,7 +79,7 @@ export default async function TheseDaysPage() {
           </div>
 
           {/* Reading */}
-          <div className="border border-gray-200 rounded-xl p-8">
+          <div className="border border-gray-200/60 rounded-xl p-8 bg-white/50">
             <h2 className="font-display text-xl text-gray-900 mb-1">Reading</h2>
             <p className="text-sm text-gray-500 mb-6">What's on the nightstand</p>
             {currentlyReading ? (
@@ -121,7 +121,7 @@ export default async function TheseDaysPage() {
           </div>
 
           {/* Doing */}
-          <div className="border border-gray-200 rounded-xl p-8">
+          <div className="border border-gray-200/60 rounded-xl p-8 bg-white/50">
             <h2 className="font-display text-xl text-gray-900 mb-1">Doing</h2>
             <p className="text-sm text-gray-500 mb-6">Hobbies and habits</p>
             <div className="space-y-5">

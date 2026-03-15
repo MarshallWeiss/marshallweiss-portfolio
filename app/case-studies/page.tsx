@@ -29,7 +29,7 @@ export default async function WorkIndexPage() {
     const caseStudies = await client.fetch(query);
 
     return (
-        <main className="min-h-screen bg-white py-12 px-6 md:px-12 max-w-[1920px] mx-auto">
+        <main className="min-h-screen py-12 px-6 md:px-12 max-w-[1920px] mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16 md:gap-y-24">
                 {caseStudies.map((study: any) => (
                     <WorkCard key={study.slug.current} study={study} />

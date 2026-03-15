@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { Download } from 'lucide-react';
 
 const workHistory = [
@@ -72,10 +71,10 @@ export default function AboutPage() {
                   <div key={i}>
                     <div className="flex flex-wrap items-baseline gap-x-2 mb-1">
                       <h3 className="text-base font-semibold text-gray-900">{job.title}</h3>
-                      <span className="text-base text-gray-400">|</span>
+                      <span className="text-base text-gray-500">|</span>
                       <span className="text-base text-gray-600">{job.company}</span>
                     </div>
-                    <p className="text-sm text-gray-400 mb-2">{job.period}</p>
+                    <p className="text-sm text-gray-500 mb-2">{job.period}</p>
                     <p className="text-sm text-gray-600 leading-relaxed">{job.description}</p>
                   </div>
                 ))}
@@ -100,16 +99,11 @@ export default function AboutPage() {
           <div className="space-y-10">
             {/* Photo */}
             <div className="flex justify-center">
-              <div className="relative w-36 h-36 lg:w-44 lg:h-44 rounded-full overflow-hidden ring-1 ring-gray-900/5">
-                <Image
-                  src="/images/about/profile.jpg"
-                  alt="Marshall Weiss"
-                  fill
-                  className="object-cover"
-                  sizes="176px"
-                  priority
-                />
-              </div>
+              <img
+                src="/images/about/marsh photo gray background.png"
+                alt="Marshall Weiss"
+                className="w-36 h-36 lg:w-44 lg:h-44 rounded-full object-cover ring-1 ring-gray-900/5"
+              />
             </div>
 
             {/* Contact */}
@@ -138,8 +132,8 @@ export default function AboutPage() {
                 {education.map((edu, i) => (
                   <div key={i}>
                     <h3 className="text-sm font-semibold text-gray-900">{edu.degree}</h3>
-                    <p className="text-sm text-gray-500">{edu.school}</p>
-                    <p className="text-xs text-gray-400">{edu.period}</p>
+                    <p className="text-sm text-gray-600">{edu.school}</p>
+                    <p className="text-xs text-gray-500">{edu.period}</p>
                   </div>
                 ))}
               </div>
@@ -150,7 +144,7 @@ export default function AboutPage() {
               <h2 className="font-display text-2xl text-gray-900 mb-4">Tools</h2>
               <div className="flex flex-wrap gap-2">
                 {tools.map((tool) => (
-                  <span key={tool} className="text-sm text-gray-600 px-2.5 py-1 bg-gray-100 rounded">
+                  <span key={tool} className="text-sm text-gray-600 px-2.5 py-1 bg-white/50 rounded">
                     {tool}
                   </span>
                 ))}
@@ -162,7 +156,7 @@ export default function AboutPage() {
               <h2 className="font-display text-2xl text-gray-900 mb-4">Skills</h2>
               <div className="flex flex-wrap gap-2">
                 {skills.map((skill) => (
-                  <span key={skill} className="text-sm text-gray-600 px-2.5 py-1 bg-gray-100 rounded">
+                  <span key={skill} className="text-sm text-gray-600 px-2.5 py-1 bg-white/50 rounded">
                     {skill}
                   </span>
                 ))}

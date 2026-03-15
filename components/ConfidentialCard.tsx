@@ -37,7 +37,7 @@ export default function ConfidentialCard({ projects }: ConfidentialCardProps) {
   return (
     <div
       ref={cardRef}
-      className="border border-gray-200 rounded-xl p-8 relative overflow-hidden"
+      className="border border-gray-200/60 rounded-xl p-8 bg-white/50 relative overflow-hidden"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >

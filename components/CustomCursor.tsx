@@ -24,8 +24,6 @@ export default function CustomCursor() {
     scale.set(1);
   }, [pathname, scale]);
 
-  const springX = useSpring(cursorX, { damping: 25, stiffness: 300 });
-  const springY = useSpring(cursorY, { damping: 25, stiffness: 300 });
 
   const offset = SIZE / 2;
 
@@ -94,8 +92,8 @@ export default function CustomCursor() {
         style={{
           width: SIZE,
           height: SIZE,
-          x: springX,
-          y: springY,
+          x: cursorX,
+          y: cursorY,
           scale: label ? 0 : scale,
           opacity: visible ? 1 : 0,
         }}
@@ -113,8 +111,8 @@ export default function CustomCursor() {
             style={{
               width: SIZE * LABEL_SCALE,
               height: SIZE * LABEL_SCALE,
-              x: springX,
-              y: springY,
+              x: cursorX,
+              y: cursorY,
               marginLeft: -(SIZE * LABEL_SCALE - SIZE) / 2,
               marginTop: -(SIZE * LABEL_SCALE - SIZE) / 2,
               backgroundColor: "rgba(30, 30, 30, 0.85)",
