@@ -35,6 +35,12 @@ export default defineType({
             },
         }),
         defineField({
+            name: 'subtitle',
+            title: 'Card Subtitle',
+            type: 'string',
+            description: 'One-line description shown on the case studies listing page',
+        }),
+        defineField({
             name: 'thumbnailType',
             title: 'Thumbnail Type',
             description: 'Choose between image or video for the case studies listing page thumbnail',

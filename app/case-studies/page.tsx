@@ -9,6 +9,7 @@ export const revalidate = 5;
 export default async function WorkIndexPage() {
     const query = groq`*[_type == "caseStudy" && defined(slug.current)] {
     title,
+    subtitle,
     slug,
     thumbnailType,
     thumbnailVideo {

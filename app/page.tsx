@@ -66,7 +66,7 @@ export default async function Home() {
                   is a product designer
                 </h1>
                 <p className="font-sans text-2xl text-stone-500">
-                  exploring the intersection of design, artificial intelligence, and philosophy.
+                  AI-first product designer and developer. Passionate about amplifying the impact of socially conscious products through excellent design.
                 </p>
               </div>
             </div>
