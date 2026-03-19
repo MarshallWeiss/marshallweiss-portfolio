@@ -63,7 +63,7 @@ export default async function Home() {
               <div className="space-y-5">
                 <h1 className="font-display text-6xl text-stone-700 leading-[1.1]">
                   Marshall Weiss<br />
-                  is a product designer.
+                  is a product designer
                 </h1>
                 <p className="font-sans text-2xl text-stone-500">
                   exploring the intersection of design, artificial intelligence, and philosophy.
