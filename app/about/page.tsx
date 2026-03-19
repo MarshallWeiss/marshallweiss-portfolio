@@ -66,16 +66,18 @@ export default function AboutPage() {
             {/* Work Experience */}
             <section>
               <h2 className="font-display text-2xl text-gray-900 mb-8">Selected Work Experience</h2>
-              <div className="space-y-8">
+              <div className="space-y-4">
                 {workHistory.map((job, i) => (
-                  <div key={i}>
-                    <div className="flex flex-wrap items-baseline gap-x-2 mb-1">
-                      <h3 className="text-base font-semibold text-gray-900">{job.title}</h3>
-                      <span className="text-base text-gray-500">|</span>
-                      <span className="text-base text-gray-600">{job.company}</span>
+                  <div key={i} className="p-5 bg-white/40 border border-gray-200/60 rounded-lg">
+                    <div className="flex flex-wrap items-baseline justify-between gap-x-2 mb-1">
+                      <div className="flex flex-wrap items-baseline gap-x-2">
+                        <h3 className="text-base font-semibold text-gray-900">{job.title}</h3>
+                        <span className="text-base text-gray-400">·</span>
+                        <span className="text-base text-gray-600">{job.company}</span>
+                      </div>
+                      <span className="text-xs text-gray-400 shrink-0">{job.period}</span>
                     </div>
-                    <p className="text-sm text-gray-500 mb-2">{job.period}</p>
-                    <p className="text-sm text-gray-600 leading-relaxed">{job.description}</p>
+                    <p className="text-sm text-gray-600 leading-relaxed mt-2">{job.description}</p>
                   </div>
                 ))}
               </div>

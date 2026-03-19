@@ -17,7 +17,7 @@ export default function Navigation() {
 
   return (
     <nav
-      className="sticky top-0 z-50 backdrop-blur-sm border-b border-stone-200 transition-[background-color] duration-500 ease-in-out"
+      className="sticky top-0 z-50 backdrop-blur-sm border-b border-stone-900/10 transition-[background-color] duration-500 ease-in-out"
       style={{ backgroundColor: 'color-mix(in srgb, var(--page-bg) 80%, transparent)' }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

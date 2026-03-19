@@ -65,8 +65,8 @@ export default async function Home() {
                   Marshall Weiss<br />
                   is a product designer.
                 </h1>
-                <p className="font-display text-xl text-stone-500">
-                  exploring the intersection of <span className="text-stone-600">design</span>, <span className="text-stone-600">artificial intelligence</span>, and <span className="text-stone-600">philosophy</span>.
+                <p className="font-sans text-2xl text-stone-500">
+                  exploring the intersection of design, artificial intelligence, and philosophy.
                 </p>
               </div>
             </div>
