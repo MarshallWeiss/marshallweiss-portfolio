@@ -25,7 +25,8 @@ export default function ThoughtsFilter({ items, curatedArticles = [] }: Thoughts
 
   return (
     <div>
-      <div className="flex gap-6 mb-8 border-b border-gray-200">
+      <h1 className="font-display text-4xl text-stone-700 mb-8">Thoughts</h1>
+      <div className="flex gap-6 mb-8 border-b border-stone-900/10">
         <button
           onClick={() => setActiveTab('mine')}
           className={`pb-3 text-sm font-medium transition-colors ${
