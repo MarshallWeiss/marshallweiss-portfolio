@@ -5,6 +5,7 @@ import Script from 'next/script';
 import Navigation from '@/components/Navigation';
 import CustomCursor from '@/components/CustomCursor';
 import PageBackground from '@/components/PageBackground';
+import Footer from '@/components/Footer';
 import '../styles/globals.css';
 
 const instrumentSans = Instrument_Sans({
@@ -37,15 +38,7 @@ export default function RootLayout({
         <CustomCursor />
         <Navigation />
         <main>{children}</main>
-        <footer className="border-t border-stone-200/60 py-4 px-4 sm:px-6 lg:px-8 transition-[background-color] duration-500 ease-in-out" style={{ backgroundColor: 'var(--page-bg)' }}>
-          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-stone-400">
-            <p>&copy; {new Date().getFullYear()} Marshall Weiss</p>
-            <div className="flex items-center gap-5">
-              <a href="mailto:marshallweiss94@gmail.com" className="hover:text-stone-600 transition-colors">marshallweiss94@gmail.com</a>
-              <a href="https://www.linkedin.com/in/marshallweissdesign/" target="_blank" rel="noopener noreferrer" className="hover:text-stone-600 transition-colors">LinkedIn</a>
-            </div>
-          </div>
-        </footer>
+        <Footer />
       </body>
     </html>
   );

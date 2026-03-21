@@ -1,4 +1,3 @@
-import { Download } from 'lucide-react';
 
 const workHistory = [
   {
@@ -53,14 +52,22 @@ export default function AboutPage() {
                 <span className="font-medium">AI-first product designer and developer with four years of experience in a bilingual, bicultural environment.</span>{' '}
                 Passionate about amplifying the impact of socially conscious products through excellent design.
               </p>
-              <a
-                href="/Marshall-Weiss-CV.pdf"
-                download
-                className="inline-flex items-center gap-2 mt-6 px-5 py-2.5 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors"
-              >
-                <Download className="w-4 h-4" />
-                Download CV
-              </a>
+              <div className="flex gap-3 mt-6">
+                <a
+                  href="/Marshall-Weiss-CV.pdf"
+                  download
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors"
+                >
+                  🇺🇸 Download CV
+                </a>
+                <a
+                  href="/Marshall Weiss CV_ES.pdf"
+                  download
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors"
+                >
+                  🇪🇸 Descargar CV
+                </a>
+              </div>
             </div>
 
             {/* Work Experience */}
@@ -86,7 +93,7 @@ export default function AboutPage() {
             {/* About Me */}
             <section>
               <h2 className="font-display text-2xl text-gray-900 mb-4">About Me</h2>
-              <div className="space-y-3 text-sm text-gray-600 leading-relaxed">
+              <div className="space-y-3 text-base text-gray-600 leading-relaxed">
                 <p>
                   I'm passionate about designing innovative products that contribute positively to society. My varied education and experience in psychology, philosophy, design, and entrepreneurship provides me with lateral thinking skills and a creative approach useful across all phases of the design process.
                 </p>
