@@ -75,7 +75,7 @@ export default function AboutPage() {
                         <span className="text-base text-gray-400">·</span>
                         <span className="text-base text-gray-600">{job.company}</span>
                       </div>
-                      <span className="text-xs text-gray-400 shrink-0">{job.period}</span>
+                      <span className="text-xs text-gray-500 shrink-0">{job.period}</span>
                     </div>
                     <p className="text-sm text-gray-600 leading-relaxed mt-2">{job.description}</p>
                   </div>

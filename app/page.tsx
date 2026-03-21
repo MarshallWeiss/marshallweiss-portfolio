@@ -23,7 +23,7 @@ export default async function Home() {
 
   const sections = [
     {
-      name: 'Case Studies',
+      name: 'Work',
       path: '/case-studies',
       description: 'Product design work',
       previews: [{
@@ -66,7 +66,7 @@ export default async function Home() {
                   is a product designer
                 </h1>
                 <p className="font-sans text-2xl text-stone-500">
-                  AI-first product designer and developer. Passionate about amplifying the impact of socially conscious products through excellent design.
+                  Harnessing AI to take ideas from conception to completion and build thoughtful products that scale.
                 </p>
               </div>
             </div>

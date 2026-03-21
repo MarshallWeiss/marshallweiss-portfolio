@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
 const navItems = [
-  { name: 'Case studies', path: '/case-studies' },
+  { name: 'Work', path: '/case-studies' },
   { name: 'Thoughts', path: '/thoughts' },
   { name: 'Current', path: '/current' },
   { name: 'About', path: '/about' },
@@ -37,7 +37,7 @@ export default function Navigation() {
                   className={`text-sm font-medium transition-colors ${
                     isActive
                       ? 'text-stone-700 border-b-2 border-stone-500 pb-1'
-                      : 'text-stone-400 hover:text-stone-700'
+                      : 'text-stone-500 hover:text-stone-700'
                   }`}
                 >
                   {item.name}
