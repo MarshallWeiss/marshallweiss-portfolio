@@ -61,7 +61,7 @@ export default function AboutPage() {
                   🇺🇸 Download CV
                 </a>
                 <a
-                  href="/Marshall Weiss CV_ES.pdf"
+                  href="/Marshall-Weiss-CV-ES.pdf"
                   download
                   className="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-900 text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors"
                 >
