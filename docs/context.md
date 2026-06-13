@@ -4,6 +4,34 @@ Running log of work sessions. Most recent at top.
 
 ---
 
+## Recent Work (2026-06-13) — Session 13
+
+### Home Page Redesign Case Study + Figma Diagram Restyle + CV PDFs Live ✅
+**Continued the El Confidencial home page redesign case study, restyled its architecture diagram in Figma to match the portfolio, and pushed updated CV PDFs to production.**
+
+**Home Page Redesign Case Study (Sanity — DRAFT, not yet published):**
+- Confirmed the in-flight draft `el-confidencial-home-page-redesign` (id `f792e4fd-...`, 20 modules) is saved server-side. Copy is essentially complete and follows voice rules (context-first framing, no em-dashes).
+- Still TODO: ~20 media placeholders (`[Add screenshot/diagram…]`) need real assets; a screen-recording video upload in the draft's `images` field is stuck at `progress: 2` (never finished uploading).
+- New article/idea backlog entries captured from this session: "What Google's Changes Mean for Publishers", "NYT Home Page Teardown", "EC brand design system" (in `content/articles/backlog.md`, `content/ideas/backlog.md`).
+
+**Figma — Home Page Architecture Diagram (file `gLOcDHMNZt41pReZ5FwLvv`, node `30:7848`):**
+- Frame is rotated −90° (authored horizontally); useful relationship: `visual_x = 1200 − local_y`, `visual_y = local_x`.
+- Recolored the saturated rainbow palette into a muted warm-stone register matching the portfolio (`#F7F5F2` bg / `#3C3A37` ink). Each block category kept its own hue (e.g. Apertura→terracotta `#BE7257`, Issues→dusty blue `#AAC1CB`, branded→warm taupe `#8A7D6D`, ads→warm stone `#D7D0C4`, pills→ink `#3C3A37`). 114 fills remapped + frame bg. No text content changed.
+- Applied uniform `cornerRadius: 6` to all 72 rectangles.
+- Aligned the BALCÓN pill column to a single left edge (local y=810); shifted each pill's matching label by the same delta so labels stayed locked to pills.
+- Left alone (would change meaning): ragged block right edges, slightly uneven row gaps.
+
+**CV PDFs — pushed live (commit `eb26a09`):**
+- Committed only `public/Marshall-Weiss-CV.pdf` + `public/Marshall-Weiss-CV-ES.pdf` (validated: PDF 1.7, single page, real EN/ES text). Deploys to production via Vercel on main.
+
+**Preview hack — kept LOCAL, deliberately NOT committed:**
+- `app/case-studies/[slug]/page.tsx` swaps to `previewClient.fetch` and `sanity/lib/previewClient.ts` (drafts perspective) so the unpublished draft can be previewed locally. Committing these would leak draft case studies to production.
+- **Before the home page case study ships publicly: publish the Sanity draft, then revert the page.tsx hack and delete `previewClient.ts`.**
+
+**Build Status:** ✓ CV PDFs pushed to main (Vercel redeploy). Case study draft still unpublished.
+
+---
+
 ## Recent Work (2026-03-29) — Session 12
 
 ### Case Study Polish, CV Redesign, Resume PDFs ✅

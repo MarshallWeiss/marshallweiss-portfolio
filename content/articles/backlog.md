@@ -60,6 +60,20 @@ Structured article projects for AI-assisted writing. Add new ideas at the top.
 - **Status**: captured
 - **Angle**: Career-wise, it might make sense. Invest 9 hours a day just learning vibecoding and building something along the way. You will learn AI and maybe make a business. Present a realistic plan to do this: how much money you need, how to generate passive income, etc.
 
+### What Google's Changes Mean for Publishers
+
+- **Added**: 2026-06-13
+- **Status**: captured
+- **Source**: Home page redesign case study session
+- **Angle**: First-hand account of how changes to Google Discover in Europe (favoring individual creators and YouTubers over media outlets) and the rise of AI search are collapsing referral traffic for newspapers. The forced pivot toward direct reader relationships, the home page as the new anchor, and subscriptions over volume. Grounded in the El Confidencial redesign — these forces literally drove a full home page rebuild. Personal, specific, and timely.
+
+### The New York Times Home Page Teardown
+
+- **Added**: 2026-06-13
+- **Status**: captured
+- **Source**: Home page redesign case study session
+- **Angle**: The in-depth NYT analysis I did that shaped the El Confidencial redesign. Why the two-column, modular, feed-based architecture works; why print-era sections no longer map to how people actually read; how relevance beats taxonomy. A design-thinking teardown with a clear point of view.
+
 ---
 
 *Article-worthy ideas from `/idea` are automatically cross-posted here.*
