@@ -6,6 +6,36 @@ Session context for continuing work on this project.
 
 `main`
 
+## Recent Work (2026-06-14) — Session 14
+
+### Coded animated diagrams for the Home Page Redesign case study ✅
+**Built three coded, on-brand animations for the home-page-redesign case study, wired Sanity placement, fixed a Studio crash, and shipped to production.**
+
+**New AnimatedDiagram variants** (block type `animatedDiagram`, routed in `BlockRenderer`, variants listed in `caseStudy` schema, registered in the `VARIANTS` map in `AnimatedDiagram.tsx`):
+- `competingNeeds` (`CompetingNeeds.tsx`) — radial orbit: six teams (Newsroom, Audience & SEO, Subscriptions, Advertising, Product design, Marketing) orbit a center hub. Final form: no outside-forces band; hub reads "North star / Subscription growth" (softer `stone-700`, small 0.08 pull); right panel "Key needs" with formal copy; opaque chips so tethers tuck underneath; starts on Product, click/hover to switch (no rest state).
+- `homepageArchitecture` (`HomepageArchitecture.tsx`) — user-scrollable schematic of the new homepage in a browser frame, stops at the footer (no loop); right-hand zone legend tracks scroll + click-to-jump; "Scroll the page" hint fades on first scroll. Zones: Opening/apertura, Issues (3/4-width feed + ad rail, 5 issues, full-width ones text-left), Highlighted sections (text-left · image · support column), Secondary sections (+ ad), More news, dark footer with "Volver arriba". Blocks mirror real EC templates (eyebrow tag → serif headline → body → meta, 3:2 images).
+- Shared page extracted to `HomepageSchematic.tsx` (forwardRef, optional `zoneRef`) — single source of truth.
+
+**Key decisions:**
+- Real EC masthead logo at `public/case-studies/home/elconfidencial-logo.svg` (inverted white in footer). Logo render uses default-show + `onError` fallback (an `onLoad`-gated approach failed when the SVG loaded from cache before React attached the handler).
+- Listing thumbnail: built a GIF-style auto-scroll thumb, then **reverted to a static thumbnail** per request — `WorkCard` coded-thumbnail override removed; `HomepageArchitectureThumb.tsx` deleted.
+- Home-page-redesign **featured first** on `/case-studies` (order clause in `app/case-studies/page.tsx`).
+- Case study page reverted from the TEMP `previewClient` back to the published `client`; `sanity/lib/previewClient.ts` deleted.
+- Sanity content placed via direct `@sanity/client` patches (MCP can't flip an array item's `_type`); both diagram blocks published. Home redesign doc id `f792e4fd-fab0-46af-80af-725bb71bcc61`.
+- Carousel gained `slideLayout: 'textRight'` (text-left/image-right; schema field already existed) — committed so it renders in production.
+
+**Bug fixes:**
+- Studio crash on the thumbnail image field: `sanity/components/ImageWithMetadata.tsx` used `<ImageInput {...props} />` (broke in current Sanity / ChunkLoadError) → switched to `props.renderDefault(props)`.
+- Cleared a stuck `thumbnailImage._upload` (`progress: 2`) on the draft that caused "Cannot apply deep operations on primitive values … path 'progress'".
+- Bare 500s on `/` and case-study page were a stale dev server / `.next` cache → resolved with clean restart (`rm -rf .next && npm run dev`).
+
+**Files Updated:**
+- New: `components/blocks/AnimatedDiagram.tsx`, `components/blocks/animated-diagrams/{CompetingNeeds,HomepageArchitecture,HomepageSchematic,SectionsToTopics,TemplateMorph}.tsx`, `public/case-studies/home/elconfidencial-logo.svg` + opening-template PNGs
+- Modified: `components/blocks/BlockRenderer.tsx`, `components/blocks/Carousel.tsx`, `components/WorkCard.tsx`, `app/case-studies/page.tsx`, `app/case-studies/[slug]/page.tsx`, `sanity/schemas/caseStudy.tsx`, `sanity/components/ImageWithMetadata.tsx`
+- Deleted: `sanity/lib/previewClient.ts`
+
+**Build Status:** ✓ `next build` clean (22 pages). Pushed to `main` across commits `636648f`, `e8a9b0d`, `ae7b0a8`; Vercel auto-deploys on push.
+
 ## Recent Work (2026-03-02) — Session 11
 
 ### El Confidencial CMS Case Study Enhancement + Skill Improvements ✅
