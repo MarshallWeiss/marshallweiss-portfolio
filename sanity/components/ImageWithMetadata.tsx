@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { ImageInput } from 'sanity'
 import { useClient } from 'sanity'
 import { Stack, Text, Card } from '@sanity/ui'
 
@@ -50,7 +49,7 @@ export function ImageWithMetadata(props: any) {
 
   return (
     <Stack space={2}>
-      <ImageInput {...props} />
+      {props.renderDefault(props)}
       {metadataText.length > 0 && (
         <Card padding={2} radius={2} tone="transparent" border>
           <Text size={1} muted>

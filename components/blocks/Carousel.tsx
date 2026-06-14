@@ -26,6 +26,7 @@ interface CarouselProps {
     aspectRatio?: 'auto' | 'square' | '4:3' | '16:9' | '3:4' | '9:16';
     objectFit?: 'cover' | 'contain';
     slidesPerView?: '1' | '2' | '3' | '4';
+    slideLayout?: 'imageTop' | 'textRight';
     verticalAlign?: 'top' | 'center' | 'bottom';
     arrowPosition?: 'overlapping' | 'outside';
     infiniteLoop?: boolean;
@@ -53,6 +54,7 @@ export default function Carousel({
     aspectRatio = 'auto',
     objectFit = 'cover',
     slidesPerView = '2',
+    slideLayout = 'imageTop',
     verticalAlign = 'center',
     arrowPosition = 'overlapping',
     infiniteLoop = false,
@@ -186,6 +188,7 @@ export default function Carousel({
                                 aspectRatio={aspectRatio}
                                 objectFit={objectFit}
                                 slidesPerView={slidesPerView}
+                                slideLayout={slideLayout}
                                 showBackground={showBackground}
                                 imageShadow={imageShadow}
                             />
@@ -249,6 +252,7 @@ export default function Carousel({
                                 aspectRatio={aspectRatio}
                                 objectFit={objectFit}
                                 slidesPerView={slidesPerView}
+                                slideLayout={slideLayout}
                                 showBackground={showBackground}
                                 imageShadow={imageShadow}
                             />
@@ -303,6 +307,7 @@ function CarouselSlide({
     aspectRatio = 'auto',
     objectFit = 'cover',
     slidesPerView = '2',
+    slideLayout = 'imageTop',
     showBackground = true,
     imageShadow = 'none',
 }: {
@@ -311,6 +316,7 @@ function CarouselSlide({
     aspectRatio?: 'auto' | 'square' | '4:3' | '16:9' | '3:4' | '9:16';
     objectFit?: 'cover' | 'contain';
     slidesPerView?: '1' | '2' | '3' | '4';
+    slideLayout?: 'imageTop' | 'textRight';
     showBackground?: boolean;
     imageShadow?: 'none' | 'small' | 'medium' | 'large';
 }) {
@@ -349,6 +355,50 @@ function CarouselSlide({
         '3': '(max-width: 768px) 70vw, 350px',
         '4': '(max-width: 768px) 60vw, 280px',
     }[slidesPerView];
+
+    // Text-left / image-right layout — full-width slide, suited to vertical images.
+    if (slideLayout === 'textRight') {
+        return (
+            <div className="carousel-slide flex-shrink-0 w-full">
+                <div className="grid grid-cols-1 md:grid-cols-[3fr_7fr] gap-8 md:gap-12 items-center">
+                    {/* Text — left on desktop, below image on mobile */}
+                    <div className="order-2 md:order-1">
+                        {slide.title && (
+                            <h4 className="text-xl md:text-2xl font-medium text-gray-900 mb-3">
+                                {slide.title}
+                            </h4>
+                        )}
+                        {slide.description && (
+                            <p className="text-gray-600 leading-relaxed">
+                                {slide.description}
+                            </p>
+                        )}
+                    </div>
+
+                    {/* Image — right on desktop, above text on mobile */}
+                    <div className="order-1 md:order-2 flex justify-center">
+                        <div
+                            className={cn(
+                                "relative rounded-lg overflow-hidden cursor-pointer group",
+                                shadowClasses[imageShadow],
+                                showBackground && "bg-gray-100"
+                            )}
+                            onClick={onOpen}
+                        >
+                            {imageProps ? (
+                                <Image
+                                    {...(imageProps as any)}
+                                    alt={slide.title || 'Carousel slide'}
+                                    className="h-auto w-auto max-h-[720px] object-contain group-hover:scale-[1.02] transition-transform duration-300"
+                                    sizes="(max-width: 768px) 90vw, 45vw"
+                                />
+                            ) : null}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className={cn("carousel-slide flex-shrink-0", slideWidthClass)}>

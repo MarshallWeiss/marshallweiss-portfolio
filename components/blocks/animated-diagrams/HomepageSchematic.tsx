@@ -8,8 +8,7 @@ import { cn } from '@/lib/utils';
  * top to bottom: the OPENING (apertura), a feed of topic ISSUES with an ad rail,
  * the highlighted SECTIONS, smaller SECONDARY sections, MORE news, and a footer.
  *
- * Used by both the interactive scroll diagram (HomepageArchitecture) and the
- * auto-scrolling listing thumbnail (HomepageArchitectureThumb). Pass `zoneRef`
+ * Used by the interactive scroll diagram (HomepageArchitecture). Pass `zoneRef`
  * to capture each zone's DOM node for scroll-position tracking.
  */
 
