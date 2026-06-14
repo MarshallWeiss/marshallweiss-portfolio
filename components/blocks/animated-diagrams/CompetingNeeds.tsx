@@ -33,83 +33,80 @@ const DEPARTMENTS: Dept[] = [
         id: 'newsroom',
         short: 'Newsroom',
         full: 'Newsroom',
-        role: "Cover any day's news",
+        role: 'Editorial priority and flexibility',
         color: '#BE7257',
         needs: [
-            'Enough article slots in the first scrolls for any news day',
-            'A layout flexible enough for any scenario',
-            'Time and guidance to adapt their workflow',
+            'Sufficient lead positions above the fold for any news cycle',
+            'Layout flexibility to reflect the day’s hierarchy',
+            'Workflow transition support and clear guidance',
         ],
     },
     {
         id: 'audience',
         short: 'Audience & SEO',
         full: 'Audience & SEO',
-        role: 'Defend traffic as Google shifts',
+        role: 'Defending search-driven reach',
         color: '#9DB29C',
         needs: [
-            'Adapt to Google sending less traffic',
-            'Capture every reader we still can before the changes land',
-            'Balance high-reach stories with hard news that earns subscriptions',
+            'Resilience to declining search referral traffic',
+            'Maximized reach while it remains available',
+            'A balance of high-traffic and subscription-driving coverage',
         ],
     },
     {
         id: 'growth',
         short: 'Subscriptions',
         full: 'Subscriptions & growth',
-        role: 'Convert readers, keep the loyal ones',
+        role: 'Conversion without churn',
         color: '#D29A57',
         needs: [
-            'Retain existing subscribers, many older and wary of change',
-            'Support in-depth articles that justify subscribing',
-            "Don't lose current users in the transition",
+            'Retention of existing subscribers through the transition',
+            'Prominence for in-depth, subscription-worthy journalism',
+            'Continuity of experience for long-standing readers',
         ],
     },
     {
         id: 'ads',
         short: 'Advertising',
         full: 'Advertising & commercial',
-        role: 'Protect and grow ad revenue',
+        role: 'Protecting commercial revenue',
         color: '#7C9CB0',
         needs: [
-            'New ad formats built for the wider 1200px page',
-            'Sell ads against vertical video',
-            'Keep every existing ad position, each one is revenue',
-            'Hold viewability by keeping readers on the page',
-            'Room to sell branded content',
+            'Support for new formats on the wider 1200px grid',
+            'Inventory for vertical-video advertising',
+            'No loss of existing placements or revenue',
+            'Strong viewability and on-page engagement',
+            'Dedicated branded-content opportunities',
         ],
     },
     {
         id: 'product',
         short: 'Product design',
         full: 'Product design',
-        role: 'Modernize the reading experience',
+        role: 'A modern, coherent experience',
         color: '#B58AA0',
         needs: [
-            "A responsive site (the old one wasn't)",
-            'More space for images',
-            'More room for video, especially vertical',
-            'A cleaner, more modern look, level with competitors',
+            'A fully responsive, multi-device experience',
+            'Greater prominence for photography',
+            'Expanded support for video, particularly vertical',
+            'A cleaner, modern design competitive with peers',
         ],
     },
     {
         id: 'marketing',
         short: 'Marketing',
         full: 'Marketing',
-        role: 'Launch on brand for the anniversary',
+        role: 'An on-brand anniversary launch',
         color: '#79809E',
         needs: [
-            'Everything aligned to the new brand',
-            'Ready for the 25th-anniversary launch event',
-            'Consistent and polished throughout',
+            'Full alignment with the new brand identity',
+            'Readiness for the 25th-anniversary launch',
+            'A consistent, polished presentation throughout',
         ],
     },
 ];
 
 const DEFAULT_INDEX = DEPARTMENTS.findIndex((d) => d.id === 'product');
-
-// Environmental pressures — context, not stakeholders. Rendered apart from the orbit.
-const FORCES = ['Google algorithm shifts', 'Falling SEO traffic', 'Google Discover changes', 'Win younger readers, keep the core'];
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const SPRING = { type: 'spring', stiffness: 120, damping: 18 } as const;
@@ -126,29 +123,14 @@ export default function CompetingNeeds() {
     const [selected, setSelected] = useState(DEFAULT_INDEX);
 
     const active = DEPARTMENTS[selected];
-    const pull = reduce ? { x: 0, y: 0 } : { x: (POS[selected].x - 50) * 0.16, y: (POS[selected].y - 50) * 0.16 };
+    const pull = reduce ? { x: 0, y: 0 } : { x: (POS[selected].x - 50) * 0.08, y: (POS[selected].y - 50) * 0.08 };
 
     return (
         <div
             className="relative overflow-hidden rounded-2xl border border-stone-900/10 bg-[#F7F5F2] p-4 md:p-5"
             role="img"
-            aria-label="Diagram: six teams — newsroom, audience and SEO, subscriptions, advertising, product design, and marketing — orbit a shared homepage goal of growing subscriptions, each pulling it toward its own needs, while outside forces like Google algorithm changes, falling SEO traffic, Google Discover, and a changing readership press on every decision."
+            aria-label="Diagram: six teams — newsroom, audience and SEO, subscriptions, advertising, product design, and marketing — orbit a shared north star of subscription growth, each pulling the homepage toward its own key needs."
         >
-            {/* Outside forces — the weather over the whole system, set apart from the orbit */}
-            <div className="mb-4">
-                <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-stone-400">Outside forces</p>
-                <div className="flex flex-wrap gap-1.5">
-                    {FORCES.map((f) => (
-                        <span
-                            key={f}
-                            className="rounded-full border border-dashed border-stone-300 bg-white/40 px-2 py-0.5 text-[10px] font-medium text-stone-500"
-                        >
-                            {f}
-                        </span>
-                    ))}
-                </div>
-            </div>
-
             <div className="grid gap-4 lg:grid-cols-5 lg:gap-6">
                 {/* Orbit stage */}
                 <div className="relative h-[300px] w-full sm:h-[340px] lg:col-span-3 lg:h-[380px]">
@@ -181,15 +163,15 @@ export default function CompetingNeeds() {
                         animate={{ x: `${pull.x}%`, y: `${pull.y}%` }}
                         transition={SPRING}
                     >
-                        <div className="flex h-[128px] w-[128px] items-center justify-center rounded-full bg-stone-900 px-5 text-center shadow-lg md:h-[140px] md:w-[140px]">
-                            <span className="text-[13px] font-semibold leading-tight text-white md:text-sm">Grow subscriptions</span>
+                        <div className="flex h-[128px] w-[128px] flex-col items-center justify-center rounded-full bg-stone-700 px-5 text-center shadow-lg md:h-[140px] md:w-[140px]">
+                            <span className="text-[8px] font-semibold uppercase tracking-[0.16em] text-white/55">North star</span>
+                            <span className="mt-1 text-[13px] font-semibold leading-tight text-white md:text-sm">Subscription growth</span>
                         </div>
                     </motion.div>
 
                     {/* Team nodes */}
                     {DEPARTMENTS.map((d, i) => {
                         const on = selected === i;
-                        const dim = !on;
                         return (
                             <button
                                 key={d.id}
@@ -202,7 +184,7 @@ export default function CompetingNeeds() {
                                 style={{ left: `${POS[i].x}%`, top: `${POS[i].y}%` }}
                             >
                                 <motion.div
-                                    animate={{ scale: on ? 1.07 : 1, opacity: dim ? 0.55 : 1 }}
+                                    animate={{ scale: on ? 1.07 : 1 }}
                                     transition={{ duration: 0.3, ease: EASE }}
                                     className={cn(
                                         'flex items-center gap-1.5 whitespace-nowrap rounded-full border bg-white px-2.5 py-1.5 shadow-sm transition-colors',
@@ -235,7 +217,7 @@ export default function CompetingNeeds() {
                             </div>
                             <p className="mt-0.5 text-[12px] text-stone-400">{active.role}</p>
 
-                            <p className="mb-2 mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-stone-400">What they asked for</p>
+                            <p className="mb-2 mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-stone-400">Key needs</p>
                             <ul className="space-y-2">
                                 {active.needs.map((n) => (
                                     <li key={n} className="flex items-start gap-2.5">
