@@ -16,6 +16,7 @@ import SideBySideImages from './SideBySideImages';
 import TextBlock from './TextBlock';
 import AnnotatedImage from './AnnotatedImage';
 import Divider from './Divider';
+import AnimatedDiagram from './AnimatedDiagram';
 import LazyBlock from './LazyBlock';
 
 interface BlockRendererProps {
@@ -54,6 +55,8 @@ function renderBlock(module: any, eager = false) {
             return <TextBlock {...module} />;
         case 'annotatedImage':
             return <AnnotatedImage {...module} />;
+        case 'animatedDiagram':
+            return <AnimatedDiagram {...module} />;
         case 'divider':
             return <Divider {...module} />;
         default:

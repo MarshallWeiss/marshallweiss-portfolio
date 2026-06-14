@@ -7,6 +7,12 @@ import { client } from '@/sanity/lib/client';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import MuxPlayer from '@mux/mux-player-react';
+import HomepageArchitectureThumb from '@/components/blocks/animated-diagrams/HomepageArchitectureThumb';
+
+// Case studies whose thumbnail is a coded animation rather than an image/video.
+const CODED_THUMBNAILS: Record<string, React.ComponentType> = {
+    'el-confidencial-home-page-redesign': HomepageArchitectureThumb,
+};
 
 export default function WorkCard({ study }: { study: any }) {
     const imageProps = useNextSanityImage(client, study.heroImage, {
@@ -18,6 +24,7 @@ export default function WorkCard({ study }: { study: any }) {
     });
 
     const isVideoThumbnail = study.thumbnailType === 'video' && study.thumbnailVideo?.asset?.playbackId;
+    const CodedThumbnail = CODED_THUMBNAILS[study.slug?.current];
 
     return (
         <Link
@@ -26,7 +33,9 @@ export default function WorkCard({ study }: { study: any }) {
             data-cursor-label="Explore"
         >
             <div className="relative aspect-[4/3] bg-gray-100 rounded-lg overflow-hidden mb-6">
-                {isVideoThumbnail ? (
+                {CodedThumbnail ? (
+                    <CodedThumbnail />
+                ) : isVideoThumbnail ? (
                     <div className="relative w-full h-full pointer-events-none">
                         <MuxPlayer
                             playbackId={study.thumbnailVideo.asset.playbackId}

@@ -596,6 +596,20 @@ export default defineType({
                             initialValue: '2',
                         }),
                         defineField({
+                            name: 'slideLayout',
+                            title: 'Slide Layout',
+                            description: 'How image and text are arranged inside each slide. "Text Left, Image Right" suits vertical images and works best with 1 slide per view.',
+                            type: 'string',
+                            options: {
+                                list: [
+                                    { title: 'Image Above, Text Below (default)', value: 'imageTop' },
+                                    { title: 'Text Left, Image Right', value: 'textRight' },
+                                ],
+                                layout: 'radio',
+                            },
+                            initialValue: 'imageTop',
+                        }),
+                        defineField({
                             name: 'verticalAlign',
                             title: 'Vertical Alignment',
                             description: 'Align images to top, center, or bottom of the carousel container.',
@@ -1343,6 +1357,87 @@ export default defineType({
                             const styleLabel = style === 'dots' ? 'Dots' : style === 'space' ? 'Space' : 'Line'
                             return {
                                 title: `── Divider (${styleLabel})`,
+                            }
+                        },
+                    },
+                }),
+                // Animated Diagram Block (coded, on-brand concept animations)
+                defineField({
+                    name: 'animatedDiagram',
+                    title: 'Animated Diagram',
+                    type: 'object',
+                    components: {
+                        input: BlockWithConverter,
+                    },
+                    fields: [
+                        defineField({
+                            name: 'variant',
+                            title: 'Diagram',
+                            description: 'Which coded animation to render.',
+                            type: 'string',
+                            options: {
+                                list: [
+                                    { title: 'Sections → Topics', value: 'sectionsToTopics' },
+                                    { title: 'Modular Template System', value: 'templateMorph' },
+                                    { title: 'Balancing Competing Needs', value: 'competingNeeds' },
+                                    { title: 'Home Page Architecture', value: 'homepageArchitecture' },
+                                ],
+                                layout: 'radio',
+                            },
+                            initialValue: 'sectionsToTopics',
+                        }),
+                        ...headingFields,
+                        defineField({ name: 'text', type: 'text', title: 'Text', rows: 6 }),
+                        ...typographyFields,
+                        defineField({
+                            name: 'layout',
+                            title: 'Layout',
+                            description: 'How to arrange the copy and the diagram.',
+                            type: 'string',
+                            options: {
+                                list: [
+                                    { title: 'Side by Side', value: 'sideBySide' },
+                                    { title: 'Full Width', value: 'fullWidth' },
+                                ],
+                                layout: 'radio',
+                            },
+                            initialValue: 'sideBySide',
+                        }),
+                        defineField({
+                            name: 'reverseLayout',
+                            title: 'Reverse Layout',
+                            description: 'Put the diagram on the left and the text on the right.',
+                            type: 'boolean',
+                            initialValue: false,
+                            hidden: ({ parent }) => parent?.layout !== 'sideBySide',
+                        }),
+                        defineField({
+                            name: 'mediaRatio',
+                            title: 'Diagram / Text Ratio',
+                            type: 'string',
+                            options: {
+                                list: [
+                                    { title: '40 / 60', value: '40/60' },
+                                    { title: '50 / 50', value: '50/50' },
+                                    { title: '60 / 40', value: '60/40' },
+                                    { title: '70 / 30', value: '70/30' },
+                                ],
+                                layout: 'radio',
+                            },
+                            initialValue: '50/50',
+                            hidden: ({ parent }) => parent?.layout !== 'sideBySide',
+                        }),
+                        ...layoutFields,
+                    ],
+                    preview: {
+                        select: {
+                            headline: 'headline',
+                            variant: 'variant',
+                        },
+                        prepare({ headline, variant }) {
+                            return {
+                                title: `✦ Animated Diagram${headline ? `: ${headline}` : ''}`,
+                                subtitle: variant,
                             }
                         },
                     },

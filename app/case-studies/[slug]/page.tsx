@@ -84,7 +84,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
     let allCaseStudies = [];
 
     try {
-        caseStudy = await client.fetch(query, { slug }, { next: { revalidate: 0 } });
+        caseStudy = await client.fetch(query, { slug });
         allCaseStudies = await client.fetch(allCaseStudiesQuery);
     } catch (error) {
         console.error("Sanity fetch error:", error);

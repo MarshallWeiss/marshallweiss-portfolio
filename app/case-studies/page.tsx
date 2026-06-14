@@ -25,7 +25,7 @@ export default async function WorkIndexPage() {
     ),
     "heroTitle": modules[0].title,
     "heroSubtitle": modules[0].subtitle
-  } | order(select(slug.current == "el-confidencial-cms-modernization" => 0, 1), _createdAt desc)`;
+  } | order(select(slug.current == "el-confidencial-home-page-redesign" => 0, 1), _createdAt desc)`;
 
     const caseStudies = await client.fetch(query);
 
