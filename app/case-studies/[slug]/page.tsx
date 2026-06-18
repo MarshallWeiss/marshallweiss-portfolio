@@ -12,8 +12,8 @@ interface PageProps {
     }>;
 }
 
-// Revalidate every hour
-export const revalidate = 3600;
+// Revalidate every 30 seconds so published changes appear quickly
+export const revalidate = 30;
 
 export async function generateStaticParams() {
     // If credentials are missing, skip generation
