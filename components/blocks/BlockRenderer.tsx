@@ -17,6 +17,7 @@ import TextBlock from './TextBlock';
 import AnnotatedImage from './AnnotatedImage';
 import Divider from './Divider';
 import AnimatedDiagram from './AnimatedDiagram';
+import SpotlightTour from './SpotlightTour';
 import LazyBlock from './LazyBlock';
 
 interface BlockRendererProps {
@@ -57,6 +58,8 @@ function renderBlock(module: any, eager = false) {
             return <AnnotatedImage {...module} />;
         case 'animatedDiagram':
             return <AnimatedDiagram {...module} />;
+        case 'spotlightTour':
+            return <SpotlightTour {...module} />;
         case 'divider':
             return <Divider {...module} />;
         default:

@@ -2,6 +2,7 @@ import { defineField, defineType } from 'sanity'
 import { MultipleImageInput } from '../components/MultipleImageInput'
 import { ImagePreview } from '../components/ImagePreview'
 import { HotspotImageInput } from '../components/HotspotImageInput'
+import { RegionImageInput } from '../components/RegionImageInput'
 import { BlockWithConverter } from '../components/BlockConverter'
 import { ImageWithMetadata } from '../components/ImageWithMetadata'
 import {
@@ -1284,6 +1285,66 @@ export default defineType({
                         },
                     },
                 }),
+                // Spotlight Tour — interactive screenshot with editor-drawn highlight regions
+                defineField({
+                    name: 'spotlightTour',
+                    title: 'Spotlight Tour',
+                    type: 'object',
+                    components: {
+                        input: RegionImageInput,
+                    },
+                    fields: [
+                        ...headingFields,
+                        defineField({ name: 'text', type: 'text', title: 'Intro text', rows: 3 }),
+                        defineField({
+                            name: 'image',
+                            type: 'image',
+                            title: 'Page screenshot',
+                            description: 'A tall, full-page screenshot. Draw highlight regions on it above.',
+                            options: { hotspot: false },
+                            components: { input: ImageWithMetadata },
+                        }),
+                        defineField({ name: 'frameLabel', type: 'string', title: 'Browser address label', description: 'Shown in the fake browser bar, e.g. elconfidencial.com' }),
+                        defineField({
+                            name: 'regions',
+                            title: 'Highlight regions',
+                            type: 'array',
+                            description: 'Best edited by drawing on the image above. Order here sets the tour order.',
+                            of: [{
+                                type: 'object',
+                                name: 'region',
+                                fields: [
+                                    defineField({ name: 'title', type: 'string', title: 'Title' }),
+                                    defineField({ name: 'description', type: 'text', title: 'Description', rows: 2 }),
+                                    defineField({ name: 'x', type: 'number', title: 'X (%)' }),
+                                    defineField({ name: 'y', type: 'number', title: 'Y (%)' }),
+                                    defineField({ name: 'w', type: 'number', title: 'Width (%)' }),
+                                    defineField({ name: 'h', type: 'number', title: 'Height (%)' }),
+                                    defineField({ name: 'fullPage', type: 'boolean', title: 'Highlight whole page', description: 'Outlines the whole page with no dimming.', initialValue: false }),
+                                ],
+                                preview: {
+                                    select: { title: 'title', fullPage: 'fullPage' },
+                                    prepare({ title, fullPage }) {
+                                        return { title: title || 'Untitled region', subtitle: fullPage ? 'Whole page' : 'Region' }
+                                    },
+                                },
+                            }],
+                        }),
+                        ...typographyFields,
+                        ...layoutFields,
+                    ],
+                    preview: {
+                        select: { headline: 'headline', regions: 'regions', media: 'image' },
+                        prepare({ headline, regions, media }) {
+                            const count = regions?.length || 0
+                            return {
+                                title: `🔦 Spotlight Tour${headline ? `: ${headline}` : ''}`,
+                                subtitle: `${count} region${count !== 1 ? 's' : ''}`,
+                                media,
+                            }
+                        },
+                    },
+                }),
                 // Divider
                 defineField({
                     name: 'divider',
@@ -1381,6 +1442,7 @@ export default defineType({
                                     { title: 'Modular Template System', value: 'templateMorph' },
                                     { title: 'Balancing Competing Needs', value: 'competingNeeds' },
                                     { title: 'Home Page Architecture', value: 'homepageArchitecture' },
+                                    { title: 'Final Result: Key Changes', value: 'homepageKeyChanges' },
                                 ],
                                 layout: 'radio',
                             },

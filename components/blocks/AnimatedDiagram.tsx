@@ -8,6 +8,7 @@ import SectionsToTopics from './animated-diagrams/SectionsToTopics';
 import TemplateMorph from './animated-diagrams/TemplateMorph';
 import CompetingNeeds from './animated-diagrams/CompetingNeeds';
 import HomepageArchitecture from './animated-diagrams/HomepageArchitecture';
+import HomepageKeyChanges from './animated-diagrams/HomepageKeyChanges';
 
 /**
  * AnimatedDiagram — a reusable block that renders a coded, on-brand animated
@@ -19,6 +20,7 @@ const VARIANTS: Record<string, React.ComponentType> = {
     templateMorph: TemplateMorph,
     competingNeeds: CompetingNeeds,
     homepageArchitecture: HomepageArchitecture,
+    homepageKeyChanges: HomepageKeyChanges,
 };
 
 interface AnimatedDiagramProps {
