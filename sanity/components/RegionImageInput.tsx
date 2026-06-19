@@ -1,9 +1,10 @@
 'use client'
 
-import React, { useState, useRef, useCallback, useEffect } from 'react'
-import { ObjectInputProps, set, useClient } from 'sanity'
+import React, { useState, useRef, useCallback } from 'react'
+import { ObjectInputProps, set } from 'sanity'
 import { Stack, Card, Text, Box, Flex, Button, TextInput, TextArea, Dialog, Switch } from '@sanity/ui'
 import { TrashIcon, AddIcon } from '@sanity/icons'
+import { urlFor } from '../lib/image'
 
 interface Region {
     _key: string
@@ -38,21 +39,16 @@ type DragState =
  */
 export function RegionImageInput(props: ObjectInputProps<RegionImageValue>) {
     const { value, onChange, renderDefault } = props
-    const client = useClient({ apiVersion: '2024-01-01' })
     const imageRef = useRef<HTMLDivElement>(null)
     const dragRef = useRef<DragState>(null)
 
-    const [imageUrl, setImageUrl] = useState<string | null>(null)
     const [addMode, setAddMode] = useState(false)
     const [draft, setDraft] = useState<Region | null>(null)
     const [editing, setEditing] = useState<Region | null>(null)
     const movedRef = useRef(false)
 
-    useEffect(() => {
-        const ref = value?.image?.asset?._ref
-        if (!ref) { setImageUrl(null); return }
-        client.fetch<string>(`*[_id == $id][0].url`, { id: ref }).then(setImageUrl)
-    }, [value?.image?.asset?._ref, client])
+    // Resolve the image URL synchronously from the asset reference.
+    const imageUrl = value?.image?.asset?._ref ? urlFor(value.image as any).width(1200).url() : null
 
     const regions = (value?.regions || []).filter(
         (rg): rg is Region => rg && typeof rg.x === 'number' && typeof rg._key === 'string'
@@ -140,11 +136,11 @@ export function RegionImageInput(props: ObjectInputProps<RegionImageValue>) {
 
     return (
         <Stack space={4}>
-            {imageUrl && (
-                <Card padding={3} radius={2} shadow={1}>
-                    <Stack space={3}>
-                        <Flex justify="space-between" align="center">
-                            <Text size={1} weight="semibold">Highlight regions</Text>
+            <Card padding={3} radius={2} shadow={1} tone={imageUrl ? 'default' : 'caution'}>
+                <Stack space={3}>
+                    <Flex justify="space-between" align="center">
+                        <Text size={1} weight="semibold">🔦 Highlight regions (visual editor)</Text>
+                        {imageUrl && (
                             <Button
                                 icon={AddIcon}
                                 text={addMode ? 'Drag a box on the image…' : 'Draw region'}
@@ -152,8 +148,15 @@ export function RegionImageInput(props: ObjectInputProps<RegionImageValue>) {
                                 mode={addMode ? 'default' : 'ghost'}
                                 onClick={() => setAddMode(m => !m)}
                             />
-                        </Flex>
+                        )}
+                    </Flex>
 
+                    {!imageUrl && (
+                        <Text size={1} muted>Upload a “Page screenshot” in the field below. Your image will then appear here and you can click “Draw region” to drag highlight boxes onto it.</Text>
+                    )}
+
+                    {imageUrl && (
+                    <Stack space={3}>
                         <Box
                             ref={imageRef}
                             style={{ position: 'relative', cursor: addMode ? 'crosshair' : 'default', userSelect: 'none' }}
@@ -213,9 +216,10 @@ export function RegionImageInput(props: ObjectInputProps<RegionImageValue>) {
                                 ))}
                             </Stack>
                         )}
-                    </Stack>
-                </Card>
-            )}
+                        </Stack>
+                    )}
+                </Stack>
+            </Card>
 
             {/* All normal fields (image upload, headline, text, regions array, layout…) */}
             {renderDefault(props)}
