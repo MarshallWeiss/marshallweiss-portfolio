@@ -8,6 +8,8 @@ interface BackgroundVideoProps {
     video?: {
         asset?: {
             playbackId?: string;
+            /** Mux source aspect ratio, e.g. "9:5". Used to size the framed view exactly. */
+            muxAspectRatio?: string;
         };
         playbackId?: string;
     };
@@ -22,6 +24,10 @@ interface BackgroundVideoProps {
     loop?: boolean;
     muted?: boolean;
     aspectRatio?: 'auto' | 'square' | '4:3' | '16:9' | '3:4' | '9:16';
+    /** Wrap the video in a browser-style frame (soft mat + rounded bordered panel), matching the Spotlight Tour. */
+    frame?: boolean;
+    /** Address shown in the fake browser bar (only when framed), e.g. elconfidencial.com */
+    frameLabel?: string;
     width?: 'contained' | 'wide' | 'full';
     background?: 'none' | 'white' | 'gray';
     spacing?: 'compact' | 'default' | 'spacious';
@@ -40,6 +46,8 @@ export default function BackgroundVideo({
     loop = true,
     muted = true,
     aspectRatio = '16:9',
+    frame = false,
+    frameLabel,
     width = 'full',
     background = 'none',
     spacing = 'default',
@@ -60,9 +68,17 @@ export default function BackgroundVideo({
         '9:16': 'aspect-[9/16]',
     }[aspectRatio];
 
-    return (
-        <BlockWrapper width={width} background={background} spacing={spacing}>
-            <section className={cn("relative w-full overflow-hidden bg-white", aspectRatioClass)}>
+    // When framed, size the box to the clip's native aspect ratio so nothing is
+    // cropped at the sides (the configured aspectRatio still drives full-bleed
+    // background videos). Falls back to the configured ratio if Mux didn't report one.
+    const nativeAspect = video?.asset?.muxAspectRatio?.replace(':', ' / ');
+    const useNativeAspect = frame && Boolean(nativeAspect);
+
+    const videoSection = (
+        <section
+            className={cn("relative w-full overflow-hidden bg-white", !useNativeAspect && aspectRatioClass)}
+            style={useNativeAspect ? { aspectRatio: nativeAspect } : undefined}
+        >
             {/* Background Video using Mux Player */}
             <MuxPlayer
                 playbackId={playbackId}
@@ -137,6 +153,24 @@ export default function BackgroundVideo({
                 </div>
             )}
         </section>
+    );
+
+    return (
+        <BlockWrapper width={width} background={background} spacing={spacing}>
+            {frame ? (
+                <div className="rounded-2xl border border-stone-900/10 bg-[#F7F5F2] p-3 md:p-5">
+                    <div className="overflow-hidden rounded-xl border border-stone-900/10 bg-white shadow-sm">
+                        {/* Fake browser chrome */}
+                        <div className="flex items-center gap-1.5 border-b border-stone-900/10 px-3 py-2">
+                            <span className="h-2 w-2 rounded-full bg-stone-300" />
+                            <span className="h-2 w-2 rounded-full bg-stone-300" />
+                            <span className="h-2 w-2 rounded-full bg-stone-300" />
+                            <div className="ml-2 flex-1 rounded bg-stone-100 px-2 py-0.5 text-[9px] text-stone-400">{frameLabel || ' '}</div>
+                        </div>
+                        {videoSection}
+                    </div>
+                </div>
+            ) : videoSection}
         </BlockWrapper>
     );
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useLayoutEffect, useRef, useState } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion, useReducedMotion, useScroll, useMotionValueEvent } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { urlFor } from '@/sanity/lib/image';
 import BlockWrapper from './BlockWrapper';
@@ -59,12 +59,42 @@ export default function SpotlightTour({
 }: Props) {
     const viewportRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
+    const trackRef = useRef<HTMLDivElement>(null);
     const reduce = useReducedMotion();
     const [active, setActive] = useState(0);
 
     const valid = regions.filter((r) => r && typeof r.x === 'number' && typeof r.y === 'number');
     const idx = Math.min(active, Math.max(0, valid.length - 1));
     const change = valid[idx];
+
+    // Scroll-driven progression: the frame pins inside a tall track and the
+    // active card advances as the track scrolls through the viewport.
+    const { scrollYProgress } = useScroll({ target: trackRef, offset: ['start start', 'end end'] });
+    useMotionValueEvent(scrollYProgress, 'change', (p) => {
+        const n = valid.length;
+        if (n === 0) return;
+        // Bias each step to the middle of its scroll segment so a card is shown
+        // for the full span rather than flipping right at the boundary.
+        const i = Math.min(n - 1, Math.max(0, Math.floor(p * n)));
+        setActive(i);
+    });
+
+    // Clicking a step/arrow scrolls the page to that step's segment; the scroll
+    // listener above then sets the active card, keeping one source of truth.
+    const scrollToStep = (i: number) => {
+        const n = valid.length;
+        const clamped = Math.min(n - 1, Math.max(0, i));
+        const track = trackRef.current;
+        if (!track || typeof window === 'undefined') {
+            setActive(clamped);
+            return;
+        }
+        const rect = track.getBoundingClientRect();
+        const trackTop = rect.top + window.scrollY;
+        const dist = rect.height - window.innerHeight;
+        const y = trackTop + ((clamped + 0.5) / n) * dist;
+        window.scrollTo({ top: Math.max(0, y), behavior: reduce ? 'auto' : 'smooth' });
+    };
 
     useLayoutEffect(() => {
         const vp = viewportRef.current;
@@ -84,22 +114,22 @@ export default function SpotlightTour({
     const imgUrl = image ? urlFor(image).width(1400).quality(85).url() : null;
     if (!imgUrl || valid.length === 0) return null;
 
-    const go = (i: number) => setActive((i + valid.length) % valid.length);
     const color = COLORS[idx % COLORS.length];
     const isFrame = !!change.fullPage;
 
     return (
         <BlockWrapper width={width} background={background} spacing={spacing}>
-            {(headline || subheading || text) && (
-                <div className={cn('mb-8', textAlign === 'center' && 'text-center')}>
-                    <BlockHeading headline={headline} subheading={subheading} headlineSize={headlineSize} textAlign={textAlign} />
-                    {text && (
-                        <p className={cn('whitespace-pre-wrap leading-relaxed text-base md:text-lg text-gray-600 max-w-3xl', textAlign === 'center' && 'mx-auto md:text-center')}>{text}</p>
-                    )}
-                </div>
-            )}
-
-            <div className="relative overflow-hidden rounded-2xl border border-stone-900/10 bg-[#F7F5F2] p-4 md:p-5">
+            <div ref={trackRef} className="relative" style={{ height: `${Math.max(valid.length, 1) * 70}vh` }}>
+              <div className="sticky top-0 flex min-h-screen flex-col justify-center">
+                {(headline || subheading || text) && (
+                    <div className={cn('mb-6', textAlign === 'center' && 'text-center')}>
+                        <BlockHeading headline={headline} subheading={subheading} headlineSize={headlineSize} textAlign={textAlign} />
+                        {text && (
+                            <p className={cn('whitespace-pre-wrap leading-relaxed text-base md:text-lg text-gray-600 max-w-3xl', textAlign === 'center' && 'mx-auto md:text-center')}>{text}</p>
+                        )}
+                    </div>
+                )}
+                <div className="relative w-full overflow-hidden rounded-2xl border border-stone-900/10 bg-[#F7F5F2] p-4 md:p-5">
                 <div className="grid gap-4 lg:grid-cols-12 lg:gap-6">
                     {/* Browser frame */}
                     <div className="lg:col-span-9">
@@ -113,7 +143,7 @@ export default function SpotlightTour({
                             <div className="relative">
                                 <div
                                     ref={viewportRef}
-                                    className="h-[320px] overflow-auto overscroll-contain bg-white [scrollbar-width:thin] sm:h-[380px] lg:h-[460px]"
+                                    className="h-[400px] overflow-hidden bg-white sm:h-[480px] lg:h-[600px]"
                                 >
                                     <div ref={contentRef} className="relative">
                                         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -150,7 +180,7 @@ export default function SpotlightTour({
                                         <button
                                             type="button"
                                             aria-current={on}
-                                            onClick={() => setActive(i)}
+                                            onClick={() => scrollToStep(i)}
                                             className={cn('flex w-full items-start gap-2.5 rounded-lg border p-2.5 text-left transition-colors', on ? 'border-transparent bg-white shadow-sm' : 'border-transparent hover:bg-white/50')}
                                         >
                                             <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full text-[10px] font-semibold transition-colors" style={on ? { backgroundColor: cc, color: 'white' } : { backgroundColor: `${cc}26`, color: '#57534e' }}>{i + 1}</span>
@@ -166,16 +196,18 @@ export default function SpotlightTour({
                             })}
                         </ol>
                         <div className="mt-3 flex items-center justify-between">
-                            <button type="button" onClick={() => go(idx - 1)} className="rounded-md px-2 py-1 text-[11px] font-medium text-stone-500 transition-colors hover:bg-white hover:text-stone-800">← Prev</button>
+                            <button type="button" onClick={() => scrollToStep(idx - 1)} className="rounded-md px-2 py-1 text-[11px] font-medium text-stone-500 transition-colors hover:bg-white hover:text-stone-800">← Prev</button>
                             <div className="flex items-center gap-1.5">
                                 {valid.map((c, i) => (
-                                    <button key={c._key || i} type="button" aria-label={c.title || `Region ${i + 1}`} onClick={() => setActive(i)} className="h-1.5 rounded-full transition-all" style={{ width: i === idx ? 16 : 6, backgroundColor: i === idx ? COLORS[i % COLORS.length] : '#d6d3d1' }} />
+                                    <button key={c._key || i} type="button" aria-label={c.title || `Region ${i + 1}`} onClick={() => scrollToStep(i)} className="h-1.5 rounded-full transition-all" style={{ width: i === idx ? 16 : 6, backgroundColor: i === idx ? COLORS[i % COLORS.length] : '#d6d3d1' }} />
                                 ))}
                             </div>
-                            <button type="button" onClick={() => go(idx + 1)} className="rounded-md px-2 py-1 text-[11px] font-medium text-stone-500 transition-colors hover:bg-white hover:text-stone-800">Next →</button>
+                            <button type="button" onClick={() => scrollToStep(idx + 1)} className="rounded-md px-2 py-1 text-[11px] font-medium text-stone-500 transition-colors hover:bg-white hover:text-stone-800">Next →</button>
                         </div>
                     </div>
                 </div>
+                </div>
+              </div>
             </div>
         </BlockWrapper>
     );

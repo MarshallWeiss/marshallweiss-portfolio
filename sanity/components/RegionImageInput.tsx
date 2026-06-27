@@ -24,6 +24,10 @@ interface RegionImageValue {
 
 const clamp = (n: number, lo = 0, hi = 100) => Math.max(lo, Math.min(hi, n))
 const r1 = (n: number) => Math.round(n * 10) / 10
+// A region's x/y/w/h can be transiently undefined while editing a number field
+// (e.g. stepping with the arrows clears the value). Treat those as 0 so the
+// editor never crashes on render or while dragging.
+const num = (v: number | undefined) => (typeof v === 'number' && !isNaN(v) ? v : 0)
 
 type DragState =
     | { mode: 'draw'; startX: number; startY: number }
@@ -75,7 +79,7 @@ export function RegionImageInput(props: ObjectInputProps<RegionImageValue>) {
         e.stopPropagation()
         movedRef.current = false
         const p = pct(e)
-        dragRef.current = { mode: 'move', key: rg._key, offX: p.x - rg.x, offY: p.y - rg.y }
+        dragRef.current = { mode: 'move', key: rg._key, offX: p.x - num(rg.x), offY: p.y - num(rg.y) }
     }, [])
 
     const onHandleMouseDown = useCallback((e: React.MouseEvent, rg: Region) => {
@@ -99,11 +103,11 @@ export function RegionImageInput(props: ObjectInputProps<RegionImageValue>) {
         } else if (d.mode === 'move') {
             movedRef.current = true
             writeRegions(regions.map(rg => rg._key === d.key
-                ? { ...rg, x: r1(clamp(p.x - d.offX, 0, 100 - rg.w)), y: r1(clamp(p.y - d.offY, 0, 100 - rg.h)) }
+                ? { ...rg, x: r1(clamp(p.x - d.offX, 0, 100 - num(rg.w))), y: r1(clamp(p.y - d.offY, 0, 100 - num(rg.h))) }
                 : rg))
         } else if (d.mode === 'resize') {
             writeRegions(regions.map(rg => rg._key === d.key
-                ? { ...rg, w: r1(clamp(p.x - rg.x, 1, 100 - rg.x)), h: r1(clamp(p.y - rg.y, 1, 100 - rg.y)) }
+                ? { ...rg, w: r1(clamp(p.x - num(rg.x), 1, 100 - num(rg.x))), h: r1(clamp(p.y - num(rg.y), 1, 100 - num(rg.y))) }
                 : rg))
         }
     }, [regions, writeRegions])
@@ -176,7 +180,7 @@ export function RegionImageInput(props: ObjectInputProps<RegionImageValue>) {
                                         onMouseDown={(e) => onRegionMouseDown(e, rg)}
                                         onClick={(e) => { e.stopPropagation(); if (!movedRef.current) setEditing(rg) }}
                                         style={{
-                                            position: 'absolute', left: `${rg.x}%`, top: `${rg.y}%`, width: `${rg.w}%`, height: `${rg.h}%`,
+                                            position: 'absolute', left: `${num(rg.x)}%`, top: `${num(rg.y)}%`, width: `${num(rg.w)}%`, height: `${num(rg.h)}%`,
                                             border: `2px solid ${color}`, background: `${color}22`, borderRadius: 4,
                                             cursor: 'move', boxSizing: 'border-box', zIndex: 2,
                                         }}
@@ -208,7 +212,7 @@ export function RegionImageInput(props: ObjectInputProps<RegionImageValue>) {
                                             <div style={{ width: 20, height: 20, borderRadius: 4, background: COLORS[i % COLORS.length], color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 10, fontWeight: 700 }}>{i + 1}</div>
                                             <Box flex={1}>
                                                 <Text size={1} weight="medium">{rg.title || 'Untitled'}</Text>
-                                                <Text size={0} muted>{rg.fullPage ? 'Whole page' : `${rg.x.toFixed(0)},${rg.y.toFixed(0)} · ${rg.w.toFixed(0)}×${rg.h.toFixed(0)}`}</Text>
+                                                <Text size={0} muted>{rg.fullPage ? 'Whole page' : `${num(rg.x).toFixed(0)},${num(rg.y).toFixed(0)} · ${num(rg.w).toFixed(0)}×${num(rg.h).toFixed(0)}`}</Text>
                                             </Box>
                                             <Button icon={TrashIcon} mode="bleed" tone="critical" onClick={(e) => { e.stopPropagation(); deleteRegion(rg._key) }} />
                                         </Flex>

@@ -931,6 +931,20 @@ export default defineType({
                             initialValue: true
                         }),
                         aspectRatioField,
+                        defineField({
+                            name: 'frame',
+                            type: 'boolean',
+                            title: 'Browser-style frame',
+                            description: 'Wrap the video in a soft mat with a rounded, bordered panel plus a fake browser bar (matches the Spotlight Tour).',
+                            initialValue: false,
+                        }),
+                        defineField({
+                            name: 'frameLabel',
+                            type: 'string',
+                            title: 'Browser address label',
+                            description: 'Shown in the fake browser bar, e.g. elconfidencial.com. Crop the recording’s own browser bar off the top before uploading.',
+                            hidden: ({ parent }) => !parent?.frame,
+                        }),
                         ...layoutFields,
                     ],
                     preview: {

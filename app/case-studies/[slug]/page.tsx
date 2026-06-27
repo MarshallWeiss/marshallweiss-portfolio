@@ -45,7 +45,8 @@ export default async function CaseStudyPage({ params }: PageProps) {
                     asset->{
                         playbackId,
                         assetId,
-                        status
+                        status,
+                        "muxAspectRatio": data.aspect_ratio
                     }
                 }
             },
