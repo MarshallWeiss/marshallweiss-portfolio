@@ -16,7 +16,8 @@ export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <nav
+    <>
+      <nav
       className="sticky top-0 z-50 backdrop-blur-sm border-b border-stone-900/10 transition-[background-color] duration-500 ease-in-out"
       style={{ backgroundColor: 'color-mix(in srgb, var(--page-bg) 80%, transparent)' }}
     >
@@ -69,30 +70,34 @@ export default function Navigation() {
             </svg>
           </button>
         </div>
-
-        {/* Mobile Navigation */}
-        {isMobileMenuOpen && (
-          <div className="md:hidden pb-4 space-y-2">
-            {navItems.map((item) => {
-              const isActive = pathname === item.path;
-              return (
-                <Link
-                  key={item.path}
-                  href={item.path}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className={`block px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                    isActive
-                      ? 'text-stone-700 bg-stone-100'
-                      : 'text-stone-500 hover:text-stone-700 hover:bg-stone-50'
-                  }`}
-                >
-                  {item.name}
-                </Link>
-              );
-            })}
-          </div>
-        )}
       </div>
     </nav>
+
+      {/* Mobile Navigation */}
+      {isMobileMenuOpen && (
+        <div
+          className="md:hidden fixed top-16 left-0 right-0 z-40 px-4 sm:px-6 py-4 space-y-2 border-b border-stone-900/10 backdrop-blur-md shadow-lg shadow-stone-900/10"
+          style={{ backgroundColor: 'color-mix(in srgb, var(--page-bg) 60%, transparent)' }}
+        >
+          {navItems.map((item) => {
+            const isActive = pathname === item.path;
+            return (
+              <Link
+                key={item.path}
+                href={item.path}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`block px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                  isActive
+                    ? 'text-stone-700 bg-stone-100'
+                    : 'text-stone-500 hover:text-stone-700 hover:bg-stone-50'
+                }`}
+              >
+                {item.name}
+              </Link>
+            );
+          })}
+        </div>
+      )}
+    </>
   );
 }

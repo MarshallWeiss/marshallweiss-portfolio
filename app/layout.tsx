@@ -33,11 +33,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${instrumentSans.variable} ${rightSlab.variable}`}>
       <Script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async />
-      <body className="font-sans cursor-none">
+      <body className="font-sans cursor-none min-h-screen flex flex-col">
         <PageBackground />
         <CustomCursor />
         <Navigation />
-        <main>{children}</main>
+        <main className="flex-1 flex flex-col">{children}</main>
         <Footer />
       </body>
     </html>

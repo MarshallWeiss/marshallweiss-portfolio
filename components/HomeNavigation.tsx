@@ -40,7 +40,7 @@ export default function HomeNavigation({ sections }: HomeNavigationProps) {
 
   return (
     <div
-      className="flex flex-col gap-6 w-[283px] relative"
+      className="flex flex-col gap-4 lg:gap-6 w-full lg:w-[283px] relative"
       onMouseMove={handleMouseMove}
     >
       {sections.map((section, index) => {
@@ -51,7 +51,7 @@ export default function HomeNavigation({ sections }: HomeNavigationProps) {
           <div key={section.path} className="relative">
             <Link
               href={section.path}
-              className={`group flex items-center justify-between h-[83px] ${
+              className={`group flex items-center justify-between h-[76px] lg:h-[83px] ${
                 index > 0 ? 'border-t border-gray-200 pt-px' : ''
               }`}
               onMouseEnter={() => handleMouseEnter(section.name)}
