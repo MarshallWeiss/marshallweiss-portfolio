@@ -23,17 +23,6 @@
       "readingTime": 15
     },
     {
-      "id": "complete-guide-ai-assisted-development",
-      "title": "The Complete Guide to AI-Assisted Development: A Spec-Driven Approach",
-      "description": "A comprehensive, documentation-first system for building production-quality software with AI coding assistants. Learn the workflows, tools, and patterns that separate successful AI-assisted projects from failed experiments.",
-      "date": "2026-02-09",
-      "slug": "complete-guide-ai-assisted-development",
-      "image": "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=400&h=400&fit=crop",
-      "stage": "harvesting",
-      "category": "AI & Development",
-      "readingTime": 30
-    },
-    {
       "id": "ai-first-product-development",
       "title": "Rebuilding Product Development with AI at the Center",
       "description": "How we're transforming design-to-development workflows at El Confidencial by making AI the operating system, not just another tool.",

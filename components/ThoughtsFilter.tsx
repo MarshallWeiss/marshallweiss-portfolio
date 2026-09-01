@@ -20,23 +20,28 @@ interface ThoughtsFilterProps {
   curatedArticles?: CuratedArticle[];
 }
 
+// Temporarily hide the "Mine" tab. Flip to true to bring it back.
+const SHOW_MINE = false;
+
 export default function ThoughtsFilter({ items, curatedArticles = [] }: ThoughtsFilterProps) {
-  const [activeTab, setActiveTab] = useState<'mine' | 'others'>('mine');
+  const [activeTab, setActiveTab] = useState<'mine' | 'others'>(SHOW_MINE ? 'mine' : 'others');
 
   return (
     <div>
       <h1 className="font-display text-4xl text-stone-700 mb-8">Thoughts</h1>
       <div className="flex gap-6 mb-8 border-b border-stone-900/10">
-        <button
-          onClick={() => setActiveTab('mine')}
-          className={`pb-3 text-sm font-medium transition-colors ${
-            activeTab === 'mine'
-              ? 'text-gray-900 border-b-2 border-gray-900'
-              : 'text-gray-600 hover:text-gray-600'
-          }`}
-        >
-          Mine
-        </button>
+        {SHOW_MINE && (
+          <button
+            onClick={() => setActiveTab('mine')}
+            className={`pb-3 text-sm font-medium transition-colors ${
+              activeTab === 'mine'
+                ? 'text-gray-900 border-b-2 border-gray-900'
+                : 'text-gray-600 hover:text-gray-600'
+            }`}
+          >
+            Mine
+          </button>
+        )}
         <button
           onClick={() => setActiveTab('others')}
           className={`pb-3 text-sm font-medium transition-colors ${
@@ -45,7 +50,7 @@ export default function ThoughtsFilter({ items, curatedArticles = [] }: Thoughts
               : 'text-gray-600 hover:text-gray-600'
           }`}
         >
-          Others
+          Reading
         </button>
       </div>
 
