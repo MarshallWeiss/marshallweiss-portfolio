@@ -20,8 +20,8 @@ interface ThoughtsFilterProps {
   curatedArticles?: CuratedArticle[];
 }
 
-// Temporarily hide the "Mine" tab. Flip to true to bring it back.
-const SHOW_MINE = false;
+// Set to false to hide the "Mine" tab.
+const SHOW_MINE = true;
 
 export default function ThoughtsFilter({ items, curatedArticles = [] }: ThoughtsFilterProps) {
   const [activeTab, setActiveTab] = useState<'mine' | 'others'>(SHOW_MINE ? 'mine' : 'others');
