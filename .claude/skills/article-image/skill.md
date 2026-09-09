@@ -1,54 +1,43 @@
 # Article Image Generator
 
-Generate thumbnail images for articles that don't have them yet.
+Generate the illustration set for one or all articles in `data/thoughts.json`.
 
 ## Usage
 
 ```
-/article-image
+/article-image            # every article
+/article-image <slug>     # one article
 ```
 
-## What This Skill Does
+## What this skill does
 
-Scans `data/thoughts.json` for articles missing images and generates minimalist, concrete-style thumbnails.
+Runs the seeded illustration script in `scripts/article-images.mjs`. Each article gets a "page schematic" in the site palette: a modular block grid, a few tinted blocks, one or two ink lead blocks, hairline type, paper grain, cropped at the edges. The slug is the seed, so the same article always renders the same composition and the whole set reads as one system.
+
+Outputs, per article:
+
+- `public/images/thoughts/<slug>.png` at 800x800, used for list cards and the home preview
+- `public/images/thoughts/<slug>-og.png` at 1200x630, used as the Open Graph image
+
+The script also writes the thumbnail path back into `data/thoughts.json` under `image`.
 
 ## Process
 
-1. **Read thoughts.json** - Find articles without `image` field
-2. **Generate images** - Create minimalist thumbnails using one of these approaches:
-   - **Option A (Recommended)**: Use Unsplash API with concrete/minimalist search terms based on article category
-   - **Option B**: If image generation MCP is available, use it with prompts like:
-     - "Abstract minimalist geometric shapes, concrete brutalist style, muted colors, simple composition"
-     - "Minimalist design poster, concrete texture, simple shapes, neutral palette"
-3. **Image style guidelines**:
-   - Concrete/brutalist aesthetic
-   - Muted color palette (grays, beiges, minimal accent colors)
-   - Abstract geometric shapes or minimal photography
-   - Professional, design-forward look
-   - 400x400px minimum
-4. **Update thoughts.json** - Add image URLs to articles
-5. **Report** - Show which articles were updated
+1. Run the script:
 
-## Image URL Format
+   ```bash
+   npm run images:articles            # all, skips files that already exist
+   npm run images:articles -- <slug>  # one article
+   FORCE=1 npm run images:articles    # regenerate everything
+   ```
 
-Use Unsplash URLs with specific parameters:
-```
-https://images.unsplash.com/photo-{ID}?w=400&h=400&fit=crop
-```
+2. Open the generated PNGs and check them. If a composition is weak, there is no per-image tweaking: change the slug seed offset or the palette rules in the script, then regenerate with `FORCE=1`.
+3. Report which files were written.
 
-## Categories → Image Themes
+## Accent color
 
-- **AI & Development**: Abstract tech, geometric patterns, circuits, minimal workspace
-- **Design**: Concrete architecture, minimalist compositions, brutalist buildings
-- **Product**: Clean product photography, simple objects, minimal staging
-- **Default**: Abstract geometric shapes, concrete textures
+The tint comes from the article's `category`. To override, add `"accent": "green" | "tan" | "lavender" | "ochre"` to the article entry in `thoughts.json` and regenerate that slug with `FORCE=1`.
 
-## Example Unsplash Search Terms
+## Do not
 
-- AI & Development: "minimalist technology", "abstract circuit", "geometric tech"
-- Design: "brutalist architecture", "concrete building", "minimalist design"
-- Product: "minimalist product", "simple object", "clean workspace"
-
-## Output
-
-Report which articles were updated with images and their new URLs.
+- Do not fall back to Unsplash or any stock photography. Consistency is the point.
+- Do not hand-edit the PNGs. Change the script and regenerate.
