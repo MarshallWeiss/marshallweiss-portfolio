@@ -85,13 +85,6 @@ export default async function Home() {
             />
           ))}
         </div>
-        <div className="work-footnote">
-          <span>From the newsroom to the reader.</span>
-          <p>
-            Editorial tools, reader experiences, subscription flows, and the
-            systems that hold them together.
-          </p>
-        </div>
       </section>
       <section className="experiment-section">
         <div className="portfolio-container experiment-grid">

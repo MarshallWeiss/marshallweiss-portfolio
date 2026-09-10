@@ -286,22 +286,9 @@
   color: #68716c;
   max-width: 460px;
 }
-.work-footnote {
-  display: grid;
-  grid-template-columns: 1.16fr 1fr;
-  gap: 42px;
-  padding: 58px 0 82px;
-  align-items: start;
-}
-.work-footnote > span {
-  font-family: var(--font-right-slab);
-  font-size: 21px;
-}
-.work-footnote p {
-  font-size: 14px;
-  line-height: 1.6;
-  color: var(--portfolio-muted);
-  max-width: 350px;
+/* The work grid used to be spaced off the next section by a footnote block. */
+.selected-section {
+  padding-bottom: 100px;
 }
 .experiment-section {
   background: #283b35;
@@ -983,15 +970,8 @@
   .project-caption p {
     font-size: 14px;
   }
-  .work-footnote {
-    display: block;
-    padding-block: 40px 48px;
-  }
-  .work-footnote > span {
-    font-size: 21px;
-  }
-  .work-footnote p {
-    margin-top: 12px;
+  .selected-section {
+    padding-bottom: 56px;
   }
   .experiment-grid {
     grid-template-columns: 1fr;
