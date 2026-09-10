@@ -63,14 +63,14 @@ export default function AboutPage() {
                 <a
                   href="/Marshall-Weiss-CV.pdf"
                   download
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--portfolio-blue)] text-white text-sm font-medium rounded-lg hover:bg-[#263e5c] transition-colors"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--portfolio-blue)] text-white text-sm font-medium rounded-[var(--portfolio-button-radius)] hover:bg-[#263e5c] transition-colors"
                 >
                   🇺🇸 Download CV
                 </a>
                 <a
                   href="/Marshall-Weiss-CV-ES.pdf"
                   download
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--portfolio-blue)] text-white text-sm font-medium rounded-lg hover:bg-[#263e5c] transition-colors"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--portfolio-blue)] text-white text-sm font-medium rounded-[var(--portfolio-button-radius)] hover:bg-[#263e5c] transition-colors"
                 >
                   🇪🇸 Descargar CV
                 </a>

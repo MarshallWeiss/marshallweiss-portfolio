@@ -3,6 +3,8 @@
   --portfolio-muted: #68716c;
   --portfolio-blue: #354f70;
   --portfolio-rule: #d8dcd5;
+  /* One shape for every button on the site. */
+  --portfolio-button-radius: 4px;
 }
 .portfolio-container {
   width: min(1320px, calc(100% - 112px));
@@ -65,7 +67,7 @@
   gap: 12px;
   margin-left: 18px;
   border: 1px solid #b8beb5;
-  border-radius: 30px;
+  border-radius: var(--portfolio-button-radius);
   padding: 10px 18px;
 }
 .mobile-toggle {
@@ -353,7 +355,7 @@
   justify-content: center;
   gap: 22px;
   padding: 15px 22px;
-  border-radius: 4px;
+  border-radius: var(--portfolio-button-radius);
   font-size: 14px;
   font-weight: 500;
 }
