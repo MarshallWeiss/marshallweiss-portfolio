@@ -1,91 +1,82 @@
 ---
 title: "What I Learned Rebuilding My Portfolio in Claude Code"
-description: "A product designer's honest retrospective on leaving Squarespace behind and building a portfolio entirely with AI. What worked, what didn't, and the unexpected thing that happened along the way."
+description: "I wanted to make big changes with AI and still upload a video or edit a caption by hand. Getting both took a CMS, a lot of mockups, and more time than I expected."
 date: "2026-02-20"
 slug: "rebuilding-portfolio-in-claude-code"
 tags: ["AI", "Claude Code", "Portfolio", "Product Design", "Spec-Driven Development"]
-readingTime: "7 min read"
+readingTime: "6 min read"
 ---
 
 # What I Learned Rebuilding My Portfolio in Claude Code
 
-## Why I Left Squarespace
+I wanted a portfolio I could experiment with. If I wanted to change the navigation or reorganize a whole section, I wanted to be able to work through that with AI. If I just wanted to upload a photograph, add a video, or change some text, I wanted to do it myself.
 
-My Squarespace portfolio worked fine for static case studies. Then I tried uploading high-resolution video work and hit the ceiling. Compression artifacts, limited embed options, sluggish playback. For a product designer whose work increasingly involved motion and interaction, the platform was becoming the bottleneck.
+Those are quite different ways of editing a website, and I wanted both.
 
-I could have migrated to Framer or Webflow. Both are capable tools. But switching from one constrained template system to another felt like lateral movement. I'd just be learning a different set of limitations.
+My Squarespace site was fine for static case studies, but it was getting in the way of the motion and interaction work I wanted to show. High-resolution videos meant compression artifacts, limited embed options, and sluggish playback. Moving to another site builder might have solved some of that. I also wanted more freedom to change the site itself.
 
-Claude Code offered something different: instead of learning what a tool allows, I could specify what I wanted and iterate from there. No template constraints. No feature requests to a platform that may or may not prioritize them. Just describe the thing, review the result, adjust.
+That's what led me to Claude Code. The interesting problem was how to keep that freedom without turning every small content edit into a conversation with an agent.
 
-That's what got me to try it. What I actually learned was much broader than I expected.
+## First, learn how to ask
 
-## Getting Started Was the Hardest Part
+The terminal was the first obstacle. I'm a designer; I'm used to being able to look around an interface and work out what to do. A blinking cursor didn't give me much to go on. Switching to the Claude Code extension in VS Code helped. File trees and tabs gave the work a shape I recognized, even while much of what happened inside them was new to me.
 
-I'm not going to pretend the beginning was smooth. The terminal was intimidating. I'm a designer. My tools have always had interfaces. Staring at a blinking cursor in a black window felt like showing up to a construction site in dress shoes.
+A few colleagues who were already using these tools pointed me toward the things worth learning first. `CLAUDE.md` was one: a file where I could write down the project's architecture, my preferences, and how I wanted Claude to work. Skills let me save instructions for things I did repeatedly. And I needed enough Git to understand branches, make commits, and push my work without worrying that I'd lose it.
 
-Two things made the difference. First, I switched to the Claude Code VS Code extension, which gave me a familiar environment: file trees, tabs, visual feedback. The terminal was still there, but wrapped in something I could navigate intuitively.
+Those concepts weren't especially difficult once someone explained them. Knowing to look for them was harder. There are thousands of things you could learn before building a website, and I had very little sense of which ones I actually needed to start.
 
-Second, a few colleagues who were already deep into AI-assisted development pointed me toward the concepts that actually matter. Not programming concepts. Workflow concepts:
+My first question to Claude was what to use for a portfolio with a CMS and good video hosting. It recommended Next.js, Sanity, and Mux. I went with that. I didn't compare every alternative or arrive at an independently researched technical decision. I trusted the recommendation and started building.
 
-- **CLAUDE.md**: A context file where you define how Claude should work with your project. Your preferences, your architecture decisions, your communication style. It's like onboarding a new team member, except the onboarding document is the team member's brain.
-- **Skills**: Reusable prompts for tasks you do repeatedly. Instead of explaining the same thing every session, you build it once.
-- **Git basics**: Branches, commits, pushing. Enough to save your work and not lose it. You don't need to understand git deeply, just enough to not be afraid of it.
+## I still wanted to edit things by hand
 
-None of this was particularly hard. But I wouldn't have known to look for it without someone pointing me in the right direction. That's the real barrier to entry. Not technical difficulty, but knowing which few things actually matter among the thousands of things you could learn.
+At the time, I didn't have a good way to select a component in the page and edit it directly with an inspector-style tool. The CMS was my workaround. I could define the kinds of content I needed, then upload images, add videos, and make manual edits through fields I understood.
 
-## The Approach: Replicate, Then Diverge
+Because Sanity is headless, that editing interface doesn't dictate how the website has to look. I can change what I build on the frontend while keeping a place to manage the content. That's the part I'm happy with: I retain control over both.
 
-My first question to Claude was simple: what's the best way to rebuild a portfolio site that needs a content management system and high-quality video hosting?
+Mux handles the video hosting and gives me the options I wanted for larger videos. I've been able to use the free tiers for this setup, which has made it practical to keep experimenting without adding another site-builder subscription.
 
-The answer was Sanity CMS for content management and Mux for video hosting, running on Next.js. I didn't evaluate alternatives. I didn't spend a week researching. I trusted the recommendation and started building.
+## Copy the old site before changing it
 
-The strategy was deliberately boring: replicate my existing Squarespace site block by block. Hero sections, media grids, split layouts, carousels, each one a self-contained component. No redesign, no new features. Just get to parity.
+I rebuilt the Squarespace site block by block: heroes, media grids, split layouts, carousels. Each became a component. Keeping the design familiar meant I could judge the result without also deciding what the site ought to look like.
 
-This was methodical, not magical. Each block took iteration. Some came together in minutes. Others required multiple rounds of revision to get spacing, responsiveness, and interactions right. The process looked like: describe what I want, review the output, point out what's wrong, watch it fix it. Sometimes three cycles, sometimes ten.
+That still took a while. Getting everything from Figma into the new portfolio wasn't automatic, and making the mockups was one of the slowest, more frustrating parts. Some of them are things I'd like to go back and make again. The ability to generate code didn't make preparing and presenting the work disappear.
 
-The step change came when I connected Sanity's MCP (Model Context Protocol) server to Claude Code. Suddenly, when I asked for a new content field, say a caption option on media blocks, Claude would create both the frontend component update and the CMS schema field simultaneously. The content management system and the website evolved together, in one conversation. That felt qualitatively different from anything I'd experienced with traditional tools.
+Some blocks came together in minutes. Others took three rounds of corrections, or ten. I'd describe a layout, look at what appeared, and point out where it was wrong. Spacing and responsive behavior still needed attention. Having the code appear quickly didn't make those decisions disappear.
 
-## What Was Hard
+Connecting Sanity's MCP server to Claude Code changed the process more than I expected. When I asked for a caption field on media blocks, Claude updated both the frontend component and the CMS schema in the same pass. Until then, those had felt like separate systems I needed to keep in sync. Now I could ask for a content change and see it carried through to the page.
 
-I'm not going to tell you everything was effortless, because it wasn't.
+That was one of the moments when the extra setup started to feel worthwhile.
 
-**Animations were the biggest challenge.** Static layouts are straightforward to describe. You can reference screenshots, mockups, or just say "two columns, image left, text right." Motion is a different problem. How do you describe the feel of an easing curve? The timing of a staggered entrance? I found myself reaching for words that don't quite exist, like "it should feel like it's settling, not snapping," and getting results that were close but not right. You can't easily show Claude a video reference and say "like this." This is genuinely hard, and I don't have a clean solution for it yet.
+## The awkward parts stayed awkward
 
-**The CMS UX trade-off was real.** Sanity is powerful and flexible, but it's not Squarespace. The editing experience is more raw. Fields and schemas are developer-oriented. I had to resist the urge to spend time polishing the CMS interface itself. I was supposed to be building a portfolio, not building a content management system. This is a real trade-off: you gain unlimited freedom on the frontend, but you lose the polished authoring experience that template platforms spend years refining.
+Motion was the hardest thing to communicate. A static layout gives you something to point at: two columns, image on the left, this much space between them. An animation asks you to describe a feeling over time.
 
-**Some things just took longer than expected.** Not everything that sounds simple is simple. Edge cases in responsive layouts, image optimization pipelines, deployment configuration. These are the kinds of things that don't appear in anyone's demo but eat real hours.
+I kept reaching for phrases like “it should feel like it's settling, not snapping.” The result would be close, but the easing or timing would still be off. In the workflow I was using, I couldn't easily hand over a video reference and expect it to reproduce the feel. I still don't have a tidy solution to that problem.
 
-Worth it? Yes. Squarespace gives you a polished ceiling. This gives you no ceiling at all. But the gap between those two options isn't free.
+Sanity brought a different frustration. Its flexibility was useful, but the authoring experience was less polished than Squarespace's. I was dealing with fields and schemas, and I kept having to resist polishing the CMS itself. The project was supposed to be my portfolio. It was easy to turn it into a project about the tool I used to edit my portfolio.
 
-## You're Not Just Building, You're Building How You Build
+Responsive edge cases, image optimization, and deployment configuration took time too. None of those make for an impressive demo. They still have to work.
 
-This is where the story changes direction.
+I wanted the freedom this setup gave me, and I'm glad I made the switch. But I also took on work that Squarespace had previously done for me. The CMS gave me the manual control I wanted; getting it all into shape was still a project.
 
-Somewhere in the middle of building the portfolio, I realized I was spending as much time improving my workflow as I was building the site itself. And that the workflow improvements were the more valuable output.
+## Then I built the dictation tool
 
-The clearest example: I'd been using WhisperFlow, a third-party app, for voice dictation while working. Hold a key, speak, release, and the transcribed text appears. It worked fine. But one day I thought, could I just build this myself?
+Somewhere in the middle of all this, I started spending as much time improving my workflow as building the site.
 
-Ten minutes later, I had a custom dictation system running through Hammerspoon and a local Whisper model. Hold Right Option to record, release to transcribe. Exactly the behavior I wanted, with no subscription, no external dependency, and full control over the model and configuration. The WhisperFlow app was good. Mine was mine.
+I'd been using WhisperFlow for dictation: hold a key, speak, release it, and get text. It worked. Then I wondered whether I could make my own version.
 
-That's a small example, but it illustrates something that kept happening. Anything that created friction in my workflow, I could just fix. Not "file a feature request and wait." Not "search for a plugin that kind of does what I need." Just describe the problem, build the solution, move on.
+About ten minutes later I had Hammerspoon connected to a local Whisper model. Hold Right Option to record; release it to transcribe. No dictation subscription, and control over the model and configuration. It was a small tool, but it did exactly what I wanted.
 
-This extended to everything:
+Other bits of friction started looking solvable too. I made an `/idea` skill that takes a thought and files it in the appropriate backlog, whether it's an article, an experiment, or a design concept. A `/link` skill fetches a URL's title and metadata, asks what I want to do with it, and can save a curated article or start a brainstorming session.
 
-- I built a skill that lets me capture ideas by saying `/idea` followed by a thought, and it automatically categorizes and files it in the right backlog: articles, experiments, design concepts, whatever fits.
-- I built a `/link` skill that processes any URL I share. It fetches the title and metadata, asks what I want to do with it, and either saves it as a curated article or kicks off a brainstorming session.
-- I set up research agents that can deep-dive into topics and return structured summaries.
-- I created a spitballing workflow where I develop article ideas through conversation, building up notes and outlines iteratively.
+I set up research agents to return structured summaries. I made a conversational workflow for developing article ideas into notes and outlines. These weren't things I'd set out to build when I decided the videos on my portfolio looked bad. They came from using the environment long enough to notice what I wanted it to do differently.
 
-The portfolio was supposed to be the project. Instead, it became the catalyst for building something closer to a second brain, a personalized system for capturing, developing, and acting on ideas. The site is almost a side effect.
+## What I kept
 
-## Where This Goes
+The useful part is that these pieces connect. Idea capture feeds the article workflow. The articles use the CMS I already set up for the site. The site gives the resulting work somewhere to go. I don't have to start over each time I want to try something.
 
-Each thing I build makes the next thing easier. The skills I created for idea capture feed into the article pipeline. The article pipeline uses the same CMS that powers the portfolio. The portfolio showcases the thinking that the whole system helps develop. It compounds.
+I'm particularly interested in the connection between Figma and code: designs informing what gets built, and code changes finding their way back into a design tool. As a designer, I can see how much of my current back-and-forth that could remove. It's a direction I want to explore, rather than something I've finished solving.
 
-What I'm most interested in now is the emerging connection between design tools and code. The ability to work in Figma and have those designs inform what Claude Code builds, or the reverse, seeing code changes reflected back in a design tool. That bridge is forming, and for a designer working this way, it could be the next step change.
+The portfolio did get built. But the change I notice most is in how I react to a limitation in a tool. I used to look for a setting, a plugin, or another product. Now I also ask whether I can make the small thing I need myself.
 
-But the broader point isn't about any specific tool or workflow. It's this: when you build your portfolio in an environment like Claude Code, you're not just making a website. You're establishing a platform. For the portfolio, yes, but also for every idea, project, and tool you'll want to build next. The portfolio becomes the first thing you built, not the only thing you can build.
-
-That's the difference between a template and a foundation. A template does one thing well. A foundation lets you do anything, including things you haven't thought of yet.
-
-For a designer who spent years working within the constraints of other people's tools, that shift is hard to overstate.
+Sometimes that means taking on more maintenance than I intended. Sometimes it means ten minutes and a keyboard shortcut that does exactly what I wanted. I'm still learning to tell the difference.

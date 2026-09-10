@@ -1,131 +1,82 @@
 ---
 title: "When the Designer Builds: Rethinking the Handoff at a Newsroom"
-description: "Most of my time as a product designer at El Confidencial goes to fixing what got lost between Figma and code. Here is the workflow I'm building toward, where the designer builds and the developer reviews."
+description: "At El Confidencial, I spend too much time correcting the gap between Figma and production. I want to test a workflow where I build with an agent and a developer reviews the result."
 date: "2026-02-09"
 slug: "ai-first-product-development"
 tags: ["AI", "Product Development", "Design Systems", "Workflow", "El Confidencial"]
-readingTime: "7 min read"
+readingTime: "6 min read"
 ---
 
 # When the Designer Builds: Rethinking the Handoff at a Newsroom
 
-## We spend our time on the wrong things
+At El Confidencial, a product owner writes requirements in Jira, I design in Figma, and developers build. Then we review, fix things, and ship. Our digital lab brings together design, development, product, data, marketing, and subscriptions. Sprints are organized around funnel metrics.
 
-At El Confidencial the workflow is standard. A product owner writes requirements in Jira. I design in Figma. Developers build it. We review, we ship. Sprints are organized around funnel metrics, and the design team sits in a digital lab alongside developers, product managers, data analysts, marketing, and the subscriptions team.
+On paper, it's a familiar process. In practice, most of my time goes into fixes. I review something and find that it doesn't quite match the design. I explain a spacing rule again. We track down why a component looks slightly wrong. These are small things, but there are a lot of them.
 
-Except most of my time isn't spent designing new things. It's spent on fixes. Reviews where what got built doesn't match what I designed. Explaining the same spacing rule for the third time. Chasing down why a component looks slightly off.
+Our design system is part of the problem. It was built years ago and hasn't kept pace with the work. We have MUI components styled to look like shadcn components. That arrangement reflects a real constraint: converting everything wasn't feasible. But keeping the two aligned adds work, and maintenance competes with the next ticket.
 
-Part of this is our design system, which was built years ago and never kept up. We are running MUI components skinned to look like shadcn components, which is exactly as backwards as it sounds.
+I keep coming back to the same frustration: I know what I'm trying to make, but getting it into production means someone else has to interpret it before I can see whether it works.
 
-But most of it is structural. The designer-developer handoff is a bottleneck by design. I make something in Figma. I hand it over. The developer interprets it, asks questions, I clarify, they build something almost right, and we iterate. Meanwhile the design system falls further behind, because who has time to maintain it when we're drowning in tickets.
+## What building my portfolio changed
 
-The fix isn't a better handoff. It's a different shape of work.
+I built my own portfolio by directing an agent, looking at the result, and correcting it. That put design decisions much closer to the thing they changed. I could try something in the working site, instead of waiting for a handoff and another review cycle.
 
-## Adding AI is integration. This is transformation.
+A portfolio isn't a newspaper. I don't mistake that experience for proof that the same process will work across our codebase. But it gave me a concrete version of a question I'd like to test at work: what if the designer brought working code to review?
 
-Most teams are asking which AI tool to add to their workflow. That's the wrong question. Adding Cursor or Claude Code or Copilot to the existing process is integration. The real question is what happens if AI is the workflow.
+The approach I'm interested in is spec-driven development. The specification records what the feature should do and how we'll check it. The agent builds against that document, and changes have to stay consistent with it. I've written a [separate explainer](/thoughts/spec-driven-development-for-designers) about the preparation this requires.
 
-The paradigm I'm working from is spec-driven development. In the traditional model, code is the source of truth and specs are documentation that falls out of date. Spec-driven development inverts it: the specification is the source of truth, and code is generated or verified output that has to conform to it. I've written a [separate explainer](/thoughts/spec-driven-development-for-designers) on what that means in practice.
+In the workflow I'm proposing, I would direct the implementation as well as the design. The agent would do much of the translation into code. A developer would review the result for architecture, security, performance, and the problems I don't know how to spot.
 
-For a newsroom product team, it inverts the roles:
+That changes my responsibilities too. I would need to bring something tested and reviewable, rather than assuming the developer will finish working out its behavior.
 
-- **Designers direct and build.** With an agent, a designer goes from idea to working code.
-- **AI handles translation.** Between design intent and implementation, the part that burns all the time today.
-- **Developers review and refine.** Architecture, security, performance, edge cases. Not translating Figma pixels to CSS.
+## A feature I'd use to test it
 
-This sounds radical. It is. It's also already how I built my own portfolio, so I know the shape of it from the inside.
+Today, a medium-sized feature takes us two to three weeks, with several rounds of review. I'd like to test whether we can get that down to three to five days. That's a target, not a result we've achieved.
 
-## The workflow I'm building toward
+Take a hypothetical save-article feature. The product owner asks for readers to be able to save stories for later. Before making screens, I'd want the agent to examine what's already there: any favorites or reading-list behavior, the database and API constraints, and the available design system components.
 
-Today a medium-sized feature takes two to three weeks with several review cycles. The loop looks like this:
+Then we'd work through the questions. Do saves sync across devices? Where do readers find them? Are there folders? What should happen offline or when a request fails?
 
-```
-Product owner writes the PRD
-Designer makes Figma mockups
-Handoff, developer interprets
-Development, code review
-Designer review: "that's not quite right"
-Fixes, another round
-Ship
-```
+The answers belong in a specification attached to the ticket, along with the technical approach, design decisions, test criteria, and edge cases. I want those questions settled while changing the answer is still cheap.
 
-The version I'm building toward:
+There's preparation we'd have to do before this could work reliably. Our components need proper documentation, the tokens need a consistent format, and the agent needs written guidance on when to use what. Figma's [design system guidelines documentation](https://developers.figma.com/docs/code/write-design-system-guidelines/) offers one reference for that. Existing Storybook documentation could help us get started. Connecting the agent to an undocumented library wouldn't, by itself, solve the problem.
 
-```
-Product owner writes the PRD
-Agent gathers context, edge cases, suggestions
-Designer + agent produce working code
-Automated gates: tests, security, accessibility, performance
-Developer reviews architecture and edge cases
-Ship
-```
+## Review the thing as it takes shape
 
-The target is three to five days, with fewer review cycles because problems surface early instead of at the end. Here is how a single feature moves through it.
+With that context in place, I could ask for a save button using our existing bookmark icon, persisting the article ID to the reader's saved articles, and confirming it through our notification system. It would need to work in both the article header and article cards.
 
-### Requirements, with context
+I'd expect the agent to produce the component, the data change, error handling, token-based styles, and tests. Then I'd use the live preview. Does the action work? Does the saved state survive a reload? Does it behave consistently in both places? Does it match the rest of the product?
 
-The product owner describes a feature: "Add the ability to save articles for later."
+I could correct the toast position or the save animation while looking at the implementation. That's the part of my portfolio workflow I want to bring into the newsroom: shorter distance between seeing a problem and trying a correction.
 
-Instead of jumping to design, the agent first reads the situation. Existing bookmark-like features in the codebase. How favorites and reading lists already work. Technical constraints in the database schema and API. Which design system components exist for this. Whether readers already save articles some other way.
+The proposed sequence is straightforward:
 
-Then it asks the questions a good developer would ask on day three, on day one. Should this sync across devices? Where do saved articles live? Folders? Offline support? The output is a spec document that lives in the ticket and becomes the source of truth: requirements, technical approach, design considerations, test criteria, edge cases.
+1. Agree the requirements and specification.
+2. Build and review the feature with the agent.
+3. Run tests and security, accessibility, performance, and design system checks.
+4. Have a developer review the implementation.
+5. Ship when the reviews are resolved.
 
-### The design system has to be readable first
+The checks should happen before the developer picks up the pull request. They won't catch everything, and neither will I. But the reviewer should have more to work with than an untested patch and an assurance that it looks right on my screen.
 
-Before building anything, the design system has to be legible to an agent. This is the step everyone skips.
+## The developer's review still matters
 
-For us that means finally documenting the components properly, expressing tokens in a standard format, and writing guidelines that say when to use what. Figma now publishes [guidance on writing design system guidelines](https://developers.figma.com/docs/code/write-design-system-guidelines/) for exactly this purpose, and an agent can convert existing Storybook documentation into that shape. The maintenance we never had time for becomes something the agent can help carry.
+I can evaluate the design and test the reader's flow. I can't reliably judge every architectural choice, race condition, or security problem in the code an agent produces.
 
-### The designer builds
+A developer would still need to ask whether the change fits our systems, handles errors properly, and will hold up at scale. What happens if a reader clicks repeatedly? What if requests finish out of order? Can someone else maintain it?
 
-This is where it gets interesting. I build the feature. Not in Figma. In code. But I'm not writing the code by hand. I'm directing.
+I want fewer review cycles spent correcting routine visual mismatches. I don't expect a passing test suite to remove the need for someone to understand the code.
 
-```
-Me: Create a save-article button using our existing bookmark icon component.
-On click, save the article ID to the user's saved articles table.
-Show a toast confirmation using our notification system.
-It needs to work in the article header and on article cards.
-```
+There's also the codebase we actually have. El Confidencial is a live newspaper. We can't stop publishing to rebuild it. There is fragile old code, undocumented work whose original developer has left, and third-party integrations outside our control.
 
-The agent produces the component in our patterns, the data mutation with error handling, the toast integration, styles from our tokens, and basic tests. I see a live preview and review it the way I'd review a prototype. Does it look right? Does clicking work? Does it match our other bookmark patterns?
-
-```
-Me: The toast should appear top-right, not bottom-center.
-Add a subtle animation on save.
-```
-
-It adjusts. I review again. Repeat until it's right.
-
-I'm not reviewing code quality. I'm reviewing function and design, which is what I'm good at. Code quality gets checked next.
-
-### Automated gates before any human sees it
-
-Before a developer looks at the pull request, automated checks run. Tests must pass. Security scanning must pass. Accessibility checks must pass: labels, keyboard navigation, contrast. Performance produces warnings on bundle size and query cost. And a design system check confirms the code uses approved components and tokens.
-
-Only if all of that passes does the PR reach a person.
-
-### The developer as expert reviewer
-
-The developer reviews what I can't evaluate. Does this fit our architecture, or is there a better approach? Are errors and race conditions handled? Will it hold at scale? What happens offline, or if a reader spam-clicks the button? Is it maintainable?
-
-What they're not reviewing anymore: basic functionality, design accuracy, component usage, simple bugs. I tested the first two, the gates caught the rest. Developer review becomes higher leverage, focused on hard problems.
-
-## The reality check
-
-This workflow requires designers who can tell whether code works. Not understand it deeply, but use browser dev tools, read an error message, test a flow, confirm data persisted, check responsive behavior. Some designers already can. Others would need training. That's a real constraint, not a footnote.
-
-Security is the other one. Designers don't think about injection or cross-site scripting. That's why automated scanning is non-negotiable, and why developer review stays in the loop.
-
-And there's the legacy problem. El Confidencial is a live newspaper. We can't stop and rebuild. We have old code that's fragile to touch, undocumented corners where the original developer left years ago, third-party integrations we don't fully control. That's the reality for most companies, and it means the strategy can't be "rewrite everything." It's "new features use the new workflow, old features get migrated when touched." When we have to change something old, the agent reads and explains it, writes tests before anything moves, refactors while preserving behavior, and documents it for the next person. Untouched legacy stays untouched.
+The approach would have to be incremental: try the workflow on new features, and migrate older ones when we need to touch them. Before changing an old component, have the agent explain its behavior, write tests, and preserve that behavior through the refactor. Then document what changed. A wholesale rewrite isn't a credible starting point.
 
 ## Where we actually are
 
-I want to be honest about the distance between this article and Monday morning.
+We're still experimenting with tools and building context. The design system needs work. Some developers are skeptical; some designers are interested, and others are nervous. There are reasonable concerns about code quality, responsibilities, and how much new technical knowledge a designer would need.
 
-We're not there yet. We're in early stages: experimenting with tools, building context, figuring out what works. The design system still needs documenting. Some developers are skeptical. Some designers are excited, others nervous. The biggest risk isn't technical, it's organizational. Developers who feel threatened, designers who don't want to learn new skills, managers who see the whole thing as exposure.
+Using browser tools, reading errors, testing persistence, and checking responsive behavior would have to become part of the job. Security scanning and developer review would remain necessary. None of that disappears because generating a component is fast.
 
-That's why the plan is small. One designer, one feature, a senior developer shadowing. Measure the time, the bugs caught, the review cycles. Show the numbers. Then do it again with less supervision.
+The pilot I have in mind is one designer, one feature, and a senior developer shadowing the work. We'd measure the time, the bugs caught, and the number of review cycles. Then try it again with less supervision.
 
-The direction is clear, though. This isn't about replacing developers. It's about restructuring where value gets created. Designers get closer to shipping and keep ownership of their work through implementation. Developers spend their time on systems and hard problems instead of "this should be 16px, not 18px." And the translation work that burned so many hours, the "what did the designer mean by this," is handled by the thing that's actually good at it.
-
-The teams that figure this out first won't win because they use AI. Everyone will use AI. They'll win because they rebuilt the workflow around it.
+I'd like to spend more of my week making the product better and less of it explaining the same gap between Figma and production. Building my portfolio showed me a different way to work through that gap. The next step is to find out how much of it survives contact with a newsroom.

@@ -3,50 +3,50 @@
     {
       "id": "spec-driven-development-for-designers",
       "title": "Spec-Driven Development, Explained for Designers",
-      "description": "Vibe coding is the cultural term. Spec-driven development is the discipline. What it is, what an agent needs to know about your product before it can build, and what has to be true of you.",
+      "description": "A caption field on my portfolio made the idea click: write down the change, give the agent enough context, and check what it builds against what you asked for.",
       "date": "2026-09-01",
       "slug": "spec-driven-development-for-designers",
       "image": "/images/thoughts/spec-driven-development-for-designers.png",
       "stage": "growing",
       "category": "AI & Development",
       "accent": "lavender",
-      "readingTime": 7
+      "readingTime": 6
     },
     {
       "id": "rebuilding-portfolio-in-claude-code",
       "title": "What I Learned Rebuilding My Portfolio in Claude Code",
-      "description": "A product designer's honest retrospective on leaving Squarespace behind and building a portfolio entirely with AI. What worked, what didn't, and the unexpected thing that happened along the way.",
+      "description": "I wanted better video on my portfolio. Rebuilding it led to a new CMS, a homemade dictation tool, and a lot of time spent trying to describe animations.",
       "date": "2026-02-20",
       "slug": "rebuilding-portfolio-in-claude-code",
       "image": "/images/thoughts/rebuilding-portfolio-in-claude-code.png",
       "stage": "growing",
       "category": "AI & Development",
       "accent": "ochre",
-      "readingTime": 7
+      "readingTime": 6
     },
     {
       "id": "focus-the-essential-tool-spec-driven-development",
       "title": "Focus Is the Tool: Working at an Agent's Pace",
-      "description": "Spec-driven development has a different rhythm from writing code by hand. Most productivity advice assumes you can pause. With an agent running, you can't. Here is the environment I built around that.",
+      "description": "An e-ink phone has helped me concentrate. AI makes that harder in a different way: there are suddenly far more things I can start than I can finish.",
       "date": "2026-02-12",
       "slug": "focus-the-essential-tool-spec-driven-development",
       "image": "/images/thoughts/focus-the-essential-tool-spec-driven-development.png",
       "stage": "harvesting",
       "category": "Productivity",
       "accent": "green",
-      "readingTime": 8
+      "readingTime": 5
     },
     {
       "id": "ai-first-product-development",
       "title": "When the Designer Builds: Rethinking the Handoff at a Newsroom",
-      "description": "Most of my time as a product designer at El Confidencial goes to fixing what got lost between Figma and code. Here is the workflow I'm building toward, where the designer builds and the developer reviews.",
+      "description": "At El Confidencial, I spend too much time correcting the gap between Figma and production. I want to test a workflow where I build with an agent and a developer reviews the result.",
       "date": "2026-02-09",
       "slug": "ai-first-product-development",
       "image": "/images/thoughts/ai-first-product-development.png",
       "stage": "growing",
       "category": "Product Design",
       "accent": "tan",
-      "readingTime": 7
+      "readingTime": 6
     }
   ]
 }
