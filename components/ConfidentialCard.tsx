@@ -43,22 +43,22 @@ export default function ConfidentialCard({ projects }: ConfidentialCardProps) {
     >
       <h2 className="font-display text-xl text-gray-900 mb-1">Working</h2>
       <p className="text-sm text-gray-500 mb-6">Client and day-job projects</p>
-      <div className="space-y-5">
+      <div className="space-y-4">
         {projects.length > 0 ? (
           projects.map((project) =>
             project.confidential ? (
               <div key={project.id} className="relative">
                 <div className="select-none">
-                  <h3 className="text-base font-medium text-gray-900 mb-1 blur-[6px]">
-                    {project.title}
-                  </h3>
-                  {project.company && (
-                    <p className="text-xs text-gray-500 mb-2 blur-[6px]">
-                      {project.company}
-                    </p>
-                  )}
+                  <div className="flex flex-wrap items-baseline gap-x-2 blur-[6px]">
+                    <h3 className="text-base font-medium text-gray-900">
+                      {project.title}
+                    </h3>
+                    {project.company && (
+                      <span className="text-xs text-gray-500">{project.company}</span>
+                    )}
+                  </div>
                   {project.description && (
-                    <p className="text-sm text-gray-600 leading-relaxed blur-[6px]">
+                    <p className="text-sm text-gray-600 leading-snug mt-1 blur-[6px]">
                       {project.description}
                     </p>
                   )}
@@ -66,14 +66,16 @@ export default function ConfidentialCard({ projects }: ConfidentialCardProps) {
               </div>
             ) : (
               <div key={project.id}>
-                <h3 className="text-base font-medium text-gray-900 mb-1">
-                  {project.title}
-                </h3>
-                {project.company && (
-                  <p className="text-xs text-gray-500 mb-2">{project.company}</p>
-                )}
+                <div className="flex flex-wrap items-baseline gap-x-2">
+                  <h3 className="text-base font-medium text-gray-900">
+                    {project.title}
+                  </h3>
+                  {project.company && (
+                    <span className="text-xs text-gray-500">{project.company}</span>
+                  )}
+                </div>
                 {project.description && (
-                  <p className="text-sm text-gray-600 leading-relaxed">
+                  <p className="text-sm text-gray-600 leading-snug mt-1">
                     {project.description}
                   </p>
                 )}
