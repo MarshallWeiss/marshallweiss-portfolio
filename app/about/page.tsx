@@ -54,7 +54,7 @@ export default function AboutPage() {
           <div className="space-y-12">
             {/* Header */}
             <div>
-              <h1 className="font-display text-5xl md:text-6xl text-[var(--portfolio-blue)] mb-4">Marshall Weiss</h1>
+              <h1 className="font-display text-5xl md:text-6xl text-gray-900 mb-4">Marshall Weiss</h1>
               <p className="text-lg text-gray-700">
                 <span className="font-medium">Product designer and developer working across English and Spanish, at the intersection of design, journalism, and AI.</span>{' '}
                 Passionate about amplifying the impact of socially conscious products through excellent design.
