@@ -60,46 +60,33 @@ export default function ThoughtsFilter({ items, curatedArticles = [] }: Thoughts
               <Link
                 key={item.id}
                 href={`/thoughts/${item.slug}`}
-                className="group flex h-32 border border-gray-200/60 rounded-lg overflow-hidden hover:border-gray-300 transition-colors bg-white/50"
+                className={`group grid gap-x-4 gap-y-2 p-4 border border-gray-200/60 rounded-lg overflow-hidden hover:border-gray-300 transition-colors bg-white/50 ${item.image ? 'grid-cols-[minmax(0,1fr)_88px] sm:grid-cols-[minmax(0,1fr)_112px]' : 'grid-cols-1'}`}
               >
-                <div className="flex-1 min-w-0 px-4 py-3 flex flex-col justify-between">
-                  <div>
-                    <h3 className="font-display text-xl text-gray-900 group-hover:text-gray-600 transition-colors line-clamp-2">
-                      {item.title}
-                    </h3>
-                    {item.description && (
-                      <p className="text-sm text-gray-600 mt-1 line-clamp-2">
-                        {item.description}
-                      </p>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    {item.category && (
-                      <>
-                        <span className="truncate">{item.category}</span>
-                        {item.readingTime && <span>·</span>}
-                      </>
-                    )}
-                    {item.readingTime && (
-                      <span className="flex-shrink-0">{item.readingTime} min read</span>
-                    )}
-                  </div>
-                </div>
+                <h3 className="font-display text-lg sm:text-xl text-gray-900 group-hover:text-gray-600 transition-colors self-center sm:self-start">
+                  {item.title}
+                </h3>
                 {item.image && (
-                  <div className="flex-shrink-0 w-28 sm:w-32 p-2">
-                    <div className="w-full h-full bg-gray-100 rounded overflow-hidden">
-                      <img
-                        src={item.image}
-                        alt=""
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                        onError={(e) => {
-                          (e.target as HTMLImageElement).parentElement!.parentElement!.style.display = 'none';
-                        }}
-                      />
-                    </div>
+                  <div className="col-start-2 row-start-1 sm:row-span-3 w-[88px] h-[88px] sm:w-28 sm:h-28 bg-gray-100 rounded overflow-hidden">
+                    <img
+                      src={item.image}
+                      alt=""
+                      width={800}
+                      height={800}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
                   </div>
                 )}
+                {item.description && (
+                  <p className={`text-sm text-gray-600 line-clamp-2 ${item.image ? 'col-span-2 sm:col-span-1 sm:col-start-1' : ''}`}>
+                    {item.description}
+                  </p>
+                )}
+                <div className={`flex flex-wrap items-center gap-x-2 gap-y-1 text-xs sm:text-sm text-gray-600 ${item.image ? 'col-span-2 sm:col-span-1 sm:col-start-1' : ''}`}>
+                  {item.category && <span>{item.category}</span>}
+                  {item.category && item.readingTime && <span aria-hidden="true">·</span>}
+                  {item.readingTime && <span className="whitespace-nowrap">{item.readingTime} min read</span>}
+                </div>
               </Link>
             ))
           ) : (

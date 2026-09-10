@@ -66,7 +66,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!post) return {};
   const ogImage = `/images/thoughts/${post.slug}-og.png`;
   return {
-    title: `${post.title} | Marshall Weiss`,
+    // The root layout's title template already appends the site name.
+    title: post.title,
     description: post.description,
     openGraph: {
       title: post.title,

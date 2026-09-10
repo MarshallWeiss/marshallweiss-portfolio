@@ -6,6 +6,7 @@ import { getPortfolioProjects } from '@/lib/portfolio';
 import { getFunProjects } from '@/lib/sanity-these-days';
 import thoughtsData from '@/data/thoughts.json';
 import { SHOW_PERSONAL_WRITING } from '@/lib/flags';
+import LapidariumArtwork from '@/components/LapidariumArtwork';
 
 export const revalidate = 60;
 export default async function Home() {
@@ -62,6 +63,7 @@ export default async function Home() {
             .<br />
             Also teaching at Universidad Europea.
           </p>
+          <p className="intro-detail">Fully bilingual in English and Spanish.</p>
           <Link className="text-link" href="/about">
             A little more about me <ArrowUpRight size={17} aria-hidden="true" />
           </Link>
@@ -143,34 +145,7 @@ export default async function Home() {
           className="crystal-art"
           aria-label="Explore Lapidarium, an encyclopedia of precious stones"
         >
-          <span className="crystal-art-title">Lapidarium</span>
-          <Image
-            className="mineral mineral-amethyst"
-            src="/experiments/lapidarium/amethyst.webp"
-            width={800}
-            height={800}
-            alt="Rendered amethyst crystal"
-            sizes="(max-width: 760px) 60vw, 30vw"
-          />
-          <Image
-            className="mineral mineral-malachite"
-            src="/experiments/lapidarium/malachite.webp"
-            width={800}
-            height={800}
-            alt="Rendered malachite specimen"
-            sizes="(max-width: 760px) 40vw, 22vw"
-          />
-          <Image
-            className="mineral mineral-opal"
-            src="/experiments/lapidarium/opal.webp"
-            width={800}
-            height={800}
-            alt="Rendered opal"
-            sizes="(max-width: 760px) 26vw, 15vw"
-          />
-          <span className="crystal-art-caption">
-            An encyclopedia of precious stones
-          </span>
+          <LapidariumArtwork />
         </a>
         <div className="crystal-copy">
           <span className="project-category">Independent experiment</span>
@@ -181,12 +156,12 @@ export default async function Home() {
           </h2>
           <p>
             Lapidarium is a digital encyclopedia of crystals and precious
-            stones. A place to explore their forms, properties, and the way they
-            catch the light.
+            stones. Explore the collection, compare their forms, and see how
+            each one catches the light.
           </p>
           <p className="crystal-detail">
-            Interactive 3D forms and rendered mineral turntables bring the
-            collection off the page.
+            Interactive 3D forms and rendered turntables let you examine the
+            stones from different angles.
           </p>
           <a
             href="https://lapidarium.vercel.app"
@@ -217,7 +192,7 @@ export default async function Home() {
             >
               <div className="essay-image">
                 <Image
-                  src={featured.image}
+                  src={`/images/thoughts/${featured.slug}-og.png`}
                   fill
                   alt=""
                   sizes="(max-width: 760px) 90vw, 50vw"
