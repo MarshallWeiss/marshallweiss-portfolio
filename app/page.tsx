@@ -5,6 +5,7 @@ import PortfolioProject from '@/components/PortfolioProject';
 import { getPortfolioProjects } from '@/lib/portfolio';
 import { getFunProjects } from '@/lib/sanity-these-days';
 import thoughtsData from '@/data/thoughts.json';
+import { SHOW_PERSONAL_WRITING } from '@/lib/flags';
 
 export const revalidate = 60;
 export default async function Home() {
@@ -197,6 +198,7 @@ export default async function Home() {
           </a>
         </div>
       </section>
+      {SHOW_PERSONAL_WRITING && (
       <section className="writing-section portfolio-container">
         <div className="section-intro">
           <div>
@@ -243,6 +245,7 @@ export default async function Home() {
           </div>
         </div>
       </section>
+      )}
       <section className="personal-strip portfolio-container">
         <p>There’s a person behind the pixels.</p>
         <Link className="text-link" href="/current">

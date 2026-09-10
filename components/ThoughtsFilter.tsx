@@ -20,8 +20,7 @@ interface ThoughtsFilterProps {
   curatedArticles?: CuratedArticle[];
 }
 
-// Set to false to hide the "Mine" tab.
-const SHOW_MINE = true;
+import { SHOW_PERSONAL_WRITING as SHOW_MINE } from '@/lib/flags';
 
 export default function ThoughtsFilter({ items, curatedArticles = [] }: ThoughtsFilterProps) {
   const [activeTab, setActiveTab] = useState<'mine' | 'others'>(SHOW_MINE ? 'mine' : 'others');
