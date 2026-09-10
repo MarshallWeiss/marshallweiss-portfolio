@@ -42,6 +42,73 @@ export default defineType({
             description: 'One-line description shown on the case studies listing page',
         }),
         defineField({
+            name: 'cardHeadline',
+            title: 'Card Headline',
+            type: 'string',
+            description: 'Short, punchy headline for the homepage and Work listing cards. Falls back to the title if empty.',
+        }),
+        defineField({
+            name: 'cardCategory',
+            title: 'Card Category',
+            type: 'string',
+            description: 'Small label above the card headline, e.g. "Editorial tools & AI". Falls back to "Product design" if empty.',
+        }),
+        defineField({
+            name: 'accentColor',
+            title: 'Card Accent Colour',
+            type: 'string',
+            description: 'Background tint used for the project card.',
+            options: {
+                list: [
+                    { title: 'Blue', value: 'blue' },
+                    { title: 'Sage', value: 'sage' },
+                    { title: 'Peach', value: 'peach' },
+                    { title: 'Lilac', value: 'lilac' },
+                ],
+            },
+            initialValue: 'blue',
+        }),
+        defineField({
+            name: 'cardImageFit',
+            title: 'Card Image Fit',
+            type: 'string',
+            description: 'How the card image sits in its frame. "Fit" shows the whole image; "Fill" crops to the frame from the top, which suits screenshots of an interface.',
+            options: {
+                list: [
+                    { title: 'Fit (show whole image)', value: 'contain' },
+                    { title: 'Fill (crop from top)', value: 'cover' },
+                ],
+            },
+            initialValue: 'contain',
+        }),
+        defineField({
+            name: 'displayOrder',
+            title: 'Display Order',
+            type: 'number',
+            description: 'Editorial order across the homepage, Work listing, and previous/next links. Lower numbers come first. Case studies without a value fall to the end, newest first.',
+        }),
+        defineField({
+            name: 'overviewSummary',
+            title: 'Overview — The Short Version',
+            type: 'text',
+            rows: 3,
+            description: 'Problem, ownership, and what shipped, in two or three sentences. Shown in the summary box near the top of the case study.',
+        }),
+        defineField({
+            name: 'overviewEvidence',
+            title: 'Overview — In Practice / Results',
+            type: 'text',
+            rows: 3,
+            description: 'A defensible outcome or scope statement. Keep observation windows and mixed results intact.',
+        }),
+        defineField({
+            name: 'overviewEvidenceLabel',
+            title: 'Overview — Results Heading',
+            type: 'string',
+            description: 'Heading above the results text. Defaults to "In practice".',
+            initialValue: 'In practice',
+        }),
+        defineField({
             name: 'thumbnailType',
             title: 'Thumbnail Type',
             description: 'Choose between image or video for the case studies listing page thumbnail',

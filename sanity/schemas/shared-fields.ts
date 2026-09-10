@@ -160,6 +160,13 @@ export const headingFields = [
         title: 'Subheading (optional)',
     }),
     defineField({
+        name: 'showInSectionNav',
+        title: 'Show in "On this page" nav',
+        type: 'boolean',
+        description: 'Add this headline to the section navigation at the top of the case study.',
+        initialValue: false,
+    }),
+    defineField({
         name: 'headlineSize',
         title: 'Headline Size',
         type: 'string',

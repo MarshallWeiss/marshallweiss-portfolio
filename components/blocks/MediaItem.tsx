@@ -36,13 +36,14 @@ export default function MediaItem({
     priority = false,
 }: MediaItemProps) {
     const [lightboxOpen, setLightboxOpen] = useState(false)
-    const imageProps = mediaType === 'image' && image ? useNextSanityImage(client, image, {
+    // Hooks must run unconditionally — pass null instead of skipping the call.
+    const imageProps = useNextSanityImage(client, mediaType === 'image' ? image : null, {
         imageBuilder: (imageUrlBuilder, options) => {
             return imageUrlBuilder
                 .width(Math.min(options.width || 3000, 3000))
                 .quality(95)
         }
-    }) : null
+    })
 
     // Aspect ratio classes
     const aspectRatioClasses = {

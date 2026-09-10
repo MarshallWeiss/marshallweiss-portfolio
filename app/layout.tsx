@@ -1,12 +1,12 @@
 import type { Metadata } from 'next';
 import { Instrument_Sans } from 'next/font/google';
 import localFont from 'next/font/local';
-import Script from 'next/script';
 import Navigation from '@/components/Navigation';
 import CustomCursor from '@/components/CustomCursor';
 import PageBackground from '@/components/PageBackground';
 import Footer from '@/components/Footer';
 import '../styles/globals.css';
+import '../styles/portfolio.css';
 
 const instrumentSans = Instrument_Sans({
   subsets: ['latin'],
@@ -21,8 +21,13 @@ const rightSlab = localFont({
 });
 
 export const metadata: Metadata = {
-  title: 'Marshall Weiss - Product Designer',
-  description: 'Portfolio of Marshall Weiss, product designer for El Confidencial',
+  metadataBase: new URL('https://www.marshallweiss.com'),
+  title: {
+    default: 'Marshall Weiss — Product designer & developer',
+    template: '%s — Marshall Weiss',
+  },
+  description:
+    'Product designer and developer in Madrid. Editorial tools, reader experiences, and experiments at the intersection of design, journalism, and AI.',
 };
 
 export default function RootLayout({
@@ -32,12 +37,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${instrumentSans.variable} ${rightSlab.variable}`}>
-      <Script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async />
-      <body className="font-sans cursor-none min-h-screen flex flex-col">
+      <body className="font-sans min-h-screen flex flex-col">
         <PageBackground />
         <CustomCursor />
         <Navigation />
-        <main className="flex-1 flex flex-col">{children}</main>
+        <main id="main-content" className="flex-1 flex flex-col" tabIndex={-1}>
+          {children}
+        </main>
         <Footer />
       </body>
     </html>

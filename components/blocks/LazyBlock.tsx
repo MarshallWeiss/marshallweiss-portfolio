@@ -5,11 +5,13 @@ import { motion } from 'framer-motion';
 
 interface LazyBlockProps {
   children: ReactNode;
+  id?: string;
 }
 
-export default function LazyBlock({ children }: LazyBlockProps) {
+export default function LazyBlock({ children, id }: LazyBlockProps) {
   return (
     <motion.div
+      id={id}
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-80px' }}

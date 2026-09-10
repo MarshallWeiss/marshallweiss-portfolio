@@ -1,13 +1,20 @@
 import { getCurrentlyReading, getPastBooks, getWorkProjects, getFunProjects, getDoingItems } from '@/lib/sanity-these-days';
 import ConfidentialCard from '@/components/ConfidentialCard';
 
-export const revalidate = 3600; // Revalidate every hour
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Current',
+  description: 'What I’m working on, reading, making, and doing.',
+};
+
+export const revalidate = 60;
 
 export default async function TheseDaysPage() {
   const [currentlyReading, pastBooks, workProjects, funProjects, doingItems] = await Promise.all([
     getCurrentlyReading(),
     getPastBooks(6),
-    getWorkProjects(3),
+    getWorkProjects(5),
     getFunProjects(3),
     getDoingItems(),
   ]);

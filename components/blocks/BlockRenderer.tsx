@@ -22,6 +22,8 @@ import LazyBlock from './LazyBlock';
 
 interface BlockRendererProps {
     modules: any[];
+    /** Optional summary + section nav injected after the first block. */
+    overview?: React.ReactNode;
 }
 
 /** Number of blocks to render eagerly (above the fold) */
@@ -72,7 +74,7 @@ function renderBlock(module: any, eager = false) {
     }
 }
 
-export default function BlockRenderer({ modules }: BlockRendererProps) {
+export default function BlockRenderer({ modules, overview }: BlockRendererProps) {
     if (!modules || !Array.isArray(modules)) {
         return null;
     }
@@ -99,31 +101,31 @@ export default function BlockRenderer({ modules }: BlockRendererProps) {
     return (
         <div>
             {processedModules.map((module, index) => {
-                const key = module._key || Math.random().toString(36).substring(7);
+                // Stable keys: a random key would remount the block on every render.
+                const key = module._key || `block-${index}`;
                 const isEager = index < EAGER_COUNT;
                 const block = renderBlock(module, isEager);
 
-                if (isEager) {
-                    return (
-                        <motion.div
-                            key={key}
-                            initial={{ opacity: 0, y: 40 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{
-                                duration: 0.7,
-                                delay: index * 0.2,
-                                ease: [0.25, 0.1, 0.25, 1],
-                            }}
-                        >
-                            {block}
-                        </motion.div>
-                    );
-                }
-
                 return (
-                    <LazyBlock key={key}>
-                        {block}
-                    </LazyBlock>
+                    <React.Fragment key={key}>
+                        {isEager ? (
+                            <motion.div
+                                id={`section-${key}`}
+                                initial={{ opacity: 0, y: 40 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{
+                                    duration: 0.7,
+                                    delay: index * 0.2,
+                                    ease: [0.25, 0.1, 0.25, 1],
+                                }}
+                            >
+                                {block}
+                            </motion.div>
+                        ) : (
+                            <LazyBlock id={`section-${key}`}>{block}</LazyBlock>
+                        )}
+                        {index === 0 && overview}
+                    </React.Fragment>
                 );
             })}
         </div>

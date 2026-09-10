@@ -4,7 +4,9 @@ import { client } from '@/sanity/lib/client';
 import BlockRenderer from '@/components/blocks/BlockRenderer';
 import { groq } from 'next-sanity';
 import Link from 'next/link';
-import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+import type { Metadata } from 'next';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { resolveProjectStory, sortProjects } from '@/lib/portfolio';
 
 interface PageProps {
     params: Promise<{
@@ -14,6 +16,23 @@ interface PageProps {
 
 // Revalidate every 30 seconds so published changes appear quickly
 export const revalidate = 30;
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+    const { slug } = await params;
+    try {
+        const study = await client.fetch(
+            groq`*[_type == "caseStudy" && slug.current == $slug][0]{ title, subtitle, overviewSummary }`,
+            { slug }
+        );
+        if (!study) return {};
+        return {
+            title: study.title,
+            description: study.overviewSummary || study.subtitle,
+        };
+    } catch {
+        return {};
+    }
+}
 
 export async function generateStaticParams() {
     // If credentials are missing, skip generation
@@ -76,17 +95,18 @@ export default async function CaseStudyPage({ params }: PageProps) {
     }`;
 
     // Query to get all case studies for navigation
-    const allCaseStudiesQuery = groq`*[_type == "caseStudy" && defined(slug.current)] | order(select(slug.current == "el-confidencial-cms-modernization" => 0, 1), _createdAt desc) {
+    const allCaseStudiesQuery = groq`*[_type == "caseStudy" && defined(slug.current)] | order(_createdAt desc) {
         title,
+        displayOrder,
         "slug": slug.current
     }`;
 
     let caseStudy = null;
-    let allCaseStudies = [];
+    let allCaseStudies: { title: string; slug: string; displayOrder?: number }[] = [];
 
     try {
         caseStudy = await client.fetch(query, { slug });
-        allCaseStudies = await client.fetch(allCaseStudiesQuery);
+        allCaseStudies = sortProjects(await client.fetch(allCaseStudiesQuery));
     } catch (error) {
         console.error("Sanity fetch error:", error);
         // If we can't fetch real data, maybe we are in local dev without keys.
@@ -125,17 +145,50 @@ export default async function CaseStudyPage({ params }: PageProps) {
         notFound();
     }
 
-    // Debug: Log module count
-    console.log('Case study:', caseStudy.title);
-    console.log('Module count:', caseStudy.modules?.length || 0);
-    console.log('Module types:', caseStudy.modules?.map((m: any) => m._type) || []);
+    // Short reading path: a summary drawn from Sanity, plus an "on this page"
+    // nav built from the modules an editor has explicitly opted in.
+    const story = resolveProjectStory(caseStudy);
+    const navSections = (caseStudy.modules || []).filter(
+        (module: any) => module.showInSectionNav && typeof module.headline === 'string' && module.headline.trim()
+    );
+
+    const overview =
+        story.summary || story.evidence || navSections.length > 0 ? (
+            <>
+                {(story.summary || story.evidence) && (
+                    <aside className="case-quick-summary" aria-label="Project overview">
+                        {story.summary && (
+                            <div>
+                                <h2>The short version</h2>
+                                <p>{story.summary}</p>
+                            </div>
+                        )}
+                        {story.evidence && (
+                            <div>
+                                <h2>{story.evidenceLabel}</h2>
+                                <p>{story.evidence}</p>
+                            </div>
+                        )}
+                    </aside>
+                )}
+                {navSections.length > 0 && (
+                    <nav className="case-section-nav" aria-label="On this page">
+                        {navSections.map((module: any) => (
+                            <a key={module._key} href={`#section-${module._key}`}>
+                                {module.headline.trim()}
+                            </a>
+                        ))}
+                    </nav>
+                )}
+            </>
+        ) : null;
 
     return (
         <div className="min-h-screen bg-white">
             {/* Main Content */}
             <div className="px-6 md:px-12 max-w-[1920px] mx-auto pb-32 pt-8">
                 {caseStudy.modules && caseStudy.modules.length > 0 ? (
-                    <BlockRenderer modules={caseStudy.modules} />
+                    <BlockRenderer modules={caseStudy.modules} overview={overview} />
                 ) : (
                     <div className="text-center py-20">
                         <p className="text-gray-500">No modules found for this case study.</p>

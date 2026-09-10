@@ -1,103 +1,74 @@
 'use client';
-
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
-
+import { useEffect, useRef, useState } from 'react';
+import { Menu, X, ArrowUpRight } from 'lucide-react';
 const navItems = [
   { name: 'Work', path: '/case-studies' },
-  { name: 'Thoughts', path: '/thoughts' },
+  { name: 'Writing', path: '/thoughts' },
   { name: 'Current', path: '/current' },
   { name: 'About', path: '/about' },
 ];
-
 export default function Navigation() {
   const pathname = usePathname();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
+  const [open, setOpen] = useState(false);
+  const button = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+  useEffect(() => {
+    const onEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && open) {
+        setOpen(false);
+        button.current?.focus();
+      }
+    };
+    document.addEventListener('keydown', onEscape);
+    return () => document.removeEventListener('keydown', onEscape);
+  }, [open]);
   return (
-    <>
+    <header className="site-header">
+      <a href="#main-content" className="skip-link">
+        Skip to content
+      </a>
       <nav
-      className="sticky top-0 z-50 backdrop-blur-sm border-b border-stone-900/10 transition-[background-color] duration-500 ease-in-out"
-      style={{ backgroundColor: 'color-mix(in srgb, var(--page-bg) 80%, transparent)' }}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          <Link href="/" className="font-display text-xl text-stone-600 hover:text-stone-800 transition-colors">
-            Marshall Weiss
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-8">
-            {navItems.map((item) => {
-              const isActive = pathname === item.path;
-              return (
-                <Link
-                  key={item.path}
-                  href={item.path}
-                  className={`text-sm font-medium transition-colors ${
-                    isActive
-                      ? 'text-stone-700 border-b-2 border-stone-500 pb-1'
-                      : 'text-stone-500 hover:text-stone-700'
-                  }`}
-                >
-                  {item.name}
-                </Link>
-              );
-            })}
-          </div>
-
-          {/* Mobile menu button */}
-          <button
-            className="md:hidden p-2 rounded-md text-stone-500 hover:text-stone-700 hover:bg-stone-100"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              {isMobileMenuOpen ? (
-                <path d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
-          </button>
-        </div>
-      </div>
-    </nav>
-
-      {/* Mobile Navigation */}
-      {isMobileMenuOpen && (
-        <div
-          className="md:hidden fixed top-16 left-0 right-0 z-40 px-4 sm:px-6 py-4 space-y-2 border-b border-stone-900/10 backdrop-blur-md shadow-lg shadow-stone-900/10"
-          style={{ backgroundColor: 'color-mix(in srgb, var(--page-bg) 60%, transparent)' }}
+        aria-label="Main navigation"
+        className="portfolio-container header-inner"
+      >
+        <Link href="/" className="wordmark" aria-label="Marshall Weiss home">
+          Marshall Weiss
+          <span className="wordmark-dot" aria-hidden="true" />
+        </Link>
+        <button
+          ref={button}
+          className="mobile-toggle"
+          aria-label={open ? 'Close menu' : 'Open menu'}
+          aria-expanded={open}
+          aria-controls="main-menu"
+          onClick={() => setOpen(!open)}
         >
+          {open ? <X size={24} /> : <Menu size={24} />}
+        </button>
+        <div className={`header-links ${open ? 'is-open' : ''}`} id="main-menu">
           {navItems.map((item) => {
-            const isActive = pathname === item.path;
+            const active =
+              pathname === item.path || pathname.startsWith(`${item.path}/`);
             return (
               <Link
                 key={item.path}
                 href={item.path}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`block px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                  isActive
-                    ? 'text-stone-700 bg-stone-100'
-                    : 'text-stone-500 hover:text-stone-700 hover:bg-stone-50'
-                }`}
+                aria-current={active ? 'page' : undefined}
+                onClick={() => setOpen(false)}
               >
                 {item.name}
               </Link>
             );
           })}
+          <a href="mailto:marshallweiss94@gmail.com" className="header-contact">
+            Say hello <ArrowUpRight size={16} aria-hidden="true" />
+          </a>
         </div>
-      )}
-    </>
+      </nav>
+    </header>
   );
 }

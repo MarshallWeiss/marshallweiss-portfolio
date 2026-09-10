@@ -1,6 +1,13 @@
+import type { Metadata } from 'next';
 import ThoughtsFilter from '@/components/ThoughtsFilter';
 import thoughtsData from '@/data/thoughts.json';
 import { getCuratedArticles } from '@/lib/sanity-these-days';
+
+export const metadata: Metadata = {
+  title: 'Writing & reading',
+  description:
+    'Notes on design, AI, and learning by making, by Marshall Weiss.',
+};
 
 export default async function ThoughtsPage() {
   const items = thoughtsData.items;

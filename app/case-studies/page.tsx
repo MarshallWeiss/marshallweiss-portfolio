@@ -1,42 +1,33 @@
-import React from 'react';
-import { client } from '@/sanity/lib/client';
-import { groq } from 'next-sanity';
-import WorkCard from '@/components/WorkCard';
-
-// Revalidate every 5 seconds for development
-export const revalidate = 5;
-
+import type { Metadata } from 'next';
+import PortfolioProject from '@/components/PortfolioProject';
+import { getPortfolioProjects } from '@/lib/portfolio';
+export const metadata: Metadata = {
+  title: 'Selected work',
+  description:
+    'Editorial tools, reader experiences, subscriptions, and design systems for El Confidencial.',
+};
+export const revalidate = 60;
 export default async function WorkIndexPage() {
-    const query = groq`*[_type == "caseStudy" && defined(slug.current)] {
-    title,
-    subtitle,
-    slug,
-    thumbnailType,
-    thumbnailVideo {
-      asset->
-    },
-    "heroImage": coalesce(
-      thumbnailImage,
-      modules[_type == "hero" && showImage != false][0].image,
-      modules[_type == "fullWidthMedia" && mediaType == "image"][0].image,
-      modules[_type == "splitMedia" && mediaType == "image"][0].image,
-      modules[_type == "carousel"][0].slides[0].image,
-      modules[0].image
-    ),
-    "heroTitle": modules[0].title,
-    "heroSubtitle": modules[0].subtitle
-  } | order(select(slug.current == "el-confidencial-home-page-redesign" => 0, slug.current == "el-confidencial-cms-modernization" => 1, 2), _createdAt desc)`;
-
-    const caseStudies = await client.fetch(query);
-
-    return (
-        <main className="min-h-screen py-12 px-6 md:px-12 max-w-[1920px] mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16 md:gap-y-24">
-                {caseStudies.map((study: any) => (
-                    <WorkCard key={study.slug.current} study={study} />
-                ))}
-            </div>
-        </main>
-    );
+  const projects = await getPortfolioProjects();
+  return (
+    <div className="portfolio-container work-index">
+      <div className="index-heading">
+        <h1>Work, in context.</h1>
+        <p>
+          Designing for the people who make the news.
+          <br />
+          And the people who read it.
+        </p>
+      </div>
+      <div className="work-index-grid">
+        {projects.map((project, i) => (
+          <PortfolioProject
+            project={project}
+            priority={i < 2}
+            key={project.slug.current}
+          />
+        ))}
+      </div>
+    </div>
+  );
 }
-

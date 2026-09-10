@@ -33,6 +33,10 @@ export default function CustomCursor() {
       return;
     }
 
+    // Only suppress the native pointer once we're actually tracking it,
+    // so the cursor never disappears before hydration or if JS fails.
+    document.documentElement.classList.add("custom-cursor-ready");
+
     const handleMouseMove = (e: MouseEvent) => {
       cursorX.set(e.clientX - offset);
       cursorY.set(e.clientY - offset);
@@ -74,6 +78,7 @@ export default function CustomCursor() {
     document.addEventListener("mouseenter", handleMouseEnter);
 
     return () => {
+      document.documentElement.classList.remove("custom-cursor-ready");
       window.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseover", handleMouseOver);
       document.removeEventListener("mouseout", handleMouseOut);
