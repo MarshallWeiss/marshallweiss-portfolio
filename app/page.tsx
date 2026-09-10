@@ -27,6 +27,7 @@ export default async function Home() {
             <br className="desktop-break" /> behind the stories
             <span className="hero-period">.</span>
           </h1>
+          <p className="hero-subtitle">Fully bilingual in English and Spanish.</p>
           <a className="hero-scroll" href="#selected-work">
             <ArrowDown size={18} aria-hidden="true" /> A few things I’ve worked
             on
@@ -63,7 +64,6 @@ export default async function Home() {
             .<br />
             Also teaching at Universidad Europea.
           </p>
-          <p className="intro-detail">Fully bilingual in English and Spanish.</p>
           <Link className="text-link" href="/about">
             A little more about me <ArrowUpRight size={17} aria-hidden="true" />
           </Link>

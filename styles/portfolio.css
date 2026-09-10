@@ -106,8 +106,15 @@
 .hero-period {
   color: var(--portfolio-blue);
 }
+.hero-subtitle {
+  margin-top: 26px;
+  font-size: 19px;
+  line-height: 1.5;
+  color: var(--portfolio-muted);
+  max-width: 520px;
+}
 .hero-scroll {
-  margin-top: 42px;
+  margin-top: 34px;
   display: inline-flex;
   align-items: center;
   gap: 14px;
@@ -871,6 +878,10 @@
   }
   .portfolio-hero h1 {
     font-size: 66px;
+  }
+  .hero-subtitle {
+    font-size: 17px;
+    margin-top: 20px;
   }
   .desktop-break {
     display: none;
