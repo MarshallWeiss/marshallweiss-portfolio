@@ -1,12 +1,12 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { ArrowDown, ArrowUpRight, MoveUpRight } from 'lucide-react';
-import PortfolioProject from '@/components/PortfolioProject';
-import { getPortfolioProjects } from '@/lib/portfolio';
-import { getFunProjects } from '@/lib/sanity-these-days';
-import thoughtsData from '@/data/thoughts.json';
-import { SHOW_PERSONAL_WRITING } from '@/lib/flags';
-import LapidariumArtwork from '@/components/LapidariumArtwork';
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowDown, ArrowUpRight, MoveUpRight } from "lucide-react";
+import PortfolioProject from "@/components/PortfolioProject";
+import { getPortfolioProjects } from "@/lib/portfolio";
+import { getFunProjects } from "@/lib/sanity-these-days";
+import thoughtsData from "@/data/thoughts.json";
+import { SHOW_PERSONAL_WRITING } from "@/lib/flags";
+import LapidariumArtwork from "@/components/LapidariumArtwork";
 
 export const revalidate = 60;
 export default async function Home() {
@@ -17,6 +17,9 @@ export default async function Home() {
   const recorder = experiments.find((project: { title: string }) =>
     /four.?track|recorder/i.test(project.title),
   );
+  const lapidarium = experiments.find((project: { title: string }) =>
+    /lapidarium/i.test(project.title),
+  );
   const [featured, ...articles] = thoughtsData.items;
   return (
     <div className="portfolio-home">
@@ -25,9 +28,7 @@ export default async function Home() {
           <h1>
             Designing the tools
             <br className="desktop-break" /> behind the stories
-            <span className="hero-period">.</span>
           </h1>
-          <p className="hero-subtitle">Fully bilingual in English and Spanish.</p>
           <a className="hero-scroll" href="#selected-work">
             <ArrowDown size={18} aria-hidden="true" /> A few things I’ve worked
             on
@@ -53,7 +54,7 @@ export default async function Home() {
             journalism, and AI meet.
           </p>
           <p className="intro-detail">
-            Currently at{' '}
+            Currently at{" "}
             <a
               href="https://www.elconfidencial.com/"
               target="_blank"
@@ -62,7 +63,16 @@ export default async function Home() {
               El Confidencial
             </a>
             .<br />
-            Also teaching at Universidad Europea.
+            Also teaching at{" "}
+            <a
+              href="https://universidadeuropea.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Universidad Europea
+            </a>
+            .<br />
+            Fully bilingual in English and Spanish.
           </p>
           <Link className="text-link" href="/about">
             A little more about me <ArrowUpRight size={17} aria-hidden="true" />
@@ -89,142 +99,125 @@ export default async function Home() {
           ))}
         </div>
       </section>
-      <section className="experiment-section">
-        <div className="portfolio-container experiment-grid">
-          <div className="experiment-copy">
-            <span className="experiment-label">
-              <span className="record-dot" /> Away from the newsroom
-            </span>
-            <h2>
-              A little less screen.
-              <br />A little more sound.
-            </h2>
-            <p>
-              A four-track recorder, right in your browser. An experiment in
-              making music software feel simple, tactile, and fun to play with.
-            </p>
-            <p className="experiment-note">
-              Inspired by the four-track recorders of the 1980s. Built with
-              React and the Web Audio API.
-            </p>
-            <a
-              className="light-button"
-              href={recorder?.url || '/current'}
-              target={recorder?.url ? '_blank' : undefined}
-              rel={recorder?.url ? 'noopener noreferrer' : undefined}
-            >
-              Try the recorder <ArrowUpRight size={18} aria-hidden="true" />
-            </a>
+      <section className="experiments-section portfolio-container">
+        <div className="section-intro">
+          <div>
+            <h2>Independent experiments.</h2>
+            <p>Small products and systems made away from the newsroom.</p>
           </div>
-          <a
-            className="recorder-art"
-            href={recorder?.url || '/current'}
-            target={recorder?.url ? '_blank' : undefined}
-            rel={recorder?.url ? 'noopener noreferrer' : undefined}
-            aria-label="Open the four-track recorder"
-          >
-            <div className="recorder-rings" aria-hidden="true" />
-            <Image
-              src="/experiments/four-track-recorder.png"
-              width={900}
-              height={900}
-              alt="The four-track recorder interface"
-              sizes="(max-width: 760px) 90vw, 50vw"
-            />
-            <span className="recorder-caption">
-              A side project, made to be played.
-            </span>
-          </a>
+          <Link className="text-link" href="/current">
+            What I’m making <ArrowUpRight size={18} aria-hidden="true" />
+          </Link>
         </div>
-      </section>
-      <section className="crystal-section portfolio-container">
-        <a
-          href="https://lapidarium.vercel.app"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="crystal-art"
-          aria-label="Explore Lapidarium, an encyclopedia of precious stones"
-        >
-          <LapidariumArtwork />
-        </a>
-        <div className="crystal-copy">
-          <span className="project-category">Independent experiment</span>
-          <h2>
-            A small window
-            <br />
-            into deep time.
-          </h2>
-          <p>
-            Lapidarium is a digital encyclopedia of crystals and precious
-            stones. Explore the collection, compare their forms, and see how
-            each one catches the light.
-          </p>
-          <p className="crystal-detail">
-            Interactive 3D forms and rendered turntables let you examine the
-            stones from different angles.
-          </p>
-          <a
-            href="https://lapidarium.vercel.app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-link"
-          >
-            Explore Lapidarium <ArrowUpRight size={18} aria-hidden="true" />
-          </a>
+        <div className="experiments-grid">
+          {recorder && (
+            <a
+              className="experiment-card experiment-card--recorder"
+              href={recorder.url || "/current"}
+              target={recorder.url ? "_blank" : undefined}
+              rel={recorder.url ? "noopener noreferrer" : undefined}
+              aria-label={`Open ${recorder.title}`}
+            >
+              <div className="experiment-card-copy">
+                <span className="experiment-card-label">
+                  <span className="record-dot" /> Sound experiment
+                </span>
+                <h3>{recorder.title}</h3>
+                {recorder.description && <p>{recorder.description}</p>}
+                <span className="experiment-card-link">
+                  Open recorder <ArrowUpRight size={17} aria-hidden="true" />
+                </span>
+              </div>
+              <div className="experiment-card-media">
+                <Image
+                className="recorder-card-art"
+                src={recorder.image || "/experiments/four-track-recorder.png"}
+                width={900}
+                height={900}
+                alt=""
+                sizes="(max-width: 540px) 260px, (max-width: 1000px) 45vw, 25vw"
+              />
+              </div>
+            </a>
+          )}
+          {lapidarium && (
+            <a
+              href={lapidarium.url || "/current"}
+              target={lapidarium.url ? "_blank" : undefined}
+              rel={lapidarium.url ? "noopener noreferrer" : undefined}
+              className="experiment-card experiment-card--lapidarium"
+              aria-label={`Explore ${lapidarium.title}`}
+            >
+              <div className="experiment-card-media">
+                <LapidariumArtwork variant="card" imageSrc={lapidarium.image} />
+              </div>
+              <div className="experiment-card-copy">
+                <span className="experiment-card-label">
+                  Reference experiment
+                </span>
+                <h3>{lapidarium.title}</h3>
+                {lapidarium.description && <p>{lapidarium.description}</p>}
+                <span className="experiment-card-link">
+                  Explore collection{" "}
+                  <ArrowUpRight size={17} aria-hidden="true" />
+                </span>
+              </div>
+            </a>
+          )}
         </div>
       </section>
       {SHOW_PERSONAL_WRITING && (
-      <section className="writing-section portfolio-container">
-        <div className="section-intro">
-          <div>
-            <h2>Thinking out loud.</h2>
-            <p>Notes on designing, building, and figuring things out.</p>
-          </div>
-          <Link className="text-link" href="/thoughts">
-            All writing <ArrowUpRight size={18} aria-hidden="true" />
-          </Link>
-        </div>
-        <div className="home-writing-grid">
-          {featured && (
-            <Link
-              href={`/thoughts/${featured.slug}`}
-              className="featured-essay"
-            >
-              <div className="essay-image">
-                <Image
-                  src={`/images/thoughts/${featured.slug}-og.png`}
-                  fill
-                  alt=""
-                  sizes="(max-width: 760px) 90vw, 50vw"
-                />
-              </div>
-              <div className="essay-info">
-                <span>
-                  {featured.category} · {featured.readingTime} min read
-                </span>
-                <h3>{featured.title}</h3>
-                <MoveUpRight className="essay-arrow" aria-hidden="true" />
-              </div>
+        <section className="writing-section portfolio-container">
+          <div className="section-intro">
+            <div>
+              <h2>Thinking out loud.</h2>
+              <p>Notes on designing, building, and figuring things out.</p>
+            </div>
+            <Link className="text-link" href="/thoughts">
+              All writing <ArrowUpRight size={18} aria-hidden="true" />
             </Link>
-          )}
-          <div className="essay-list">
-            {articles.slice(0, 3).map((article) => (
-              <Link key={article.id} href={`/thoughts/${article.slug}`}>
-                <span>
-                  {article.category} · {article.readingTime} min read
-                </span>
-                <h3>{article.title}</h3>
-                <ArrowUpRight size={20} aria-hidden="true" />
-              </Link>
-            ))}
           </div>
-        </div>
-      </section>
+          <div className="home-writing-grid">
+            {featured && (
+              <Link
+                href={`/thoughts/${featured.slug}`}
+                className="featured-essay"
+              >
+                <div className="essay-image">
+                  <Image
+                    src={`/images/thoughts/${featured.slug}-og.png`}
+                    fill
+                    alt=""
+                    sizes="(max-width: 760px) 90vw, 50vw"
+                  />
+                </div>
+                <div className="essay-info">
+                  <span>
+                    {featured.category} · {featured.readingTime} min read
+                  </span>
+                  <h3>{featured.title}</h3>
+                  <MoveUpRight className="essay-arrow" aria-hidden="true" />
+                </div>
+              </Link>
+            )}
+            <div className="essay-list">
+              {articles.slice(0, 3).map((article) => (
+                <Link key={article.id} href={`/thoughts/${article.slug}`}>
+                  <span>
+                    {article.category} · {article.readingTime} min read
+                  </span>
+                  <h3>{article.title}</h3>
+                  <ArrowUpRight size={20} aria-hidden="true" />
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
       )}
       <section className="personal-strip portfolio-container">
         <p>There’s a person behind the pixels.</p>
         <Link className="text-link" href="/current">
-          What I’m reading, making, and doing{' '}
+          What I’m reading, making, and doing{" "}
           <ArrowUpRight size={18} aria-hidden="true" />
         </Link>
       </section>

@@ -49,7 +49,7 @@
   position: relative;
 }
 .header-links > a[aria-current]::after {
-  content: '';
+  content: "";
   height: 4px;
   width: 4px;
   border-radius: 50%;
@@ -179,29 +179,33 @@
 }
 .section-intro {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   gap: 24px;
-  margin-bottom: 30px;
+  margin-bottom: 32px;
 }
 .section-intro h2 {
   font-family: var(--font-right-slab);
-  font-size: 27px;
-  letter-spacing: -0.035em;
+  font-size: clamp(32px, 3.4vw, 42px);
+  letter-spacing: -0.04em;
+  line-height: 1.1;
 }
 .section-intro p {
-  font-size: 15px;
+  font-size: 14px;
+  line-height: 1.55;
+  max-width: 390px;
   color: var(--portfolio-muted);
   margin-top: 12px;
 }
+.section-intro > .text-link {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
 .selected-grid {
   display: grid;
-  grid-template-columns: 1.16fr 1fr;
-  gap: 42px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
   align-items: start;
-}
-.selected-grid .portfolio-project:nth-child(2) {
-  margin-top: 100px;
 }
 .portfolio-project {
   display: block;
@@ -297,24 +301,46 @@
 .selected-section {
   padding-bottom: 100px;
 }
-.experiment-section {
-  background: #283b35;
-  color: #faf9f5;
+.experiments-section {
+  padding-block: 84px 94px;
+}
+.experiments-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+.experiment-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 54% 46%;
+  min-height: 390px;
+  border-radius: 8px;
+  overflow: hidden;
+  isolation: isolate;
+}
+.experiment-card-copy {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  grid-column: 1;
+  grid-row: 1;
+  padding: 30px 0 30px 30px;
+  min-width: 0;
+}
+.experiment-card-media {
+  position: relative;
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
   overflow: hidden;
 }
-.experiment-grid {
-  display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
-  align-items: center;
-  gap: 70px;
-  padding-block: 88px;
-}
-.experiment-label {
+.experiment-card-label {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 9px;
   font-size: 12px;
-  color: #d4dcd3;
 }
 .record-dot {
   width: 8px;
@@ -322,25 +348,26 @@
   border-radius: 50%;
   background: #e8a78c;
 }
-.experiment-copy h2 {
+.experiment-card h3 {
   font-family: var(--font-right-slab);
-  font-size: clamp(34px, 3.6vw, 52px);
+  font-size: clamp(30px, 2.8vw, 42px);
   letter-spacing: -0.04em;
   line-height: 1.1;
-  margin-top: 28px;
-  margin-bottom: 25px;
-}
-.experiment-copy > p {
-  font-size: 16px;
-  line-height: 1.7;
-  max-width: 420px;
-  color: #e0e6df;
-}
-.experiment-copy .experiment-note {
-  font-size: 12px;
-  color: #b8c8bd;
   margin-top: 18px;
-  max-width: 330px;
+}
+.experiment-card p {
+  max-width: 270px;
+  margin-top: 14px;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.experiment-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: auto;
+  padding-top: 24px;
+  font-size: 13px;
 }
 .light-button,
 .primary-button {
@@ -368,58 +395,51 @@
 .primary-button:hover {
   background: #263e5c;
 }
-.recorder-art {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  position: relative;
-  isolation: isolate;
+.experiment-card--recorder {
+  background: #283b35;
+  color: #faf9f5;
 }
-.recorder-art img {
-  width: 100%;
-  height: auto;
-  position: relative;
-  transform: rotate(-5deg);
-  filter: drop-shadow(0 26px 26px #12221c70);
-  transition: transform 0.5s;
-  max-height: 460px;
-  object-fit: contain;
+.experiment-card--recorder .experiment-card-label,
+.experiment-card--recorder p {
+  color: #d4dcd3;
 }
-.recorder-art:hover img {
-  transform: rotate(-2deg) translateY(-5px);
-}
-.recorder-rings {
-  width: 90%;
-  aspect-ratio: 1;
-  border: 1px solid #abc6b52e;
+.recorder-card-art {
   position: absolute;
-  border-radius: 50%;
-  top: -5%;
-  z-index: -1;
-  box-shadow:
-    0 0 0 40px #abc6b50a,
-    0 0 0 80px #abc6b506;
+  width: 104%;
+  max-width: none;
+  height: auto;
+  left: 10%;
+  top: 50%;
+  z-index: 1;
+  transform: translateY(-42%) rotate(-7deg);
+  filter: drop-shadow(0 12px 14px #12221c50);
+  transition: transform 0.45s ease;
 }
-.recorder-caption {
-  color: #b8c8bd;
-  font-size: 11px;
-  margin-top: 28px;
+.experiment-card--recorder:hover .recorder-card-art,
+.experiment-card--recorder:focus-visible .recorder-card-art {
+  transform: translateY(-44%) rotate(-5deg);
 }
-.crystal-section {
-  padding-block: 86px 0;
-  display: grid;
-  grid-template-columns: 1.12fr 1fr;
-  align-items: center;
-  gap: 90px;
+.experiment-card--lapidarium {
+  background: radial-gradient(ellipse at 80% 55%, #fff0cf, transparent 65%), #efd8a2;
+  color: #3f3224;
 }
-.crystal-art {
-  position: relative;
-  display: block;
-  aspect-ratio: 1.32;
-  border-radius: 8px;
-  overflow: hidden;
-  background: #e4dff0;
-  isolation: isolate;
+.experiment-card--lapidarium .lapidarium-art {
+  position: absolute;
+  inset: 0;
+}
+.experiment-card--lapidarium .experiment-card-copy {
+  pointer-events: none;
+}
+.experiment-card--lapidarium p {
+  color: #66533c;
+  max-width: 280px;
+}
+.experiment-card--lapidarium .experiment-card-link {
+  color: #3f3224;
+}
+.experiment-card:focus-visible {
+  outline: 2px solid var(--portfolio-blue);
+  outline-offset: 5px;
 }
 .lapidarium-art {
   position: relative;
@@ -430,7 +450,8 @@
   color: #49415d;
   isolation: isolate;
 }
-.lapidarium-art--feature {
+.lapidarium-art--feature,
+.lapidarium-art--card {
   aspect-ratio: 1.32;
 }
 .lapidarium-wordmark {
@@ -444,28 +465,44 @@
 }
 .lapidarium-study {
   position: absolute;
-  left: 8%;
-  top: 30%;
-  width: 18%;
-  height: 40%;
-  stroke: #7a708d;
-  stroke-width: 1.2;
+  left: 7%;
+  top: 29%;
+  width: 20%;
+  height: 43%;
+  stroke: #817794;
+  stroke-width: 1;
+  opacity: 0.8;
 }
 .lapidarium-specimen {
   position: absolute;
-  width: 79%;
-  height: 93%;
-  right: -6%;
-  top: 6%;
+  z-index: 2;
+  width: 72%;
+  height: 82%;
+  right: -1%;
+  top: 11%;
   object-fit: contain;
-  transform: rotate(9deg);
-  transition: transform .5s ease;
-  filter: drop-shadow(12px 22px 16px #4c375922);
+  transform: rotate(2deg);
+  transition: transform 0.5s ease;
+  filter: drop-shadow(13px 23px 15px rgb(79 53 23 / 0.2));
+}
+.lapidarium-art--card {
+  background: transparent;
+  aspect-ratio: auto;
+}
+.lapidarium-art--card .lapidarium-specimen {
+  width: 125%;
+  max-width: none;
+  height: auto;
+  right: auto;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -45%);
+  filter: drop-shadow(0 12px 10px rgb(79 53 23 / 0.12));
 }
 .lapidarium-specimen-name {
   position: absolute;
-  left: 6%;
-  bottom: 7%;
+  left: 7%;
+  bottom: 8%;
   z-index: 2;
   font-family: var(--font-right-slab);
   font-size: clamp(18px, 1.6vw, 23px);
@@ -477,13 +514,9 @@
   font-size: 11px;
   color: #655e74;
 }
-.crystal-art:hover .lapidarium-specimen,
-.crystal-art:focus-visible .lapidarium-specimen {
-  transform: rotate(5deg) translateY(-3px);
-}
-.crystal-art:focus-visible {
-  outline: 2px solid var(--portfolio-blue);
-  outline-offset: 5px;
+.experiment-card--lapidarium:hover .lapidarium-specimen,
+.experiment-card--lapidarium:focus-visible .lapidarium-specimen {
+  transform: translate(-50%, -46%);
 }
 .lapidarium-art--compact {
   aspect-ratio: 1;
@@ -505,39 +538,49 @@
   .lapidarium-specimen {
     transition: none;
   }
-  .crystal-art:hover .lapidarium-specimen,
-  .crystal-art:focus-visible .lapidarium-specimen {
-    transform: rotate(9deg);
+  .experiment-card--lapidarium:hover .lapidarium-specimen,
+  .experiment-card--lapidarium:focus-visible .lapidarium-specimen {
+    transform: translate(-50%, -45%);
+  }
+  .recorder-card-art { transition: none; }
+  .experiment-card--recorder:hover .recorder-card-art,
+  .experiment-card--recorder:focus-visible .recorder-card-art {
+    transform: translateY(-42%) rotate(-7deg);
   }
 }
-.crystal-copy h2 {
-  font-family: var(--font-right-slab);
-  font-size: 46px;
-  letter-spacing: -0.04em;
-  line-height: 1.1;
-  margin-block: 20px;
+@media (min-width: 761px) and (max-width: 1000px) {
+  .experiments-grid { grid-template-columns: 1fr; }
 }
-.crystal-copy > p {
-  color: var(--portfolio-muted);
-  font-size: 16px;
-  line-height: 1.7;
-  max-width: 400px;
-}
-.crystal-copy .crystal-detail {
-  font-size: 13px;
-  margin-block: 16px;
+@media (max-width: 540px) {
+  .experiment-card {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 220px;
+  }
+  .experiment-card .experiment-card-copy { padding: 24px 24px 0; }
+  .experiment-card p { max-width: none; }
+  .experiment-card-media { grid-column: 1; grid-row: 2; }
+  .recorder-card-art {
+    width: 250px;
+    left: 50%;
+    top: 20px;
+    transform: translateX(-50%) rotate(-7deg);
+  }
+  .experiment-card--recorder:hover .recorder-card-art,
+  .experiment-card--recorder:focus-visible .recorder-card-art {
+    transform: translateX(-50%) rotate(-7deg);
+  }
+  .lapidarium-art--card .lapidarium-specimen {
+    width: 320px;
+    transform: translate(-50%, -50%);
+  }
 }
 .writing-section {
   padding-block: 90px;
-}
-.writing-section .section-intro h2 {
-  font-size: 42px;
 }
 .home-writing-grid {
   display: grid;
   grid-template-columns: 1fr 0.8fr;
   gap: 70px;
-  padding-top: 8px;
 }
 .essay-image {
   position: relative;
@@ -780,7 +823,7 @@
   color: #58675f;
   border-bottom: 2px solid transparent;
 }
-.writing-switch button[aria-pressed='true'] {
+.writing-switch button[aria-pressed="true"] {
   border-bottom-color: #303936;
   color: #303936;
 }
@@ -887,16 +930,13 @@
     display: none;
   }
   .selected-grid {
-    gap: 30px;
+    gap: 20px;
   }
   .home-writing-grid {
     gap: 40px;
   }
-  .experiment-grid {
-    gap: 40px;
-  }
-  .crystal-section {
-    gap: 45px;
+  .experiments-grid {
+    gap: 20px;
   }
 }
 @media (max-width: 760px) {
@@ -981,10 +1021,13 @@
     margin-bottom: 8px;
   }
   .section-intro {
-    margin-bottom: 22px;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 18px;
+    margin-bottom: 24px;
   }
   .section-intro h2 {
-    font-size: 25px;
+    font-size: 32px;
   }
   .text-link {
     font-size: 12px;
@@ -994,9 +1037,6 @@
   .work-index-grid {
     grid-template-columns: 1fr;
     gap: 40px;
-  }
-  .selected-grid .portfolio-project:nth-child(2) {
-    margin-top: 0;
   }
   .project-art {
     aspect-ratio: 1.2;
@@ -1027,46 +1067,30 @@
   .selected-section {
     padding-bottom: 56px;
   }
-  .experiment-grid {
+  .experiments-section {
+    padding-block: 56px;
+  }
+  .experiments-grid {
     grid-template-columns: 1fr;
-    padding-block: 52px;
-    gap: 48px;
+    gap: 16px;
   }
-  .experiment-copy h2 {
-    font-size: 37px;
+  .experiment-card {
+    min-height: 340px;
   }
-  .experiment-copy > p {
-    font-size: 15px;
+  .experiment-card-copy {
+    padding: 24px 0 24px 24px;
   }
-  .recorder-art img {
-    max-width: 440px;
+  .experiment-card h3 {
+    font-size: 34px;
+  }
+  .lapidarium-wordmark {
+    font-size: 30px;
   }
   .writing-section {
     padding-block: 52px;
   }
-  .crystal-section {
-    grid-template-columns: 1fr;
-    gap: 30px;
-    padding-top: 48px;
-  }
-  .crystal-copy h2 {
-    font-size: 37px;
-  }
-  .crystal-copy > p {
-    font-size: 15px;
-  }
-  .writing-section .section-intro {
-    align-items: start;
-  }
-  .writing-section .section-intro h2 {
-    font-size: 32px;
-  }
-  .writing-section .section-intro > .text-link {
-    white-space: nowrap;
-  }
   .section-intro p {
     font-size: 13px;
-    max-width: 230px;
   }
   .home-writing-grid {
     grid-template-columns: 1fr;
