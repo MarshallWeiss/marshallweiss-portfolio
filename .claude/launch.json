@@ -13,6 +13,21 @@
       "runtimeArgs": ["run", "dev", "--prefix", "/Users/mweiss/Desktop/Gem Encyclopedia"],
       "port": 3100,
       "autoPort": true
+    },
+    {
+      "name": "astra",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev",
+        "--prefix",
+        "/Users/mweiss/Desktop/Portfolio-astra",
+        "--",
+        "--port",
+        "3001"
+      ],
+      "port": 3001,
+      "autoPort": true
     }
   ]
 }

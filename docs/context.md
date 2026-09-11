@@ -4,6 +4,65 @@ Running log of work sessions. Most recent at top.
 
 ---
 
+## Recent Work (2026-09-10/11) — Session 14
+
+### Astra Merge, Sanity Migration, Codex Writing Pass — All Deployed ✅
+**Merged the codex/astra-portfolio redesign experiment into main selectively, moved the presentation copy it hardcoded into Sanity, reviewed and shipped Codex's writing/visual pass, and deployed both the portfolio and the music recorder.**
+
+**Astra merge (`2eb6cc1`):**
+- Took from `codex/astra-portfolio`: the long-form homepage with visible work, the redesigned footer, a real `/contact` page, split email/copy actions, nav a11y (aria-expanded, Escape + focus return, skip link, nested-route active state, Thoughts→Writing), route metadata with a title template, and `styles/portfolio.css`.
+- Deliberately NOT taken: astra's `LazyBlock`/framer-motion removal, its forced `autoPlay={false}` on video blocks, and its `ConfidentialCard`/`ThoughtsFilter` rewrites (the blur + "Sorry, confidential!" tooltip were kept).
+- Real bug fixes included: `MediaItem` called `useNextSanityImage` inside a ternary (rules-of-hooks violation); `BlockRenderer` used `Math.random()` for React keys; per-render `console.log`s on the case study page; the Figma capture script was loading on every production page view; Work listing `revalidate` was 5s.
+- Kept `CustomCursor` but added a real fallback: it now sets `custom-cursor-ready` on `<html>` and `cursor: none` is scoped to that class, so the native pointer survives pre-hydration and JS failure.
+
+**Sanity as source of truth (KEY DECISION):**
+- Astra had hardcoded card copy in `lib/portfolio.ts` and made it *win* over Sanity, so editing a case study in Studio did nothing. Inverted this: Sanity fields win, the TS map is fallback-only (delete once every doc has its fields).
+- Added to the `caseStudy` schema: `cardHeadline`, `cardCategory`, `accentColor`, `cardImageFit`, `displayOrder`, `overviewSummary`, `overviewEvidence`, `overviewEvidenceLabel`.
+- Added `showInSectionNav` to `headingFields` (shared-fields.ts), replacing astra's regex match on headline text for the "On this page" nav.
+- `displayOrder` replaced three duplicated slug-order lists (homepage, Work listing, prev/next).
+- Seeded and published all 5 case studies with card + overview copy, and ticked section-nav entries on each.
+- `revalidate` set to 60s (astra wanted 3600, which would mean an hour between publishing and seeing it).
+
+**Sanity content published this session:**
+- 4 new `workProject` docs for Current → Working (registered users, notification system, design system, UE course); old "Homepage Redesign" marked completed so it drops off.
+- Reading: Zuboff marked `finished` (moves to Previously), new `currentlyReading` for **Empire of AI** by Karen Hao, cover uploaded via `npx @sanity/cli assets upload`.
+- New `funProject` for **Lapidarium** (verified lapidarium.vercel.app is live, 79 stones) with the amethyst render as thumbnail.
+
+**Codex writing/visual pass (`15fbeb1`, `8f302e8`) — reviewed, then committed:**
+- Codex ran out of credits mid-Task-4; its pass report was never written. Verified here: lint + build clean, flag intact.
+- All four essays cut back (Focus 1,725→1,023 words); descriptions rewritten in concrete first person.
+- `scripts/article-images.mjs` rewritten to draw explicit per-article SVG compositions instead of seeded line art. 8 PNGs regenerated.
+- `components/LapidariumArtwork.tsx` replaces the three floating minerals with one amethyst + outline study, shared by Home and Current.
+- **Corrections made to the pass:** reverted its rename of "Focus Is the Tool: Working at an Agent's Pace"; fixed article pages appending the site name twice on top of the root title template.
+- **KNOWN DEFECT, left by choice:** Codex dropped two citations from the Focus article — the University of Chicago "brain drain" study (`journals.uchicago.edu/doi/10.1086/691462`) and Cold Turkey. The article still makes the claim the study supported. One-line fix when wanted.
+- The e-ink phone / Bigme passage is confirmed true (user told Codex), not fabricated.
+
+**Personal essays published:**
+- `lib/flags.ts` → `SHOW_PERSONAL_WRITING` gates BOTH the homepage "Thinking out loud" section and the Thoughts "Mine" tab. Previously these were separate, so hiding one still left the other linking to the essays. Currently `true`.
+
+**Design fixes:**
+- Working card on Current condensed 775px → 456px (title + company share a baseline row, tighter leading) to match its neighbours.
+- All buttons unified at 4px via `--portfolio-button-radius` (header "Say hello" was a 30px pill, About CV buttons were `rounded-lg`).
+- About CV buttons use `--portfolio-blue`; the name heading stays gray-900 with the other titles.
+- Removed the "From the newsroom to the reader" footnote; it was also the only spacing before the recorder section, so `.selected-section` got explicit bottom padding.
+- Bilingual line moved from the intro column to a `.hero-subtitle` under the headline.
+
+**Music recorder (`f24e722` + submodule `21fc9ce`):**
+- Codex's polish pass: waveform traces per channel strip, keyboard shortcuts + legend, mic init/error recovery, responsive layout, focus + reduced-motion. 15 source files, +904 lines.
+- Deployed via `npm run deploy` (gh-pages, own repo `MarshallWeiss/music-recorder`, base `/music-recorder/`). This also published 4 earlier unpushed passes.
+
+**Files Updated:** `app/page.tsx`, `app/about/page.tsx`, `app/current/page.tsx`, `app/contact/page.tsx`, `app/layout.tsx`, `app/thoughts/page.tsx`, `app/thoughts/[slug]/page.tsx`, `app/case-studies/page.tsx`, `app/case-studies/[slug]/page.tsx`, `components/Navigation.tsx`, `components/Footer.tsx`, `components/GetInTouchButton.tsx`, `components/PortfolioProject.tsx`, `components/LapidariumArtwork.tsx`, `components/CustomCursor.tsx`, `components/ThoughtsFilter.tsx`, `components/blocks/{BlockRenderer,LazyBlock,MediaItem}.tsx`, `lib/portfolio.ts`, `lib/flags.ts`, `sanity/schemas/{caseStudy.tsx,shared-fields.ts}`, `styles/{globals,portfolio}.css`, `scripts/article-images.mjs`, `content/thoughts/*.md`, `data/thoughts.json`, `public/images/thoughts/*.png`
+
+**Build Status:** ✓ lint + build clean, 22 static pages. Both marshallweiss.com and marshallweiss.github.io/music-recorder deployed and verified live.
+
+**Gotchas for next session:**
+- **Do not run `npm run build` while a dev server is running** — it overwrites `.next` and the dev server 500s on every route until restarted. Cost real time twice this session. Stop the server first.
+- Codex had a dev server on port 3002 against this same directory, fighting over `.next`. If work is split between Codex and Claude Code, give Codex its own worktree.
+- `components/HomeNavigation.tsx` and `components/WorkCard.tsx` are now dead code (homepage and Work listing replaced). Left in place in case the hover-preview nav is wanted back.
+- Several pieces of published copy are in a neutral assistant voice, not Marshall's: the Empire of AI description, the Lapidarium description, and the four Working entries. All Sanity fields, editable in Studio.
+
+**Next up:** brainstorm/spitball sessions on philosophical topics in AI and AI research topics, then develop those into articles. Use the `spitballing` / `brainstorm` skills to explore, then `think-piece` or `write-article` to draft.
+
 ## Recent Work (2026-06-13) — Session 13
 
 ### Home Page Redesign Case Study + Figma Diagram Restyle + CV PDFs Live ✅
