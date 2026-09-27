@@ -399,6 +399,34 @@
   background: #283b35;
   color: #faf9f5;
 }
+.experiment-card--atlas {
+  grid-column: 1 / -1;
+  background: #f2ece0;
+  color: #2a2724;
+  border: 1px solid #d9cfbc;
+}
+.experiment-card--atlas .experiment-card-label,
+.experiment-card--atlas p {
+  color: #6b655b;
+}
+.atlas-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1.5px solid #9c3d1f;
+  box-shadow: inset 0 0 0 1.5px #f2ece0, inset 0 0 0 4px #9c3d1f;
+}
+.atlas-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform .6s ease;
+}
+.experiment-card--atlas:hover .atlas-art,
+.experiment-card--atlas:focus-visible .atlas-art {
+  transform: scale(1.04);
+}
 .experiment-card--recorder .experiment-card-label,
 .experiment-card--recorder p {
   color: #d4dcd3;
@@ -543,6 +571,9 @@
     transform: translate(-50%, -45%);
   }
   .recorder-card-art { transition: none; }
+  .atlas-art { transition: none; }
+  .experiment-card--atlas:hover .atlas-art,
+  .experiment-card--atlas:focus-visible .atlas-art { transform: none; }
   .experiment-card--recorder:hover .recorder-card-art,
   .experiment-card--recorder:focus-visible .recorder-card-art {
     transform: translateY(-42%) rotate(-7deg);

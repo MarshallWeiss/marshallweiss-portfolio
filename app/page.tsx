@@ -7,6 +7,7 @@ import { getFunProjects } from "@/lib/sanity-these-days";
 import thoughtsData from "@/data/thoughts.json";
 import { SHOW_PERSONAL_WRITING } from "@/lib/flags";
 import LapidariumArtwork from "@/components/LapidariumArtwork";
+import AtlasArtwork from "@/components/AtlasArtwork";
 
 export const revalidate = 60;
 export default async function Home() {
@@ -19,6 +20,9 @@ export default async function Home() {
   );
   const lapidarium = experiments.find((project: { title: string }) =>
     /lapidarium/i.test(project.title),
+  );
+  const atlas = experiments.find((project: { title: string }) =>
+    /ai atlas/i.test(project.title),
   );
   const [featured, ...articles] = thoughtsData.items;
   return (
@@ -110,6 +114,29 @@ export default async function Home() {
           </Link>
         </div>
         <div className="experiments-grid">
+          {atlas && (
+            <a
+              className="experiment-card experiment-card--atlas"
+              href={atlas.url || "/current"}
+              target={atlas.url ? "_blank" : undefined}
+              rel={atlas.url ? "noopener noreferrer" : undefined}
+              aria-label={`Open ${atlas.title}`}
+            >
+              <div className="experiment-card-copy">
+                <span className="experiment-card-label">
+                  <span className="atlas-dot" /> Map experiment · work in progress
+                </span>
+                <h3>{atlas.title}</h3>
+                {atlas.description && <p>{atlas.description}</p>}
+                <span className="experiment-card-link">
+                  Open the atlas <ArrowUpRight size={17} aria-hidden="true" />
+                </span>
+              </div>
+              <div className="experiment-card-media">
+                <AtlasArtwork />
+              </div>
+            </a>
+          )}
           {recorder && (
             <a
               className="experiment-card experiment-card--recorder"
