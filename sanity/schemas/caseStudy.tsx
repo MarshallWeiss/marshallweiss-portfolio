@@ -1256,6 +1256,76 @@ export default defineType({
                         },
                     },
                 }),
+                // Key Figures Block (headline numbers with caveats)
+                defineField({
+                    name: 'keyFigures',
+                    title: 'Key Figures',
+                    type: 'object',
+                    fields: [
+                        ...headingFields,
+                        defineField({
+                            name: 'description',
+                            type: 'text',
+                            title: 'Description',
+                            rows: 2,
+                            description: 'One line on what was measured and when.',
+                        }),
+                        defineField({
+                            name: 'figures',
+                            title: 'Figures',
+                            type: 'array',
+                            validation: (Rule) => Rule.min(1).max(4),
+                            of: [
+                                {
+                                    type: 'object',
+                                    name: 'figure',
+                                    title: 'Figure',
+                                    fields: [
+                                        defineField({
+                                            name: 'value',
+                                            type: 'string',
+                                            title: 'Value',
+                                            description: 'The number as it should read, e.g. "37%", "+3.4 pts", "200+". Counts up on scroll.',
+                                            validation: (Rule) => Rule.required(),
+                                        }),
+                                        defineField({ name: 'label', type: 'string', title: 'Label' }),
+                                        defineField({
+                                            name: 'caveat',
+                                            type: 'text',
+                                            title: 'Caveat',
+                                            rows: 2,
+                                            description: 'What exactly was measured, the window, and the comparison. Always shown.',
+                                        }),
+                                    ],
+                                    preview: {
+                                        select: { title: 'value', subtitle: 'label' },
+                                    },
+                                },
+                            ],
+                        }),
+                        defineField({
+                            name: 'textAlign',
+                            title: 'Text Alignment',
+                            type: 'string',
+                            options: {
+                                list: [
+                                    { title: 'Left', value: 'left' },
+                                    { title: 'Center', value: 'center' },
+                                ],
+                                layout: 'radio',
+                            },
+                            initialValue: 'left',
+                        }),
+                        ...layoutFields,
+                    ],
+                    preview: {
+                        select: { headline: 'headline', figures: 'figures' },
+                        prepare({ headline, figures }) {
+                            const values = (figures || []).map((f: { value?: string }) => f.value).filter(Boolean).join(' · ')
+                            return { title: `Key figures${headline ? `: ${headline}` : ''}`, subtitle: values }
+                        },
+                    },
+                }),
                 // Annotated Image Block (with hotspots)
                 defineField({
                     name: 'annotatedImage',

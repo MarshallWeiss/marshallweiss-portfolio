@@ -12,6 +12,13 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'emoji',
+      title: 'Emoji',
+      type: 'string',
+      description: 'One emoji shown before the title on the Current page',
+      validation: (Rule) => Rule.max(4),
+    }),
+    defineField({
       name: 'description',
       title: 'Description',
       type: 'text',

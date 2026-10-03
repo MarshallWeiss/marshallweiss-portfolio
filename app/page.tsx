@@ -54,8 +54,8 @@ export default async function Home() {
             </span>
           </div>
           <p>
-            I’m a product designer and developer working where design,
-            journalism, and AI meet.
+            I’m a senior product designer and developer working where
+            design, journalism, and AI meet.
           </p>
           <p className="intro-detail">
             Currently at{" "}
@@ -94,11 +94,12 @@ export default async function Home() {
           </Link>
         </div>
         <div className="selected-grid">
-          {projects.slice(0, 2).map((project) => (
+          {projects.slice(0, 3).map((project, i) => (
             <PortfolioProject
               key={project.slug.current}
               project={project}
               priority
+              featured={i === 0}
             />
           ))}
         </div>
@@ -242,7 +243,7 @@ export default async function Home() {
         </section>
       )}
       <section className="personal-strip portfolio-container">
-        <p>There’s a person behind the pixels.</p>
+        <p>Outside the newsroom.</p>
         <Link className="text-link" href="/current">
           What I’m reading, making, and doing{" "}
           <ArrowUpRight size={18} aria-hidden="true" />

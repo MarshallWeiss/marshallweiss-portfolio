@@ -14,9 +14,9 @@ export default async function WorkIndexPage() {
       <div className="index-heading">
         <h1>Work, in context.</h1>
         <p>
-          Designing for the people who make the news.
-          <br />
-          And the people who read it.
+          Four years at El Confidencial, one of Spain’s most-read digital
+          newspapers. Tools for the people who make the news, and the pages
+          the rest of us read them on.
         </p>
       </div>
       <div className="work-index-grid">

@@ -88,10 +88,10 @@ function ArticleRow({ id }: { id: string }) {
         <motion.div
             layout
             transition={MOVE}
-            className="relative flex h-[38px] shrink-0 items-center overflow-hidden rounded-md px-2.5"
-            style={{ backgroundColor: `${color}24`, boxShadow: `inset 3px 0 0 ${color}` }}
+            className="relative flex min-h-[40px] shrink-0 items-center gap-3 border-b border-[#e6e8e2] py-2 pr-2"
         >
-            <p className="line-clamp-2 text-[11px] leading-snug text-stone-700 md:text-xs">{article.headline}</p>
+            <span className="h-2 w-2 shrink-0 rounded-full" style={{ backgroundColor: color }} aria-hidden="true" />
+            <p className="line-clamp-2 font-display text-[13.5px] leading-snug tracking-[-0.01em] text-[#303936] md:text-[14.5px]">{article.headline}</p>
         </motion.div>
     );
 }
@@ -104,11 +104,11 @@ function GroupLabel({ item }: { item: Extract<Item, { kind: 'label' }> }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4, ease: 'easeOut' }}
-            className={cn('shrink-0', !item.first && 'mt-3')}
+            className={cn('shrink-0 pb-1', !item.first && 'mt-5')}
         >
-            <span className="inline-flex items-center gap-1.5 rounded-full px-2 py-0.5" style={{ backgroundColor: `${item.color}1f` }}>
+            <span className="inline-flex items-center gap-2">
                 <span className="h-2 w-2 rounded-full" style={{ backgroundColor: item.color }} />
-                <span className="whitespace-nowrap text-[11px] font-semibold text-stone-700">{item.label}</span>
+                <span className="whitespace-nowrap text-[11px] font-medium uppercase tracking-[0.14em] text-[#68716c]">{item.label}</span>
             </span>
         </motion.div>
     );
@@ -145,11 +145,11 @@ export default function SectionsToTopics() {
     return (
         <div
             ref={ref}
-            className="relative rounded-2xl border border-stone-900/10 bg-[#F7F5F2] p-4 md:p-5"
+            className="relative overflow-hidden rounded-md border border-[#d8dcd5] bg-white/70 p-5 md:p-6"
             role="img"
             aria-label="Diagram: news headlines siloed in print sections (Spain, Economy, Sports) regroup into specific cross-cutting topics."
         >
-            <div role="tablist" aria-label="Organization mode" className="mb-4 inline-flex rounded-full border border-stone-900/10 bg-white/60 p-0.5">
+            <div role="tablist" aria-label="Organization mode" className="mb-5 flex gap-6 border-b border-[#d8dcd5]">
                 {TABS.map((tab) => {
                     const active = tab.value === phase;
                     return (
@@ -160,8 +160,8 @@ export default function SectionsToTopics() {
                             aria-selected={active}
                             onClick={() => setPhase(tab.value)}
                             className={cn(
-                                'rounded-full px-3 py-1 text-[11px] font-medium transition-colors',
-                                active ? 'bg-stone-800 text-white' : 'text-stone-500 hover:text-stone-700'
+                                '-mb-px border-b-2 pb-2.5 text-[13px] transition-colors',
+                                active ? 'border-[#303936] text-[#303936]' : 'border-transparent text-[#68716c] hover:text-[#303936]'
                             )}
                         >
                             {tab.label}
@@ -170,7 +170,7 @@ export default function SectionsToTopics() {
                 })}
             </div>
 
-            <div className="flex h-[508px] flex-col gap-1.5 overflow-hidden">
+            <motion.div layout transition={MOVE} className="flex flex-col overflow-hidden">
                 <LayoutGroup>
                     <AnimatePresence mode="popLayout" initial={false}>
                         {items.map((it) =>
@@ -182,7 +182,7 @@ export default function SectionsToTopics() {
                         )}
                     </AnimatePresence>
                 </LayoutGroup>
-            </div>
+            </motion.div>
         </div>
     );
 }

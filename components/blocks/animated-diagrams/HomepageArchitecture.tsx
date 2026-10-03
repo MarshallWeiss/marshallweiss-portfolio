@@ -55,23 +55,21 @@ export default function HomepageArchitecture() {
 
     return (
         <div
-            className="relative overflow-hidden rounded-2xl border border-stone-900/10 bg-[#F7F5F2] p-4 md:p-5"
+            className="relative overflow-hidden rounded-md border border-[#d8dcd5] bg-white/70 p-5 md:p-6"
             role="img"
             aria-label="Diagram: a schematic of the redesigned home page in a browser frame the reader scrolls through — a large opening (apertura) with an opinion column, a feed of topic issues with an ad rail, the classic highlighted sections with a supporting article column, smaller secondary sections with an ad, more news and subscriber services, and a footer."
         >
             <div className="grid gap-4 lg:grid-cols-5 lg:gap-6">
                 {/* Browser frame with the scrollable schematic */}
                 <div className="lg:col-span-3">
-                    <div className="overflow-hidden rounded-xl border border-stone-900/10 bg-white shadow-sm">
-                        {/* chrome */}
-                        <div className="flex items-center gap-1.5 border-b border-stone-900/10 px-3 py-2">
-                            <span className="h-2 w-2 rounded-full bg-stone-300" />
-                            <span className="h-2 w-2 rounded-full bg-stone-300" />
-                            <span className="h-2 w-2 rounded-full bg-stone-300" />
-                            <div className="ml-2 flex-1 rounded bg-stone-100 px-2 py-0.5 text-[9px] text-stone-400">elconfidencial.com</div>
+                    <div className="overflow-hidden rounded-md border border-[#d8dcd5] bg-white">
+                        {/* frame label */}
+                        <div className="flex items-center justify-between border-b border-[#e6e8e2] px-3 py-1.5">
+                            <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-[#68716c]">elconfidencial.com</span>
+                            <span className="text-[10px] text-[#9aa29d]">{ZONES[active].name}</span>
                         </div>
                         {/* progress (tracks scroll position) */}
-                        <div className="h-0.5 w-full bg-stone-100">
+                        <div className="h-0.5 w-full bg-[#eef0ea]">
                             <div className="h-full transition-[width,background-color] duration-200" style={{ width: `${progress}%`, backgroundColor: accent }} />
                         </div>
                         {/* scrollable viewport (stops at the footer) */}
@@ -98,17 +96,17 @@ export default function HomepageArchitecture() {
                                         transition={{ duration: 0.3, ease: EASE }}
                                         className="pointer-events-none absolute inset-x-0 bottom-2 flex justify-center"
                                     >
-                                        <span className="flex items-center gap-1 rounded-full bg-stone-900/85 px-2.5 py-1 text-[10px] font-medium text-white shadow-md">
-                                            Scroll the page
+                                        <span className="flex items-center gap-1.5 rounded-full border border-[#d8dcd5] bg-white/95 px-3 py-1 text-[11px] text-[#303936] shadow-sm">
+                                            Scroll inside the page
                                             <motion.svg
-                                                width="9"
-                                                height="9"
+                                                width="10"
+                                                height="10"
                                                 viewBox="0 0 12 12"
                                                 fill="none"
                                                 animate={{ y: [0, 2, 0] }}
                                                 transition={{ repeat: Infinity, duration: 1.2, ease: 'easeInOut' }}
                                             >
-                                                <path d="M3 5l3 3 3-3" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                                                <path d="M3 5l3 3 3-3" stroke="#303936" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                                             </motion.svg>
                                         </span>
                                     </motion.div>
@@ -120,8 +118,8 @@ export default function HomepageArchitecture() {
 
                 {/* Zone legend / jump control */}
                 <div className="lg:col-span-2">
-                    <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-stone-400">Top to bottom</p>
-                    <ol className="space-y-1.5">
+                    <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.14em] text-[#68716c]">Top to bottom</p>
+                    <ol className="space-y-1">
                         {ZONES.map((z, i) => {
                             const on = i === active;
                             return (
@@ -131,19 +129,20 @@ export default function HomepageArchitecture() {
                                         aria-current={on}
                                         onClick={() => scrollToZone(i)}
                                         className={cn(
-                                            'flex w-full items-start gap-2.5 rounded-lg border p-2.5 text-left transition-colors',
-                                            on ? 'border-transparent bg-white shadow-sm' : 'border-transparent hover:bg-white/50'
+                                            'flex w-full items-start gap-3 border-l-2 py-2 pl-3 pr-2 text-left transition-colors',
+                                            on ? 'bg-white' : 'border-transparent hover:bg-white/60'
                                         )}
+                                        style={on ? { borderLeftColor: z.color } : undefined}
                                     >
                                         <span
                                             className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full text-[10px] font-semibold transition-colors"
-                                            style={on ? { backgroundColor: z.color, color: 'white' } : { backgroundColor: `${z.color}26`, color: '#57534e' }}
+                                            style={on ? { backgroundColor: z.color, color: 'white' } : { backgroundColor: `${z.color}26`, color: '#68716c' }}
                                         >
                                             {i + 1}
                                         </span>
                                         <span className="min-w-0">
-                                            <span className={cn('block text-[13px] font-semibold', on ? 'text-stone-800' : 'text-stone-500')}>{z.name}</span>
-                                            <span className="mt-0.5 block text-[11px] leading-snug text-stone-400">{z.desc}</span>
+                                            <span className={cn('block font-display text-[15px] leading-tight', on ? 'text-[#303936]' : 'text-[#68716c]')}>{z.name}</span>
+                                            <span className={cn('mt-0.5 block text-[11.5px] leading-snug', on ? 'text-[#68716c]' : 'text-[#9aa29d]')}>{z.desc}</span>
                                         </span>
                                     </button>
                                 </li>

@@ -211,6 +211,44 @@
   display: block;
   min-width: 0;
 }
+/* The first project on the home page runs full width: one big screen, caption split in two. */
+.portfolio-project.is-featured {
+  grid-column: 1 / -1;
+}
+.is-featured .project-art {
+  aspect-ratio: 1.85;
+}
+.is-featured .project-screen {
+  top: 64px;
+  left: 11%;
+  right: 11%;
+  bottom: 0;
+  border-radius: 6px 6px 0 0;
+}
+.is-featured .project-art-top {
+  top: 22px;
+  left: 28px;
+  right: 28px;
+}
+.is-featured .project-caption {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  column-gap: 48px;
+  align-items: start;
+}
+.is-featured .project-category {
+  grid-column: 1;
+}
+.is-featured .project-caption h3 {
+  grid-column: 1;
+  font-size: clamp(32px, 3.3vw, 48px);
+}
+.is-featured .project-caption p {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  margin-top: 22px;
+  max-width: 440px;
+}
 .project-art {
   background: #dce4ed;
   border-radius: 8px;
@@ -266,6 +304,13 @@
   background: white;
   box-shadow: 0 12px 25px #25395014;
 }
+.project-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
 .project-screen.is-filled .project-image {
   object-fit: cover;
   object-position: center top;
@@ -302,18 +347,19 @@
   padding-bottom: 100px;
 }
 .experiments-section {
-  padding-block: 84px 94px;
+  padding-block: 72px 84px;
 }
+/* Three equal, compact cards: copy on top, artwork below. The work above stays the loud part of the page. */
 .experiments-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
 }
 .experiment-card {
   position: relative;
   display: grid;
-  grid-template-columns: 54% 46%;
-  min-height: 390px;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 200px;
   border-radius: 8px;
   overflow: hidden;
   isolation: isolate;
@@ -326,13 +372,13 @@
   align-items: flex-start;
   grid-column: 1;
   grid-row: 1;
-  padding: 30px 0 30px 30px;
+  padding: 24px 24px 0;
   min-width: 0;
 }
 .experiment-card-media {
   position: relative;
-  grid-column: 2;
-  grid-row: 1;
+  grid-column: 1;
+  grid-row: 2;
   min-width: 0;
   overflow: hidden;
 }
@@ -350,23 +396,23 @@
 }
 .experiment-card h3 {
   font-family: var(--font-right-slab);
-  font-size: clamp(30px, 2.8vw, 42px);
-  letter-spacing: -0.04em;
-  line-height: 1.1;
-  margin-top: 18px;
+  font-size: clamp(24px, 1.9vw, 30px);
+  letter-spacing: -0.035em;
+  line-height: 1.12;
+  margin-top: 14px;
 }
 .experiment-card p {
-  max-width: 270px;
-  margin-top: 14px;
-  font-size: 14px;
-  line-height: 1.55;
+  max-width: none;
+  margin-top: 10px;
+  font-size: 13.5px;
+  line-height: 1.5;
 }
 .experiment-card-link {
   display: inline-flex;
   align-items: center;
   gap: 9px;
   margin-top: auto;
-  padding-top: 24px;
+  padding-top: 16px;
   font-size: 13px;
 }
 .light-button,
@@ -400,7 +446,6 @@
   color: #faf9f5;
 }
 .experiment-card--atlas {
-  grid-column: 1 / -1;
   background: #f2ece0;
   color: #2a2724;
   border: 1px solid #d9cfbc;
@@ -433,19 +478,19 @@
 }
 .recorder-card-art {
   position: absolute;
-  width: 104%;
+  width: 270px;
   max-width: none;
   height: auto;
-  left: 10%;
-  top: 50%;
+  left: 50%;
+  top: 18px;
   z-index: 1;
-  transform: translateY(-42%) rotate(-7deg);
+  transform: translateX(-50%) rotate(-7deg);
   filter: drop-shadow(0 12px 14px #12221c50);
   transition: transform 0.45s ease;
 }
 .experiment-card--recorder:hover .recorder-card-art,
 .experiment-card--recorder:focus-visible .recorder-card-art {
-  transform: translateY(-44%) rotate(-5deg);
+  transform: translateX(-50%) translateY(-3px) rotate(-5deg);
 }
 .experiment-card--lapidarium {
   background: radial-gradient(ellipse at 80% 55%, #fff0cf, transparent 65%), #efd8a2;
@@ -460,7 +505,6 @@
 }
 .experiment-card--lapidarium p {
   color: #66533c;
-  max-width: 280px;
 }
 .experiment-card--lapidarium .experiment-card-link {
   color: #3f3224;
@@ -579,27 +623,19 @@
     transform: translateY(-42%) rotate(-7deg);
   }
 }
-@media (min-width: 761px) and (max-width: 1000px) {
+@media (max-width: 1000px) {
   .experiments-grid { grid-template-columns: 1fr; }
+  .experiment-card { grid-template-rows: auto 220px; }
+}
+@media (max-width: 760px) {
+  .portfolio-project.is-featured .project-art { aspect-ratio: 1.24; }
+  .is-featured .project-screen { top: 78px; left: 28px; right: 28px; bottom: 22px; border-radius: 3px; }
+  .is-featured .project-caption { display: block; }
+  .is-featured .project-caption h3 { font-size: clamp(26px, 2.4vw, 34px); }
+  .is-featured .project-caption p { margin-top: 0; max-width: none; }
 }
 @media (max-width: 540px) {
-  .experiment-card {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 220px;
-  }
-  .experiment-card .experiment-card-copy { padding: 24px 24px 0; }
-  .experiment-card p { max-width: none; }
-  .experiment-card-media { grid-column: 1; grid-row: 2; }
-  .recorder-card-art {
-    width: 250px;
-    left: 50%;
-    top: 20px;
-    transform: translateX(-50%) rotate(-7deg);
-  }
-  .experiment-card--recorder:hover .recorder-card-art,
-  .experiment-card--recorder:focus-visible .recorder-card-art {
-    transform: translateX(-50%) rotate(-7deg);
-  }
+  .recorder-card-art { width: 250px; top: 20px; }
   .lapidarium-art--card .lapidarium-specimen {
     width: 320px;
     transform: translate(-50%, -50%);
@@ -994,8 +1030,8 @@
     left: 0;
     right: 0;
     padding: 18px 28px 26px;
-    background: color-mix(in srgb, var(--page-bg) 75%, transparent);
-    backdrop-filter: blur(18px);
+    /* Solid, not translucent: the page text was showing through the open menu. */
+    background: var(--page-bg);
     border-bottom: 1px solid var(--portfolio-rule);
     box-shadow: 0 14px 18px #3039360a;
     gap: 0;

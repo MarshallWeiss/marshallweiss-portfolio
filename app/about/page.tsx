@@ -40,7 +40,7 @@ const education = [
   { degree: 'B.A., Psychology', school: 'University of Wisconsin-Madison', period: '2012 - 2016' },
 ];
 
-const tools = ['Claude Code', 'Figma', 'Cursor', 'Jira', 'Amplitude', 'Retool', 'ChatGPT', 'Bolt.new', 'Vercel', 'Midjourney'];
+const tools = ['Figma', 'Claude Code', 'GitHub', 'Amplitude', 'Sanity', 'Next.js'];
 
 const skills = ['Product strategy', 'UX/UI design', 'Design system creation', 'Interactive prototyping', 'Data analysis', 'User Research'];
 

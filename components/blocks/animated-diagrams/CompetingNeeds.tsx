@@ -127,7 +127,7 @@ export default function CompetingNeeds() {
 
     return (
         <div
-            className="relative overflow-hidden rounded-2xl border border-stone-900/10 bg-[#F7F5F2] p-4 md:p-5"
+            className="relative overflow-hidden rounded-md border border-[#d8dcd5] bg-white/70 p-5 md:p-6"
             role="img"
             aria-label="Diagram: six teams — newsroom, audience and SEO, subscriptions, advertising, product design, and marketing — orbit a shared north star of subscription growth, each pulling the homepage toward its own key needs."
         >

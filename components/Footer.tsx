@@ -29,7 +29,7 @@ export default function Footer() {
         <div className="footer-bottom">
           <span>© {new Date().getFullYear()} Marshall Weiss</span>
           <span className="footer-location">
-            Made with curiosity, in Madrid.
+            Designed and built in Madrid.
           </span>
           <div>
             <a

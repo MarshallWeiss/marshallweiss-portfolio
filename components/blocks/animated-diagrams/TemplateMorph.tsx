@@ -59,7 +59,7 @@ export default function TemplateMorph() {
     return (
         <div
             ref={ref}
-            className="relative overflow-hidden rounded-2xl border border-stone-900/10 bg-white p-4 md:p-5"
+            className="relative overflow-hidden rounded-md border border-[#d8dcd5] bg-white p-4 md:p-5"
             role="img"
             aria-label="Diagram: a single homepage opening template cycling through its variants — the photo grows and reshapes from a banner to a square, a vertical, a full-width block on top, and then disappears for a text-only layout — while the surrounding template stays constant."
         >

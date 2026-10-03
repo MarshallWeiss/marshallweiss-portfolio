@@ -7,6 +7,7 @@ interface WorkProject {
   title: string;
   description?: string;
   company?: string;
+  emoji?: string;
   confidential: boolean;
 }
 
@@ -37,7 +38,7 @@ export default function ConfidentialCard({ projects }: ConfidentialCardProps) {
   return (
     <div
       ref={cardRef}
-      className="border border-gray-200/60 rounded-xl p-8 bg-white/50 relative overflow-hidden"
+      className="border border-gray-200/60 rounded-xl p-5 sm:p-8 bg-white/50 relative overflow-hidden h-full"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
@@ -51,6 +52,9 @@ export default function ConfidentialCard({ projects }: ConfidentialCardProps) {
                 <div className="select-none">
                   <div className="flex flex-wrap items-baseline gap-x-2 blur-[6px]">
                     <h3 className="text-base font-medium text-gray-900">
+                      {project.emoji && (
+                        <span className="mr-2" aria-hidden="true">{project.emoji}</span>
+                      )}
                       {project.title}
                     </h3>
                     {project.company && (
@@ -68,6 +72,9 @@ export default function ConfidentialCard({ projects }: ConfidentialCardProps) {
               <div key={project.id}>
                 <div className="flex flex-wrap items-baseline gap-x-2">
                   <h3 className="text-base font-medium text-gray-900">
+                    {project.emoji && (
+                      <span className="mr-2" aria-hidden="true">{project.emoji}</span>
+                    )}
                     {project.title}
                   </h3>
                   {project.company && (

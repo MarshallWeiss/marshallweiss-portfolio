@@ -94,6 +94,8 @@ export interface PortfolioProjectData {
   overviewSummary?: string;
   overviewEvidence?: string;
   overviewEvidenceLabel?: string;
+  /** Mux playback id when the card thumbnail is a video. */
+  thumbnailPlaybackId?: string;
 }
 
 /**
@@ -146,6 +148,7 @@ export const portfolioProjectFields = groq`
   accentColor,
   cardImageFit,
   displayOrder,
+  "thumbnailPlaybackId": select(thumbnailType == "video" => thumbnailVideo.asset->playbackId),
   "heroImage": coalesce(
     thumbnailImage,
     modules[_type == "hero" && showImage != false][0].image,

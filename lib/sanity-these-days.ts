@@ -60,7 +60,8 @@ export async function getWorkProjects(limit: number = 3) {
     description,
     company,
     startDate,
-    confidential
+    confidential,
+    emoji
   }`;
 
   const projects = await client.fetch(query);
@@ -68,6 +69,7 @@ export async function getWorkProjects(limit: number = 3) {
   return projects.map((project: any) => ({
     id: project._id,
     title: project.title,
+    emoji: project.emoji,
     description: project.description,
     company: project.company,
     startDate: project.startDate,

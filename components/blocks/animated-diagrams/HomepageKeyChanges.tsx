@@ -104,7 +104,7 @@ export default function HomepageKeyChanges() {
 
     return (
         <div
-            className="relative overflow-hidden rounded-2xl border border-stone-900/10 bg-[#F7F5F2] p-4 md:p-5"
+            className="relative overflow-hidden rounded-md border border-[#d8dcd5] bg-white/70 p-5 md:p-6"
             role="group"
             aria-label="Diagram: a spotlight tour of the redesigned El Confidencial home page, highlighting seven key changes from the redesign — renamed sections, a clearer visual hierarchy, a new submenu, a prominent home for opinion, thematic content blocks, a wider page, and more space for audiovisual content."
         >
