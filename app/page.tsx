@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDown, ArrowUpRight, MoveUpRight } from "lucide-react";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 import PortfolioProject from "@/components/PortfolioProject";
 import { getPortfolioProjects } from "@/lib/portfolio";
 import { getFunProjects } from "@/lib/sanity-these-days";
@@ -130,7 +130,7 @@ export default async function Home() {
                 <h3>{atlas.title}</h3>
                 {atlas.description && <p>{atlas.description}</p>}
                 <span className="experiment-card-link">
-                  Open the atlas <ArrowUpRight size={17} aria-hidden="true" />
+                  Open the atlas
                 </span>
               </div>
               <div className="experiment-card-media">
@@ -153,7 +153,7 @@ export default async function Home() {
                 <h3>{recorder.title}</h3>
                 {recorder.description && <p>{recorder.description}</p>}
                 <span className="experiment-card-link">
-                  Open recorder <ArrowUpRight size={17} aria-hidden="true" />
+                  Open recorder
                 </span>
               </div>
               <div className="experiment-card-media">
@@ -186,8 +186,7 @@ export default async function Home() {
                 <h3>{lapidarium.title}</h3>
                 {lapidarium.description && <p>{lapidarium.description}</p>}
                 <span className="experiment-card-link">
-                  Explore collection{" "}
-                  <ArrowUpRight size={17} aria-hidden="true" />
+                  Explore collection
                 </span>
               </div>
             </a>
@@ -224,7 +223,6 @@ export default async function Home() {
                     {featured.category} · {featured.readingTime} min read
                   </span>
                   <h3>{featured.title}</h3>
-                  <MoveUpRight className="essay-arrow" aria-hidden="true" />
                 </div>
               </Link>
             )}
@@ -235,7 +233,6 @@ export default async function Home() {
                     {article.category} · {article.readingTime} min read
                   </span>
                   <h3>{article.title}</h3>
-                  <ArrowUpRight size={20} aria-hidden="true" />
                 </Link>
               ))}
             </div>

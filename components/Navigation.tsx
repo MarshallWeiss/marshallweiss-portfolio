@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import { Menu, X, ArrowUpRight } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 const navItems = [
   { name: 'Work', path: '/case-studies' },
   { name: 'Writing', path: '/thoughts' },
@@ -65,7 +65,7 @@ export default function Navigation() {
             );
           })}
           <a href="mailto:marshallweiss94@gmail.com" className="header-contact">
-            Say hello <ArrowUpRight size={16} aria-hidden="true" />
+            Say hello
           </a>
         </div>
       </nav>

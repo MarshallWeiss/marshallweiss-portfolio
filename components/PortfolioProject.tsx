@@ -1,7 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowUpRight } from 'lucide-react';
 import MuxPlayer from '@mux/mux-player-react';
 import { urlFor } from '@/sanity/lib/image';
 import { resolveProjectStory, type PortfolioProjectData } from '@/lib/portfolio';
@@ -9,12 +8,10 @@ import { resolveProjectStory, type PortfolioProjectData } from '@/lib/portfolio'
 export default function PortfolioProject({
   project,
   priority = false,
-  showClient = false,
   featured = false,
 }: {
   project: PortfolioProjectData;
   priority?: boolean;
-  showClient?: boolean;
   featured?: boolean;
 }) {
   const story = resolveProjectStory(project);
@@ -24,10 +21,6 @@ export default function PortfolioProject({
       href={`/case-studies/${project.slug.current}`}
     >
       <div className="project-art">
-        <div className="project-art-top">
-          <span>{showClient ? 'El Confidencial' : ''}</span>
-          <ArrowUpRight size={22} aria-hidden="true" />
-        </div>
         {featured && project.thumbnailPlaybackId ? (
           <div className="project-screen is-filled">
             {/* The featured card plays the study's own thumbnail video, silently, instead of a still. */}

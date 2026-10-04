@@ -219,16 +219,11 @@
   aspect-ratio: 1.85;
 }
 .is-featured .project-screen {
-  top: 64px;
+  top: 48px;
   left: 11%;
   right: 11%;
-  bottom: 0;
-  border-radius: 6px 6px 0 0;
-}
-.is-featured .project-art-top {
-  top: 22px;
-  left: 28px;
-  right: 28px;
+  bottom: 48px;
+  border-radius: 6px;
 }
 .is-featured .project-caption {
   display: grid;
@@ -266,33 +261,10 @@
 .project-lilac .project-art {
   background: #dcdce9;
 }
-.project-art-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: absolute;
-  top: 24px;
-  left: 28px;
-  right: 28px;
-  z-index: 2;
-}
-.project-art-top span {
-  font-family: var(--font-right-slab);
-  font-size: 18px;
-}
-.project-art-top svg {
-  background: #ffffffa0;
-  border-radius: 50%;
-  box-sizing: content-box;
-  padding: 9px;
-  transition: transform 0.25s;
-}
+/* Screens sit in the card like a framed print: the same margin on every side. */
 .project-screen {
   position: absolute;
-  top: 78px;
-  left: 28px;
-  right: 28px;
-  bottom: 22px;
+  inset: 40px;
   overflow: hidden;
   border-radius: 3px;
 }
@@ -318,8 +290,17 @@
 .portfolio-project:hover .project-image {
   transform: scale(1.025);
 }
-.portfolio-project:hover .project-art-top svg {
-  transform: rotate(45deg);
+/* Cards carry no arrow; the title underlines on hover instead. */
+.portfolio-project:hover .project-caption h3,
+.featured-essay:hover h3,
+.essay-list a:hover h3 {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+}
+.experiment-card:hover .experiment-card-link {
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 .project-caption {
   padding-top: 24px;
@@ -629,7 +610,7 @@
 }
 @media (max-width: 760px) {
   .portfolio-project.is-featured .project-art { aspect-ratio: 1.24; }
-  .is-featured .project-screen { top: 78px; left: 28px; right: 28px; bottom: 22px; border-radius: 3px; }
+  .is-featured .project-screen { inset: 40px; border-radius: 3px; }
   .is-featured .project-caption { display: block; }
   .is-featured .project-caption h3 { font-size: clamp(26px, 2.4vw, 34px); }
   .is-featured .project-caption p { margin-top: 0; max-width: none; }
@@ -665,8 +646,6 @@
 }
 .essay-info {
   padding-top: 22px;
-  position: relative;
-  padding-right: 44px;
 }
 .essay-info > span,
 .essay-list a > span {
@@ -680,15 +659,10 @@
   line-height: 1.2;
   margin-top: 10px;
 }
-.essay-arrow {
-  position: absolute;
-  right: 0;
-  top: 48px;
-}
 .essay-list a {
   display: block;
   position: relative;
-  padding: 26px 34px 28px 0;
+  padding: 26px 0 28px;
   border-bottom: 1px solid var(--portfolio-rule);
 }
 .essay-list a:first-child {
@@ -700,14 +674,6 @@
   line-height: 1.2;
   letter-spacing: -0.025em;
   margin-top: 11px;
-}
-.essay-list svg {
-  position: absolute;
-  right: 0;
-  top: 52px;
-}
-.essay-list a:first-child svg {
-  top: 28px;
 }
 .personal-strip {
   display: flex;
@@ -1112,19 +1078,9 @@
   .project-art {
     aspect-ratio: 1.2;
   }
-  .project-art-top {
-    top: 18px;
-    left: 20px;
-    right: 20px;
-  }
-  .project-art-top span {
-    font-size: 16px;
-  }
-  .project-screen {
-    top: 62px;
-    left: 16px;
-    right: 16px;
-    bottom: 16px;
+  .project-screen,
+  .is-featured .project-screen {
+    inset: 20px;
   }
   .project-caption {
     padding-top: 20px;
