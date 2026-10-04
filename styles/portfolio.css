@@ -16,13 +16,13 @@
   position: sticky;
   top: 0;
   z-index: 60;
+  border-bottom: 1px solid var(--portfolio-rule);
 }
 .header-inner {
   display: flex;
   justify-content: space-between;
   align-items: center;
   min-height: 94px;
-  border-bottom: 1px solid var(--portfolio-rule);
 }
 .wordmark {
   display: inline-flex;
@@ -31,12 +31,6 @@
   font-family: var(--font-right-slab);
   font-size: 24px;
   color: var(--portfolio-ink);
-}
-.wordmark-dot {
-  width: 7px;
-  height: 7px;
-  background: var(--portfolio-blue);
-  border-radius: 50%;
 }
 .header-links {
   display: flex;
@@ -802,38 +796,6 @@
   font-size: 20px;
   line-height: 1.6;
 }
-.case-quick-summary {
-  background: #e6ecf2;
-  border-radius: 8px;
-  padding: 28px 32px;
-  margin-bottom: 40px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
-}
-.case-quick-summary h2 {
-  font-family: var(--font-right-slab);
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-.case-quick-summary p {
-  font-size: 14px;
-  line-height: 1.7;
-  color: #4f5f68;
-}
-.case-section-nav {
-  display: flex;
-  flex-wrap: wrap;
-  column-gap: 24px;
-  row-gap: 10px;
-  padding-block: 16px 26px;
-  font-size: 12px;
-  color: #536378;
-}
-.case-section-nav a:hover {
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
 .writing-heading {
   padding-block: 25px 45px;
 }
@@ -1170,10 +1132,5 @@
   }
   .work-index-grid {
     padding-bottom: 60px;
-  }
-  .case-quick-summary {
-    grid-template-columns: 1fr;
-    padding: 24px;
-    gap: 24px;
   }
 }

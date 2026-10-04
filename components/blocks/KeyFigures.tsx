@@ -114,7 +114,7 @@ export default function KeyFigures({
                 {figures.map((f, i) => (
                     <div
                         key={f._key || i}
-                        className={cn('border-t border-gray-300 pt-5', align)}
+                        className={align}
                         style={{ transitionDelay: `${i * 80}ms` }}
                     >
                         <p className="font-display text-5xl leading-none tracking-[-0.04em] text-gray-900 md:text-6xl">

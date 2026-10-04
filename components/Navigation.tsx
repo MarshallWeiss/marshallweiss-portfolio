@@ -37,7 +37,6 @@ export default function Navigation() {
       >
         <Link href="/" className="wordmark" aria-label="Marshall Weiss home">
           Marshall Weiss
-          <span className="wordmark-dot" aria-hidden="true" />
         </Link>
         <button
           ref={button}

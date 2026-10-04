@@ -6,7 +6,7 @@ import { groq } from 'next-sanity';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { resolveProjectStory, sortProjects } from '@/lib/portfolio';
+import { sortProjects } from '@/lib/portfolio';
 
 interface PageProps {
     params: Promise<{
@@ -145,50 +145,12 @@ export default async function CaseStudyPage({ params }: PageProps) {
         notFound();
     }
 
-    // Short reading path: a summary drawn from Sanity, plus an "on this page"
-    // nav built from the modules an editor has explicitly opted in.
-    const story = resolveProjectStory(caseStudy);
-    const navSections = (caseStudy.modules || []).filter(
-        (module: any) => module.showInSectionNav && typeof module.headline === 'string' && module.headline.trim()
-    );
-
-    const overview =
-        story.summary || story.evidence || navSections.length > 0 ? (
-            <>
-                {(story.summary || story.evidence) && (
-                    <aside className="case-quick-summary" aria-label="Project overview">
-                        {story.summary && (
-                            <div>
-                                <h2>The short version</h2>
-                                <p>{story.summary}</p>
-                            </div>
-                        )}
-                        {story.evidence && (
-                            <div>
-                                <h2>{story.evidenceLabel}</h2>
-                                <p>{story.evidence}</p>
-                            </div>
-                        )}
-                    </aside>
-                )}
-                {navSections.length > 0 && (
-                    <nav className="case-section-nav" aria-label="On this page">
-                        {navSections.map((module: any) => (
-                            <a key={module._key} href={`#section-${module._key}`}>
-                                {module.headline.trim()}
-                            </a>
-                        ))}
-                    </nav>
-                )}
-            </>
-        ) : null;
-
     return (
         <div className="min-h-screen bg-white">
             {/* Main Content */}
             <div className="px-6 md:px-12 max-w-[1920px] mx-auto pb-32 pt-8">
                 {caseStudy.modules && caseStudy.modules.length > 0 ? (
-                    <BlockRenderer modules={caseStudy.modules} overview={overview} />
+                    <BlockRenderer modules={caseStudy.modules} />
                 ) : (
                     <div className="text-center py-20">
                         <p className="text-gray-500">No modules found for this case study.</p>

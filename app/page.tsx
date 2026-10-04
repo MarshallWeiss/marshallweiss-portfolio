@@ -50,7 +50,7 @@ export default async function Home() {
             <span>
               Marshall Weiss
               <br />
-              <span className="muted">Madrid, Spain</span>
+              <span className="muted">Madrid &amp; Washington, DC</span>
             </span>
           </div>
           <p>

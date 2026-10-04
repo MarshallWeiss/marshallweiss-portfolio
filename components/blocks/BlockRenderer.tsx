@@ -23,8 +23,6 @@ import LazyBlock from './LazyBlock';
 
 interface BlockRendererProps {
     modules: any[];
-    /** Optional summary + section nav injected after the first block. */
-    overview?: React.ReactNode;
 }
 
 /** Number of blocks to render eagerly (above the fold) */
@@ -77,7 +75,7 @@ function renderBlock(module: any, eager = false) {
     }
 }
 
-export default function BlockRenderer({ modules, overview }: BlockRendererProps) {
+export default function BlockRenderer({ modules }: BlockRendererProps) {
     if (!modules || !Array.isArray(modules)) {
         return null;
     }
@@ -127,7 +125,6 @@ export default function BlockRenderer({ modules, overview }: BlockRendererProps)
                         ) : (
                             <LazyBlock id={`section-${key}`}>{block}</LazyBlock>
                         )}
-                        {index === 0 && overview}
                     </React.Fragment>
                 );
             })}
