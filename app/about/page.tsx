@@ -135,6 +135,9 @@ export default function AboutPage() {
                 <a href="mailto:marshallweiss94@gmail.com" className="block text-gray-600 hover:text-gray-900 transition-colors">
                   marshallweiss94@gmail.com
                 </a>
+                <a href="tel:+12403515284" className="block text-gray-600 hover:text-gray-900 transition-colors">
+                  +1 (240) 351-5284 (US)
+                </a>
                 <a href="tel:+34691608000" className="block text-gray-600 hover:text-gray-900 transition-colors">
                   +34 691 608 000 (Spain)
                 </a>
