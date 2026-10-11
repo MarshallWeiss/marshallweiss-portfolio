@@ -6,7 +6,7 @@ export default function ContactPage() {
     <section className="portfolio-container contact-page">
       <h1>Say hello.</h1>
       <p>
-        I’m based in Madrid and work in English and Spanish.
+        I’m based in Washington, DC and Madrid, and work in English and Spanish.
         <br />
         Get in touch about design, development, or teaching.
       </p>
