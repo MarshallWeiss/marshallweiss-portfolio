@@ -307,10 +307,7 @@ export default function AnnotatedImage({
     // Side-by-side layout: text on one side, annotated image on the other
     if (isSideBySide) {
         const textContent = (
-            <div className={cn(
-                'md:col-span-5 flex flex-col justify-center',
-                reverseLayout && 'md:col-start-8'
-            )}>
+            <div className="flex flex-col justify-center">
                 <BlockHeading
                     headline={headline}
                     subheading={subheading}
@@ -328,10 +325,7 @@ export default function AnnotatedImage({
         );
 
         const imageContent = (
-            <div className={cn(
-                'md:col-span-7',
-                reverseLayout && 'md:col-start-1 md:row-start-1'
-            )}>
+            <div className={cn(reverseLayout && 'lg:order-first')}>
                 {renderAnnotatedImage()}
             </div>
         );
@@ -340,8 +334,11 @@ export default function AnnotatedImage({
             <>
                 <BlockWrapper width={width} background={background} spacing={spacing}>
                     <div className={cn(
-                        'grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center',
-                        reverseLayout && 'md:grid-flow-dense'
+                        // Two tracks, text 5 : image 7 (see SplitMedia for why not 12 columns)
+                        'grid grid-cols-1 gap-8 lg:gap-12 items-center',
+                        reverseLayout
+                            ? 'lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]'
+                            : 'lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]'
                     )}>
                         {textContent}
                         {imageContent}

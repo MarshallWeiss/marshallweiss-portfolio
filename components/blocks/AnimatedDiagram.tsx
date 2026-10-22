@@ -54,12 +54,13 @@ export default function AnimatedDiagram({
 }: AnimatedDiagramProps) {
     const Diagram = VARIANTS[variant] || SectionsToTopics;
 
-    const columnSpans = {
-        '40/60': { media: 'md:col-span-5', text: 'md:col-span-7' },
-        '50/50': { media: 'md:col-span-6', text: 'md:col-span-6' },
-        '60/40': { media: 'md:col-span-7', text: 'md:col-span-5' },
-        '70/30': { media: 'md:col-span-8', text: 'md:col-span-4' },
-    }[mediaRatio];
+    // Two tracks [text, diagram], or [diagram, text] when reversed (see SplitMedia).
+    const gridTemplate = {
+        '40/60': ['lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]', 'lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]'],
+        '50/50': ['lg:grid-cols-2', 'lg:grid-cols-2'],
+        '60/40': ['lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]', 'lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]'],
+        '70/30': ['lg:grid-cols-[minmax(0,3fr)_minmax(0,7fr)]', 'lg:grid-cols-[minmax(0,7fr)_minmax(0,3fr)]'],
+    }[mediaRatio][reverseLayout ? 1 : 0];
 
     const hasText = Boolean(text || headline || subheading);
 
@@ -67,9 +68,8 @@ export default function AnimatedDiagram({
         <div
             className={cn(
                 'text-gray-600',
-                layout === 'sideBySide' ? columnSpans.text : 'max-w-3xl',
-                layout !== 'sideBySide' && textAlign === 'center' && 'mx-auto',
-                layout === 'sideBySide' && reverseLayout && 'md:col-start-auto md:row-start-1'
+                layout !== 'sideBySide' && 'max-w-3xl',
+                layout !== 'sideBySide' && textAlign === 'center' && 'mx-auto'
             )}
         >
             <BlockHeading headline={headline} subheading={subheading} headlineSize={headlineSize} textAlign={textAlign} />
@@ -90,8 +90,8 @@ export default function AnimatedDiagram({
     const diagram = (
         <div
             className={cn(
-                layout === 'sideBySide' ? columnSpans.media : 'w-full',
-                layout === 'sideBySide' && reverseLayout && 'md:col-start-1 md:row-start-1'
+                layout !== 'sideBySide' && 'w-full',
+                layout === 'sideBySide' && reverseLayout && 'lg:order-first'
             )}
         >
             <Diagram />
@@ -103,8 +103,8 @@ export default function AnimatedDiagram({
             {layout === 'sideBySide' && textContent ? (
                 <div
                     className={cn(
-                        'grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 items-center',
-                        reverseLayout && 'md:grid-flow-dense'
+                        'grid grid-cols-1 gap-12 lg:gap-16 items-center',
+                        gridTemplate
                     )}
                 >
                     {textContent}
