@@ -93,9 +93,14 @@ html {
   color: #3C3A37;
 }
 
-/* Crop bottom recording artifact from Mux videos */
+/* Crop bottom recording artifact from Mux videos. The player runs 2px past its
+   box and the parent's overflow-hidden trims it; a clip-path would instead
+   expose the container's background as a thin line. Block display removes the
+   inline baseline gap underneath. */
 mux-player {
-  clip-path: inset(0 0 2px 0);
+  display: block;
+  height: calc(100% + 2px) !important;
+  margin-bottom: -2px;
 }
 
 /* Hide all Mux Player controls for thumbnail videos */
