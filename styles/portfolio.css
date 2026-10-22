@@ -537,13 +537,15 @@
   aspect-ratio: auto;
 }
 .lapidarium-art--card .lapidarium-specimen {
-  width: 125%;
+  /* Sits in the lower band like the recorder, slightly cropped at the bottom. */
+  width: min(80%, 340px);
   max-width: none;
   height: auto;
   right: auto;
   left: 50%;
-  top: 50%;
-  transform: translate(-50%, -45%);
+  top: auto;
+  bottom: -22%;
+  transform: translateX(-50%);
   filter: drop-shadow(0 12px 10px rgb(79 53 23 / 0.12));
 }
 .lapidarium-specimen-name {
@@ -563,7 +565,7 @@
 }
 .experiment-card--lapidarium:hover .lapidarium-specimen,
 .experiment-card--lapidarium:focus-visible .lapidarium-specimen {
-  transform: translate(-50%, -46%);
+  transform: translate(-50%, -3%);
 }
 .lapidarium-art--compact {
   aspect-ratio: 1;
@@ -587,7 +589,7 @@
   }
   .experiment-card--lapidarium:hover .lapidarium-specimen,
   .experiment-card--lapidarium:focus-visible .lapidarium-specimen {
-    transform: translate(-50%, -45%);
+    transform: translateX(-50%);
   }
   .recorder-card-art { transition: none; }
   .atlas-art { transition: none; }
@@ -612,8 +614,7 @@
 @media (max-width: 540px) {
   .recorder-card-art { width: 250px; top: 20px; }
   .lapidarium-art--card .lapidarium-specimen {
-    width: 320px;
-    transform: translate(-50%, -50%);
+    width: 280px;
   }
 }
 .writing-section {
