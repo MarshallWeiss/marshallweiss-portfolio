@@ -8,6 +8,7 @@ import thoughtsData from '@/data/thoughts.json';
 import { SectionItem } from '@/components/SectionCard';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { SHOW_PERSONAL_WRITING } from '@/lib/flags';
 
 interface PageProps {
   params: Promise<{
@@ -15,7 +16,8 @@ interface PageProps {
   }>;
 }
 
-const items: SectionItem[] = thoughtsData.items;
+// With the essays switched off, their URLs 404 rather than staying reachable.
+const items: SectionItem[] = SHOW_PERSONAL_WRITING ? thoughtsData.items : [];
 
 /** Show a section index for pieces at or above this reading time. */
 const INDEX_THRESHOLD_MIN = 8;
