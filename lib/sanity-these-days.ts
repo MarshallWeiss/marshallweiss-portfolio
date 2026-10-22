@@ -96,7 +96,7 @@ export async function getDoingItems(limit: number = 5) {
 
 // Fetch curated articles
 export async function getCuratedArticles() {
-  const query = `*[_type == "curatedArticle"] | order(addedAt desc) {
+  const query = `*[_type == "curatedArticle" && hidden != true] | order(addedAt desc) {
     _id,
     title,
     url,
@@ -104,6 +104,7 @@ export async function getCuratedArticles() {
     description,
     ogImage,
     category,
+    format,
     addedAt
   }`;
 
@@ -117,6 +118,7 @@ export async function getCuratedArticles() {
     description: article.description,
     ogImage: article.ogImage,
     category: article.category,
+    format: article.format || 'article',
     addedAt: article.addedAt,
   }));
 }

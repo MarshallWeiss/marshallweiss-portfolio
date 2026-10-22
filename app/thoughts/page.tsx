@@ -4,9 +4,9 @@ import thoughtsData from '@/data/thoughts.json';
 import { getCuratedArticles } from '@/lib/sanity-these-days';
 
 export const metadata: Metadata = {
-  title: 'Writing & reading',
+  title: 'Thoughts',
   description:
-    'Notes on design, AI, and learning by making, by Marshall Weiss.',
+    'Articles, essays, podcasts and talks Marshall Weiss recommends.',
 };
 
 export default async function ThoughtsPage() {

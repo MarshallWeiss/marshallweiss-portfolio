@@ -52,6 +52,28 @@ export default defineType({
       },
     }),
     defineField({
+      name: 'format',
+      title: 'Format',
+      type: 'string',
+      description: 'Articles and podcasts/videos show in separate tabs on /thoughts',
+      options: {
+        list: [
+          { title: 'Article', value: 'article' },
+          { title: 'Video', value: 'video' },
+          { title: 'Podcast', value: 'podcast' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'article',
+    }),
+    defineField({
+      name: 'hidden',
+      title: 'Hide from site',
+      type: 'boolean',
+      description: 'Keep the link in Sanity but leave it off the Thoughts page',
+      initialValue: false,
+    }),
+    defineField({
       name: 'addedAt',
       title: 'Date Added',
       type: 'date',

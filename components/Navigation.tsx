@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 const navItems = [
   { name: 'Work', path: '/case-studies' },
-  { name: 'Writing', path: '/thoughts' },
+  { name: 'Thoughts', path: '/thoughts' },
   { name: 'Current', path: '/current' },
   { name: 'About', path: '/about' },
 ];
