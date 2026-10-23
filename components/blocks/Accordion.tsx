@@ -94,7 +94,7 @@ function AccordionItemPanel({
                     >
                         <p className={cn(
                             "text-gray-600 leading-relaxed",
-                            variant === 'full' ? 'max-w-[34em] pb-6' : 'pb-4'
+                            variant === 'full' ? 'max-w-3xl pb-6' : 'pb-4'
                         )}>
                             {item.content}
                         </p>

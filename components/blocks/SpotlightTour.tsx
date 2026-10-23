@@ -179,7 +179,7 @@ export default function SpotlightTour({
                     <div className={cn('mb-6', textAlign === 'center' && 'text-center')}>
                         <BlockHeading headline={headline} subheading={subheading} headlineSize={headlineSize} textAlign={textAlign} />
                         {text && (
-                            <p className={cn('whitespace-pre-wrap leading-relaxed text-base md:text-lg text-gray-600 max-w-[34em]', textAlign === 'center' && 'mx-auto md:text-center')}>{text}</p>
+                            <p className={cn('whitespace-pre-wrap leading-relaxed text-base md:text-lg text-gray-600 max-w-3xl', textAlign === 'center' && 'mx-auto md:text-center')}>{text}</p>
                         )}
                     </div>
                 )}
@@ -209,7 +209,7 @@ export default function SpotlightTour({
                     <div className={cn('mb-6', textAlign === 'center' && 'text-center')}>
                         <BlockHeading headline={headline} subheading={subheading} headlineSize={headlineSize} textAlign={textAlign} />
                         {text && (
-                            <p className={cn('whitespace-pre-wrap leading-relaxed text-base md:text-lg text-gray-600 max-w-[34em]', textAlign === 'center' && 'mx-auto md:text-center')}>{text}</p>
+                            <p className={cn('whitespace-pre-wrap leading-relaxed text-base md:text-lg text-gray-600 max-w-3xl', textAlign === 'center' && 'mx-auto md:text-center')}>{text}</p>
                         )}
                     </div>
                 )}

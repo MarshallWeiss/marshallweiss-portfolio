@@ -58,7 +58,7 @@ export default function BlockHeading({
                 </Heading>
             )}
             {subheading && (
-                <p className={cn('text-base md:text-lg text-gray-600 mt-2 max-w-[34em]', textAlign === 'center' && 'md:mx-auto', textAlign === 'right' && 'md:ml-auto')}>
+                <p className={cn('text-base md:text-lg text-gray-600 mt-2 max-w-3xl', textAlign === 'center' && 'md:mx-auto', textAlign === 'right' && 'md:ml-auto')}>
                     {subheading}
                 </p>
             )}

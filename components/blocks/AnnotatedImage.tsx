@@ -373,7 +373,7 @@ export default function AnnotatedImage({
                     className=""
                 />
                 {description && (
-                    <p className={cn("text-gray-600 text-base md:text-lg leading-relaxed mb-10 md:mb-14 max-w-[34em]", alignmentClass, textAlign === 'center' && "md:mx-auto")}>
+                    <p className={cn("text-gray-600 text-base md:text-lg leading-relaxed mb-10 md:mb-14 max-w-3xl", alignmentClass, textAlign === 'center' && "md:mx-auto")}>
                         {description}
                     </p>
                 )}
