@@ -5,9 +5,9 @@ import Image from 'next/image';
 import { useNextSanityImage } from 'next-sanity-image';
 import { client } from '@/sanity/lib/client';
 import { cn } from '@/lib/utils';
-import { ArrowLeft, ArrowRight, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, X, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 import BlockWrapper from './BlockWrapper';
-import BlockHeading from './BlockHeading';
+import BlockHeading, { childHeadingTag } from './BlockHeading';
 import MediaPlaceholder, { SHOW_PENDING_MEDIA } from './MediaPlaceholder';
 
 interface Slide {
@@ -69,6 +69,10 @@ export default function Carousel({
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(true);
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+    // With one slide per view, slides of different heights would otherwise
+    // leave the block as tall as the tallest one. Follow the visible slide.
+    const [trackHeight, setTrackHeight] = useState<number | undefined>(undefined);
+    const fitToVisibleSlide = slidesPerView === '1';
 
     const openLightbox = (index: number) => setSelectedIndex(index);
     const closeLightbox = () => setSelectedIndex(null);
@@ -83,7 +87,18 @@ export default function Carousel({
         }
     };
 
+    const syncTrackHeight = () => {
+        const container = scrollContainerRef.current;
+        if (!fitToVisibleSlide || !container) return;
+        const slideEls = Array.from(container.querySelectorAll<HTMLElement>('.carousel-slide'));
+        if (slideEls.length === 0) return;
+        const step = slideEls.length > 1 ? slideEls[1].offsetLeft - slideEls[0].offsetLeft : container.clientWidth;
+        const index = Math.min(slideEls.length - 1, Math.max(0, Math.round(container.scrollLeft / (step || 1))));
+        setTrackHeight(slideEls[index].offsetHeight);
+    };
+
     const checkScrollButtons = () => {
+        syncTrackHeight();
         if (scrollContainerRef.current) {
             const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
             if (infiniteLoop) {
@@ -100,7 +115,17 @@ export default function Carousel({
     useEffect(() => {
         checkScrollButtons();
         window.addEventListener('resize', checkScrollButtons);
-        return () => window.removeEventListener('resize', checkScrollButtons);
+        // Images load after first paint and change slide heights.
+        const container = scrollContainerRef.current;
+        const observer = fitToVisibleSlide && container && typeof ResizeObserver !== 'undefined'
+            ? new ResizeObserver(() => syncTrackHeight())
+            : null;
+        container?.querySelectorAll('.carousel-slide').forEach((el) => observer?.observe(el));
+        return () => {
+            window.removeEventListener('resize', checkScrollButtons);
+            observer?.disconnect();
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     if (!slides || slides.length === 0) {
@@ -185,14 +210,15 @@ export default function Carousel({
                     {/* Slides Container */}
                     <div
                         ref={scrollContainerRef}
-                        className={cn("md:flex-1 flex gap-12 overflow-x-auto scrollbar-hide", alignmentClass)}
-                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                        className={cn("md:flex-1 flex gap-12 overflow-x-auto scrollbar-hide", fitToVisibleSlide ? 'items-start transition-[height] duration-300 ease-out' : alignmentClass)}
+                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', height: trackHeight }}
                         onScroll={checkScrollButtons}
                     >
                         {slides.map((slide, idx) => (
                             <CarouselSlide
                                 key={slide._key || idx}
                                 slide={slide}
+                                titleTag={headline ? childHeadingTag(headlineSize) : 'h3'}
                                 onOpen={() => openLightbox(idx)}
                                 aspectRatio={aspectRatio}
                                 objectFit={objectFit}
@@ -217,31 +243,31 @@ export default function Carousel({
                         <ArrowRight className="w-5 h-5 text-gray-700" />
                     </button>
 
-                    {/* Left Arrow - overlapping on mobile */}
-                    <button
-                        onClick={() => scroll('left')}
-                        disabled={!canScrollLeft}
-                        className={cn(
-                            "md:hidden absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full border border-gray-300 bg-white/90 flex items-center justify-center transition-all shadow-lg",
-                            !canScrollLeft && "opacity-30 cursor-not-allowed"
-                        )}
-                        aria-label="Previous slide"
-                    >
-                        <ArrowLeft className="w-4 h-4 text-gray-700" />
-                    </button>
-
-                    {/* Right Arrow - overlapping on mobile */}
-                    <button
-                        onClick={() => scroll('right')}
-                        disabled={!canScrollRight}
-                        className={cn(
-                            "md:hidden absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full border border-gray-300 bg-white/90 flex items-center justify-center transition-all shadow-lg",
-                            !canScrollRight && "opacity-30 cursor-not-allowed"
-                        )}
-                        aria-label="Next slide"
-                    >
-                        <ArrowRight className="w-4 h-4 text-gray-700" />
-                    </button>
+                    {/* Mobile: arrows sit under the slides so they never cover slide text */}
+                    <div className="mt-4 flex justify-end gap-2 md:hidden">
+                        <button
+                            onClick={() => scroll('left')}
+                            disabled={!canScrollLeft}
+                            className={cn(
+                                "w-11 h-11 rounded-full border border-gray-300 bg-white flex items-center justify-center transition-all",
+                                !canScrollLeft && "opacity-30 cursor-not-allowed"
+                            )}
+                            aria-label="Previous slide"
+                        >
+                            <ArrowLeft className="w-4 h-4 text-gray-700" />
+                        </button>
+                        <button
+                            onClick={() => scroll('right')}
+                            disabled={!canScrollRight}
+                            className={cn(
+                                "w-11 h-11 rounded-full border border-gray-300 bg-white flex items-center justify-center transition-all",
+                                !canScrollRight && "opacity-30 cursor-not-allowed"
+                            )}
+                            aria-label="Next slide"
+                        >
+                            <ArrowRight className="w-4 h-4 text-gray-700" />
+                        </button>
+                    </div>
                 </div>
             ) : (
                 // Overlapping positioning - arrows absolute
@@ -249,14 +275,15 @@ export default function Carousel({
                     {/* Slides Container */}
                     <div
                         ref={scrollContainerRef}
-                        className={cn("flex gap-12 overflow-x-auto scrollbar-hide", alignmentClass)}
-                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                        className={cn("flex gap-12 overflow-x-auto scrollbar-hide", fitToVisibleSlide ? 'items-start transition-[height] duration-300 ease-out' : alignmentClass)}
+                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', height: trackHeight }}
                         onScroll={checkScrollButtons}
                     >
                         {slides.map((slide, idx) => (
                             <CarouselSlide
                                 key={slide._key || idx}
                                 slide={slide}
+                                titleTag={headline ? childHeadingTag(headlineSize) : 'h3'}
                                 onOpen={() => openLightbox(idx)}
                                 aspectRatio={aspectRatio}
                                 objectFit={objectFit}
@@ -312,6 +339,7 @@ export default function Carousel({
 
 function CarouselSlide({
     slide,
+    titleTag: TitleTag = 'h3',
     onOpen,
     aspectRatio = 'auto',
     objectFit = 'cover',
@@ -321,6 +349,7 @@ function CarouselSlide({
     imageShadow = 'none',
 }: {
     slide: Slide;
+    titleTag?: 'h3' | 'h4';
     onOpen: () => void;
     aspectRatio?: 'auto' | 'square' | '4:3' | '16:9' | '3:4' | '9:16';
     objectFit?: 'cover' | 'contain';
@@ -373,9 +402,9 @@ function CarouselSlide({
                     {/* Text — left on desktop, below image on mobile */}
                     <div className="order-2 md:order-1">
                         {slide.title && (
-                            <h3 className="text-xl md:text-2xl font-medium text-gray-900 mb-3">
-                                {slide.title}
-                            </h3>
+                            <TitleTag className="text-xl md:text-2xl font-medium text-gray-900 mb-3">
+                                {slide.title.trim()}
+                            </TitleTag>
                         )}
                         {slide.description && (
                             <p className="text-gray-600 leading-relaxed">
@@ -386,9 +415,11 @@ function CarouselSlide({
 
                     {/* Image — right on desktop, above text on mobile */}
                     <div className="order-1 md:order-2 flex justify-center">
-                        <div
+                        <button
+                            type="button"
+                            aria-label={`Enlarge image${slide.title ? `: ${slide.title.trim()}` : ''}`}
                             className={cn(
-                                "relative rounded-lg overflow-hidden cursor-pointer group",
+                                "relative block rounded-lg overflow-hidden cursor-zoom-in group",
                                 shadowClasses[imageShadow],
                                 showBackground && "bg-gray-100"
                             )}
@@ -397,12 +428,15 @@ function CarouselSlide({
                             {imageProps ? (
                                 <Image
                                     {...(imageProps as any)}
-                                    alt={slide.title || 'Carousel slide'}
+                                    alt={slide.title?.trim() || ''}
                                     className="h-auto w-auto max-h-[720px] object-contain group-hover:scale-[1.02] transition-transform duration-300"
                                     sizes="(max-width: 768px) 90vw, 45vw"
                                 />
                             ) : null}
-                        </div>
+                            <span aria-hidden="true" className="pointer-events-none absolute bottom-2 right-2 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-sm md:hidden">
+                                <Maximize2 className="h-4 w-4" />
+                            </span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -412,9 +446,11 @@ function CarouselSlide({
     return (
         <div className={cn("carousel-slide flex-shrink-0", slideWidthClass)}>
             {/* Image */}
-            <div
+            <button
+                type="button"
+                aria-label={`Enlarge image${slide.title ? `: ${slide.title.trim()}` : ''}`}
                 className={cn(
-                    "relative rounded-lg overflow-hidden mb-4 cursor-pointer group",
+                    "relative block w-full rounded-lg overflow-hidden mb-4 cursor-zoom-in group",
                     shadowClasses[imageShadow],
                     showBackground && "bg-gray-100",
                     aspectRatioClass
@@ -424,7 +460,7 @@ function CarouselSlide({
                 {imageProps ? (
                     <Image
                         {...(imageProps as any)}
-                        alt={slide.title || 'Carousel slide'}
+                        alt={slide.title?.trim() || ''}
                         className={cn(
                             "group-hover:scale-[1.02] transition-transform duration-300",
                             aspectRatioClass ? "w-full h-full" : "w-full h-auto",
@@ -433,13 +469,16 @@ function CarouselSlide({
                         sizes={imageSizes}
                     />
                 ) : null}
-            </div>
+                <span aria-hidden="true" className="pointer-events-none absolute bottom-2 right-2 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-sm md:hidden">
+                    <Maximize2 className="h-4 w-4" />
+                </span>
+            </button>
 
             {/* Title */}
             {slide.title && (
-                <h3 className="text-lg font-medium text-gray-900 mb-2">
-                    {slide.title}
-                </h3>
+                <TitleTag className="text-lg font-medium text-gray-900 mb-2">
+                    {slide.title.trim()}
+                </TitleTag>
             )}
 
             {/* Description */}
@@ -517,6 +556,7 @@ function Lightbox({
             {/* Close button */}
             <button
                 onClick={onClose}
+                aria-label="Close"
                 className="absolute top-6 right-6 z-10 text-gray-500 hover:text-gray-900 transition-colors"
             >
                 <X className="w-8 h-8" />
@@ -526,6 +566,7 @@ function Lightbox({
             {slides.length > 1 && (
                 <button
                     onClick={(e) => { e.stopPropagation(); handlePrev(); }}
+                    aria-label="Previous image"
                     className="absolute left-6 top-1/2 -translate-y-1/2 z-10 text-gray-500 hover:text-gray-900 transition-colors"
                 >
                     <ChevronLeft className="w-10 h-10" />
@@ -536,6 +577,7 @@ function Lightbox({
             {slides.length > 1 && (
                 <button
                     onClick={(e) => { e.stopPropagation(); onNext(); }}
+                    aria-label="Next image"
                     className="absolute right-6 top-1/2 -translate-y-1/2 z-10 text-gray-500 hover:text-gray-900 transition-colors"
                 >
                     <ChevronRight className="w-10 h-10" />
@@ -554,7 +596,7 @@ function Lightbox({
                 {imageProps && (
                     <Image
                         {...(imageProps as any)}
-                        alt={currentSlide.title || "Lightbox view"}
+                        alt={currentSlide.title?.trim() || ""}
                         className="object-contain max-h-[70vh] max-w-full rounded-lg shadow-2xl"
                         sizes="100vw"
                     />
@@ -565,7 +607,7 @@ function Lightbox({
                     <div className="mt-6 text-center max-w-2xl">
                         {currentSlide.title && (
                             <h3 className="text-xl font-medium text-gray-900 mb-2">
-                                {currentSlide.title}
+                                {currentSlide.title.trim()}
                             </h3>
                         )}
                         {currentSlide.description && (

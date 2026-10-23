@@ -10,14 +10,18 @@ export default function PortfolioProject({
   priority = false,
   featured = false,
   showEvidence = false,
+  headingLevel = 3,
 }: {
   project: PortfolioProjectData;
   priority?: boolean;
   featured?: boolean;
   /** Show the study's outcome or scope statement under the description. */
   showEvidence?: boolean;
+  /** 3 under a section heading (homepage); 2 when the cards are the page's sections. */
+  headingLevel?: 2 | 3;
 }) {
   const story = resolveProjectStory(project);
+  const Heading = headingLevel === 2 ? 'h2' : 'h3';
   const hasVideo = featured && project.thumbnailPlaybackId;
   return (
     <Link
@@ -69,7 +73,7 @@ export default function PortfolioProject({
       </div>
       <div className="project-caption">
         <div className="project-title">
-          <h3>{story.headline}</h3>
+          <Heading>{story.headline}</Heading>
           {story.meta && <p className="project-meta">{story.meta}</p>}
         </div>
         <div className="project-body">

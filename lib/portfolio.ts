@@ -93,7 +93,7 @@ export interface PortfolioProjectData {
   overviewEvidenceLabel?: string;
   /** Mux playback id when the card thumbnail is a video. */
   thumbnailPlaybackId?: string;
-  /** Role and years from the study's metadata block. */
+  /** Role and years from the study's metadata block, or its hero when there is none. */
   role?: string;
   years?: string;
 }
@@ -157,8 +157,8 @@ export const portfolioProjectFields = groq`
   displayOrder,
   overviewEvidence,
   overviewEvidenceLabel,
-  "role": modules[_type == "metadata"][0].role,
-  "years": modules[_type == "metadata"][0].year,
+  "role": coalesce(modules[_type == "metadata"][0].role, modules[_type == "hero"][0].role),
+  "years": coalesce(modules[_type == "metadata"][0].year, modules[_type == "hero"][0].year),
   "thumbnailPlaybackId": select(thumbnailType == "video" => thumbnailVideo.asset->playbackId),
   "heroImage": coalesce(
     thumbnailImage,

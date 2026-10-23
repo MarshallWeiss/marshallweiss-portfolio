@@ -62,7 +62,7 @@ export default function Comparison({
                 className={cn("", textAlign === 'center' && "max-w-3xl md:mx-auto")}
             />
             {description && (
-                <p className={cn("text-gray-600 text-base md:text-lg leading-relaxed mb-12 md:mb-16 max-w-[65ch]", alignmentClass, textAlign === 'center' && "md:mx-auto")}>
+                <p className={cn("text-gray-600 text-base md:text-lg leading-relaxed mb-12 md:mb-16 max-w-[34em]", alignmentClass, textAlign === 'center' && "md:mx-auto")}>
                     {description}
                 </p>
             )}

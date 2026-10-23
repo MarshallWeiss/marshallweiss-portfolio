@@ -14,9 +14,9 @@ export default async function WorkIndexPage() {
       <div className="index-heading">
         <h1>Work, in context.</h1>
         <p>
-          Four years at El Confidencial, one of Spain’s most-read digital
-          newspapers. Tools for the people who make the news, and the pages
-          the rest of us read them on.
+          Four years of product design at El Confidencial, a Spanish national
+          newspaper: the CMS its journalists write in, and the pages its
+          readers see.
         </p>
       </div>
       <div className="work-index-grid">
@@ -24,6 +24,7 @@ export default async function WorkIndexPage() {
           <PortfolioProject
             project={project}
             priority={i < 2}
+            headingLevel={2}
             key={project.slug.current}
           />
         ))}

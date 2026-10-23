@@ -1,10 +1,11 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import MuxPlayer from '@mux/mux-player-react';
 import { useNextSanityImage } from 'next-sanity-image';
 import { client } from '@/sanity/lib/client';
 import { cn } from '@/lib/utils';
+import { Maximize2, X } from 'lucide-react';
 import BlockWrapper from './BlockWrapper';
 import BlockHeading from './BlockHeading';
 import MediaItem from './MediaItem';
@@ -60,6 +61,7 @@ const shadowClasses: Record<string, string> = {
 
 function SanityImage({
     image,
+    alt = '',
     aspectRatio = 'auto',
     objectFit = 'cover',
     fillHeight = false,
@@ -67,6 +69,7 @@ function SanityImage({
     imageShadow = 'none',
 }: {
     image: any
+    alt?: string
     aspectRatio?: string
     objectFit?: string
     fillHeight?: boolean
@@ -80,6 +83,21 @@ function SanityImage({
                 .quality(95)
         }
     });
+
+    const [zoomed, setZoomed] = useState(false);
+
+    useEffect(() => {
+        if (!zoomed) return;
+        const onKey = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') setZoomed(false);
+        };
+        document.addEventListener('keydown', onKey);
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.removeEventListener('keydown', onKey);
+            document.body.style.overflow = '';
+        };
+    }, [zoomed]);
 
     if (!imageProps) return null;
 
@@ -110,13 +128,47 @@ function SanityImage({
         )}>
             <Image
                 {...(imageProps as any)}
-                alt="Split media"
+                alt={alt}
                 className={cn(
                     fillHeight ? 'h-full w-auto max-w-full object-contain' : 'w-full h-auto',
                     !fillHeight && objectFitClasses[objectFit]
                 )}
                 sizes="100vw"
             />
+            {/* Detailed specimens are unreadable at phone width: offer a full-size view to pan. */}
+            <button
+                type="button"
+                onClick={() => setZoomed(true)}
+                aria-label={alt ? `View full size: ${alt}` : 'View image full size'}
+                className="absolute bottom-2 right-2 flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-sm md:hidden"
+            >
+                <Maximize2 className="h-4 w-4" aria-hidden="true" />
+            </button>
+            {zoomed && (
+                <div
+                    role="dialog"
+                    aria-modal="true"
+                    aria-label={alt || 'Image'}
+                    className="fixed inset-0 z-[60] overflow-auto bg-white"
+                >
+                    <button
+                        type="button"
+                        onClick={() => setZoomed(false)}
+                        aria-label="Close"
+                        autoFocus
+                        className="sticky left-[calc(100vw-3.5rem)] top-3 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white text-gray-700 shadow-md"
+                    >
+                        <X className="h-5 w-5" aria-hidden="true" />
+                    </button>
+                    <Image
+                        {...(imageProps as any)}
+                        alt={alt}
+                        className="-mt-11 h-auto max-w-none p-4"
+                        style={{ width: 'max(100vw, 1200px)' }}
+                        sizes="1200px"
+                    />
+                </div>
+            )}
         </div>
     );
 }
@@ -197,7 +249,7 @@ export default function SplitMedia({
     const renderTextContent = () => (
         <div className={cn(
             "text-gray-600",
-            layout !== 'sideBySide' && 'max-w-[65ch]',
+            layout !== 'sideBySide' && 'max-w-[34em]',
             layout !== 'sideBySide' && textAlign === 'center' && 'md:mx-auto',
             textPaddingClass
         )}>
@@ -266,6 +318,7 @@ export default function SplitMedia({
             {!hasVideo && !hasFigma && displayImages.length === 1 && (
                 <SanityImage
                     image={displayImages[0].image}
+                    alt={(displayImages[0].image?.alt || headline || '').trim()}
                     aspectRatio={displayImages[0].aspectRatio}
                     objectFit={objectFit}
                     imageBackground={imageBackground}
@@ -282,6 +335,7 @@ export default function SplitMedia({
                             <div key={item._key || index} className="flex-shrink-0" style={{ height: `${imageHeight}px` }}>
                                 <SanityImage
                                     image={item.image}
+                                    alt={(item.image?.alt || '').trim()}
                                     aspectRatio={item.aspectRatio}
                                     objectFit="contain"
                                     fillHeight={true}

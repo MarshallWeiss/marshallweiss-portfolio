@@ -1,9 +1,24 @@
 import { cn } from '@/lib/utils'
 
+type HeadlineSize = 'xsmall' | 'small' | 'medium' | 'large'
+
+/**
+ * Small headlines mark sub-sections, so they sit one level below the section
+ * headings around them. Item headings inside a block (cards, slides, hotspots)
+ * go one level below the block's own heading.
+ */
+export function headingLevel(size: HeadlineSize = 'medium'): 2 | 3 {
+    return size === 'small' || size === 'xsmall' ? 3 : 2
+}
+
+export function childHeadingTag(size: HeadlineSize = 'medium'): 'h3' | 'h4' {
+    return headingLevel(size) === 3 ? 'h4' : 'h3'
+}
+
 interface BlockHeadingProps {
     headline?: string
     subheading?: string
-    headlineSize?: 'xsmall' | 'small' | 'medium' | 'large'
+    headlineSize?: HeadlineSize
     textAlign?: 'left' | 'center' | 'right'
     className?: string
 }
@@ -30,18 +45,20 @@ export default function BlockHeading({
         right: 'text-left md:text-right',
     }
 
+    const Heading = headingLevel(headlineSize) === 3 ? 'h3' : 'h2'
+
     return (
         <div className={cn('mb-6', alignmentClasses[textAlign], className)}>
             {headline && (
-                <h2 className={cn(
+                <Heading className={cn(
                     'font-display text-gray-900 text-balance',
                     headlineSizeClasses[headlineSize]
                 )}>
                     {headline}
-                </h2>
+                </Heading>
             )}
             {subheading && (
-                <p className={cn('text-base md:text-lg text-gray-600 mt-2 max-w-[65ch]', textAlign === 'center' && 'md:mx-auto', textAlign === 'right' && 'md:ml-auto')}>
+                <p className={cn('text-base md:text-lg text-gray-600 mt-2 max-w-[34em]', textAlign === 'center' && 'md:mx-auto', textAlign === 'right' && 'md:ml-auto')}>
                     {subheading}
                 </p>
             )}

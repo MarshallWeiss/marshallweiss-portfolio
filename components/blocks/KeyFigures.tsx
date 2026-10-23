@@ -115,7 +115,7 @@ export default function KeyFigures({
         <BlockWrapper width={width} background={background} spacing={spacing}>
             <BlockHeading headline={headline} subheading={subheading} headlineSize={headlineSize} textAlign={textAlign} />
             {description && (
-                <p className={cn('mb-8 max-w-[65ch] text-base text-gray-600 md:text-lg', align, textAlign === 'center' && 'md:mx-auto')}>
+                <p className={cn('mb-8 max-w-[34em] text-base text-gray-600 md:text-lg', align, textAlign === 'center' && 'md:mx-auto')}>
                     {description}
                 </p>
             )}

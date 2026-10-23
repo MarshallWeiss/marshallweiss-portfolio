@@ -43,7 +43,16 @@ export default function Hero({
     background = 'none',
     spacing = 'default',
 }: HeroProps) {
-    const hasMetadata = role || client || year;
+    // The subtitle is a short area label ("Subscriptions"). It sits with the
+    // other facts in the metadata column rather than as a kicker above the H1.
+    const focus = subtitle?.trim();
+    const metadataRows = [
+        { label: 'Role', value: role },
+        { label: 'Client', value: client },
+        { label: 'Focus', value: focus },
+        { label: 'Year', value: year },
+    ].filter((row) => row.value);
+    const hasMetadata = metadataRows.length > 0;
 
     const content = (
         <div className={isInline ? "" : ""}>
@@ -51,11 +60,6 @@ export default function Hero({
             <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-8 md:gap-12 mb-12">
                 {/* Title Section - max 60% */}
                 <div className="md:max-w-[60%]">
-                    {subtitle && (
-                        <p className="text-sm md:text-base text-gray-500 mb-4 font-normal tracking-wide">
-                            {subtitle}
-                        </p>
-                    )}
                     <h1 className="font-display text-3xl md:text-4xl lg:text-5xl text-gray-900 mb-6 leading-[1.15] tracking-tight">
                         {title}
                     </h1>
@@ -71,38 +75,18 @@ export default function Hero({
                 {/* Metadata Section - aligned right */}
                 {hasMetadata && (
                     <div className="md:flex-shrink-0 md:ml-auto">
-                        <div className="divide-y divide-gray-200 md:pt-8 min-w-[280px]">
-                            {role && (
-                                <div className="flex justify-between items-baseline py-4 first:pt-0 gap-8">
+                        <dl className="divide-y divide-gray-200 md:pt-2 min-w-[280px]">
+                            {metadataRows.map((row) => (
+                                <div key={row.label} className="flex justify-between items-baseline py-4 first:pt-0 last:pb-0 gap-8">
                                     <dt className="text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Role
+                                        {row.label}
                                     </dt>
                                     <dd className="text-base text-gray-900 text-right">
-                                        {role}
+                                        {row.value}
                                     </dd>
                                 </div>
-                            )}
-                            {client && (
-                                <div className="flex justify-between items-baseline py-4 gap-8">
-                                    <dt className="text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Client
-                                    </dt>
-                                    <dd className="text-base text-gray-900 text-right">
-                                        {client}
-                                    </dd>
-                                </div>
-                            )}
-                            {year && (
-                                <div className="flex justify-between items-baseline py-4 last:pb-0 gap-8">
-                                    <dt className="text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Year
-                                    </dt>
-                                    <dd className="text-base text-gray-900 text-right">
-                                        {year}
-                                    </dd>
-                                </div>
-                            )}
-                        </div>
+                            ))}
+                        </dl>
                     </div>
                 )}
             </div>

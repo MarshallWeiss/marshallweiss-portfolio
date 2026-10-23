@@ -31,7 +31,7 @@ export default function MediaItem({
     imageShadow = 'none',
     enableLightbox = false,
     imageCaption,
-    alt = 'Media',
+    alt,
     className,
     priority = false,
 }: MediaItemProps) {
@@ -101,7 +101,7 @@ export default function MediaItem({
                     >
                         <Image
                             {...imageProps as any}
-                            alt={alt}
+                            alt={(alt || image?.alt || "").trim()}
                             className={cn(
                                 'w-full h-full',
                                 objectFitClasses[objectFit]
@@ -131,7 +131,7 @@ export default function MediaItem({
                         </button>
                         <Image
                             {...imageProps as any}
-                            alt={alt}
+                            alt={(alt || image?.alt || "").trim()}
                             className="object-contain max-h-[90vh] max-w-[90vw]"
                             sizes="100vw"
                         />

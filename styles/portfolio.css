@@ -234,7 +234,7 @@
   column-gap: 48px;
   align-items: start;
 }
-.is-featured .project-caption h3 {
+.is-featured .project-caption :is(h2, h3) {
   font-size: clamp(32px, 3.3vw, 48px);
 }
 .is-featured .project-body {
@@ -287,7 +287,7 @@
   transform: scale(1.025);
 }
 /* Cards carry no arrow; the title underlines on hover instead. */
-.portfolio-project:hover .project-caption h3,
+.portfolio-project:hover .project-caption :is(h2, h3),
 .featured-essay:hover h3,
 .essay-list a:hover h3 {
   text-decoration: underline;
@@ -301,7 +301,7 @@
 .project-caption {
   padding-top: 22px;
 }
-.project-caption h3 {
+.project-caption :is(h2, h3) {
   font-family: var(--font-right-slab);
   font-size: clamp(26px, 2.4vw, 34px);
   line-height: 1.15;
@@ -760,7 +760,7 @@
   .portfolio-project.is-featured .project-art { aspect-ratio: 1.24; }
   .is-featured .project-screen { inset: 40px; border-radius: 3px; }
   .is-featured .project-caption { display: block; }
-  .is-featured .project-caption h3 { font-size: clamp(26px, 2.4vw, 34px); }
+  .is-featured .project-caption :is(h2, h3) { font-size: clamp(26px, 2.4vw, 34px); }
   .is-featured .project-body { margin-top: 14px; }
 }
 @media (max-width: 540px) {
@@ -1215,7 +1215,7 @@
   .project-caption {
     padding-top: 20px;
   }
-  .project-caption h3 {
+  .project-caption :is(h2, h3) {
     font-size: 28px;
   }
   .project-description {

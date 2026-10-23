@@ -170,7 +170,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
 
             {/* Case Study Navigation */}
             {allCaseStudies.length > 1 && (
-                <nav className="border-t border-gray-200 py-12 px-6 md:px-12 max-w-[1920px] mx-auto">
+                <nav id="case-study-next" aria-label="More case studies" className="border-t border-gray-200 py-12 px-6 md:px-12 max-w-[1920px] mx-auto">
                     <div className="flex justify-between items-center gap-8">
                         {/* Previous Case Study */}
                         <Link

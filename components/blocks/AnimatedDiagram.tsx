@@ -68,7 +68,7 @@ export default function AnimatedDiagram({
         <div
             className={cn(
                 'text-gray-600',
-                layout !== 'sideBySide' && 'max-w-[65ch]',
+                layout !== 'sideBySide' && 'max-w-[34em]',
                 layout !== 'sideBySide' && textAlign === 'center' && 'mx-auto'
             )}
         >

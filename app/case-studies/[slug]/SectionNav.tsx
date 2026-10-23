@@ -10,15 +10,21 @@ export interface SectionNavItem {
 }
 
 /**
- * "On this page" for long case studies. A small pill pinned to the bottom of
- * the viewport names the section you're in and how far through the study you
- * are; it opens a list to jump between sections. It stays out of the way: it
- * appears after the opening, and hides once the next-study links are in view.
+ * "On this page" for long case studies. A small pill names the section you're
+ * in and how far through the study you are; it opens a list to jump between
+ * the sections flagged in Studio. On wide screens it sits in the bottom-right
+ * corner, clear of the centred reading column. On narrow screens, where any
+ * overlay would sit on the text, it only shows while you scroll back up. It
+ * appears after the opening and hides once the next-study links are in view.
  */
 export default function SectionNav({ items }: { items: SectionNavItem[] }) {
     const [active, setActive] = useState(-1);
     const [progress, setProgress] = useState(0);
     const [visible, setVisible] = useState(false);
+    // Label for the block in view when it isn't one of the flagged sections.
+    const [blockLabel, setBlockLabel] = useState<string | null>(null);
+    const [scrollingUp, setScrollingUp] = useState(false);
+    const lastY = useRef(0);
     const [open, setOpen] = useState(false);
     const rootRef = useRef<HTMLDivElement>(null);
     const buttonRef = useRef<HTMLButtonElement>(null);
@@ -26,6 +32,16 @@ export default function SectionNav({ items }: { items: SectionNavItem[] }) {
     const update = useCallback(() => {
         const vh = window.innerHeight;
         const line = vh * 0.35;
+
+        // The block in view: the last one whose top has passed the reading line.
+        const blocks = Array.from(
+            document.querySelectorAll<HTMLElement>('#case-study-body [id^="section-"]')
+        );
+        let currentBlock: HTMLElement | null = null;
+        for (const block of blocks) {
+            if (block.getBoundingClientRect().top <= line) currentBlock = block;
+        }
+
         let current = -1;
         items.forEach((item, i) => {
             const el = document.getElementById(item.id);
@@ -33,13 +49,27 @@ export default function SectionNav({ items }: { items: SectionNavItem[] }) {
         });
         setActive(current);
 
+        // If the block in view has its own heading and isn't flagged, name it
+        // rather than claiming a flagged section that has scrolled away.
+        const isFlagged = currentBlock && items.some((item) => item.id === currentBlock!.id);
+        const heading = !isFlagged ? currentBlock?.querySelector('h2')?.textContent?.trim() : null;
+        setBlockLabel(heading || null);
+
+        const y = window.scrollY;
+        if (Math.abs(y - lastY.current) > 4) {
+            setScrollingUp(y < lastY.current);
+            lastY.current = y;
+        }
+
         const main = document.getElementById('case-study-body');
+        const next = document.getElementById('case-study-next');
         if (main) {
             const rect = main.getBoundingClientRect();
             const total = rect.height - vh;
             setProgress(total > 0 ? Math.min(1, Math.max(0, -rect.top / total)) : 0);
-            // Show after the opening screen; hide once the body has scrolled away.
-            setVisible(-rect.top > vh * 0.6 && rect.bottom > vh * 0.75);
+            const pastOpening = -rect.top > vh * 0.6;
+            const beforeNext = next ? next.getBoundingClientRect().top > vh - 24 : rect.bottom > vh * 0.75;
+            setVisible(pastOpening && beforeNext);
         }
     }, [items]);
 
@@ -85,17 +115,22 @@ export default function SectionNav({ items }: { items: SectionNavItem[] }) {
     if (items.length < 2) return null;
 
     const current = active >= 0 ? items[active] : null;
+    const label = blockLabel || current?.label || 'On this page';
+    const showCount = !blockLabel && active >= 0;
 
     return (
         <div
             ref={rootRef}
             className={cn(
-                'fixed inset-x-0 bottom-4 z-50 flex justify-center px-4 transition-all duration-300 ease-out md:bottom-6',
-                visible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-3 opacity-0'
+                'fixed inset-x-0 bottom-4 z-50 flex justify-center px-4 transition-all duration-300 ease-out lg:inset-x-auto lg:bottom-6 lg:right-6 lg:px-0',
+                visible ? 'opacity-100' : 'pointer-events-none opacity-0',
+                // Narrow screens: only while scrolling back up (or with the list open).
+                visible && !scrollingUp && !open && 'max-lg:pointer-events-none max-lg:translate-y-3 max-lg:opacity-0',
+                !visible && 'translate-y-3'
             )}
             aria-hidden={!visible}
         >
-            <nav aria-label="On this page" className="relative w-full max-w-sm">
+            <nav aria-label="On this page" className="relative w-full max-w-sm lg:w-72">
                 {open && (
                     <ol
                         id="section-nav-list"
@@ -128,11 +163,13 @@ export default function SectionNav({ items }: { items: SectionNavItem[] }) {
                     onClick={() => setOpen((o) => !o)}
                     className="relative flex w-full items-center gap-3 overflow-hidden rounded-full border border-stone-900/10 bg-white pb-3 pt-2.5 pl-4 pr-3 text-left shadow-[0_8px_24px_-6px_rgba(28,25,23,0.22)] transition-colors hover:bg-stone-50"
                 >
-                    <span className="shrink-0 text-xs tabular-nums text-stone-500">
-                        {active >= 0 ? active + 1 : '–'} / {items.length}
-                    </span>
+                    {showCount && (
+                        <span className="shrink-0 text-xs tabular-nums text-stone-500">
+                            {active + 1} / {items.length}
+                        </span>
+                    )}
                     <span className="min-w-0 flex-1 truncate text-sm font-medium text-stone-900">
-                        {current ? current.label : 'On this page'}
+                        {label}
                     </span>
                     <ChevronUp
                         className={cn('h-4 w-4 shrink-0 text-stone-500 transition-transform', !open && 'rotate-180')}
