@@ -405,6 +405,9 @@
 .side-art--atlas {
   background: #f2ece0;
 }
+.side-art--atlas img {
+  object-fit: cover;
+}
 .side-art--recorder {
   background: #283b35;
 }
@@ -412,13 +415,11 @@
   object-fit: cover;
 }
 .side-art--lapidarium {
-  background: radial-gradient(ellipse at 60% 60%, #fff0cf, transparent 70%), #efd8a2;
+  background: #fff;
 }
 .side-art--lapidarium img {
-  width: 110%;
-  height: 110%;
-  max-width: none;
-  object-fit: cover;
+  object-fit: contain;
+  transform: scale(1.4);
 }
 .side-art-initial {
   font-family: var(--font-right-slab);
@@ -1281,4 +1282,7 @@
   .work-index-grid {
     padding-bottom: 60px;
   }
+}
+.side-project:hover .side-art--lapidarium img {
+  transform: scale(1.47);
 }

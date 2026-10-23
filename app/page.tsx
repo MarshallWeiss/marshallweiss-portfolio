@@ -6,7 +6,6 @@ import { getPortfolioProjects } from "@/lib/portfolio";
 import { getFunProjects } from "@/lib/sanity-these-days";
 import thoughtsData from "@/data/thoughts.json";
 import { SHOW_PERSONAL_WRITING } from "@/lib/flags";
-import AtlasArtwork from "@/components/AtlasArtwork";
 
 export const revalidate = 60;
 
@@ -27,7 +26,13 @@ function SideProjectArt({ project }: { project: SideProject }) {
   if (/atlas/i.test(project.title)) {
     return (
       <span className="side-art side-art--atlas">
-        <AtlasArtwork />
+        <Image
+          src="/experiments/ai-atlas-thumb.jpg"
+          width={240}
+          height={240}
+          alt=""
+          sizes="120px"
+        />
       </span>
     );
   }
@@ -48,7 +53,7 @@ function SideProjectArt({ project }: { project: SideProject }) {
     return (
       <span className="side-art side-art--lapidarium">
         <Image
-          src="https://lapidarium.vercel.app/renders/amber/amber_021.webp"
+          src="/experiments/lapidarium/malachite.webp"
           width={300}
           height={300}
           alt=""
