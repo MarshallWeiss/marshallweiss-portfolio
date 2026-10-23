@@ -52,9 +52,6 @@ export default function ConfidentialCard({ projects }: ConfidentialCardProps) {
                 <div className="select-none">
                   <div className="flex flex-wrap items-baseline gap-x-2 blur-[6px]">
                     <h3 className="text-base font-medium text-gray-900">
-                      {project.emoji && (
-                        <span className="mr-2" aria-hidden="true">{project.emoji}</span>
-                      )}
                       {project.title}
                     </h3>
                     {project.company && (
@@ -72,9 +69,6 @@ export default function ConfidentialCard({ projects }: ConfidentialCardProps) {
               <div key={project.id}>
                 <div className="flex flex-wrap items-baseline gap-x-2">
                   <h3 className="text-base font-medium text-gray-900">
-                    {project.emoji && (
-                      <span className="mr-2" aria-hidden="true">{project.emoji}</span>
-                    )}
                     {project.title}
                   </h3>
                   {project.company && (

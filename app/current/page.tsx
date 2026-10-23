@@ -1,7 +1,5 @@
 import { getCurrentlyReading, getPastBooks, getWorkProjects, getFunProjects, getDoingItems } from '@/lib/sanity-these-days';
 import ConfidentialCard from '@/components/ConfidentialCard';
-import LapidariumArtwork from '@/components/LapidariumArtwork';
-import AtlasArtwork from '@/components/AtlasArtwork';
 
 import type { Metadata } from 'next';
 
@@ -38,63 +36,50 @@ export default async function TheseDaysPage() {
           <div className="border border-gray-200/60 rounded-xl p-5 sm:p-8 bg-white/50 h-full">
             <h2 className="font-display text-xl text-gray-900 mb-1">Playing</h2>
             <p className="text-sm text-gray-500 mb-6">Side projects and experiments</p>
-            <div className="space-y-5">
+            <div className="space-y-4">
               {funProjects.length > 0 ? (
                 funProjects.map((project: any) => {
-                  const isLapidarium = project.title === 'Lapidarium';
-                  const isAtlas = /ai atlas/i.test(project.title);
-                  const hasArtwork = isLapidarium || isAtlas || project.image;
-                  const title = project.url ? (
-                    <a
-                      href={project.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="group inline-flex items-baseline gap-1.5 text-base font-medium text-gray-900 hover:text-[var(--portfolio-blue)] transition-colors"
-                    >
-                      {project.title}
-                      <span aria-hidden="true" className="text-xs text-gray-400 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5">↗</span>
-                    </a>
-                  ) : (
-                    <h3 className="text-base font-medium text-gray-900">{project.title}</h3>
-                  );
+                  // Same thumbnails as the homepage side projects.
+                  const thumb = /ai atlas/i.test(project.title)
+                    ? '/experiments/ai-atlas-thumb.jpg'
+                    : /lapidarium/i.test(project.title)
+                      ? '/experiments/lapidarium/malachite.webp'
+                      : project.image;
+                  const isLapidarium = /lapidarium/i.test(project.title);
                   return (
-                    <div key={project.id} className={`grid gap-x-4 gap-y-1.5 ${hasArtwork ? 'grid-cols-[56px_minmax(0,1fr)]' : 'grid-cols-1'}`}>
-                      {hasArtwork && (
-                        <div className="w-14 h-14 sm:row-span-3">
-                          {isLapidarium ? (
-                            <LapidariumArtwork compact imageSrc={project.image} />
-                          ) : isAtlas ? (
-                            <div className="relative w-full h-full rounded-xl overflow-hidden shadow-sm ring-1 ring-black/5">
-                              {/* Zoom into one corner of the map so the thumbnail reads as a map fragment, not a shrunken poster. */}
-                              <div className="absolute inset-0" style={{ transform: 'scale(2.7)', transformOrigin: '34% 22%' }}>
-                                <AtlasArtwork />
-                              </div>
-                            </div>
+                    <div key={project.id} className="flex gap-4">
+                      {thumb && (
+                        <span className={`h-12 w-12 shrink-0 overflow-hidden rounded-lg ${isLapidarium ? 'bg-white' : 'bg-[#efe9df]'}`}>
+                          <img
+                            src={thumb}
+                            alt=""
+                            width={48}
+                            height={48}
+                            loading="lazy"
+                            className={`h-full w-full ${isLapidarium ? 'object-contain scale-[1.4]' : 'object-cover'}`}
+                          />
+                        </span>
+                      )}
+                      <div className="min-w-0">
+                        <h3 className="text-base font-medium text-gray-900">
+                          {project.url ? (
+                            <a
+                              href={project.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="hover:text-[var(--portfolio-blue)] transition-colors"
+                            >
+                              {project.title}
+                              <span className="sr-only"> (opens in a new tab)</span>
+                            </a>
                           ) : (
-                            <img
-                              src={project.image}
-                              alt=""
-                              width={56}
-                              height={56}
-                              loading="lazy"
-                              className="w-full h-full object-cover rounded-xl shadow-sm"
-                            />
+                            project.title
                           )}
-                        </div>
-                      )}
-                      <div className="self-center sm:self-start">{title}</div>
-                      {project.description && (
-                        <p className={`text-sm text-gray-600 leading-snug line-clamp-2 ${hasArtwork ? 'col-span-2 sm:col-span-1 sm:col-start-2' : ''}`}>{project.description}</p>
-                      )}
-                      {project.tags && project.tags.length > 0 && (
-                        <div className={`flex flex-wrap gap-1.5 ${hasArtwork ? 'col-span-2 sm:col-span-1 sm:col-start-2' : ''}`}>
-                          {project.tags.map((tag: string) => (
-                            <span key={tag} className="text-[11px] px-1.5 py-0.5 bg-gray-100 text-gray-600 rounded">
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      )}
+                        </h3>
+                        {project.description && (
+                          <p className="text-sm text-gray-600 leading-snug mt-1 line-clamp-2">{project.description}</p>
+                        )}
+                      </div>
                     </div>
                   );
                 })
