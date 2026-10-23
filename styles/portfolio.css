@@ -853,10 +853,9 @@
 }
 .footer-main h2 {
   font-family: var(--font-right-slab);
-  font-size: clamp(36px, 3.8vw, 56px);
-  line-height: 1.08;
-  letter-spacing: -0.04em;
-  max-width: 560px;
+  font-size: clamp(40px, 4.4vw, 64px);
+  line-height: 1.05;
+  letter-spacing: -0.045em;
 }
 .footer-contact {
   justify-self: end;
@@ -888,21 +887,18 @@
   left: 0;
 }
 .footer-email {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  font-size: 14px;
+  font-size: 13px;
   text-decoration: underline;
   text-underline-offset: 4px;
 }
 .footer-bottom {
   border-top: 1px solid #b9bed2;
-  padding-block: 12px;
+  padding-block: 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  font-size: 13px;
+  font-size: 11px;
 }
 .footer-bottom > div {
   display: flex;
@@ -912,11 +908,6 @@
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  min-height: 44px;
-}
-.footer-bottom a:hover {
-  text-decoration: underline;
-  text-underline-offset: 4px;
 }
 .index-heading {
   display: flex;
@@ -1275,7 +1266,7 @@
     padding-top: 45px;
   }
   .footer-main h2 {
-    font-size: 40px;
+    font-size: 48px;
   }
   .footer-contact {
     justify-self: start;

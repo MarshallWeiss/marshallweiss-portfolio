@@ -94,7 +94,8 @@ export default function ContentCards({
                 subheading={subheading}
                 headlineSize={headlineSize}
                 textAlign={textAlign}
-                className={headingSpacingClasses[headingSpacing]}
+                // With an intro paragraph, the heading sits close to it; the paragraph's own margin separates the cards.
+                className={description ? 'mb-4' : headingSpacingClasses[headingSpacing]}
             />
             {description && (
                 <p className={cn(

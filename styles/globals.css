@@ -149,3 +149,4 @@ mux-player {
 .pointer-events-none mux-player::part(duration-display) {
   display: none !important;
 }
+

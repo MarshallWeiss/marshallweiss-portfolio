@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { ArrowRight, Check, Copy } from 'lucide-react';
+import { ArrowUpRight, Check, Copy } from 'lucide-react';
 export default function GetInTouchButton() {
   const [status, setStatus] = useState('');
   async function copyEmail() {
@@ -14,7 +14,7 @@ export default function GetInTouchButton() {
   return (
     <div className="contact-actions">
       <a href="mailto:marshallweiss94@gmail.com" className="primary-button">
-        Email me <ArrowRight size={18} aria-hidden="true" />
+        Send me an email <ArrowUpRight size={19} aria-hidden="true" />
       </a>
       <button className="copy-email" onClick={copyEmail}>
         {status === 'Email copied.' ? (
