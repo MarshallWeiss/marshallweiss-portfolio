@@ -1,188 +1,175 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence, LayoutGroup, useInView, useReducedMotion } from 'framer-motion';
+import { motion, LayoutGroup, useInView, useReducedMotion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 /**
- * "Sections vs. topic-based organization" concept diagram.
+ * "Sections vs. topics" diagram, drawn as a fragment of a front page.
  *
- * The same eight article rows stay mounted the whole time and simply REORDER
- * between two groupings — no reparenting, so the motion stays smooth:
- *   BEFORE: grouped under broad print sections (Spain / Economy / Sports).
- *   AFTER:  grouped under specific cross-cutting topics (Sánchez crisis, etc.).
- * Group labels fade in/out via `popLayout` while the rows slide into place.
+ * The same eight headlines sit first in print-style section columns (Spain,
+ * Economy, Sports), then physically move into the topic groups the new
+ * homepage uses. Each headline keeps one `layoutId`, so framer-motion animates
+ * it from its section slot to its topic slot across parents. The move is the
+ * argument: stories about one subject were scattered, and now they sit together.
  *
- * Content mirrors the Figma reference ("03 Sections vs topics diagram"),
- * translated to English. Plays once on scroll-into-view, holds on the topic view.
+ * Plays once when scrolled into view and holds on the topic view; the caption
+ * row lets the reader switch back and forth.
  */
 
-type TopicId = 'sanchez' | 'gp' | 'corrupcion' | 'mundial';
+type Story = { id: string; headline: string };
 
-const TOPICS: Record<TopicId, { label: string; color: string }> = {
-    sanchez: { label: 'Sánchez crisis', color: '#BE7257' },
-    gp: { label: 'Spanish Grand Prix', color: '#D29A57' },
-    corrupcion: { label: 'PSOE corruption', color: '#9DB29C' },
-    mundial: { label: '2026 World Cup', color: '#7C9CB0' },
+const STORIES: Record<string, Story> = {
+    a1: { id: 'a1', headline: 'Judges see Sánchez entrenched if he is charged' },
+    a2: { id: 'a2', headline: 'Cracks in the PSOE: the drift challenging Sánchez' },
+    a3: { id: 'a3', headline: "Leire's cleaning contracts span 12 PSOE town halls" },
+    a4: { id: 'a4', headline: 'The deal extending Almaraz to 2030 defies the government' },
+    a5: { id: 'a5', headline: "€1.447B in revenue from Valencia's F1 plan" },
+    a7: { id: 'a7', headline: 'Russell and Hamilton chase an upset at Montmeló' },
+    a8: { id: 'a8', headline: 'Brazil disappoints on debut; Vini saves Ancelotti' },
+    a9: { id: 'a9', headline: 'Oyarzabal in the Golden Boot race, behind Mbappé and Kane' },
 };
 
-type Article = { id: string; headline: string; topic: TopicId };
-const ARTICLES: Record<string, Article> = {
-    a1: { id: 'a1', headline: "Judges see Sánchez entrenched if he is charged", topic: 'sanchez' },
-    a2: { id: 'a2', headline: 'Cracks in the PSOE: the drift challenging Sánchez', topic: 'sanchez' },
-    a3: { id: 'a3', headline: "Leire's cleaning contracts span 12 PSOE town halls", topic: 'corrupcion' },
-    a4: { id: 'a4', headline: 'The deal extending Almaraz to 2030 defies the government', topic: 'sanchez' },
-    a5: { id: 'a5', headline: "€1.447B in revenue from Valencia's F1 plan", topic: 'gp' },
-    a7: { id: 'a7', headline: 'Russell and Hamilton chase an upset at Montmeló', topic: 'gp' },
-    a8: { id: 'a8', headline: 'Brazil disappoints on debut; Vini saves Ancelotti', topic: 'mundial' },
-    a9: { id: 'a9', headline: 'Oyarzabal in the Golden Boot race, behind Mbappé and Kane', topic: 'mundial' },
-};
+type Group = { key: string; label: string; stories: string[] };
 
-// BEFORE — broad print sections; topics scattered across them
-const BEFORE: { key: string; label: string; articles: string[] }[] = [
-    { key: 'sec-spain', label: 'National', articles: ['a1', 'a2', 'a3'] },
-    { key: 'sec-economy', label: 'Economy', articles: ['a4', 'a5'] },
-    { key: 'sec-sports', label: 'Sports', articles: ['a7', 'a8', 'a9'] },
+// Before: broad print sections. Stories about one subject land in different columns.
+const SECTIONS: Group[] = [
+    { key: 'spain', label: 'Spain', stories: ['a1', 'a2', 'a3'] },
+    { key: 'economy', label: 'Economy', stories: ['a4', 'a5'] },
+    { key: 'sports', label: 'Sports', stories: ['a7', 'a8', 'a9'] },
 ];
 
-// AFTER — specific cross-cutting topics; the same articles converge
-const AFTER: { key: string; topic: TopicId; articles: string[] }[] = [
-    { key: 'top-sanchez', topic: 'sanchez', articles: ['a1', 'a2', 'a4'] },
-    { key: 'top-gp', topic: 'gp', articles: ['a7', 'a5'] },
-    { key: 'top-corrupcion', topic: 'corrupcion', articles: ['a3'] },
-    { key: 'top-mundial', topic: 'mundial', articles: ['a8', 'a9'] },
+// After: the topics the news is actually about. The first one leads the page.
+const TOPICS: Group[] = [
+    { key: 'sanchez', label: 'Sánchez crisis', stories: ['a1', 'a2', 'a4'] },
+    { key: 'gp', label: 'Spanish Grand Prix', stories: ['a7', 'a5'] },
+    { key: 'worldcup', label: '2026 World Cup', stories: ['a8', 'a9'] },
+    { key: 'corruption', label: 'PSOE corruption', stories: ['a3'] },
 ];
 
-const EASE = [0.22, 1, 0.36, 1] as const;
-const MOVE = { duration: 1.7, ease: EASE };
+// Ease in and out so the reader sees each headline travel, not jump.
+const EASE = [0.65, 0, 0.35, 1] as const;
 
-// Neutral dot for section headings (a section spans multiple topics, so it has
-// no single topic color). Topic headings use their own color.
-const SECTION_DOT = '#A8A29E';
+// Stories move one topic at a time, so the eye can follow each group as it forms.
+const TOPIC_ORDER: Record<string, number> = Object.fromEntries(
+    TOPICS.flatMap((t, i) => t.stories.map((id) => [id, i]))
+);
 
-type Item =
-    | { kind: 'label'; key: string; first: boolean; label: string; color: string }
-    | { kind: 'article'; key: string; id: string };
-
-function buildItems(isAfter: boolean): Item[] {
-    const items: Item[] = [];
-    if (isAfter) {
-        AFTER.forEach((g, gi) => {
-            const t = TOPICS[g.topic];
-            items.push({ kind: 'label', key: g.key, first: gi === 0, label: t.label, color: t.color });
-            g.articles.forEach((id) => items.push({ kind: 'article', key: `a-${id}`, id }));
-        });
-    } else {
-        BEFORE.forEach((g, gi) => {
-            items.push({ kind: 'label', key: g.key, first: gi === 0, label: g.label, color: SECTION_DOT });
-            g.articles.forEach((id) => items.push({ kind: 'article', key: `a-${id}`, id }));
-        });
-    }
-    return items;
-}
-
-function ArticleRow({ id }: { id: string }) {
-    const article = ARTICLES[id];
-    const { color } = TOPICS[article.topic];
+function Headline({ id, lead, reduce }: { id: string; lead: boolean; reduce: boolean }) {
     return (
-        <motion.div
-            layout
-            transition={MOVE}
-            className="relative flex min-h-[40px] shrink-0 items-center gap-3 border-b border-[#e6e8e2] py-2 pr-2"
+        <motion.li
+            layoutId={`story-${id}`}
+            layout="position"
+            transition={reduce ? { duration: 0 } : { duration: 0.9, ease: EASE, delay: TOPIC_ORDER[id] * 0.18 }}
+            className="border-t border-[#dcdad3] py-2.5 first:border-t-0 first:pt-0"
         >
-            <span className="h-2 w-2 shrink-0 rounded-full" style={{ backgroundColor: color }} aria-hidden="true" />
-            <p className="line-clamp-2 font-display text-[13.5px] leading-snug tracking-[-0.01em] text-[#303936] md:text-[14.5px]">{article.headline}</p>
-        </motion.div>
+            <p
+                className={cn(
+                    'font-display leading-[1.2] tracking-[-0.01em] text-[#1f2421]',
+                    lead ? 'text-[19px] md:text-[21px]' : 'text-[14.5px] md:text-[15.5px]'
+                )}
+            >
+                {STORIES[id].headline}
+            </p>
+        </motion.li>
     );
 }
 
-function GroupLabel({ item }: { item: Extract<Item, { kind: 'label' }> }) {
+function Column({
+    group,
+    leadFirst,
+    reduce,
+    className,
+}: {
+    group: Group;
+    leadFirst?: boolean;
+    reduce: boolean;
+    className?: string;
+}) {
     return (
-        <motion.div
-            layout
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4, ease: 'easeOut' }}
-            className={cn('shrink-0 pb-1', !item.first && 'mt-5')}
-        >
-            <span className="inline-flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full" style={{ backgroundColor: item.color }} />
-                <span className="whitespace-nowrap text-[11px] font-medium uppercase tracking-[0.14em] text-[#68716c]">{item.label}</span>
-            </span>
-        </motion.div>
+        <div className={cn('min-w-0', className)}>
+            <motion.h3
+                initial={reduce ? false : { opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, delay: reduce ? 0 : 0.5 }}
+                className="mb-3 border-t-[3px] border-[#1f2421] pt-1.5 font-display text-[13px] text-[#1f2421] md:text-sm"
+            >
+                {group.label}
+            </motion.h3>
+            <ul>
+                {group.stories.map((id, i) => (
+                    <Headline key={id} id={id} lead={Boolean(leadFirst && i === 0)} reduce={reduce} />
+                ))}
+            </ul>
+        </div>
     );
 }
 
 export default function SectionsToTopics() {
-    const ref = useRef<HTMLDivElement>(null);
-    // Fire only once the diagram is well into the viewport (its top has crossed
-    // ~60% down), not the moment its top edge first appears — so the morph plays
-    // while the reader is actually on this section.
-    const inView = useInView(ref, { once: true, margin: '0px 0px -40% 0px' });
-    const reduce = useReducedMotion();
-    const [phase, setPhase] = useState<'before' | 'after'>('before');
+    const ref = useRef<HTMLElement>(null);
+    // Wait until the figure is well into the viewport so the move plays while
+    // the reader is looking at it.
+    const inView = useInView(ref, { once: true, margin: '0px 0px -35% 0px' });
+    const reduce = Boolean(useReducedMotion());
+    const [view, setView] = useState<'sections' | 'topics'>('sections');
 
-    // Auto-advance once: when the diagram scrolls into view, animate from the
-    // section view to the topic view a single time. After that it's tab-driven.
-    const advanced = useRef(false);
+    const played = useRef(false);
     useEffect(() => {
-        if (reduce || advanced.current) return;
-        if (inView) {
-            advanced.current = true;
-            const t = setTimeout(() => setPhase('after'), 1000);
-            return () => clearTimeout(t);
-        }
+        if (!inView || played.current) return;
+        played.current = true;
+        const t = setTimeout(() => setView('topics'), reduce ? 0 : 1400);
+        return () => clearTimeout(t);
     }, [inView, reduce]);
 
-    const isAfter = phase === 'after';
-    const TABS: { value: 'before' | 'after'; label: string }[] = [
-        { value: 'before', label: 'By section' },
-        { value: 'after', label: 'By topic' },
-    ];
-    const items = buildItems(isAfter);
+    const isTopics = view === 'topics';
+    const [lead, ...rest] = TOPICS;
 
     return (
-        <div
-            ref={ref}
-            className="relative overflow-hidden rounded-md border border-[#d8dcd5] bg-white/70 p-5 md:p-6"
-            role="figure"
-            aria-label="Diagram: news headlines siloed in print sections (Spain, Economy, Sports) regroup into specific cross-cutting topics."
-        >
-            <div role="tablist" aria-label="Organization mode" className="mb-5 flex gap-6 border-b border-[#d8dcd5]">
-                {TABS.map((tab) => {
-                    const active = tab.value === phase;
-                    return (
-                        <button
-                            key={tab.value}
-                            type="button"
-                            role="tab"
-                            aria-selected={active}
-                            onClick={() => setPhase(tab.value)}
-                            className={cn(
-                                '-mb-px border-b-2 pb-2.5 text-[13px] transition-colors',
-                                active ? 'border-[#303936] text-[#303936]' : 'border-transparent text-[#68716c] hover:text-[#303936]'
-                            )}
-                        >
-                            {tab.label}
-                        </button>
-                    );
-                })}
+        <figure ref={ref} className="m-0">
+            <div className="rounded-[3px] bg-white px-5 py-6 shadow-[0_1px_2px_rgba(31,36,33,0.06),0_8px_24px_-12px_rgba(31,36,33,0.18)] md:px-7 md:py-7">
+                <LayoutGroup>
+                    {isTopics ? (
+                        <div className="space-y-6">
+                            <Column group={lead} leadFirst reduce={reduce} />
+                            <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-0 sm:divide-x sm:divide-[#dcdad3]">
+                                {rest.map((g) => (
+                                    <Column key={g.key} group={g} reduce={reduce} className="sm:px-4 sm:first:pl-0 sm:last:pr-0" />
+                                ))}
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-0 sm:divide-x sm:divide-[#dcdad3]">
+                            {SECTIONS.map((g) => (
+                                <Column key={g.key} group={g} reduce={reduce} className="sm:px-4 sm:first:pl-0 sm:last:pr-0" />
+                            ))}
+                        </div>
+                    )}
+                </LayoutGroup>
             </div>
 
-            <motion.div layout transition={MOVE} className="flex flex-col overflow-hidden">
-                <LayoutGroup>
-                    <AnimatePresence mode="popLayout" initial={false}>
-                        {items.map((it) =>
-                            it.kind === 'label' ? (
-                                <GroupLabel key={it.key} item={it} />
-                            ) : (
-                                <ArticleRow key={it.key} id={it.id} />
-                            )
-                        )}
-                    </AnimatePresence>
-                </LayoutGroup>
-            </motion.div>
-        </div>
+            <figcaption className="mt-2 flex flex-wrap items-center justify-between gap-x-6 text-sm text-gray-600">
+                <span aria-live="polite">
+                    {isTopics
+                        ? 'The same stories, grouped by what they are about.'
+                        : 'Eight stories from one day, filed by print section.'}
+                </span>
+                <span className="flex gap-4" role="group" aria-label="Show the stories">
+                    {(['sections', 'topics'] as const).map((v) => (
+                        <button
+                            key={v}
+                            type="button"
+                            aria-pressed={view === v}
+                            onClick={() => setView(v)}
+                            className={cn(
+                                'min-h-[44px] underline-offset-4 transition-colors',
+                                view === v ? 'text-gray-900 underline decoration-[1.5px]' : 'text-gray-500 hover:text-gray-900'
+                            )}
+                        >
+                            {v === 'sections' ? 'By section' : 'By topic'}
+                        </button>
+                    ))}
+                </span>
+            </figcaption>
+        </figure>
     );
 }
