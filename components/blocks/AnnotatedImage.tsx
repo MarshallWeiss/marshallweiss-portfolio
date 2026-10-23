@@ -121,39 +121,33 @@ export default function AnnotatedImage({
                 const colors = getHotspotColor(hotspot.type);
                 const isActive = activeHotspot === hotspot._key || hoveredLegendItem === hotspot._key;
 
-                // The numbered marker sits just off the point it annotates, tied to
-                // it by a short leader, so it never covers the thing it points at.
-                const flipX = hotspot.x > 85;
-                const flipY = hotspot.y < 12;
-                const offsetX = flipX ? 'calc(-100% - 10px)' : '10px';
-                const offsetY = flipY ? '10px' : 'calc(-100% - 10px)';
-
                 return (
                     <div
                         key={hotspot._key}
                         className="absolute"
-                        style={{ left: `${hotspot.x}%`, top: `${hotspot.y}%` }}
+                        style={{
+                            left: `${hotspot.x}%`,
+                            top: `${hotspot.y}%`,
+                            transform: 'translate(-50%, -50%)',
+                        }}
                     >
-                        {/* Anchor dot and leader on the annotated point */}
-                        <span
-                            aria-hidden="true"
-                            className={cn('absolute h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white shadow', colors.bg)}
-                        />
-                        <span
-                            aria-hidden="true"
-                            className="absolute h-px w-4 origin-left bg-white shadow-[0_0_0_0.5px_rgba(0,0,0,0.25)]"
+                        {/* Pulsing ring animation */}
+                        <div
+                            className={cn(
+                                'absolute top-0 left-0 rounded-full animate-ping opacity-40',
+                                colors.bgPulse
+                            )}
                             style={{
-                                transform: `rotate(${flipX ? (flipY ? 135 : -135) : (flipY ? 45 : -45)}deg)`,
+                                width: 32,
+                                height: 32,
+                                animationDuration: '2.5s',
                             }}
                         />
-                        <div
-                            className="absolute"
-                            style={{ transform: `translate(${offsetX}, ${offsetY})` }}
-                        >
+
                         {/* Hotspot button */}
                         <button
                             className={cn(
-                                'relative w-7 h-7 rounded-full border-2 border-white shadow-lg flex items-center justify-center text-white text-xs font-bold transition-transform hover:scale-110 focus:outline-none focus:ring-4',
+                                'relative w-8 h-8 rounded-full border-[3px] border-white shadow-lg flex items-center justify-center text-white text-sm font-bold transition-transform hover:scale-110 focus:outline-none focus:ring-4',
                                 colors.bg,
                                 colors.ring,
                                 isActive && 'scale-125 ring-4'
@@ -215,7 +209,6 @@ export default function AnnotatedImage({
                                 </div>
                             </>
                         )}
-                        </div>
                     </div>
                 );
             })}
