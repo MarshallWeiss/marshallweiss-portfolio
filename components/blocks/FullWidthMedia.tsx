@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { useNextSanityImage } from 'next-sanity-image';
 import { client } from '@/sanity/lib/client';
@@ -71,6 +71,7 @@ export default function FullWidthMedia({
     const hasVideo = mediaType === 'video' && playbackId;
     const hasFigma = mediaType === 'figma' && figmaUrl;
 
+    const [videoRatio, setVideoRatio] = useState<number | null>(null);
     const isEmpty = !hasImage && !hasVideo && !hasFigma;
     if (isEmpty && !SHOW_PENDING_MEDIA) return null;
 
@@ -120,7 +121,9 @@ export default function FullWidthMedia({
                     shadowClasses[imageShadow],
                     hasVideo && 'bg-white',
                     imageBackground === 'gray' && 'bg-gray-50',
-                    aspectRatio !== 'auto' && aspectRatioClasses[aspectRatio]
+                    // Once a video's own shape is known, the frame follows it, so a
+                    // fixed aspect ratio can't letterbox it with black bars.
+                    aspectRatio !== 'auto' && !(hasVideo && videoRatio) && aspectRatioClasses[aspectRatio]
                 )}>
                     {hasVideo ? (
                         <MuxPlayer
@@ -130,6 +133,11 @@ export default function FullWidthMedia({
                             loop={loop}
                             muted={muted}
                             className="w-full h-full"
+                            style={videoRatio ? { aspectRatio: String(videoRatio) } : undefined}
+                            onLoadedMetadata={(e) => {
+                                const el = e.target as HTMLVideoElement;
+                                if (el.videoWidth && el.videoHeight) setVideoRatio(el.videoWidth / el.videoHeight);
+                            }}
                         />
                     ) : hasFigma ? (
                         <iframe
