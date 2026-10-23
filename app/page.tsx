@@ -85,7 +85,7 @@ export default async function Home() {
           <div className="intro-person">
             <Image
               src="/images/about/marsh photo gray background.png"
-              alt=""
+              alt="Marshall Weiss"
               width={64}
               height={64}
               priority
@@ -97,33 +97,32 @@ export default async function Home() {
             </span>
           </div>
           <p>
-            I’m a senior product designer at{" "}
+            I’m a senior product designer and developer working where
+            design, journalism, and AI meet.
+          </p>
+          <p className="intro-detail">
+            Currently at{" "}
             <a
               href="https://www.elconfidencial.com/"
               target="_blank"
               rel="noopener noreferrer"
             >
               El Confidencial
-              <span className="sr-only"> (opens in a new tab)</span>
             </a>
-            , where I work on the CMS our journalists write in, including its
-            AI tools, and on the pages our readers see. I build software as
-            well as design it.
-          </p>
-          <p className="intro-detail">
-            I also teach at{" "}
+            .<br />
+            Also teaching at{" "}
             <a
               href="https://universidadeuropea.com/"
               target="_blank"
               rel="noopener noreferrer"
             >
               Universidad Europea
-              <span className="sr-only"> (opens in a new tab)</span>
-            </a>{" "}
-            and work in English and Spanish.
+            </a>
+            .<br />
+            Fully bilingual in English and Spanish.
           </p>
           <Link className="text-link" href="/about">
-            About me and my CV <ArrowRight size={16} aria-hidden="true" />
+            A little more about me <ArrowUpRight size={17} aria-hidden="true" />
           </Link>
         </div>
       </section>
@@ -146,7 +145,6 @@ export default async function Home() {
                 project={project}
                 priority={i < 2}
                 featured={i === 0}
-                showEvidence
               />
             ))}
           </div>

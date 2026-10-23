@@ -123,15 +123,7 @@
   border-radius: 50%;
 }
 .hero-intro {
-  padding-top: 10px;
-}
-.hero-intro a:not(.text-link) {
-  text-decoration: underline;
-  text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
-  text-underline-offset: 3px;
-}
-.hero-intro a:not(.text-link):hover {
-  text-decoration-color: currentColor;
+  padding-top: 6px;
 }
 .intro-person {
   display: flex;
@@ -151,15 +143,14 @@
   color: var(--portfolio-muted);
 }
 .hero-intro > p {
-  font-size: 17px;
-  line-height: 1.55;
-  margin-bottom: 14px;
+  font-size: 18px;
+  line-height: 1.5;
+  margin-bottom: 18px;
 }
 .hero-intro .intro-detail {
-  font-size: 14px;
-  line-height: 1.6;
+  font-size: 13px;
+  line-height: 1.8;
   color: var(--portfolio-muted);
-  margin-bottom: 10px;
 }
 .intro-detail a {
   text-decoration: underline;
@@ -168,10 +159,10 @@
 .text-link {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  min-height: 44px;
-  font-size: 14px;
+  gap: 12px;
+  font-size: 13px;
   font-weight: 500;
+  padding-block: 8px;
 }
 .text-link:hover {
   text-decoration: underline;
@@ -1159,20 +1150,18 @@
     padding-top: 0;
   }
   .intro-person {
-    margin-bottom: 14px;
+    margin-bottom: 18px;
   }
   .intro-person img {
-    width: 38px;
-    height: 38px;
+    width: 42px;
+    height: 42px;
   }
   .hero-intro > p {
-    font-size: 16px;
+    font-size: 17px;
     max-width: 420px;
-    margin-bottom: 10px;
   }
   .hero-intro .intro-detail {
-    font-size: 13.5px;
-    margin-bottom: 0;
+    margin-bottom: 8px;
   }
   .section-intro {
     align-items: baseline;
