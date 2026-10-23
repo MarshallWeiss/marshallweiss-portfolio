@@ -138,14 +138,27 @@ export default async function TheseDaysPage() {
             <p className="text-sm text-gray-500 mb-6">Hobbies and habits</p>
             <div className="space-y-5">
               {doingItems.length > 0 ? (
-                doingItems.map((item: any) => (
+                doingItems.map((item: any) => {
+                  // Titles start with an emoji in Sanity; give it a little room from the words.
+                  const match = String(item.title).match(new RegExp('^((?:\\p{Extended_Pictographic}|\\p{Emoji_Modifier}|\\uFE0F|\\u200D)+)\\s*(.*)$', 'u'));
+                  return (
                   <div key={item.id}>
-                    <h3 className="text-base font-medium text-gray-900 mb-1">{item.title}</h3>
+                    <h3 className="text-base font-medium text-gray-900 mb-1">
+                      {match ? (
+                        <>
+                          <span className="mr-2.5" aria-hidden="true">{match[1]}</span>
+                          {match[2]}
+                        </>
+                      ) : (
+                        item.title
+                      )}
+                    </h3>
                     {item.description && (
                       <p className="text-sm text-gray-600 leading-relaxed">{item.description}</p>
                     )}
                   </div>
-                ))
+                  );
+                })
               ) : (
                 <p className="text-sm text-gray-500">Nothing here yet.</p>
               )}
