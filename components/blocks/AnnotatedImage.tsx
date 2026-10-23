@@ -318,7 +318,7 @@ export default function AnnotatedImage({
                     subheading={subheading}
                     headlineSize={headlineSize}
                     textAlign="left"
-                    className=""
+                    className={description ? 'mb-4' : ''}
                 />
                 {description && (
                     <p className="text-gray-600 text-base md:text-lg leading-relaxed mb-6">
@@ -363,7 +363,7 @@ export default function AnnotatedImage({
                     subheading={subheading}
                     headlineSize={headlineSize}
                     textAlign={textAlign}
-                    className=""
+                    className={description ? 'mb-4' : ''}
                 />
                 {description && (
                     <p className={cn("text-gray-600 text-base md:text-lg leading-relaxed mb-10 md:mb-14 max-w-3xl", alignmentClass, textAlign === 'center' && "md:mx-auto")}>

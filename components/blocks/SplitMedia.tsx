@@ -258,6 +258,7 @@ export default function SplitMedia({
                 subheading={subheading}
                 headlineSize={headlineSize}
                 textAlign={textAlign}
+                className={text ? 'mb-4' : undefined}
             />
             <p className={cn(
                 "whitespace-pre-wrap leading-relaxed text-base md:text-lg",

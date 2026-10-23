@@ -81,6 +81,7 @@ export default function TextBlock({
                     subheading={subheading}
                     headlineSize={headlineSize}
                     textAlign={alignment}
+                    className={text ? 'mb-4' : undefined}
                 />
                 <div className={cn("text-gray-600 whitespace-pre-wrap", textSizeClasses[textSize])}>
                     {text}

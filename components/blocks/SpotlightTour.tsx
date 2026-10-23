@@ -177,7 +177,7 @@ export default function SpotlightTour({
             <div className="lg:hidden">
                 {(headline || subheading || text) && (
                     <div className={cn('mb-6', textAlign === 'center' && 'text-center')}>
-                        <BlockHeading headline={headline} subheading={subheading} headlineSize={headlineSize} textAlign={textAlign} />
+                        <BlockHeading headline={headline} subheading={subheading} headlineSize={headlineSize} textAlign={textAlign} className={text ? 'mb-4' : undefined} />
                         {text && (
                             <p className={cn('whitespace-pre-wrap leading-relaxed text-base md:text-lg text-gray-600 max-w-3xl', textAlign === 'center' && 'mx-auto md:text-center')}>{text}</p>
                         )}
@@ -207,7 +207,7 @@ export default function SpotlightTour({
               <div className="sticky flex flex-col justify-center" style={{ top: headerH, minHeight: `calc(100vh - ${headerH}px)` }}>
                 {(headline || subheading || text) && (
                     <div className={cn('mb-6', textAlign === 'center' && 'text-center')}>
-                        <BlockHeading headline={headline} subheading={subheading} headlineSize={headlineSize} textAlign={textAlign} />
+                        <BlockHeading headline={headline} subheading={subheading} headlineSize={headlineSize} textAlign={textAlign} className={text ? 'mb-4' : undefined} />
                         {text && (
                             <p className={cn('whitespace-pre-wrap leading-relaxed text-base md:text-lg text-gray-600 max-w-3xl', textAlign === 'center' && 'mx-auto md:text-center')}>{text}</p>
                         )}

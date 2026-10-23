@@ -167,7 +167,7 @@ export default function Accordion({
                         subheading={subheading}
                         headlineSize={headlineSize || 'medium'}
                         textAlign={textAlign}
-                        className="mb-6"
+                        className={text ? 'mb-4' : 'mb-6'}
                     />
                     {text && (
                         <div className="text-gray-600 leading-relaxed whitespace-pre-wrap">

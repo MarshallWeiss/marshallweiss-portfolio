@@ -104,7 +104,7 @@ export default function FullWidthMedia({
                 subheading={subheading}
                 headlineSize={headlineSize}
                 textAlign={textAlign}
-                className={cn("", textAlign === 'center' && "max-w-3xl md:mx-auto")}
+                className={cn(caption && "mb-4", textAlign === 'center' && "max-w-3xl md:mx-auto")}
             />
             {caption && (
                 <p className={cn("text-gray-600 text-base md:text-lg leading-relaxed mb-10 md:mb-14 max-w-3xl", alignmentClass, textAlign === 'center' && "md:mx-auto")}>

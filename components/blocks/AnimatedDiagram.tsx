@@ -72,7 +72,7 @@ export default function AnimatedDiagram({
                 layout !== 'sideBySide' && textAlign === 'center' && 'mx-auto'
             )}
         >
-            <BlockHeading headline={headline} subheading={subheading} headlineSize={headlineSize} textAlign={textAlign} />
+            <BlockHeading headline={headline} subheading={subheading} headlineSize={headlineSize} textAlign={textAlign} className={text ? 'mb-4' : undefined} />
             {text && (
                 <p
                     className={cn(
