@@ -53,8 +53,12 @@ const AFTER: { key: string; topic: TopicId; articles: string[] }[] = [
     { key: 'top-mundial', topic: 'mundial', articles: ['a8', 'a9'] },
 ];
 
-const EASE = [0.22, 1, 0.36, 1] as const;
-const MOVE = { duration: 1.7, ease: EASE };
+// Ease in and out: rows start and settle gently instead of leaping off the line.
+const EASE = [0.65, 0, 0.35, 1] as const;
+const MOVE = { duration: 0.9, ease: EASE };
+// Old group labels clear out before the rows move; new ones arrive as they settle.
+const LABEL_OUT = { duration: 0.15, ease: 'easeOut' } as const;
+const LABEL_IN = { duration: 0.3, ease: 'easeOut', delay: 0.6 } as const;
 
 // Neutral dot for section headings (a section spans multiple topics, so it has
 // no single topic color). Topic headings use their own color.
@@ -86,7 +90,7 @@ function ArticleRow({ id }: { id: string }) {
     const { color } = TOPICS[article.topic];
     return (
         <motion.div
-            layout
+            layout="position"
             transition={MOVE}
             className="relative flex min-h-[40px] shrink-0 items-center gap-3 border-b border-[#e6e8e2] py-2 pr-2"
         >
@@ -99,11 +103,9 @@ function ArticleRow({ id }: { id: string }) {
 function GroupLabel({ item }: { item: Extract<Item, { kind: 'label' }> }) {
     return (
         <motion.div
-            layout
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4, ease: 'easeOut' }}
+            animate={{ opacity: 1, transition: LABEL_IN }}
+            exit={{ opacity: 0, transition: LABEL_OUT }}
             className={cn('shrink-0 pb-1', !item.first && 'mt-5')}
         >
             <span className="inline-flex items-center gap-2">
@@ -142,6 +144,19 @@ export default function SectionsToTopics() {
     ];
     const items = buildItems(isAfter);
 
+    // The two views differ in height (three sections vs. four topics). Animate
+    // the list's height explicitly so the card grows with the rows instead of
+    // snapping to its new size.
+    const listRef = useRef<HTMLDivElement>(null);
+    const [listHeight, setListHeight] = useState<number | 'auto'>('auto');
+    useEffect(() => {
+        const el = listRef.current;
+        if (!el || typeof ResizeObserver === 'undefined') return;
+        const ro = new ResizeObserver(() => setListHeight(el.offsetHeight));
+        ro.observe(el);
+        return () => ro.disconnect();
+    }, []);
+
     return (
         <div
             ref={ref}
@@ -160,28 +175,41 @@ export default function SectionsToTopics() {
                             aria-selected={active}
                             onClick={() => setPhase(tab.value)}
                             className={cn(
-                                '-mb-px border-b-2 pb-2.5 text-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-stone-800 focus-visible:ring-offset-2',
-                                active ? 'border-[#303936] text-[#303936]' : 'border-transparent text-[#68716c] hover:text-[#303936]'
+                                'relative -mb-px pb-2.5 text-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-stone-800 focus-visible:ring-offset-2',
+                                active ? 'text-[#303936]' : 'text-[#68716c] hover:text-[#303936]'
                             )}
                         >
                             {tab.label}
+                            {active && (
+                                <motion.span
+                                    layoutId="sections-topics-tab"
+                                    transition={reduce ? { duration: 0 } : { duration: 0.35, ease: EASE }}
+                                    className="absolute inset-x-0 bottom-0 h-0.5 bg-[#303936]"
+                                />
+                            )}
                         </button>
                     );
                 })}
             </div>
 
-            <motion.div layout transition={MOVE} className="flex flex-col overflow-hidden">
-                <LayoutGroup>
-                    <AnimatePresence mode="popLayout" initial={false}>
-                        {items.map((it) =>
-                            it.kind === 'label' ? (
-                                <GroupLabel key={it.key} item={it} />
-                            ) : (
-                                <ArticleRow key={it.key} id={it.id} />
-                            )
-                        )}
-                    </AnimatePresence>
-                </LayoutGroup>
+            <motion.div
+                animate={{ height: listHeight }}
+                transition={reduce ? { duration: 0 } : MOVE}
+                className="overflow-hidden"
+            >
+                <div ref={listRef} className="flex flex-col">
+                    <LayoutGroup>
+                        <AnimatePresence mode="popLayout" initial={false}>
+                            {items.map((it) =>
+                                it.kind === 'label' ? (
+                                    <GroupLabel key={it.key} item={it} />
+                                ) : (
+                                    <ArticleRow key={it.key} id={it.id} />
+                                )
+                            )}
+                        </AnimatePresence>
+                    </LayoutGroup>
+                </div>
             </motion.div>
         </div>
     );
