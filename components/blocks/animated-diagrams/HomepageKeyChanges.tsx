@@ -37,37 +37,37 @@ const CHANGES: Change[] = [
     },
     {
         name: 'Clear visual hierarchy',
-        desc: 'Each block carries weight proportional to its importance, so the most relevant stories stand out at a glance.',
+        desc: 'Bigger blocks for bigger stories, so the important ones are easy to spot.',
         color: '#BE7257',
         region: { top: 5.7, left: 0.5, width: 64, height: 4.6 },
     },
     {
         name: 'New submenu',
-        desc: 'Newsletters, podcasts and services now live in an easy-to-reach submenu at the top of the page.',
+        desc: 'Newsletters, podcasts and services moved to a submenu at the top of the page.',
         color: '#7C9CB0',
         region: { top: 3.78, left: 29, width: 33, height: 0.4 },
     },
     {
         name: 'A home for Opinion',
-        desc: 'Opinion gets a stable, prominent place on the page to draw readers and feature signature columnists.',
+        desc: 'Opinion has a fixed, prominent place on the page, where readers can find the columnists they follow.',
         color: '#B58AA0',
         region: { top: 5.85, left: 64, width: 35, height: 5.6 },
     },
     {
         name: 'Thematic blocks',
-        desc: 'Content is grouped into thematic blocks that gather every piece on a topic, keeping in-depth stories together.',
+        desc: 'Every story on a topic sits in one block, so the in-depth pieces stay next to the news.',
         color: '#7C9CB0',
         region: { top: 22.4, left: 1, width: 98, height: 7.6 },
     },
     {
         name: 'Wider page',
-        desc: 'A wider layout gives each block more room, improving legibility and the visual balance of the whole page.',
+        desc: 'A wider layout gives each block more room and makes the page easier to read.',
         color: '#9DB29C',
         region: null,
     },
     {
-        name: 'Audiovisual takes center stage',
-        desc: 'Images and video take more space and scale to the story, reinforcing the impact of each piece.',
+        name: 'More room for photos and video',
+        desc: 'Images and video get more space, sized to how big the story is.',
         color: '#BE7257',
         region: { top: 93.4, left: 40, width: 59, height: 5.4 },
     },
@@ -117,7 +117,7 @@ export default function HomepageKeyChanges() {
                             <span className="h-2 w-2 rounded-full bg-stone-300" />
                             <span className="h-2 w-2 rounded-full bg-stone-300" />
                             <span className="h-2 w-2 rounded-full bg-stone-300" />
-                            <div className="ml-2 flex-1 rounded bg-stone-100 px-2 py-0.5 text-[10px] text-stone-500">elconfidencial.com</div>
+                            <div className="ml-2 flex-1 rounded bg-stone-100 px-2 py-0.5 text-[11px] text-stone-500">elconfidencial.com</div>
                         </div>
                         {/* viewport */}
                         <div className="relative">
@@ -202,7 +202,7 @@ export default function HomepageKeyChanges() {
                         <button
                             type="button"
                             onClick={() => go(active - 1)}
-                            className="rounded-md px-2 py-1 text-[11px] font-medium text-stone-500 transition-colors hover:bg-white hover:text-stone-800"
+                            className="rounded-md px-2 py-1 text-xs font-medium text-stone-600 transition-colors hover:bg-white hover:text-stone-800"
                         >
                             ← Prev
                         </button>
@@ -221,7 +221,7 @@ export default function HomepageKeyChanges() {
                         <button
                             type="button"
                             onClick={() => go(active + 1)}
-                            className="rounded-md px-2 py-1 text-[11px] font-medium text-stone-500 transition-colors hover:bg-white hover:text-stone-800"
+                            className="rounded-md px-2 py-1 text-xs font-medium text-stone-600 transition-colors hover:bg-white hover:text-stone-800"
                         >
                             Next →
                         </button>

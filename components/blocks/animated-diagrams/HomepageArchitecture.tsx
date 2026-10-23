@@ -65,8 +65,8 @@ export default function HomepageArchitecture() {
                     <div className="overflow-hidden rounded-md border border-[#d8dcd5] bg-white">
                         {/* frame label */}
                         <div className="flex items-center justify-between border-b border-[#e6e8e2] px-3 py-1.5">
-                            <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-[#68716c]">elconfidencial.com</span>
-                            <span className="text-[10px] text-[#68716c]">{ZONES[active].name}</span>
+                            <span className="text-[11px] text-[#68716c]">elconfidencial.com</span>
+                            <span className="text-[11px] text-[#4f5752]">{ZONES[active].name}</span>
                         </div>
                         {/* progress (tracks scroll position) */}
                         <div className="h-0.5 w-full bg-[#eef0ea]">
@@ -96,7 +96,7 @@ export default function HomepageArchitecture() {
                                         transition={{ duration: 0.3, ease: EASE }}
                                         className="pointer-events-none absolute inset-x-0 bottom-2 flex justify-center"
                                     >
-                                        <span className="flex items-center gap-1.5 rounded-full border border-[#d8dcd5] bg-white/95 px-3 py-1 text-[11px] text-[#303936] shadow-sm">
+                                        <span className="flex items-center gap-1.5 rounded-full border border-[#d8dcd5] bg-white/95 px-3 py-1 text-xs text-[#303936] shadow-sm">
                                             Scroll inside the page
                                             <motion.svg
                                                 width="10"
@@ -118,7 +118,7 @@ export default function HomepageArchitecture() {
 
                 {/* Zone legend / jump control */}
                 <div className="lg:col-span-2">
-                    <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.14em] text-[#68716c]">Top to bottom</p>
+                    <p className="mb-3 text-xs font-semibold text-[#4f5752]">Top to bottom</p>
                     <ol className="space-y-1">
                         {ZONES.map((z, i) => {
                             const on = i === active;
