@@ -61,10 +61,10 @@ export default function TemplateMorph() {
             ref={ref}
             className="relative overflow-hidden rounded-md border border-[#d8dcd5] bg-white p-4 md:p-5"
             role="img"
-            aria-label="Diagram: a single homepage opening template cycling through its variants — the photo grows and reshapes from a banner to a square, a vertical, a full-width block on top, and then disappears for a text-only layout — while the surrounding template stays constant."
+            aria-label="Diagram: a single homepage opening template cycling through its variants. The photo grows and reshapes from a banner to a square, a vertical, a full-width block on top, and then disappears for a text-only layout, while the surrounding template stays constant."
         >
             <div className="mb-3 flex items-center justify-between">
-                <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-stone-400">
+                <p className="text-xs font-medium text-stone-600">
                     Opening template
                 </p>
                 <AnimatePresence mode="wait">
@@ -74,7 +74,7 @@ export default function TemplateMorph() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 4 }}
                         transition={{ duration: 0.3, ease: EASE }}
-                        className="text-[10px] font-semibold uppercase tracking-[0.14em] text-stone-600"
+                        className="text-xs font-semibold text-stone-800"
                     >
                         {frame.label}
                     </motion.span>

@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import BlockWrapper from './BlockWrapper';
 import BlockHeading from './BlockHeading';
+import MediaPlaceholder, { SHOW_PENDING_MEDIA } from './MediaPlaceholder';
 
 const shadowClasses: Record<string, string> = {
     'none': '',
@@ -49,7 +50,9 @@ export default function MediaGrid({
 }: MediaGridProps) {
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
-    if (!images || images.length === 0) return null;
+    const list = images ?? [];
+    const isEmpty = list.length === 0;
+    if (isEmpty && !SHOW_PENDING_MEDIA) return null;
 
     const gridCols = {
         '1': 'grid-cols-1',
@@ -61,12 +64,12 @@ export default function MediaGrid({
     const closeLightbox = () => setSelectedIndex(null);
     const goNext = () => {
         if (selectedIndex !== null) {
-            setSelectedIndex((selectedIndex + 1) % images.length);
+            setSelectedIndex((selectedIndex + 1) % list.length);
         }
     };
     const goPrev = () => {
         if (selectedIndex !== null) {
-            setSelectedIndex((selectedIndex - 1 + images.length) % images.length);
+            setSelectedIndex((selectedIndex - 1 + list.length) % list.length);
         }
     };
 
@@ -82,12 +85,13 @@ export default function MediaGrid({
                 className={cn("", textAlign === 'center' && "max-w-3xl md:mx-auto")}
             />
             {description && (
-                <p className={cn("text-gray-600 text-base md:text-lg leading-relaxed mb-8 md:mb-12 max-w-3xl", alignmentClass, textAlign === 'center' && "md:mx-auto")}>
+                <p className={cn("text-gray-600 text-base md:text-lg leading-relaxed mb-8 md:mb-12 max-w-[65ch]", alignmentClass, textAlign === 'center' && "md:mx-auto")}>
                     {description}
                 </p>
             )}
+            {isEmpty && <MediaPlaceholder label={headline || 'Image grid'} />}
             <div className={cn("grid gap-4 md:gap-6", gridCols[columns])}>
-                {images.map((img, idx) => (
+                {list.map((img, idx) => (
                     <GridItem
                         key={img._key || idx}
                         image={img}
@@ -102,7 +106,7 @@ export default function MediaGrid({
             {/* Lightbox Overlay */}
             {selectedIndex !== null && (
                 <Lightbox
-                    images={images}
+                    images={list}
                     currentIndex={selectedIndex}
                     onClose={closeLightbox}
                     onNext={goNext}
@@ -208,7 +212,7 @@ function Lightbox({
             {/* Close button */}
             <button
                 onClick={onClose}
-                className="absolute top-6 right-6 z-10 text-gray-400 hover:text-gray-900 transition-colors"
+                className="absolute top-6 right-6 z-10 text-gray-500 hover:text-gray-900 transition-colors"
             >
                 <X className="w-8 h-8" />
             </button>
@@ -217,7 +221,7 @@ function Lightbox({
             {images.length > 1 && (
                 <button
                     onClick={(e) => { e.stopPropagation(); onPrev(); }}
-                    className="absolute left-6 top-1/2 -translate-y-1/2 z-10 text-gray-400 hover:text-gray-900 transition-colors"
+                    className="absolute left-6 top-1/2 -translate-y-1/2 z-10 text-gray-500 hover:text-gray-900 transition-colors"
                 >
                     <ChevronLeft className="w-10 h-10" />
                 </button>
@@ -227,7 +231,7 @@ function Lightbox({
             {images.length > 1 && (
                 <button
                     onClick={(e) => { e.stopPropagation(); onNext(); }}
-                    className="absolute right-6 top-1/2 -translate-y-1/2 z-10 text-gray-400 hover:text-gray-900 transition-colors"
+                    className="absolute right-6 top-1/2 -translate-y-1/2 z-10 text-gray-500 hover:text-gray-900 transition-colors"
                 >
                     <ChevronRight className="w-10 h-10" />
                 </button>

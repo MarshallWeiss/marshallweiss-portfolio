@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 import BlockWrapper from './BlockWrapper';
 import BlockHeading from './BlockHeading';
+import MediaPlaceholder, { SHOW_PENDING_MEDIA } from './MediaPlaceholder';
 import MediaItem from './MediaItem';
 
 interface Hotspot {
@@ -53,7 +54,7 @@ export default function AnnotatedImage({
     const [activeHotspot, setActiveHotspot] = useState<string | null>(null);
     const [hoveredLegendItem, setHoveredLegendItem] = useState<string | null>(null);
 
-    if (!image) return null;
+    if (!image && !SHOW_PENDING_MEDIA) return null;
 
     const alignmentClass = textAlign === 'center' ? 'text-left md:text-center' : textAlign === 'right' ? 'text-left md:text-right' : 'text-left';
     const isSideBySide = layout === 'sideBySide';
@@ -102,7 +103,9 @@ export default function AnnotatedImage({
     };
 
     // Render the annotated image with hotspot markers and tooltips
-    const renderAnnotatedImage = () => (
+    const renderAnnotatedImage = () => !image ? (
+        <MediaPlaceholder label={headline || 'Annotated image'} />
+    ) : (
         <div className="relative">
             <MediaItem
                 image={image}
@@ -361,7 +364,7 @@ export default function AnnotatedImage({
                     className=""
                 />
                 {description && (
-                    <p className={cn("text-gray-600 text-base md:text-lg leading-relaxed mb-10 md:mb-14", alignmentClass)}>
+                    <p className={cn("text-gray-600 text-base md:text-lg leading-relaxed mb-10 md:mb-14 max-w-[65ch]", alignmentClass, textAlign === 'center' && "md:mx-auto")}>
                         {description}
                     </p>
                 )}

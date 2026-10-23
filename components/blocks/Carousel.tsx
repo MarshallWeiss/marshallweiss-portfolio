@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils';
 import { ArrowLeft, ArrowRight, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import BlockWrapper from './BlockWrapper';
 import BlockHeading from './BlockHeading';
+import MediaPlaceholder, { SHOW_PENDING_MEDIA } from './MediaPlaceholder';
 
 interface Slide {
     _key?: string;
@@ -102,7 +103,15 @@ export default function Carousel({
         return () => window.removeEventListener('resize', checkScrollButtons);
     }, []);
 
-    if (!slides || slides.length === 0) return null;
+    if (!slides || slides.length === 0) {
+        if (!SHOW_PENDING_MEDIA) return null;
+        return (
+            <BlockWrapper width={width} background={background} spacing={spacing}>
+                <BlockHeading headline={headline} subheading={subheading} headlineSize={headlineSize} textAlign={textAlign} />
+                <MediaPlaceholder label={headline || 'Carousel slides'} />
+            </BlockWrapper>
+        );
+    }
 
     // Vertical alignment classes
     const alignmentClass = {
@@ -364,9 +373,9 @@ function CarouselSlide({
                     {/* Text — left on desktop, below image on mobile */}
                     <div className="order-2 md:order-1">
                         {slide.title && (
-                            <h4 className="text-xl md:text-2xl font-medium text-gray-900 mb-3">
+                            <h3 className="text-xl md:text-2xl font-medium text-gray-900 mb-3">
                                 {slide.title}
-                            </h4>
+                            </h3>
                         )}
                         {slide.description && (
                             <p className="text-gray-600 leading-relaxed">
@@ -428,9 +437,9 @@ function CarouselSlide({
 
             {/* Title */}
             {slide.title && (
-                <h4 className="text-lg font-medium text-gray-900 mb-2">
+                <h3 className="text-lg font-medium text-gray-900 mb-2">
                     {slide.title}
-                </h4>
+                </h3>
             )}
 
             {/* Description */}
@@ -508,7 +517,7 @@ function Lightbox({
             {/* Close button */}
             <button
                 onClick={onClose}
-                className="absolute top-6 right-6 z-10 text-gray-400 hover:text-gray-900 transition-colors"
+                className="absolute top-6 right-6 z-10 text-gray-500 hover:text-gray-900 transition-colors"
             >
                 <X className="w-8 h-8" />
             </button>
@@ -517,7 +526,7 @@ function Lightbox({
             {slides.length > 1 && (
                 <button
                     onClick={(e) => { e.stopPropagation(); handlePrev(); }}
-                    className="absolute left-6 top-1/2 -translate-y-1/2 z-10 text-gray-400 hover:text-gray-900 transition-colors"
+                    className="absolute left-6 top-1/2 -translate-y-1/2 z-10 text-gray-500 hover:text-gray-900 transition-colors"
                 >
                     <ChevronLeft className="w-10 h-10" />
                 </button>
@@ -527,7 +536,7 @@ function Lightbox({
             {slides.length > 1 && (
                 <button
                     onClick={(e) => { e.stopPropagation(); onNext(); }}
-                    className="absolute right-6 top-1/2 -translate-y-1/2 z-10 text-gray-400 hover:text-gray-900 transition-colors"
+                    className="absolute right-6 top-1/2 -translate-y-1/2 z-10 text-gray-500 hover:text-gray-900 transition-colors"
                 >
                     <ChevronRight className="w-10 h-10" />
                 </button>
@@ -555,9 +564,9 @@ function Lightbox({
                 {(currentSlide.title || currentSlide.description) && (
                     <div className="mt-6 text-center max-w-2xl">
                         {currentSlide.title && (
-                            <h4 className="text-xl font-medium text-gray-900 mb-2">
+                            <h3 className="text-xl font-medium text-gray-900 mb-2">
                                 {currentSlide.title}
-                            </h4>
+                            </h3>
                         )}
                         {currentSlide.description && (
                             <p className="text-gray-600 leading-relaxed">

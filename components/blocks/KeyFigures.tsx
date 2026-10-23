@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { useInView, useReducedMotion } from 'framer-motion';
+import { ArrowDownRight, ArrowUpRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import BlockWrapper from './BlockWrapper';
 import BlockHeading from './BlockHeading';
@@ -39,6 +40,14 @@ function parseValue(value: string) {
     const separator = raw.includes(',') ? ',' : '.';
     const decimals = raw.includes(separator) ? raw.split(separator)[1].length : 0;
     return { prefix, target: parseFloat(raw.replace(',', '.')), suffix, decimals, separator };
+}
+
+/** Direction of a signed figure, so a drop reads as a drop rather than as another win. */
+function direction(value: string): 'up' | 'down' | null {
+    const v = value.trim();
+    if (/^[-−–]/.test(v)) return 'down';
+    if (v.startsWith('+')) return 'up';
+    return null;
 }
 
 function CountUp({ value, play }: { value: string; play: boolean }) {
@@ -106,7 +115,7 @@ export default function KeyFigures({
         <BlockWrapper width={width} background={background} spacing={spacing}>
             <BlockHeading headline={headline} subheading={subheading} headlineSize={headlineSize} textAlign={textAlign} />
             {description && (
-                <p className={cn('mb-8 max-w-3xl text-base text-gray-600 md:text-lg', align, textAlign === 'center' && 'md:mx-auto')}>
+                <p className={cn('mb-8 max-w-[65ch] text-base text-gray-600 md:text-lg', align, textAlign === 'center' && 'md:mx-auto')}>
                     {description}
                 </p>
             )}
@@ -117,8 +126,14 @@ export default function KeyFigures({
                         className={align}
                         style={{ transitionDelay: `${i * 80}ms` }}
                     >
-                        <p className="font-display text-5xl leading-none tracking-[-0.04em] text-gray-900 md:text-6xl">
-                            {reduce ? f.value : <CountUp value={f.value} play={play} />}
+                        <p className={cn('flex items-start gap-2 font-display text-5xl leading-none tracking-[-0.04em] text-gray-900 md:text-6xl', textAlign === 'center' && 'md:justify-center', textAlign === 'right' && 'md:justify-end')}>
+                            <span>{reduce ? f.value : <CountUp value={f.value} play={play} />}</span>
+                            {direction(f.value) === 'down' && (
+                                <ArrowDownRight className="mt-1 h-6 w-6 shrink-0 text-gray-500 md:h-7 md:w-7" strokeWidth={1.75} aria-label="decrease" />
+                            )}
+                            {direction(f.value) === 'up' && (
+                                <ArrowUpRight className="mt-1 h-6 w-6 shrink-0 text-gray-500 md:h-7 md:w-7" strokeWidth={1.75} aria-label="increase" />
+                            )}
                         </p>
                         {f.label && (
                             <p className="mt-4 text-sm font-medium leading-snug text-gray-900 md:text-base">{f.label}</p>

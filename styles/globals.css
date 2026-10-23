@@ -23,6 +23,31 @@ html {
   outline-offset: 5px;
 }
 
+/* Browser surfaces in the site's own colors: selection, caret, link underlines. */
+::selection {
+  background: #d4d8e8;
+  color: #30364e;
+}
+input,
+textarea {
+  caret-color: #354f70;
+}
+a {
+  text-underline-offset: 4px;
+}
+
+/* Headings break evenly; paragraphs avoid a lone last word. */
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+p,
+li,
+figcaption {
+  text-wrap: pretty;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

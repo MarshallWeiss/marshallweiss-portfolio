@@ -125,7 +125,7 @@ export default function MediaItem({
                     >
                         <button
                             onClick={() => setLightboxOpen(false)}
-                            className="absolute top-6 right-6 z-10 text-gray-400 hover:text-gray-900 transition-colors"
+                            className="absolute top-6 right-6 z-10 text-gray-500 hover:text-gray-900 transition-colors"
                         >
                             <X className="w-8 h-8" />
                         </button>

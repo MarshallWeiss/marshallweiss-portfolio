@@ -194,7 +194,7 @@ const HomepageSchematic = forwardRef<HTMLDivElement, Props>(function HomepageSch
                     </div>
                 </div>
 
-                <ZoneLabel name="Opening — apertura" color={C[0].color} />
+                <ZoneLabel name="Opening / apertura" color={C[0].color} />
                 <div className="grid grid-cols-12 gap-3">
                     <div className="col-span-4">
                         <Tag color={C[0].color} w="w-12" />
@@ -224,7 +224,7 @@ const HomepageSchematic = forwardRef<HTMLDivElement, Props>(function HomepageSch
 
             {/* ===== ISSUES ===== */}
             <div ref={setZone(1)}>
-                <ZoneLabel name="Issues — topics" color={C[1].color} />
+                <ZoneLabel name="Issues / topics" color={C[1].color} />
 
                 {/* Issue 1 — full width, text left */}
                 {fullIssue(56)}

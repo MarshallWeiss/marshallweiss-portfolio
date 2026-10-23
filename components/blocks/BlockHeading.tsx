@@ -34,14 +34,14 @@ export default function BlockHeading({
         <div className={cn('mb-6', alignmentClasses[textAlign], className)}>
             {headline && (
                 <h2 className={cn(
-                    'font-display text-gray-900',
+                    'font-display text-gray-900 text-balance',
                     headlineSizeClasses[headlineSize]
                 )}>
                     {headline}
                 </h2>
             )}
             {subheading && (
-                <p className="text-base md:text-lg text-gray-600 mt-2">
+                <p className={cn('text-base md:text-lg text-gray-600 mt-2 max-w-[65ch]', textAlign === 'center' && 'md:mx-auto', textAlign === 'right' && 'md:ml-auto')}>
                     {subheading}
                 </p>
             )}

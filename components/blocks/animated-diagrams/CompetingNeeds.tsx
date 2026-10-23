@@ -38,7 +38,7 @@ const DEPARTMENTS: Dept[] = [
         needs: [
             'Sufficient lead positions above the fold for any news cycle',
             'Layout flexibility to reflect the day’s hierarchy',
-            'Workflow transition support and clear guidance',
+            'Training and clear guidance while workflows change',
         ],
     },
     {
@@ -48,8 +48,8 @@ const DEPARTMENTS: Dept[] = [
         role: 'Defending search-driven reach',
         color: '#9DB29C',
         needs: [
-            'Resilience to declining search referral traffic',
-            'Maximized reach while it remains available',
+            'A homepage that holds up as search referrals decline',
+            'As much search reach as possible while it lasts',
             'A balance of high-traffic and subscription-driving coverage',
         ],
     },
@@ -57,7 +57,7 @@ const DEPARTMENTS: Dept[] = [
         id: 'growth',
         short: 'Subscriptions',
         full: 'Subscriptions & growth',
-        role: 'Conversion without churn',
+        role: 'More subscribers, without losing current ones',
         color: '#D29A57',
         needs: [
             'Retention of existing subscribers through the transition',
@@ -89,7 +89,7 @@ const DEPARTMENTS: Dept[] = [
             'A fully responsive, multi-device experience',
             'Greater prominence for photography',
             'Expanded support for video, particularly vertical',
-            'A cleaner, modern design competitive with peers',
+            'A design that holds up next to other major news sites',
         ],
     },
     {
@@ -101,7 +101,7 @@ const DEPARTMENTS: Dept[] = [
         needs: [
             'Full alignment with the new brand identity',
             'Readiness for the 25th-anniversary launch',
-            'A consistent, polished presentation throughout',
+            'The new identity applied the same way in every block',
         ],
     },
 ];
@@ -128,10 +128,10 @@ export default function CompetingNeeds() {
     return (
         <div
             className="relative overflow-hidden rounded-md border border-[#d8dcd5] bg-white/70 p-5 md:p-6"
-            role="img"
-            aria-label="Diagram: six teams — newsroom, audience and SEO, subscriptions, advertising, product design, and marketing — orbit a shared north star of subscription growth, each pulling the homepage toward its own key needs."
+            role="figure"
+            aria-label="Diagram: six teams (newsroom, audience and SEO, subscriptions, advertising, product design, and marketing) orbit a shared north star of subscription growth, each pulling the homepage toward its own key needs."
         >
-            <div className="grid gap-4 lg:grid-cols-5 lg:gap-6">
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-5 lg:gap-6">
                 {/* Orbit stage */}
                 <div className="relative h-[300px] w-full sm:h-[340px] lg:col-span-3 lg:h-[380px]">
                     {/* Tethers */}
@@ -164,7 +164,7 @@ export default function CompetingNeeds() {
                         transition={SPRING}
                     >
                         <div className="flex h-[128px] w-[128px] flex-col items-center justify-center rounded-full bg-stone-700 px-5 text-center shadow-lg md:h-[140px] md:w-[140px]">
-                            <span className="text-[8px] font-semibold uppercase tracking-[0.16em] text-white/55">North star</span>
+                            <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/75">North star</span>
                             <span className="mt-1 text-[13px] font-semibold leading-tight text-white md:text-sm">Subscription growth</span>
                         </div>
                     </motion.div>
@@ -180,7 +180,7 @@ export default function CompetingNeeds() {
                                 aria-label={`${d.full}: ${d.role}`}
                                 onClick={() => setSelected(i)}
                                 onMouseEnter={() => setSelected(i)}
-                                className="absolute z-10 -translate-x-1/2 -translate-y-1/2 focus:outline-none"
+                                className="absolute z-10 -translate-x-1/2 -translate-y-1/2 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-stone-800 focus-visible:ring-offset-2"
                                 style={{ left: `${POS[i].x}%`, top: `${POS[i].y}%` }}
                             >
                                 <motion.div
@@ -193,7 +193,7 @@ export default function CompetingNeeds() {
                                     style={on ? ({ ['--tw-ring-color' as string]: d.color } as React.CSSProperties) : undefined}
                                 >
                                     <span className="h-2 w-2 shrink-0 rounded-full" style={{ backgroundColor: d.color }} />
-                                    <span className={cn('text-[11px] font-semibold', on ? 'text-stone-800' : 'text-stone-600')}>{d.short}</span>
+                                    <span className={cn('text-xs font-semibold', on ? 'text-stone-900' : 'text-stone-600')}>{d.short}</span>
                                 </motion.div>
                             </button>
                         );
@@ -215,9 +215,9 @@ export default function CompetingNeeds() {
                                 <span className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ backgroundColor: active.color }} />
                                 <p className="text-sm font-semibold text-stone-800">{active.full}</p>
                             </div>
-                            <p className="mt-0.5 text-[12px] text-stone-400">{active.role}</p>
+                            <p className="mt-0.5 text-[13px] text-stone-600">{active.role}</p>
 
-                            <p className="mb-2 mt-4 text-[10px] font-semibold uppercase tracking-[0.14em] text-stone-400">Key needs</p>
+                            <p className="mb-2 mt-4 text-xs font-semibold text-stone-600">Key needs</p>
                             <ul className="space-y-2">
                                 {active.needs.map((n) => (
                                     <li key={n} className="flex items-start gap-2.5">

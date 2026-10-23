@@ -106,9 +106,9 @@ export default function HomepageKeyChanges() {
         <div
             className="relative overflow-hidden rounded-md border border-[#d8dcd5] bg-white/70 p-5 md:p-6"
             role="group"
-            aria-label="Diagram: a spotlight tour of the redesigned El Confidencial home page, highlighting seven key changes from the redesign — renamed sections, a clearer visual hierarchy, a new submenu, a prominent home for opinion, thematic content blocks, a wider page, and more space for audiovisual content."
+            aria-label="Diagram: a spotlight tour of the redesigned El Confidencial home page, highlighting seven key changes from the redesign: renamed sections, a clearer visual hierarchy, a new submenu, a prominent home for opinion, thematic content blocks, a wider page, and more space for audiovisual content."
         >
-            <div className="grid gap-4 lg:grid-cols-12 lg:gap-6">
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-12 lg:gap-6">
                 {/* Browser frame with the spotlighted page */}
                 <div className="lg:col-span-9">
                     <div className="overflow-hidden rounded-xl border border-stone-900/10 bg-white shadow-sm">
@@ -117,13 +117,13 @@ export default function HomepageKeyChanges() {
                             <span className="h-2 w-2 rounded-full bg-stone-300" />
                             <span className="h-2 w-2 rounded-full bg-stone-300" />
                             <span className="h-2 w-2 rounded-full bg-stone-300" />
-                            <div className="ml-2 flex-1 rounded bg-stone-100 px-2 py-0.5 text-[9px] text-stone-400">elconfidencial.com</div>
+                            <div className="ml-2 flex-1 rounded bg-stone-100 px-2 py-0.5 text-[10px] text-stone-500">elconfidencial.com</div>
                         </div>
                         {/* viewport */}
                         <div className="relative">
                             <div
                                 ref={viewportRef}
-                                className="h-[320px] overflow-auto overscroll-contain bg-white [scrollbar-width:thin] sm:h-[380px] lg:h-[460px]"
+                                className="h-[320px] overflow-auto bg-white [scrollbar-width:thin] sm:h-[380px] lg:h-[460px]"
                             >
                                 <div ref={contentRef} className="relative">
                                     {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -157,7 +157,7 @@ export default function HomepageKeyChanges() {
 
                 {/* Change list / step control */}
                 <div className="lg:col-span-3">
-                    <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-stone-400">Key changes</p>
+                    <p className="mb-2 text-xs font-semibold text-stone-600">Key changes</p>
                     <ol className="space-y-1.5">
                         {CHANGES.map((c, i) => {
                             const on = i === active;
@@ -185,7 +185,7 @@ export default function HomepageKeyChanges() {
                                                     initial={reduce ? false : { opacity: 0, y: -2 }}
                                                     animate={{ opacity: 1, y: 0 }}
                                                     transition={{ duration: 0.25, ease: EASE }}
-                                                    className="mt-1 block text-[11px] leading-snug text-stone-400"
+                                                    className="mt-1 block text-[13px] leading-snug text-stone-600"
                                                 >
                                                     {c.desc}
                                                 </motion.span>

@@ -197,7 +197,7 @@ export default function SplitMedia({
     const renderTextContent = () => (
         <div className={cn(
             "text-gray-600",
-            layout !== 'sideBySide' && 'max-w-4xl',
+            layout !== 'sideBySide' && 'max-w-[65ch]',
             layout !== 'sideBySide' && textAlign === 'center' && 'md:mx-auto',
             textPaddingClass
         )}>

@@ -6,6 +6,7 @@ import { client } from '@/sanity/lib/client';
 import MuxPlayer from '@mux/mux-player-react';
 import BlockWrapper from './BlockWrapper';
 import BlockHeading from './BlockHeading';
+import MediaPlaceholder, { SHOW_PENDING_MEDIA } from './MediaPlaceholder';
 import { cn } from '@/lib/utils';
 
 interface FullWidthMediaProps {
@@ -70,7 +71,8 @@ export default function FullWidthMedia({
     const hasVideo = mediaType === 'video' && playbackId;
     const hasFigma = mediaType === 'figma' && figmaUrl;
 
-    if (!hasImage && !hasVideo && !hasFigma) return null;
+    const isEmpty = !hasImage && !hasVideo && !hasFigma;
+    if (isEmpty && !SHOW_PENDING_MEDIA) return null;
 
     const alignmentClass = textAlign === 'center' ? 'text-left md:text-center' : textAlign === 'right' ? 'text-left md:text-right' : 'text-left';
 
@@ -105,10 +107,13 @@ export default function FullWidthMedia({
                 className={cn("", textAlign === 'center' && "max-w-3xl md:mx-auto")}
             />
             {caption && (
-                <p className={cn("text-gray-600 text-base md:text-lg leading-relaxed mb-10 md:mb-14 max-w-3xl", alignmentClass, textAlign === 'center' && "md:mx-auto")}>
+                <p className={cn("text-gray-600 text-base md:text-lg leading-relaxed mb-10 md:mb-14 max-w-[65ch]", alignmentClass, textAlign === 'center' && "md:mx-auto")}>
                     {caption}
                 </p>
             )}
+            {isEmpty ? (
+                <MediaPlaceholder label={headline || (mediaType === 'video' ? 'Video' : 'Image')} />
+            ) : (
             <figure className="w-full">
                 <div className={cn(
                     "rounded-lg overflow-hidden",
@@ -144,6 +149,7 @@ export default function FullWidthMedia({
                     ) : null}
                 </div>
             </figure>
+            )}
         </BlockWrapper>
     );
 }

@@ -146,7 +146,7 @@ export default function SectionsToTopics() {
         <div
             ref={ref}
             className="relative overflow-hidden rounded-md border border-[#d8dcd5] bg-white/70 p-5 md:p-6"
-            role="img"
+            role="figure"
             aria-label="Diagram: news headlines siloed in print sections (Spain, Economy, Sports) regroup into specific cross-cutting topics."
         >
             <div role="tablist" aria-label="Organization mode" className="mb-5 flex gap-6 border-b border-[#d8dcd5]">

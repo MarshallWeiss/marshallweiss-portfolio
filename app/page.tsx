@@ -1,48 +1,91 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowDown, ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import PortfolioProject from "@/components/PortfolioProject";
 import { getPortfolioProjects } from "@/lib/portfolio";
 import { getFunProjects } from "@/lib/sanity-these-days";
 import thoughtsData from "@/data/thoughts.json";
 import { SHOW_PERSONAL_WRITING } from "@/lib/flags";
-import LapidariumArtwork from "@/components/LapidariumArtwork";
 import AtlasArtwork from "@/components/AtlasArtwork";
 
 export const revalidate = 60;
+
+type SideProject = {
+  id: string;
+  title: string;
+  description?: string;
+  url?: string;
+  image?: string | null;
+};
+
+/**
+ * Small artwork for a side project. Known projects get their own drawing;
+ * anything else (including a renamed project) falls back to its Sanity image,
+ * or to its initial, so a card is never dropped.
+ */
+function SideProjectArt({ project }: { project: SideProject }) {
+  if (/atlas/i.test(project.title)) {
+    return (
+      <span className="side-art side-art--atlas">
+        <AtlasArtwork />
+      </span>
+    );
+  }
+  if (/four.?track|recorder/i.test(project.title)) {
+    return (
+      <span className="side-art side-art--recorder">
+        <Image
+          src={project.image || "/experiments/four-track-recorder.png"}
+          width={300}
+          height={300}
+          alt=""
+          sizes="120px"
+        />
+      </span>
+    );
+  }
+  if (/lapidarium/i.test(project.title)) {
+    return (
+      <span className="side-art side-art--lapidarium">
+        <Image
+          src="https://lapidarium.vercel.app/renders/amber/amber_021.webp"
+          width={300}
+          height={300}
+          alt=""
+          sizes="120px"
+        />
+      </span>
+    );
+  }
+  return (
+    <span className="side-art">
+      {project.image ? (
+        <Image src={project.image} width={300} height={300} alt="" sizes="120px" />
+      ) : (
+        <span className="side-art-initial">{project.title.charAt(0)}</span>
+      )}
+    </span>
+  );
+}
+
 export default async function Home() {
-  const [projects, experiments] = await Promise.all([
+  const [projects, sideProjects] = await Promise.all([
     getPortfolioProjects(),
-    getFunProjects(),
+    getFunProjects(3) as Promise<SideProject[]>,
   ]);
-  const recorder = experiments.find((project: { title: string }) =>
-    /four.?track|recorder/i.test(project.title),
-  );
-  const lapidarium = experiments.find((project: { title: string }) =>
-    /lapidarium/i.test(project.title),
-  );
-  const atlas = experiments.find((project: { title: string }) =>
-    /ai atlas/i.test(project.title),
-  );
   const [featured, ...articles] = thoughtsData.items;
   return (
     <div className="portfolio-home">
       <section className="portfolio-hero portfolio-container">
-        <div className="hero-title-wrap">
-          <h1>
-            Designing the tools
-            <br className="desktop-break" /> behind the stories
-          </h1>
-          <a className="hero-scroll" href="#selected-work">
-            <ArrowDown size={18} aria-hidden="true" /> A few things I’ve worked
-            on
-          </a>
-        </div>
+        <h1>
+          Designing the tools
+          <br className="desktop-break" /> behind the stories
+        </h1>
         <div className="hero-intro">
           <div className="intro-person">
             <Image
               src="/images/about/marsh photo gray background.png"
-              alt="Marshall Weiss"
+              alt=""
               width={64}
               height={64}
               priority
@@ -54,154 +97,114 @@ export default async function Home() {
             </span>
           </div>
           <p>
-            I’m a senior product designer and developer working where
-            design, journalism, and AI meet.
-          </p>
-          <p className="intro-detail">
-            Currently at{" "}
+            I’m a senior product designer at{" "}
             <a
               href="https://www.elconfidencial.com/"
               target="_blank"
               rel="noopener noreferrer"
             >
               El Confidencial
+              <span className="sr-only"> (opens in a new tab)</span>
             </a>
-            .<br />
-            Also teaching at{" "}
+            , where I work on the CMS our journalists write in, including its
+            AI tools, and on the pages our readers see. I build software as
+            well as design it.
+          </p>
+          <p className="intro-detail">
+            I also teach at{" "}
             <a
               href="https://universidadeuropea.com/"
               target="_blank"
               rel="noopener noreferrer"
             >
               Universidad Europea
-            </a>
-            .<br />
-            Fully bilingual in English and Spanish.
+              <span className="sr-only"> (opens in a new tab)</span>
+            </a>{" "}
+            and work in English and Spanish.
           </p>
           <Link className="text-link" href="/about">
-            A little more about me <ArrowUpRight size={17} aria-hidden="true" />
+            About me and my CV <ArrowRight size={16} aria-hidden="true" />
           </Link>
         </div>
       </section>
-      <section
-        id="selected-work"
-        className="selected-section portfolio-container"
-      >
-        <div className="section-intro">
-          <h2>Selected work</h2>
-          <Link className="text-link" href="/case-studies">
-            All projects <ArrowUpRight size={18} aria-hidden="true" />
-          </Link>
-        </div>
-        <div className="selected-grid">
-          {projects.slice(0, 3).map((project, i) => (
-            <PortfolioProject
-              key={project.slug.current}
-              project={project}
-              priority
-              featured={i === 0}
-            />
-          ))}
-        </div>
-      </section>
-      <section className="experiments-section portfolio-container">
-        <div className="section-intro">
-          <div>
-            <h2>Independent experiments.</h2>
-            <p>Small products and systems made away from the newsroom.</p>
+      {projects.length > 0 && (
+        <section
+          id="selected-work"
+          className="selected-section portfolio-container"
+          aria-labelledby="selected-work-heading"
+        >
+          <div className="section-intro">
+            <h2 id="selected-work-heading">Selected work</h2>
+            <Link className="text-link" href="/case-studies">
+              All work <ArrowRight size={16} aria-hidden="true" />
+            </Link>
           </div>
-          <Link className="text-link" href="/current">
-            What I’m making <ArrowUpRight size={18} aria-hidden="true" />
-          </Link>
-        </div>
-        <div className="experiments-grid">
-          {atlas && (
-            <a
-              className="experiment-card experiment-card--atlas"
-              href={atlas.url || "/current"}
-              target={atlas.url ? "_blank" : undefined}
-              rel={atlas.url ? "noopener noreferrer" : undefined}
-              aria-label={`Open ${atlas.title}`}
-            >
-              <div className="experiment-card-copy">
-                <span className="experiment-card-label">
-                  <span className="atlas-dot" /> Map experiment · work in progress
-                </span>
-                <h3>{atlas.title}</h3>
-                {atlas.description && <p>{atlas.description}</p>}
-                <span className="experiment-card-link">
-                  Open the atlas
-                </span>
-              </div>
-              <div className="experiment-card-media">
-                <AtlasArtwork />
-              </div>
-            </a>
-          )}
-          {recorder && (
-            <a
-              className="experiment-card experiment-card--recorder"
-              href={recorder.url || "/current"}
-              target={recorder.url ? "_blank" : undefined}
-              rel={recorder.url ? "noopener noreferrer" : undefined}
-              aria-label={`Open ${recorder.title}`}
-            >
-              <div className="experiment-card-copy">
-                <span className="experiment-card-label">
-                  <span className="record-dot" /> Sound experiment
-                </span>
-                <h3>{recorder.title}</h3>
-                {recorder.description && <p>{recorder.description}</p>}
-                <span className="experiment-card-link">
-                  Open recorder
-                </span>
-              </div>
-              <div className="experiment-card-media">
-                <Image
-                className="recorder-card-art"
-                src={recorder.image || "/experiments/four-track-recorder.png"}
-                width={900}
-                height={900}
-                alt=""
-                sizes="(max-width: 540px) 260px, (max-width: 1000px) 45vw, 25vw"
+          <div className="selected-grid">
+            {projects.slice(0, 3).map((project, i) => (
+              <PortfolioProject
+                key={project.slug.current}
+                project={project}
+                priority={i < 2}
+                featured={i === 0}
+                showEvidence
               />
-              </div>
-            </a>
-          )}
-          {lapidarium && (
-            <a
-              href={lapidarium.url || "/current"}
-              target={lapidarium.url ? "_blank" : undefined}
-              rel={lapidarium.url ? "noopener noreferrer" : undefined}
-              className="experiment-card experiment-card--lapidarium"
-              aria-label={`Explore ${lapidarium.title}`}
-            >
-              <div className="experiment-card-media">
-                <LapidariumArtwork variant="card" imageSrc={lapidarium.image} />
-              </div>
-              <div className="experiment-card-copy">
-                <span className="experiment-card-label">
-                  Reference experiment
-                </span>
-                <h3>{lapidarium.title}</h3>
-                {lapidarium.description && <p>{lapidarium.description}</p>}
-                <span className="experiment-card-link">
-                  Explore collection
-                </span>
-              </div>
-            </a>
-          )}
-        </div>
-      </section>
+            ))}
+          </div>
+        </section>
+      )}
+      {sideProjects.length > 0 && (
+        <section
+          className="side-section portfolio-container"
+          aria-labelledby="side-projects-heading"
+        >
+          <div className="section-intro">
+            <div>
+              <h2 id="side-projects-heading">Side projects</h2>
+              <p>Things I build in my own time, mostly to learn how they work. Still rough around the edges.</p>
+            </div>
+            <Link className="text-link" href="/current">
+              More in Current <ArrowRight size={16} aria-hidden="true" />
+            </Link>
+          </div>
+          <ul className="side-list">
+            {sideProjects.map((project) => (
+              <li key={project.id}>
+                <a
+                  className="side-project"
+                  href={project.url || "/current"}
+                  target={project.url ? "_blank" : undefined}
+                  rel={project.url ? "noopener noreferrer" : undefined}
+                >
+                  <SideProjectArt project={project} />
+                  <span className="side-copy">
+                    <span className="side-title">
+                      {project.title}
+                      {project.url && (
+                        <>
+                          <ArrowUpRight size={15} aria-hidden="true" />
+                          <span className="sr-only"> (opens in a new tab)</span>
+                        </>
+                      )}
+                    </span>
+                    {project.description && (
+                      <span className="side-description">{project.description}</span>
+                    )}
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
       {SHOW_PERSONAL_WRITING && (
         <section className="writing-section portfolio-container">
           <div className="section-intro">
             <div>
-              <h2>Thinking out loud.</h2>
-              <p>Notes on designing, building, and figuring things out.</p>
+              <h2>Writing</h2>
+              <p>Notes on design, building software, and what I’m figuring out.</p>
             </div>
             <Link className="text-link" href="/thoughts">
-              All writing <ArrowUpRight size={18} aria-hidden="true" />
+              All writing <ArrowRight size={16} aria-hidden="true" />
             </Link>
           </div>
           <div className="home-writing-grid">
@@ -219,33 +222,26 @@ export default async function Home() {
                   />
                 </div>
                 <div className="essay-info">
+                  <h3>{featured.title}</h3>
                   <span>
                     {featured.category} · {featured.readingTime} min read
                   </span>
-                  <h3>{featured.title}</h3>
                 </div>
               </Link>
             )}
             <div className="essay-list">
               {articles.slice(0, 3).map((article) => (
                 <Link key={article.id} href={`/thoughts/${article.slug}`}>
+                  <h3>{article.title}</h3>
                   <span>
                     {article.category} · {article.readingTime} min read
                   </span>
-                  <h3>{article.title}</h3>
                 </Link>
               ))}
             </div>
           </div>
         </section>
       )}
-      <section className="personal-strip portfolio-container">
-        <p>Outside the newsroom.</p>
-        <Link className="text-link" href="/current">
-          What I’m reading, making, and doing{" "}
-          <ArrowUpRight size={18} aria-hidden="true" />
-        </Link>
-      </section>
     </div>
   );
 }

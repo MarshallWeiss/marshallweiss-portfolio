@@ -63,8 +63,13 @@ export default function Navigation() {
               </Link>
             );
           })}
-          <a href="mailto:marshallweiss94@gmail.com" className="header-contact">
-            Say hello
+          {/* Goes to the footer, which has the address and a copy button, so it works without a mail app. */}
+          <a
+            href="#contact"
+            className="header-contact"
+            onClick={() => setOpen(false)}
+          >
+            Contact
           </a>
         </div>
       </nav>

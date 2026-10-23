@@ -49,6 +49,8 @@ function AccordionItemPanel({
     return (
         <div className={variant === 'full' ? 'border-b border-gray-200' : ''}>
             <button
+                type="button"
+                aria-expanded={isOpen}
                 onClick={onToggle}
                 className={cn(
                     "w-full flex items-center justify-between text-left hover:text-gray-600 transition-colors",
@@ -66,7 +68,7 @@ function AccordionItemPanel({
                     transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
                     className={cn(
                         "w-5 h-5 flex-shrink-0",
-                        variant === 'full' ? 'text-gray-400' : 'text-gray-500'
+                        'text-gray-500'
                     )}
                     fill="none"
                     viewBox="0 0 24 24"
@@ -92,7 +94,7 @@ function AccordionItemPanel({
                     >
                         <p className={cn(
                             "text-gray-600 leading-relaxed",
-                            variant === 'full' ? 'pl-0 md:pl-12 max-w-3xl pb-6' : 'pb-4'
+                            variant === 'full' ? 'max-w-[65ch] pb-6' : 'pb-4'
                         )}>
                             {item.content}
                         </p>

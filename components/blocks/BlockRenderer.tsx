@@ -112,6 +112,7 @@ export default function BlockRenderer({ modules }: BlockRendererProps) {
                         {isEager ? (
                             <motion.div
                                 id={`section-${key}`}
+                                className="scroll-mt-28"
                                 initial={{ opacity: 0, y: 40 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{

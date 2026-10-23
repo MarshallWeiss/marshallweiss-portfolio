@@ -22,9 +22,9 @@ export const projectStoryFallbacks: Record<
   }
 > = {
   'el-confidencial-cms-modernization': {
-    headline: 'A better place to write.',
+    headline: 'Jarvis, El Confidencial’s CMS',
     description:
-      'Jarvis — bringing the writing, editing, and AI tools of a newsroom into one workspace.',
+      'I lead design on the CMS that replaced a 15-year-old system for more than 200 journalists.',
     category: 'Editorial tools & AI',
     color: 'blue',
     summary:
@@ -33,9 +33,9 @@ export const projectStoryFallbacks: Record<
       'Rolled out section by section, with the breaking-news desk last to protect its time-critical workflow.',
   },
   'el-confidencial-home-page-redesign': {
-    headline: 'Making sense of the news.',
+    headline: 'The El Confidencial homepage',
     description:
-      'A new front page for El Confidencial, organized around stories and the way people read.',
+      'A front page organized by topic instead of by section, launched alongside the paper’s 25th-anniversary rebrand.',
     category: 'Reader experience',
     color: 'sage',
     summary:
@@ -45,36 +45,33 @@ export const projectStoryFallbacks: Record<
     evidenceLabel: 'Early results, with a tradeoff',
   },
   'checkout-optimization': {
-    headline: 'A clearer path to subscribing.',
+    headline: 'Subscription checkout',
     description:
-      'Rethinking the steps between deciding to subscribe and becoming a reader.',
+      'Reducing drop-off at the last step of El Confidencial’s subscription funnel.',
     category: 'Subscriptions',
     color: 'peach',
     summary:
       'A systematic redesign of El Confidencial’s subscription checkout, focused on friction in the purchase flow.',
-    evidence:
-      'Explore the case study for the research, design changes, and evaluation.',
+    evidence: '',
   },
   'paywall-redesign': {
-    headline: 'Showing the value of a story.',
-    description: 'A more considered subscription offer for El Confidencial’s readers.',
+    headline: 'The paywall offer',
+    description: 'New ways to present the subscription offer when a reader hits the paywall.',
     category: 'Subscriptions',
     color: 'lilac',
     summary:
       'Rethinking how the newspaper presents its subscription offer at the moment a reader encounters the paywall.',
-    evidence:
-      'Explore the case study for the problem, design approach, and outcomes.',
+    evidence: '',
   },
   'jarvis-design-system': {
-    headline: 'A shared language for the team.',
+    headline: 'Jarvis Design System',
     description:
-      'The components and foundations behind a more consistent newsroom product.',
+      'The components and tokens Jarvis is built from.',
     category: 'Design systems',
     color: 'blue',
     summary:
       'Building the component library and design language for El Confidencial’s product team.',
-    evidence:
-      'Explore the case study for the system and how it supports product work.',
+    evidence: '',
   },
 };
 
@@ -96,6 +93,9 @@ export interface PortfolioProjectData {
   overviewEvidenceLabel?: string;
   /** Mux playback id when the card thumbnail is a video. */
   thumbnailPlaybackId?: string;
+  /** Role and years from the study's metadata block. */
+  role?: string;
+  years?: string;
 }
 
 /**
@@ -113,6 +113,13 @@ export function resolveProjectStory(project: PortfolioProjectData) {
     summary: project.overviewSummary || fallback?.summary || '',
     evidence: project.overviewEvidence || fallback?.evidence || '',
     imageFit: project.cardImageFit || 'contain',
+    // "2023 - present" reads better as "2023–present".
+    meta: [project.role, project.years?.replace(/\s+-\s+/g, '–')]
+      .filter(Boolean)
+      .join(' · ') ||
+      project.cardCategory ||
+      fallback?.category ||
+      '',
     evidenceLabel:
       project.overviewEvidenceLabel ||
       fallback?.evidenceLabel ||
@@ -148,6 +155,10 @@ export const portfolioProjectFields = groq`
   accentColor,
   cardImageFit,
   displayOrder,
+  overviewEvidence,
+  overviewEvidenceLabel,
+  "role": modules[_type == "metadata"][0].role,
+  "years": modules[_type == "metadata"][0].year,
   "thumbnailPlaybackId": select(thumbnailType == "video" => thumbnailVideo.asset->playbackId),
   "heroImage": coalesce(
     thumbnailImage,

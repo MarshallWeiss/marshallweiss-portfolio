@@ -9,19 +9,24 @@ export default function PortfolioProject({
   project,
   priority = false,
   featured = false,
+  showEvidence = false,
 }: {
   project: PortfolioProjectData;
   priority?: boolean;
   featured?: boolean;
+  /** Show the study's outcome or scope statement under the description. */
+  showEvidence?: boolean;
 }) {
   const story = resolveProjectStory(project);
+  const hasVideo = featured && project.thumbnailPlaybackId;
   return (
     <Link
       className={`portfolio-project project-${story.color}${featured ? ' is-featured' : ''}`}
       href={`/case-studies/${project.slug.current}`}
     >
-      <div className="project-art">
-        {featured && project.thumbnailPlaybackId ? (
+      {/* The caption names the link; the artwork is a picture of the same project. */}
+      <div className="project-art" aria-hidden="true">
+        {hasVideo ? (
           <div className="project-screen is-filled">
             {/* The featured card plays the study's own thumbnail video, silently, instead of a still. */}
             <MuxPlayer
@@ -41,7 +46,7 @@ export default function PortfolioProject({
               } as any}
             />
           </div>
-        ) : project.heroImage && (
+        ) : project.heroImage ? (
           <div
             className={`project-screen ${story.imageFit === 'cover' ? 'is-filled' : ''}`}
           >
@@ -51,19 +56,31 @@ export default function PortfolioProject({
                 .quality(85)
                 .auto('format')
                 .url()}
-              alt={project.title}
+              alt=""
               fill
               sizes={featured ? "(max-width: 760px) calc(100vw - 72px), (max-width: 1440px) 92vw, 1320px" : "(max-width: 760px) calc(100vw - 72px), (max-width: 1440px) 50vw, 660px"}
               className="project-image"
               priority={priority}
             />
           </div>
+        ) : (
+          <span className="project-art-fallback">{story.headline}</span>
         )}
       </div>
       <div className="project-caption">
-        <span className="project-category">{story.category}</span>
-        <h3>{story.headline}</h3>
-        {story.description && <p>{story.description}</p>}
+        <div className="project-title">
+          <h3>{story.headline}</h3>
+          {story.meta && <p className="project-meta">{story.meta}</p>}
+        </div>
+        <div className="project-body">
+          {story.description && <p className="project-description">{story.description}</p>}
+          {showEvidence && story.evidence && (
+            <p className="project-evidence">
+              <span>{story.evidenceLabel}</span>
+              {story.evidence}
+            </p>
+          )}
+        </div>
       </div>
     </Link>
   );

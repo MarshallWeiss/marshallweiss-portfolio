@@ -23,11 +23,11 @@ const rightSlab = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.marshallweiss.com'),
   title: {
-    default: 'Marshall Weiss — Product designer & developer',
-    template: '%s — Marshall Weiss',
+    default: 'Marshall Weiss · Product designer',
+    template: '%s · Marshall Weiss',
   },
   description:
-    'Product designer and developer in Madrid. Editorial tools, reader experiences, and experiments at the intersection of design, journalism, and AI.',
+    'Marshall Weiss is a product designer at El Confidencial in Madrid. Case studies on the newspaper’s CMS, its homepage and its subscriptions, plus a few side projects.',
 };
 
 export default function RootLayout({

@@ -56,17 +56,17 @@ export default function HomepageArchitecture() {
     return (
         <div
             className="relative overflow-hidden rounded-md border border-[#d8dcd5] bg-white/70 p-5 md:p-6"
-            role="img"
-            aria-label="Diagram: a schematic of the redesigned home page in a browser frame the reader scrolls through — a large opening (apertura) with an opinion column, a feed of topic issues with an ad rail, the classic highlighted sections with a supporting article column, smaller secondary sections with an ad, more news and subscriber services, and a footer."
+            role="figure"
+            aria-label="Diagram: a schematic of the redesigned home page in a browser frame the reader scrolls through: a large opening (apertura) with an opinion column, a feed of topic issues with an ad rail, the classic highlighted sections with a supporting article column, smaller secondary sections with an ad, more news and subscriber services, and a footer."
         >
-            <div className="grid gap-4 lg:grid-cols-5 lg:gap-6">
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-5 lg:gap-6">
                 {/* Browser frame with the scrollable schematic */}
                 <div className="lg:col-span-3">
                     <div className="overflow-hidden rounded-md border border-[#d8dcd5] bg-white">
                         {/* frame label */}
                         <div className="flex items-center justify-between border-b border-[#e6e8e2] px-3 py-1.5">
                             <span className="text-[10px] font-medium uppercase tracking-[0.14em] text-[#68716c]">elconfidencial.com</span>
-                            <span className="text-[10px] text-[#9aa29d]">{ZONES[active].name}</span>
+                            <span className="text-[10px] text-[#68716c]">{ZONES[active].name}</span>
                         </div>
                         {/* progress (tracks scroll position) */}
                         <div className="h-0.5 w-full bg-[#eef0ea]">
@@ -77,7 +77,7 @@ export default function HomepageArchitecture() {
                             <div
                                 ref={viewportRef}
                                 onScroll={onScroll}
-                                className="h-[320px] overflow-y-auto overscroll-contain bg-white [scrollbar-width:thin] sm:h-[380px] lg:h-[460px]"
+                                className="h-[320px] overflow-y-auto overflow-x-hidden bg-white [scrollbar-width:thin] sm:h-[380px] lg:h-[460px]"
                             >
                                 <HomepageSchematic zoneRef={(i, el) => { zoneEls.current[i] = el; }} />
                             </div>
@@ -142,7 +142,7 @@ export default function HomepageArchitecture() {
                                         </span>
                                         <span className="min-w-0">
                                             <span className={cn('block font-display text-[15px] leading-tight', on ? 'text-[#303936]' : 'text-[#68716c]')}>{z.name}</span>
-                                            <span className={cn('mt-0.5 block text-[11.5px] leading-snug', on ? 'text-[#68716c]' : 'text-[#9aa29d]')}>{z.desc}</span>
+                                            <span className={cn('mt-0.5 block text-[13px] leading-snug', on ? 'text-[#4f5752]' : 'text-[#68716c]')}>{z.desc}</span>
                                         </span>
                                     </button>
                                 </li>

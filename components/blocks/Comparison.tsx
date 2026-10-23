@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import BlockWrapper from './BlockWrapper';
 import BlockHeading from './BlockHeading';
 import MediaItem from './MediaItem';
+import MediaPlaceholder, { SHOW_PENDING_MEDIA } from './MediaPlaceholder';
 
 interface ComparisonProps {
     headline?: string;
@@ -40,7 +41,8 @@ export default function Comparison({
     background = 'none',
     spacing = 'default',
 }: ComparisonProps) {
-    if (!leftImage && !rightImage) return null;
+    const isEmpty = !leftImage && !rightImage;
+    if (isEmpty && !SHOW_PENDING_MEDIA) return null;
 
     const alignmentClass = textAlign === 'center' ? 'text-left md:text-center' : textAlign === 'right' ? 'text-left md:text-right' : 'text-left';
 
@@ -60,9 +62,13 @@ export default function Comparison({
                 className={cn("", textAlign === 'center' && "max-w-3xl md:mx-auto")}
             />
             {description && (
-                <p className={cn("text-gray-600 text-base md:text-lg leading-relaxed mb-12 md:mb-16 max-w-3xl", alignmentClass, textAlign === 'center' && "md:mx-auto")}>
+                <p className={cn("text-gray-600 text-base md:text-lg leading-relaxed mb-12 md:mb-16 max-w-[65ch]", alignmentClass, textAlign === 'center' && "md:mx-auto")}>
                     {description}
                 </p>
+            )}
+
+            {isEmpty && (
+                <MediaPlaceholder label={[leftLabel, rightLabel].filter(Boolean).join(' and ') || headline || 'Comparison images'} />
             )}
 
             {/* Images */}

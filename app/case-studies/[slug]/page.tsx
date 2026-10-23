@@ -7,6 +7,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { sortProjects } from '@/lib/portfolio';
+import SectionNav, { type SectionNavItem } from './SectionNav';
 
 interface PageProps {
     params: Promise<{
@@ -145,10 +146,16 @@ export default async function CaseStudyPage({ params }: PageProps) {
         notFound();
     }
 
+    // Blocks flagged "Show in On this page nav" in Studio. Anchors match the
+    // section ids BlockRenderer gives each block.
+    const sectionNavItems: SectionNavItem[] = (caseStudy.modules || [])
+        .filter((m: any) => m?.showInSectionNav && m?.headline && m?._key)
+        .map((m: any) => ({ id: `section-${m._key}`, label: m.headline.trim() }));
+
     return (
         <div className="min-h-screen bg-white">
             {/* Main Content */}
-            <div className="px-6 md:px-12 max-w-[1920px] mx-auto pb-32 pt-8">
+            <div id="case-study-body" className="px-6 md:px-12 max-w-[1920px] mx-auto pb-32 pt-8">
                 {caseStudy.modules && caseStudy.modules.length > 0 ? (
                     <BlockRenderer modules={caseStudy.modules} />
                 ) : (
@@ -158,6 +165,8 @@ export default async function CaseStudyPage({ params }: PageProps) {
                     </div>
                 )}
             </div>
+
+            <SectionNav items={sectionNavItems} />
 
             {/* Case Study Navigation */}
             {allCaseStudies.length > 1 && (

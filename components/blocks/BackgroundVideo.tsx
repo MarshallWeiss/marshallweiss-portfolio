@@ -3,6 +3,7 @@ import React from 'react';
 import MuxPlayer from '@mux/mux-player-react';
 import { cn } from '@/lib/utils';
 import BlockWrapper from './BlockWrapper';
+import MediaPlaceholder, { SHOW_PENDING_MEDIA } from './MediaPlaceholder';
 
 interface BackgroundVideoProps {
     video?: {
@@ -56,7 +57,12 @@ export default function BackgroundVideo({
     const playbackId = video?.asset?.playbackId || video?.playbackId;
 
     if (!playbackId) {
-        return null;
+        if (!SHOW_PENDING_MEDIA) return null;
+        return (
+            <BlockWrapper width={width} background={background} spacing={spacing}>
+                <MediaPlaceholder label={headline || 'Background video'} />
+            </BlockWrapper>
+        );
     }
 
     const aspectRatioClass = {
@@ -86,6 +92,9 @@ export default function BackgroundVideo({
                 loop={loop}
                 muted={muted}
                 playsInline
+                // An explicit first-frame poster so the frame never sits empty or black while the stream loads.
+                poster={`https://image.mux.com/${playbackId}/thumbnail.webp?time=0&width=1600`}
+                placeholder={`https://image.mux.com/${playbackId}/thumbnail.webp?time=0&width=32`}
                 className="absolute inset-0 w-full h-full"
                 style={{
                     '--controls': 'none',
@@ -165,7 +174,7 @@ export default function BackgroundVideo({
                             <span className="h-2 w-2 rounded-full bg-stone-300" />
                             <span className="h-2 w-2 rounded-full bg-stone-300" />
                             <span className="h-2 w-2 rounded-full bg-stone-300" />
-                            <div className="ml-2 flex-1 rounded bg-stone-100 px-2 py-0.5 text-[9px] text-stone-400">{frameLabel || ' '}</div>
+                            <div className="ml-2 flex-1 rounded bg-stone-100 px-2 py-0.5 text-[10px] text-stone-500">{frameLabel || ' '}</div>
                         </div>
                         {videoSection}
                     </div>
