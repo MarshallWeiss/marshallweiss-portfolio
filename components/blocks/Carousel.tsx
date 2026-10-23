@@ -69,10 +69,6 @@ export default function Carousel({
     const [canScrollLeft, setCanScrollLeft] = useState(false);
     const [canScrollRight, setCanScrollRight] = useState(true);
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-    // With one slide per view, slides of different heights would otherwise
-    // leave the block as tall as the tallest one. Follow the visible slide.
-    const [trackHeight, setTrackHeight] = useState<number | undefined>(undefined);
-    const fitToVisibleSlide = slidesPerView === '1';
 
     const openLightbox = (index: number) => setSelectedIndex(index);
     const closeLightbox = () => setSelectedIndex(null);
@@ -87,18 +83,7 @@ export default function Carousel({
         }
     };
 
-    const syncTrackHeight = () => {
-        const container = scrollContainerRef.current;
-        if (!fitToVisibleSlide || !container) return;
-        const slideEls = Array.from(container.querySelectorAll<HTMLElement>('.carousel-slide'));
-        if (slideEls.length === 0) return;
-        const step = slideEls.length > 1 ? slideEls[1].offsetLeft - slideEls[0].offsetLeft : container.clientWidth;
-        const index = Math.min(slideEls.length - 1, Math.max(0, Math.round(container.scrollLeft / (step || 1))));
-        setTrackHeight(slideEls[index].offsetHeight);
-    };
-
     const checkScrollButtons = () => {
-        syncTrackHeight();
         if (scrollContainerRef.current) {
             const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
             if (infiniteLoop) {
@@ -115,17 +100,7 @@ export default function Carousel({
     useEffect(() => {
         checkScrollButtons();
         window.addEventListener('resize', checkScrollButtons);
-        // Images load after first paint and change slide heights.
-        const container = scrollContainerRef.current;
-        const observer = fitToVisibleSlide && container && typeof ResizeObserver !== 'undefined'
-            ? new ResizeObserver(() => syncTrackHeight())
-            : null;
-        container?.querySelectorAll('.carousel-slide').forEach((el) => observer?.observe(el));
-        return () => {
-            window.removeEventListener('resize', checkScrollButtons);
-            observer?.disconnect();
-        };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        return () => window.removeEventListener('resize', checkScrollButtons);
     }, []);
 
     if (!slides || slides.length === 0) {
@@ -210,8 +185,8 @@ export default function Carousel({
                     {/* Slides Container */}
                     <div
                         ref={scrollContainerRef}
-                        className={cn("md:flex-1 flex gap-12 overflow-x-auto scrollbar-hide", fitToVisibleSlide ? 'items-start transition-[height] duration-300 ease-out' : alignmentClass)}
-                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', height: trackHeight }}
+                        className={cn("md:flex-1 flex gap-12 overflow-x-auto scrollbar-hide", alignmentClass)}
+                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                         onScroll={checkScrollButtons}
                     >
                         {slides.map((slide, idx) => (
@@ -275,8 +250,8 @@ export default function Carousel({
                     {/* Slides Container */}
                     <div
                         ref={scrollContainerRef}
-                        className={cn("flex gap-12 overflow-x-auto scrollbar-hide", fitToVisibleSlide ? 'items-start transition-[height] duration-300 ease-out' : alignmentClass)}
-                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', height: trackHeight }}
+                        className={cn("flex gap-12 overflow-x-auto scrollbar-hide", alignmentClass)}
+                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                         onScroll={checkScrollButtons}
                     >
                         {slides.map((slide, idx) => (
