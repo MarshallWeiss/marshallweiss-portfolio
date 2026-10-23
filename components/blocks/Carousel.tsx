@@ -2,13 +2,13 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
+import { createPortal } from 'react-dom';
 import { useNextSanityImage } from 'next-sanity-image';
 import { client } from '@/sanity/lib/client';
 import { cn } from '@/lib/utils';
-import { ArrowLeft, ArrowRight, X, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
+import { ArrowLeft, ArrowRight, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import BlockWrapper from './BlockWrapper';
-import BlockHeading, { childHeadingTag } from './BlockHeading';
-import MediaPlaceholder, { SHOW_PENDING_MEDIA } from './MediaPlaceholder';
+import BlockHeading from './BlockHeading';
 
 interface Slide {
     _key?: string;
@@ -103,15 +103,7 @@ export default function Carousel({
         return () => window.removeEventListener('resize', checkScrollButtons);
     }, []);
 
-    if (!slides || slides.length === 0) {
-        if (!SHOW_PENDING_MEDIA) return null;
-        return (
-            <BlockWrapper width={width} background={background} spacing={spacing}>
-                <BlockHeading headline={headline} subheading={subheading} headlineSize={headlineSize} textAlign={textAlign} />
-                <MediaPlaceholder label={headline || 'Carousel slides'} />
-            </BlockWrapper>
-        );
-    }
+    if (!slides || slides.length === 0) return null;
 
     // Vertical alignment classes
     const alignmentClass = {
@@ -193,7 +185,6 @@ export default function Carousel({
                             <CarouselSlide
                                 key={slide._key || idx}
                                 slide={slide}
-                                titleTag={headline ? childHeadingTag(headlineSize) : 'h3'}
                                 onOpen={() => openLightbox(idx)}
                                 aspectRatio={aspectRatio}
                                 objectFit={objectFit}
@@ -218,31 +209,31 @@ export default function Carousel({
                         <ArrowRight className="w-5 h-5 text-gray-700" />
                     </button>
 
-                    {/* Mobile: arrows sit under the slides so they never cover slide text */}
-                    <div className="mt-4 flex justify-end gap-2 md:hidden">
-                        <button
-                            onClick={() => scroll('left')}
-                            disabled={!canScrollLeft}
-                            className={cn(
-                                "w-11 h-11 rounded-full border border-gray-300 bg-white flex items-center justify-center transition-all",
-                                !canScrollLeft && "opacity-30 cursor-not-allowed"
-                            )}
-                            aria-label="Previous slide"
-                        >
-                            <ArrowLeft className="w-4 h-4 text-gray-700" />
-                        </button>
-                        <button
-                            onClick={() => scroll('right')}
-                            disabled={!canScrollRight}
-                            className={cn(
-                                "w-11 h-11 rounded-full border border-gray-300 bg-white flex items-center justify-center transition-all",
-                                !canScrollRight && "opacity-30 cursor-not-allowed"
-                            )}
-                            aria-label="Next slide"
-                        >
-                            <ArrowRight className="w-4 h-4 text-gray-700" />
-                        </button>
-                    </div>
+                    {/* Left Arrow - overlapping on mobile */}
+                    <button
+                        onClick={() => scroll('left')}
+                        disabled={!canScrollLeft}
+                        className={cn(
+                            "md:hidden absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full border border-gray-300 bg-white/90 flex items-center justify-center transition-all shadow-lg",
+                            !canScrollLeft && "opacity-30 cursor-not-allowed"
+                        )}
+                        aria-label="Previous slide"
+                    >
+                        <ArrowLeft className="w-4 h-4 text-gray-700" />
+                    </button>
+
+                    {/* Right Arrow - overlapping on mobile */}
+                    <button
+                        onClick={() => scroll('right')}
+                        disabled={!canScrollRight}
+                        className={cn(
+                            "md:hidden absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full border border-gray-300 bg-white/90 flex items-center justify-center transition-all shadow-lg",
+                            !canScrollRight && "opacity-30 cursor-not-allowed"
+                        )}
+                        aria-label="Next slide"
+                    >
+                        <ArrowRight className="w-4 h-4 text-gray-700" />
+                    </button>
                 </div>
             ) : (
                 // Overlapping positioning - arrows absolute
@@ -258,7 +249,6 @@ export default function Carousel({
                             <CarouselSlide
                                 key={slide._key || idx}
                                 slide={slide}
-                                titleTag={headline ? childHeadingTag(headlineSize) : 'h3'}
                                 onOpen={() => openLightbox(idx)}
                                 aspectRatio={aspectRatio}
                                 objectFit={objectFit}
@@ -314,7 +304,6 @@ export default function Carousel({
 
 function CarouselSlide({
     slide,
-    titleTag: TitleTag = 'h3',
     onOpen,
     aspectRatio = 'auto',
     objectFit = 'cover',
@@ -324,7 +313,6 @@ function CarouselSlide({
     imageShadow = 'none',
 }: {
     slide: Slide;
-    titleTag?: 'h3' | 'h4';
     onOpen: () => void;
     aspectRatio?: 'auto' | 'square' | '4:3' | '16:9' | '3:4' | '9:16';
     objectFit?: 'cover' | 'contain';
@@ -377,9 +365,9 @@ function CarouselSlide({
                     {/* Text — left on desktop, below image on mobile */}
                     <div className="order-2 md:order-1">
                         {slide.title && (
-                            <TitleTag className="text-xl md:text-2xl font-medium text-gray-900 mb-3">
-                                {slide.title.trim()}
-                            </TitleTag>
+                            <h4 className="text-xl md:text-2xl font-medium text-gray-900 mb-3">
+                                {slide.title}
+                            </h4>
                         )}
                         {slide.description && (
                             <p className="text-gray-600 leading-relaxed">
@@ -390,11 +378,9 @@ function CarouselSlide({
 
                     {/* Image — right on desktop, above text on mobile */}
                     <div className="order-1 md:order-2 flex justify-center">
-                        <button
-                            type="button"
-                            aria-label={`Enlarge image${slide.title ? `: ${slide.title.trim()}` : ''}`}
+                        <div
                             className={cn(
-                                "relative block rounded-lg overflow-hidden cursor-zoom-in group",
+                                "relative rounded-lg overflow-hidden cursor-pointer group",
                                 shadowClasses[imageShadow],
                                 showBackground && "bg-gray-100"
                             )}
@@ -403,15 +389,12 @@ function CarouselSlide({
                             {imageProps ? (
                                 <Image
                                     {...(imageProps as any)}
-                                    alt={slide.title?.trim() || ''}
+                                    alt={slide.title || 'Carousel slide'}
                                     className="h-auto w-auto max-h-[720px] object-contain group-hover:scale-[1.02] transition-transform duration-300"
                                     sizes="(max-width: 768px) 90vw, 45vw"
                                 />
                             ) : null}
-                            <span aria-hidden="true" className="pointer-events-none absolute bottom-2 right-2 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-sm md:hidden">
-                                <Maximize2 className="h-4 w-4" />
-                            </span>
-                        </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -421,11 +404,9 @@ function CarouselSlide({
     return (
         <div className={cn("carousel-slide flex-shrink-0", slideWidthClass)}>
             {/* Image */}
-            <button
-                type="button"
-                aria-label={`Enlarge image${slide.title ? `: ${slide.title.trim()}` : ''}`}
+            <div
                 className={cn(
-                    "relative block w-full rounded-lg overflow-hidden mb-4 cursor-zoom-in group",
+                    "relative rounded-lg overflow-hidden mb-4 cursor-pointer group",
                     shadowClasses[imageShadow],
                     showBackground && "bg-gray-100",
                     aspectRatioClass
@@ -435,7 +416,7 @@ function CarouselSlide({
                 {imageProps ? (
                     <Image
                         {...(imageProps as any)}
-                        alt={slide.title?.trim() || ''}
+                        alt={slide.title || 'Carousel slide'}
                         className={cn(
                             "group-hover:scale-[1.02] transition-transform duration-300",
                             aspectRatioClass ? "w-full h-full" : "w-full h-auto",
@@ -444,16 +425,13 @@ function CarouselSlide({
                         sizes={imageSizes}
                     />
                 ) : null}
-                <span aria-hidden="true" className="pointer-events-none absolute bottom-2 right-2 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-gray-700 shadow-sm md:hidden">
-                    <Maximize2 className="h-4 w-4" />
-                </span>
-            </button>
+            </div>
 
             {/* Title */}
             {slide.title && (
-                <TitleTag className="text-lg font-medium text-gray-900 mb-2">
-                    {slide.title.trim()}
-                </TitleTag>
+                <h4 className="text-lg font-medium text-gray-900 mb-2">
+                    {slide.title}
+                </h4>
             )}
 
             {/* Description */}
@@ -523,26 +501,29 @@ function Lightbox({
         };
     }, []);
 
-    return (
+    // Rendered into <body> above the sticky site header (z-60), which used to
+    // cover the close button.
+    return createPortal(
         <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-white"
+            className="fixed inset-0 z-[200] flex items-center justify-center bg-white"
             onClick={onClose}
+            role="dialog"
+            aria-modal="true"
         >
             {/* Close button */}
             <button
-                onClick={onClose}
+                onClick={(e) => { e.stopPropagation(); onClose(); }}
                 aria-label="Close"
-                className="absolute top-6 right-6 z-10 text-gray-500 hover:text-gray-900 transition-colors"
+                className="absolute top-4 right-4 z-10 flex h-12 w-12 items-center justify-center rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-900 transition-colors"
             >
-                <X className="w-8 h-8" />
+                <X className="w-7 h-7" />
             </button>
 
             {/* Previous arrow */}
             {slides.length > 1 && (
                 <button
                     onClick={(e) => { e.stopPropagation(); handlePrev(); }}
-                    aria-label="Previous image"
-                    className="absolute left-6 top-1/2 -translate-y-1/2 z-10 text-gray-500 hover:text-gray-900 transition-colors"
+                    className="absolute left-6 top-1/2 -translate-y-1/2 z-10 text-gray-400 hover:text-gray-900 transition-colors"
                 >
                     <ChevronLeft className="w-10 h-10" />
                 </button>
@@ -552,8 +533,7 @@ function Lightbox({
             {slides.length > 1 && (
                 <button
                     onClick={(e) => { e.stopPropagation(); onNext(); }}
-                    aria-label="Next image"
-                    className="absolute right-6 top-1/2 -translate-y-1/2 z-10 text-gray-500 hover:text-gray-900 transition-colors"
+                    className="absolute right-6 top-1/2 -translate-y-1/2 z-10 text-gray-400 hover:text-gray-900 transition-colors"
                 >
                     <ChevronRight className="w-10 h-10" />
                 </button>
@@ -563,7 +543,8 @@ function Lightbox({
             <div
                 key={animationKey}
                 className="relative w-full h-full flex flex-col items-center justify-center p-16 animate-fade-slide"
-                onClick={(e) => e.stopPropagation()}
+                // Clicking the empty space around the image closes; clicking the image or caption doesn't.
+                onClick={(e) => { if (e.target === e.currentTarget) onClose(); else e.stopPropagation(); }}
                 style={{
                     '--slide-direction': direction === 'right' ? '20px' : '-20px',
                 } as any}
@@ -571,7 +552,7 @@ function Lightbox({
                 {imageProps && (
                     <Image
                         {...(imageProps as any)}
-                        alt={currentSlide.title?.trim() || ""}
+                        alt={currentSlide.title || "Lightbox view"}
                         className="object-contain max-h-[70vh] max-w-full rounded-lg shadow-2xl"
                         sizes="100vw"
                     />
@@ -581,9 +562,9 @@ function Lightbox({
                 {(currentSlide.title || currentSlide.description) && (
                     <div className="mt-6 text-center max-w-2xl">
                         {currentSlide.title && (
-                            <h3 className="text-xl font-medium text-gray-900 mb-2">
-                                {currentSlide.title.trim()}
-                            </h3>
+                            <h4 className="text-xl font-medium text-gray-900 mb-2">
+                                {currentSlide.title}
+                            </h4>
                         )}
                         {currentSlide.description && (
                             <p className="text-gray-600 leading-relaxed">
@@ -600,6 +581,7 @@ function Lightbox({
                     {currentIndex + 1} / {slides.length}
                 </div>
             )}
-        </div>
+        </div>,
+        document.body
     );
 }
