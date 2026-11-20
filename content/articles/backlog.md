@@ -6,6 +6,12 @@ Structured article projects for AI-assisted writing. Add new ideas at the top.
 
 ## Backlog
 
+### Thinking Through the Machine
+- **Added**: 2026-11-21
+- **Status**: captured
+- **Source**: Ideas backlog (cross-posted), spitball notes `spitball-notes/2026-11-21-thinking-through-the-machine.md`
+- **Angle**: Think piece on what happens when humanity thinks through one commercial interface. Threads: homogenization of thought (even with a "pure" tool), whether technology can be neutral, US mass tech as cognitive colonization, dictation and the new relationship with words and attention, measurable cognitive costs with no independent oversight, thinking without human judgment (and with a sycophant), tiered access to intelligence. Likely a `/think-piece`.
+
 ### The Golden Age of Web Design
 - **Added**: 2026-02-22
 - **Status**: captured
