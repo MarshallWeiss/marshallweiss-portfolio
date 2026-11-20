@@ -12,49 +12,49 @@ Ideas for future articles. Add new ideas at the top.
 - **Added**: 2026-11-21
 - **Category**: Ideas, Articles
 - **Status**: captured
-- **Notes**: AI expands our ability to think, but it also limits and concentrates human thought: all of humanity thinking through the same machine, in the same way. That machine is run by companies that answer to shareholders, so it doesn't necessarily have our best interests in mind. Even if it were a "pure" tool with no profit motive, one interface for everyone would still standardize thought. Related: "The Golden Age of Web Design" and "The Copyright Paradox" (the same homogenization, in design).
+- **Notes**: "AI is a crazy limitation and concentration of human thought as much as it also expands our ability to think. Having all of humanity thinking through this machine, which does not necessarily have our best interests in mind. It's a company that needs to make profit for shareholders, who as a rule are really only motivated by profit. It's somewhat of a totalizing or homogenizing thing to have this interface that everyone is thinking through in the same way. And even if it were a pure tool, I think it would still standardize."
 
 ### Can a Tool Ever Be Neutral?
 - **Added**: 2026-11-21
 - **Category**: Ideas
 - **Status**: captured
-- **Notes**: Is a pure tool even possible? Every technology seems to represent someone's worldview, or the needs of a specific culture in a certain place and time. Leads straight into the colonization idea below.
+- **Notes**: "What is it even possible to have a pure tool? Is it possible for tools, or technology in general, to be completely neutral? It always kind of represents someone's worldview, or the needs of a specific culture in a certain place and time."
 
 ### Cognitive Colonization: Mass Technology as Soft Empire
 - **Added**: 2026-11-21
 - **Category**: Ideas, Articles
 - **Status**: captured
-- **Notes**: Mass technologies are produced mostly in the US, the most capitalist country in the world. That can colonize other cultures much more effectively than military power, because you're colonizing their minds. Personal angle: bicultural, designing products for a Spanish newsroom with American-made tools.
+- **Notes**: "It's interesting thinking about that with mass technologies now, and how those are produced mostly in the US, the most capitalist country in the world, and how that can colonize other cultures much more effectively than militarily, because you're ultimately colonizing their mind."
 
 ### Dictation and the Perfect Scribe: A New Way of Writing
 - **Added**: 2026-11-21
 - **Category**: Ideas, Articles
 - **Status**: captured
-- **Notes**: Even the most basic changes are fascinating. You can dictate a stream of consciousness, see it on the screen, and edit it afterward, as if you had a perfect scribe. That changes our relationship with words, language and attention. Writing turns into speaking first and editing later.
+- **Notes**: "Even the most basic parts of the way it's changing things: the fact that I can dictate now, like I'm doing, and then see those thoughts on a screen and edit them after that. It's a fascinating new way of writing, because you can just dictate things out and have this perfect scribe, and then edit after the fact. I think the whole part about how much this is changing our relationship with words and language and attention is really fascinating as well."
 
 ### Is Convenience Making Me Dumber? (And Who's Measuring?)
 - **Added**: 2026-11-21
 - **Category**: Ideas, Articles
 - **Status**: captured
-- **Notes**: My spelling has gotten worse, my attention span has gotten much worse, and my ability to read has plummeted. So is AI making me smarter or dumber? This can actually be measured. Anything else this risky (pharmaceuticals, food, weapons, cars) is regulated and studied by independent bodies, but AI is mostly studied by the companies themselves. Who is studying this from outside the companies? Also: AI still produces weak ideas dressed up as insight (plausible analogies that make big jumps without explanation), and convenience makes it easy to absorb them without noticing.
+- **Notes**: "It's funny, because AI still gives you really stupid ideas, like random weird analogies that make a big jump without explaining it further. And thinking about writing quality: my spelling has definitely gotten worse. My attention span has gotten much worse. My ability to read has plummeted. So is it really making me smarter, or is it making me dumber, this convenience? That's actually a measurable thing, too. And it's crazy that because these are private companies, it's not regulated. Anything else this risky — pharmaceuticals, food, weapons, cars — is somewhat regulated and studied by an independent body. I don't think universities have many agreements with the AI companies. You need somebody studying this who's not based in the company."
 
 ### Thinking Without Being Judged
 - **Added**: 2026-11-21
 - **Category**: Ideas
 - **Status**: captured
-- **Notes**: Speaking in a stream of consciousness without worrying about another human judging or responding is a new relationship with thought: no self-consciousness. But that could also make thought more individualistic, because you're not debating or dialoguing with anyone except a sycophant.
+- **Notes**: "Our relationship to self-consciousness, the whole relationship with thought. Right now I'm able to just speak in a stream-of-consciousness way without worrying about another human being judging me or responding to me. It's almost like you have this perfect scribe again, but without the self-consciousness that comes with a real human relationship. That could also make thought somewhat more individualistic, because you're not having to debate or dialogue with anyone except this kind of sycophant."
 
 ### The Business Model Is Replacement, Not Augmentation
 - **Added**: 2026-11-21
 - **Category**: Ideas
 - **Status**: captured
-- **Notes**: AI companies probably won't make enough money from subscriptions that augment workers. The real money comes when companies pay enough to replace workers, so users are effectively training the thing that replaces them. Worth separating this from sycophancy (which may come more from training on human approval) and looking at the actual revenue math.
+- **Notes**: "It's being sycophantic because ultimately it wants you to train it to replace you. That's basically the way they envision making profit. Thinking of their business model, they're not going to make enough money if it's just subscriptions for big companies that augment workers. They're going to make money when they can get companies to pay enough to replace workers."
 
 ### Paying for Intelligence: Tiered Access to Thinking
 - **Added**: 2026-11-21
 - **Category**: Ideas, Articles
 - **Status**: captured
-- **Notes**: It's weird that I'm basically paying for access to a higher level of intelligence. Levels of intelligence limited by how much money people have. Money has always bought cognitive advantage (tutors, schools, books), but this version is rented, metered, revocable and explicitly tiered by one company. Is "fascist" the right word, or is it stratification/technofeudalism?
+- **Notes**: "It's so weird with the models, that I'm basically paying to get access to a higher level of intelligence. That levels of intelligence might be limited to some people just based on how much money they have. That also seems like kind of a fascist aspect of AI."
 
 ### The Golden Age of Web Design
 - **Added**: 2026-02-22
