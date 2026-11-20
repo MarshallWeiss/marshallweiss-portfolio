@@ -18,7 +18,7 @@ Ideas for future articles. Add new ideas at the top.
 - **Added**: 2026-11-21
 - **Category**: Ideas
 - **Status**: captured
-- **Notes**: "What is it even possible to have a pure tool? Is it possible for tools, or technology in general, to be completely neutral? It always kind of represents someone's worldview, or the needs of a specific culture in a certain place and time."
+- **Notes**: "Is it even possible to have a pure tool? Is it possible for tools, or technology in general, to be completely neutral? It always kind of represents someone's worldview, or the needs of a specific culture in a certain place and time."
 
 ### Cognitive Colonization: Mass Technology as Soft Empire
 - **Added**: 2026-11-21
