@@ -8,6 +8,54 @@ Ideas for future articles. Add new ideas at the top.
 
     `<!-- New ideas go here -->`
 
+### Thinking Through the Machine: AI as Concentration and Homogenization of Thought
+- **Added**: 2026-11-21
+- **Category**: Ideas, Articles
+- **Status**: captured
+- **Notes**: AI expands our ability to think, but it also limits and concentrates human thought: all of humanity thinking through the same machine, in the same way. That machine is run by companies that answer to shareholders, so it doesn't necessarily have our best interests in mind. Even if it were a "pure" tool with no profit motive, one interface for everyone would still standardize thought. Related: "The Golden Age of Web Design" and "The Copyright Paradox" (the same homogenization, in design).
+
+### Can a Tool Ever Be Neutral?
+- **Added**: 2026-11-21
+- **Category**: Ideas
+- **Status**: captured
+- **Notes**: Is a pure tool even possible? Every technology seems to represent someone's worldview, or the needs of a specific culture in a certain place and time. Leads straight into the colonization idea below.
+
+### Cognitive Colonization: Mass Technology as Soft Empire
+- **Added**: 2026-11-21
+- **Category**: Ideas, Articles
+- **Status**: captured
+- **Notes**: Mass technologies are produced mostly in the US, the most capitalist country in the world. That can colonize other cultures much more effectively than military power, because you're colonizing their minds. Personal angle: bicultural, designing products for a Spanish newsroom with American-made tools.
+
+### Dictation and the Perfect Scribe: A New Way of Writing
+- **Added**: 2026-11-21
+- **Category**: Ideas, Articles
+- **Status**: captured
+- **Notes**: Even the most basic changes are fascinating. You can dictate a stream of consciousness, see it on the screen, and edit it afterward, as if you had a perfect scribe. That changes our relationship with words, language and attention. Writing turns into speaking first and editing later.
+
+### Is Convenience Making Me Dumber? (And Who's Measuring?)
+- **Added**: 2026-11-21
+- **Category**: Ideas, Articles
+- **Status**: captured
+- **Notes**: My spelling has gotten worse, my attention span has gotten much worse, and my ability to read has plummeted. So is AI making me smarter or dumber? This can actually be measured. Anything else this risky (pharmaceuticals, food, weapons, cars) is regulated and studied by independent bodies, but AI is mostly studied by the companies themselves. Who is studying this from outside the companies? Also: AI still produces weak ideas dressed up as insight (plausible analogies that make big jumps without explanation), and convenience makes it easy to absorb them without noticing.
+
+### Thinking Without Being Judged
+- **Added**: 2026-11-21
+- **Category**: Ideas
+- **Status**: captured
+- **Notes**: Speaking in a stream of consciousness without worrying about another human judging or responding is a new relationship with thought: no self-consciousness. But that could also make thought more individualistic, because you're not debating or dialoguing with anyone except a sycophant.
+
+### The Business Model Is Replacement, Not Augmentation
+- **Added**: 2026-11-21
+- **Category**: Ideas
+- **Status**: captured
+- **Notes**: AI companies probably won't make enough money from subscriptions that augment workers. The real money comes when companies pay enough to replace workers, so users are effectively training the thing that replaces them. Worth separating this from sycophancy (which may come more from training on human approval) and looking at the actual revenue math.
+
+### Paying for Intelligence: Tiered Access to Thinking
+- **Added**: 2026-11-21
+- **Category**: Ideas, Articles
+- **Status**: captured
+- **Notes**: It's weird that I'm basically paying for access to a higher level of intelligence. Levels of intelligence limited by how much money people have. Money has always bought cognitive advantage (tutors, schools, books), but this version is rented, metered, revocable and explicitly tiered by one company. Is "fascist" the right word, or is it stratification/technofeudalism?
+
 ### The Golden Age of Web Design
 - **Added**: 2026-02-22
 - **Category**: Ideas, Articles
